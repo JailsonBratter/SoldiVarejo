@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Cupom Sintetico</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Movimento_Venda
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DataDe</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>HORA</tipo>
+      <titulo>Hora de</titulo>
+      <valorPadrao>00:00</valorPadrao>
+      <campo>horaInicio</campo>
+      <largura>60</largura>
+    </filtro2>
+    <filtro3>
+      <tipo>HORA</tipo>
+      <titulo>Hora Ate</titulo>
+      <valorPadrao>23:59</valorPadrao>
+      <campo>horafim</campo>
+      <largura>60</largura>
+    </filtro3>
+    
+    <filtro4>
+      <tipo>combo</tipo>
+      <sql>
+        select 'TODOS' UNION ALL  select finalizadora from finalizadora
+      </sql>
+      <titulo>Finalizadora</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>finalizadora</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+
+    <filtro6>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 Plu , descricao from mercadoria</sql>
+      <camposFiltros>
+        <campo>plu</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+    </filtro6>
+    <filtro7>
+      <tipo>texto</tipo>
+      <titulo>Cupom</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>cupom</campo>
+      <largura>80</largura>
+    </filtro7>
+    <filtro8>
+      <tipo>texto</tipo>
+      <titulo>Comanda</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>comanda</campo>
+      <largura>80</largura>
+
+    </filtro8>
+    <filtro9>
+      <tipo>COMBO</tipo>
+      <titulo>Cancelados</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>CUPOM</campo>
+        <campo>ITEM</campo>
+        <campo>NAO FINALIZADOS</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>cancelados</campo>
+      
+    </filtro9>
+    <filtro10>
+      <tipo>texto</tipo>
+      <titulo>Ext SAT</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>ext_sat</campo>
+      <largura>80</largura>
+    </filtro10>
+    <filtro11>
+      <tipo>texto</tipo>
+      <titulo>CPF CNPJ</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>cpf</campo>
+      <largura>150</largura>
+    </filtro11>
+
+  </filtros>
+
+  <subtotais>
+    <sub0>
+      <index>6</index>
+      
+    </sub0>
+    <sub1>
+      <index>7</index>
+
+    </sub1>
+    <sub2>
+      <index>8</index>
+
+    </sub2>
+    <sub3>
+      <index>9</index>
+
+    </sub3>
+   
+
+
+
+
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+</Relatorio>

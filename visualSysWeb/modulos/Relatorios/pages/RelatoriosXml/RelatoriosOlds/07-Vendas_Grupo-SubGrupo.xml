@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Grupo - SubGrupo</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_Venda_SubGrupo
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>lista</tipo>
+      <titulo>Grupo</titulo>
+      <valorPadrao/>
+      <campo>Grupo</campo>
+      <sql>Select codigo_Grupo, Descricao_Grupo From Grupo</sql>
+      <filtropai></filtropai>
+      <campofiltro>codigo_grupo</campofiltro>
+    </filtro2>
+    <filtro3>
+      <tipo>lista</tipo>
+      <titulo>SubGrupo</titulo>
+      <sql>select codigo_subgrupo, Descricao_subgrupo from subGrupo</sql>
+      <valorPadrao></valorPadrao>
+      <campo>SubGrupo</campo>
+      <filtropai>2</filtropai>
+      <campofiltro>Codigo_Grupo</campofiltro>
+    </filtro3>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>3</index>
+      <titulo>Vlr</titulo>
+      <campo>Vlr</campo>
+    </sub0>
+    <sub1>
+      <index>4</index>
+      <titulo>Qtde</titulo>
+      <campo>Qtde</campo>
+    </sub1>
+    <sub2>
+      <index>5</index>
+      <titulo>custo</titulo>
+      <campo>custo</campo>
+    </sub2>
+  </subtotais>
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

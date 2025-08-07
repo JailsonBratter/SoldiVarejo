@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Contas a Receber Simplificado</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_REL_CONTAS_A_RECEBER_SIMPLIFICADO
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>emissao</campo>
+        <campo>vencimento</campo>
+        <campo>entrada</campo>
+      </lista>
+      <valorPadrao>emissao</valorPadrao>
+      <campo>tipo</campo>
+      <campofiltro>tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Status</titulo>
+      <lista>
+        <campo>PREVISTO</campo>
+        <campo>ABERTO</campo>
+        <campo>CONCLUIDO</campo>
+        <campo>CANCELADO</campo>
+        
+      </lista>
+      <valorPadrao>PREVISTO</valorPadrao>
+      <campo>Status</campo>
+      <campofiltro>status</campofiltro>
+      <obrigatorio>true</obrigatorio>
+
+    </filtro3>
+   
+  <filtro4>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select TOP 200 Cliente = Nome_Cliente,Codigo=Codigo_Cliente  from (
+         Select  Nome_Cliente,Codigo_Cliente from cliente WITH (INDEX(IX_Cliente_Codigo_Nome))
+         ) as cliente
+       </sql>
+       <camposFiltros>
+         <campo>Nome_Cliente</campo>
+         <campo>Codigo_Cliente</campo>
+
+       </camposFiltros>
+
+       <titulo>Cliente</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>Cliente</campo>
+       <largura>200</largura>
+    </filtro4>
+
+  </filtros>
+  
+  
+  
+  <subtotais>
+
+    <sub0>
+      <index>2</index>
+      <titulo>TotalReceber Geral</titulo>
+      <campo>ValorReceber</campo>
+    </sub0>
+  </subtotais>
+  
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

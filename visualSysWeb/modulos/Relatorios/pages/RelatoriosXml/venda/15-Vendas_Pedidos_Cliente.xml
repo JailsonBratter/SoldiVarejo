@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Pedido Cliente</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Venda_pedido_cliente
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Simples</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>NAO</campo>
+        <campo>SIM</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>simples</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+
+      <tipo>texto</tipo>
+      <titulo>Cod Cliente ou Cnpj/CPF</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>cliente</campo>
+      <campofiltro></campofiltro>
+
+    </filtro3>
+    <filtro4>
+      <tipo>Combo</tipo>
+      <titulo>Vendedor</titulo>
+      <sql>select 'TODOS' UNION ALL select nome from Funcionario</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Vendedor</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>TipoData</titulo>
+      <lista>
+        <campo>ENTREGA</campo>
+        <campo>CADASTRO</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>TipoData</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+    <filtro6>
+
+      <tipo>texto</tipo>
+      <titulo>Grupo Empresa</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>GrupoEmpresa</campo>
+      <campofiltro></campofiltro>
+
+    </filtro6>
+  </filtros>
+
+  <subtotais>
+    <sub0>
+      <index>5</index>
+
+    </sub0>
+    <sub1>
+      <index>6</index>
+
+    </sub1>
+
+  </subtotais>
+  <camposSemformatacao>
+    <campo>1</campo>
+    <campo>3</campo>
+
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+</Relatorio>

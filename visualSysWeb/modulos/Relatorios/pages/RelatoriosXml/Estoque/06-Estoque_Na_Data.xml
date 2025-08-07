@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Estoque Na Data</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_EstoqueNaData
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data</titulo>
+      <valorPadrao></valorPadrao>
+	<campo>Data</campo>
+    </filtro0>
+     <filtro1>
+      <tipo>LISTATEXTO</tipo>
+      <sql>
+        Select Distinct Tipo from Mercadoria
+      </sql>
+      <titulo>Tipo</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>Tipo</campo>
+
+      <obrigatorio>true</obrigatorio>
+    </filtro1>
+  </filtros>
+
+ 
+      
+  <subtotais>
+    <sub0>
+      <index>6</index>
+    </sub0>
+    <sub1>
+      <index>7</index>
+    </sub1>
+    <sub2>
+      <index>8</index>
+    </sub2>
+    <sub3>
+      <index>9</index>
+    </sub3>
+    <sub4>
+      <index>10</index>
+    </sub4>
+   
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

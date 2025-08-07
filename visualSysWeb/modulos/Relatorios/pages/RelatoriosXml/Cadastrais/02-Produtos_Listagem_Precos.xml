@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Produtos Alterados</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_ProdutosAlterados
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Plu ,ean.ean,a.Ref_fornecedor, a.descricao, Ncm= isnull(a.cf,'') from mercadoria  a left join ean on a.plu=ean.plu</sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+        <campo>cf</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>1</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>2</filtro>
+          <campofiltro>5</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Ean</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>100</largura>
+      <campo>ean</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Ncm</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>100</largura>
+      <campo>NCM</campo>
+    </filtro2>
+    <filtro3>
+      <tipo>texto</tipo>
+      <titulo>Ref Fornec</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>100</largura>
+      <campo>REF_FORNECEDOR</campo>
+    </filtro3>
+
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>descricao</campo>
+    </filtro4>
+    <filtro5>
+      <tipo>listafiltro</tipo>
+      <titulo>Grupo</titulo>
+      <sql>select Descricao_Grupo as Descri, Codigo_grupo From Grupo</sql>
+      <valorPadrao/>
+      <sqldetalhe>select descricao from grupo</sqldetalhe>
+      <campo>grupo</campo>
+      <filtropai></filtropai>
+      <campofiltro>codigo_grupo</campofiltro>
+      <camposFiltros>
+        <filtro>Descricao_grupo</filtro>
+        <filtro>codigo_grupo</filtro>
+      </camposFiltros>
+    </filtro5>
+    <filtro6>
+      <tipo>listafiltro</tipo>
+      <titulo>SubGrupo</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>subGrupo</campo>
+      <sql>select distinct Descricao_SubGrupo,codigo_subGrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO</sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>5</filtropai>
+      <campofiltroPai>descricao_grupo</campofiltroPai>
+      <camposFiltros>
+        <filtro>Descricao_SubGrupo</filtro>
+        <filtro>codigo_subGrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+    </filtro6>
+
+    <filtro7>
+      <tipo>listafiltro</tipo>
+      <titulo>Departamento</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>departamento</campo>
+      <sql>select distinct Descricao_Departamento,codigo_Departamento,descricao_subgrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO </sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>6</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>6</filtropai>
+      <campofiltroPai>descricao_subgrupo</campofiltroPai>
+      <camposFiltros>
+        <filtro>Descricao_Departamento</filtro>
+        <filtro>codigo_Departamento</filtro>
+        <filtro>descricao_subgrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+    </filtro7>
+
+    <filtro8>
+      <tipo>listatexto</tipo>
+      <titulo>Familia</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>familia</campo>
+      <largura>200</largura>
+      <sql>select Descricao_familia,Descricao_familia,Codigo_familia from familia</sql>
+
+    </filtro8>
+
+    <filtro9>
+      <tipo>listafiltro</tipo>
+      <titulo>Linha</titulo>
+      <camposFiltros>
+        <campo>descricao_linha</campo>
+        <campo>codigo_linha=</campo>
+      </camposFiltros>
+      <valorPadrao></valorPadrao>
+      <campo>Linha</campo>
+      <largura>100</largura>
+      <sql>select Descricao_Linha,Codigo_linha from linha</sql>
+    </filtro9>
+
+   <filtro10>
+      <tipo>combo</tipo>
+      <titulo>Saldo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>saldo</campo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>Igual a Zero</campo>
+        <campo>Menor que Zero</campo>
+        <campo>Maior que Zero</campo>
+      </lista>
+      <obrigatorio>true</obrigatorio>
+    </filtro10>
+  
+    <filtro11>
+      <tipo>combo</tipo>
+      <titulo>Preco</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>custoMargem</campo>
+      <campofiltro></campofiltro>
+      <lista>
+        <campo>VENDA</campo>
+        <campo>CUSTO-MARGEM-VENDA</campo>
+        <campo>ALTERADOS</campo>
+        <campo>ALTERADOS-CUST-MARG-VENDA</campo>
+        <campo>PROMOCAO</campo>
+        <campo>PRECO-ATACADO</campo>
+      </lista>
+      <obrigatorio>true</obrigatorio>
+    </filtro11>
+    <filtro12>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DataDe</campo>
+    </filtro12>
+    <filtro13>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DataAte</campo>
+      <campofiltro></campofiltro>
+    </filtro13>
+
+
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+    <campo>3</campo>
+
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+
+
+
+</Relatorio>

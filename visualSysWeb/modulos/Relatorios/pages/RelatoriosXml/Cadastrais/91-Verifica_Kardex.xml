@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Verifica Kardex</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+   sp_rel_Verifica_Kardex
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>data</campo>
+    </filtro0>
+    
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

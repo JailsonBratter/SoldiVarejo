@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Manutenção</nome>
+  <versao>1.0</versao>
+  <atualizado>27/10/2014</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+  
+    <_1>OutrasMovimentacoes</_1>
+  </ordem>
+  
+  <OutrasMovimentacoes>
+    <nome>Outras Movimentações</nome>
+    <codigo>MA001</codigo>
+    <page>OutrasMovimentacoes.aspx</page>
+    <imgMenu></imgMenu>
+    <img>OutrasMovimentacoes.png</img>
+    <inicial>true</inicial>
+  </OutrasMovimentacoes>
+</mconfig>

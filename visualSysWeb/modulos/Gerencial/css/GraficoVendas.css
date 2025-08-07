@@ -1,0 +1,47 @@
+﻿.ct-series-b .ct-bar, .ct-series-b .ct-line, .ct-series-b .ct-point, .ct-series-b .ct-slice-donut {
+    stroke: #F08080;
+}
+
+.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+    stroke: #4169E1;
+}
+
+.grid {
+    width: 100%;
+}
+
+.ct-chart {
+    margin-top: 0;
+    padding: 0;
+    border: solid;
+    max-height: 340px;
+}
+
+.ln {
+    margin-bottom: 30px;
+}
+
+.lista {
+    font-size: 50px;
+    border: solid;
+}
+
+
+.ct-horizontal {
+    transform: rotate(90deg);
+    padding: 0;
+    margin-left: -20px;
+    margin-top: 20px;
+    font-size: 10px;
+}
+
+.frame table {
+    width: 50%;
+    font-size: 20px;
+}
+
+
+    .frame table input[type=checkbox] {
+        -webkit-transform: scale(1.5); /* Safari and Chrome */
+        margin-left :5px;
+    }

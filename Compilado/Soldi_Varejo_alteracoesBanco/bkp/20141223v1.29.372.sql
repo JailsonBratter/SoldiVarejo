@@ -1,0 +1,1 @@
+alter table  nf_item alter column NCM varchar(30)

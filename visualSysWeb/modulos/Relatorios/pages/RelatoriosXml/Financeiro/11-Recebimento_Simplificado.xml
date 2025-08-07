@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Consulta Posicao de Cliente</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_fin_Receb_SIMPLIFICADO
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>emissao</campo>
+        <campo>vencimento</campo>
+        <campo>entrada</campo>
+      </lista>
+      <valorPadrao>emissao</valorPadrao>
+      <campo>tipo</campo>
+      <campofiltro>tipo</campofiltro>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Status</titulo>
+      <lista>
+        <campo>PREVISTO</campo>
+        <campo>ABERTO</campo>
+        <campo>CONCLUIDO</campo>
+        <campo>CANCELADO</campo>
+        <campo>LANCADO</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>Status</campo>
+      <campofiltro>status</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>Valor</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>valor</campo>
+      <largura>100</largura>
+    </filtro4>
+
+     <filtro5>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select TOP 200 Cliente=Codigo_Cliente,Nome_Cliente  from (
+         Select Codigo_Cliente,Nome_Cliente from cliente WITH (INDEX(IX_Cliente_Codigo_Nome)) 
+         ) as fornec_cliente
+       </sql>
+       <camposFiltros>
+         <campo>Codigo_Cliente</campo>
+         <campo>Nome_Cliente</campo>
+
+       </camposFiltros>
+
+       <titulo>Cliente</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>Codigo_Cliente</campo>
+       <largura>200</largura>
+    </filtro5>
+
+    <filtro6>
+      <tipo>listafiltro</tipo>
+      <titulo>Centro de Custo</titulo>
+      <sql>select rtrim(ltrim(codigo_centro_custo)) as codigo, rtrim(ltrim(DESCRICAO_CENTRO_CUSTO)) as CENTRO_CUSTO from CENTRO_CUSTO</sql>
+      <valorPadrao></valorPadrao>
+      <campo>centrocusto</campo>
+      <camposFiltros>
+        <campo>codigo_centro_custo</campo>
+        <campo>Descricao_centro_custo</campo>
+      </camposFiltros>
+    </filtro6>
+    <filtro7>
+      <tipo>listafiltro</tipo>
+      <titulo>Tipo Recebimento</titulo>
+      <sql>select Distinct 
+	          Case when rtrim(ltrim(tipo_pagamento)) like '%Carteira%' Then 'CARTEIRA' when rtrim(ltrim(tipo_pagamento)) like '%Cheque%' Then 'CHEQUE' when rtrim(ltrim(tipo_pagamento)) like '%Cartao%' Then 'CARTAO' when rtrim(ltrim(tipo_pagamento)) like '%Boleto%' Then 'BOLETO' Else rtrim(ltrim(tipo_pagamento)) End Tipo_Pagamento
+ 	          from Tipo_Pagamento Group by tipo_pagamento </sql>
+      <valorPadrao></valorPadrao>
+      <campo>TipoRec</campo>
+    </filtro7>
+    <filtro8>
+      <tipo>combo</tipo>
+      <titulo>Modalidade</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>AVISTA</campo>
+        <campo>PRAZO</campo>
+      </lista>
+      <valorPadrao>PRAZO</valorPadrao>
+      <campo>AVista</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro8>
+    
+    <filtro9>
+      <tipo>combo</tipo>
+      <titulo>Simples</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>NAO</campo>
+        <campo>SIM</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>simples</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro9>
+
+   </filtros>
+
+   <grupoTotais>
+
+  <totalCampos>4</totalCampos>
+   <agrupar>Simples</agrupar><!-- campo que vai ser agrupado, se for colocado filtro o valor do filtro vai se considerado o campo agrupado-->
+    <somar0>
+      <campo>VlrReceber</campo>
+      <posicao>2</posicao>
+    </somar0> <!-- Valor a ser Somado-->
+
+  <totalCampos>4</totalCampos>
+   <agrupar>Simples</agrupar><!-- campo que vai ser agrupado, se for colocado filtro o valor do filtro vai se considerado o campo agrupado-->
+    <somar1>
+      <campo>VlrAberto</campo>
+      <posicao>3</posicao>
+    </somar1> <!-- Valor a ser Somado-->
+
+    
+  </grupoTotais>
+
+
+  <subtotais>
+
+    <sub0>
+      <index>2</index>
+      <titulo>Total Receber Geral</titulo>
+      <campo>VlrReceber</campo>
+    </sub0>
+    <sub1>
+      <index>3</index>
+      <titulo>Vlr Aberto</titulo>
+      <campo>VlrAberto</campo>
+    </sub1>
+  </subtotais>
+  
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

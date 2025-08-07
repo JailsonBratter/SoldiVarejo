@@ -1,0 +1,1 @@
+alter table filial add inibe_marcacao_familia tinyint

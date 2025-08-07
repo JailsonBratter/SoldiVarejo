@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Fornecedor</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    select [CODIGO LINHA]=LINHA.codigo_linha,[DESCRICAO LINHA]=DESCRICAO_LINHA,[CODIGO COR]=CODIGO_COR,[DESCRICAO COR]=DESCRICAO_COR from cor_linha inner join linha on cor_linha.codigo_linha=linha.codigo_linha
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Linha</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>linha.codigo_linha</campo>
+      <largura>50</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DESCRICAO_LINHA</campo>
+      <largura>200</largura>
+
+    </filtro1>
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Cor</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>CODIGO_COR</campo>
+      <largura>50</largura>
+
+    </filtro2>
+    <filtro3>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DESCRICAO_COR</campo>
+      <largura>200</largura>
+
+    </filtro3>
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>2</campo>
+    
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

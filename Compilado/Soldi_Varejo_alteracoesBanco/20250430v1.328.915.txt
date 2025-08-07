@@ -1,0 +1,128 @@
+GO
+ALTER TABLE Usuarios_WEB ADD Grupo_Clientes VARCHAR(20)
+GO
+Alter table Pedido ADD Historico TEXT
+GO
+/****** Object:  StoredProcedure [dbo].[sp_rel_extrato_a_pagar]    Script Date: 10/22/2024 09:54:38 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--PROCEDURES =======================================================================================
+ALTER procedure [dbo].[sp_rel_extrato_a_pagar](
+	@filial		varchar(20),
+	@datade		varchar(8),
+	@dataate	varchar(8),
+	@fornecedor	varchar(250),
+	@valor		VARCHAR(11), 
+	@status	   varchar(10),
+	@tipo  varchar(20)
+
+)As
+
+Declare @String as nvarchar(2000)
+Declare @Where as nvarchar(2000)
+
+
+Begin
+	--Monta Clausula Where da Procura
+	set @where = 'Where Conta_a_pagar.Filial = '+ char(39) + @filial + char(39) + ' and '
+	set @where = @where +' vencimento between ' + char(39) + @datade + char(39) + ' and ' + char(39) + @dataate + char(39)
+	--Verifica se o Parametro @fornecedor tem conteudo
+	if len(rtrim(ltrim(@Fornecedor))) > 1
+		Begin
+			set @where = @where + ' And Conta_a_pagar.fornecedor = ' + char(39) +@fornecedor +char(39) 
+		End
+	--Monta Select
+	if len(rtrim(ltrim(@valor))) > 1
+	Begin
+		set @where = @where + ' And valor ='+REPLACE(@valor,',','.')	
+	End
+	
+	
+	set @Where = @Where + ' and '+ (CASE WHEN @STATUS='ABERTO' THEN ' status =1'
+											 WHEN @STATUS='CONCLUIDO' THEN ' status =2'
+											 WHEN @STATUS='CANCELADO' THEN ' status =3'
+											 WHEN @STATUS='LANCADO' THEN ' status =4'
+										ELSE 'status <> 3' END
+																) 
+	
+	
+	--Fornecedor.CNPJ ,
+	
+	set @string = 'select 
+			
+			convert(varchar ,vencimento,103) as  Vencimento, 
+			Dia_da_Semana = case 
+									when datepart(dw, vencimento) = 2 then '+ char(39) +'Segunda'+ char(39) +'
+									when datepart(dw, vencimento) = 3 then '+ char(39) +'Terça'+ char(39) +'
+									when datepart(dw, vencimento) = 4 then '+ char(39) +'Quarta'+ char(39) +'
+									when datepart(dw, vencimento) = 5 then '+ char(39) +'Quinta'+ char(39) +'
+									when datepart(dw, vencimento) = 6 then '+ char(39) +'Sexta'+ char(39) +'
+									when datepart(dw, vencimento) = 7 then '+ char(39) +'Sabado'+ char(39) +'
+									Else '+ char(39) +'Domingo'+ char(39) +' end,
+			Documento = rtrim(ltrim(documento)), 
+			Fornecedor = rtrim(ltrim(conta_a_pagar.Fornecedor)) , 
+			
+			[Valor] = Isnull(Valor,0) - Isnull(Desconto,0) + Isnull(Acrescimo,0)
+		
+		from dbo.Conta_a_pagar Conta_a_pagar  LEFT OUTER JOIN dbo.Conta_Corrente Conta_corrente  ON  Conta_a_pagar.id_cc = Conta_corrente.id_cc and conta_a_pagar.filial=Conta_corrente.filial  LEFT OUTER JOIN dbo.Centro_Custo Centro_custo  ON  Conta_a_pagar.Codigo_Centro_Custo = Centro_custo.Codigo_centro_custo AND  Conta_a_pagar.Filial = Centro_custo.filial
+			left outer join Fornecedor on Conta_a_pagar.Fornecedor = Fornecedor.Fornecedor
+		'+@where+'  Order By convert(varchar ,vencimento,102) '
+		
+	
+	--Print @string
+	Exec(@string)
+End
+GO
+--PROCEDURES =======================================================================================
+ALTER PROCEDURE [dbo].[sp_Rel_Venda_pedido_cliente] 
+		@FILIAL 	AS VARCHAR(17),
+		@DataDe		As Varchar(8),
+		@DataAte	As Varchar(8),
+		@cliente   as varchar(40),
+		@simples	as varchar(5),
+		@vendedor   as varchar(30),
+		@grupoempresa as varchar(20)
+		
+    	as
+			-- exec sp_Rel_Venda_pedido_cliente 'MATRIZ','20141201','20141220','',''
+		if @grupoempresa = ''
+			begin
+				SET @grupoempresa = 'TODOS'
+			end
+
+		Select 
+			Simples = case when Pedido.pedido_simples=1 then 'SIM'ELSE 'NAO' END ,
+			Pedido,
+			convert(varchar,pedido.Data_cadastro,103) Data, 
+			Cliente_Fornec Cod,
+			cliente.Nome_Cliente,
+			[Total Venda]=ROUND(Total,2), 
+			ISNULL(Pedido.funcionario, '') As Vendedor 
+		 From pedido inner join cliente on pedido.Cliente_Fornec= cliente.Codigo_Cliente 
+		 Where  
+			CONVERT(VARCHAR, Pedido.pedido_simples) LIKE case when @simples='SIM' THEN  '1' ELSE case when @simples='NAO' THEN '0' ELSE '%' END END
+		  and 
+			pedido.Data_cadastro between @DataDe and @DataAte
+		  AND 
+			Pedido.Tipo =1 
+		  AND 
+			Pedido.Status in (1,2)
+          And 
+			(len(@cliente) =0 or  (Cliente.Codigo_Cliente = @cliente OR  replace(replace(replace(CLIENTE.CNPJ,'.',''),'-',''),'/','')  = replace(replace(replace(@cliente,'.',''),'-',''),'/',''))) 
+		and 
+			(@vendedor ='TODOS' OR Pedido.funcionario =@vendedor)
+		and 
+			(@grupoempresa = 'TODOS' OR Cliente.grupo_empresa IN(@grupoempresa))
+				 
+
+
+go
+
+Alter Table Saida_Estoque ADD Codigo_Promocao int, Promocao_Por_Pagamento tinyint
+Alter table Documento_Eletronico ADD Flag_Envio_ScannTech Tinyint 
+
+go
+
+alter table Fornecedor ADD CRT int 

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas por Jornada de Trabalho</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Vendas_Jornada
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>LISTATEXTO</tipo>
+      <sql>
+        Select Filial  from filial where isnull(ativa,1) = 1 order by loja
+      </sql>
+      <titulo>Filial</titulo>
+      <tituloChines>Filial</tituloChines>
+      <valorPadrao></valorPadrao>
+      <campo>Filial</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro1>
+    <filtro2>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>      
+      <campofiltro></campofiltro>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Jornada</titulo>
+      <lista>
+        <campo>06:00 - 13:59:59</campo>
+        <campo>14:00 - 21:59:59</campo>
+        <campo>22:00 - 05:59:59</campo>
+      </lista>
+      <campo>Jornada</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>Descartar Minutos</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DescarteMinutosPrimeiraHora</campo> 
+    </filtro4>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>1</index>
+    </sub0>
+    <sub1>
+      <index>2</index>
+    </sub1>
+    <sub2>
+      <index>3</index>
+    </sub2>
+    <sub3>
+      <index>4</index>
+    </sub3>
+    <sub4>
+      <index>5</index>
+    </sub4>
+    <sub5>
+      <index>6</index>
+    </sub5>
+    <sub6>
+      <index>7</index>
+    </sub6>
+    <sub7>
+      <index>8</index>
+    </sub7>
+    <sub8>
+      <index>9</index>
+    </sub8>
+    <sub9>
+      <index>10</index>
+    </sub9>
+    <sub10>
+      <index>11</index>
+    </sub10>
+    <sub11>
+      <index>12</index>
+    </sub11>
+    <sub12>
+      <index>13</index>
+    </sub12>
+    <sub13>
+      <index>14</index>
+    </sub13>
+    <sub14>
+      <index>15</index>
+    </sub14>
+    <sub15>
+      <index>16</index>
+    </sub15>
+    <sub16>
+      <index>17</index>
+    </sub16>
+    <sub17>
+      <index>18</index>
+    </sub17>
+    <sub18>
+      <index>19</index>
+    </sub18>
+    <sub19>
+      <index>20</index>
+    </sub19>
+    <sub20>
+      <index>21</index>
+    </sub20>
+    <sub21>
+      <index>22</index>
+    </sub21>
+    <sub22>
+      <index>23</index>
+    </sub22>
+    <sub23>
+      <index>24</index>
+    </sub23>
+    <sub24>
+      <index>25</index>
+    </sub24>
+  </subtotais>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

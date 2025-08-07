@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Cotacao</nome>
+  <versao>1.0</versao>
+  <atualizado>31/07/2015</atualizado>
+  <inicial>true</inicial>
+    
+  <ordem>
+    <_1>cotacao</_1>
+    <_1>digitacao</_1>
+
+  </ordem>
+
+
+  <cotacao>
+    <nome>Cotação</nome>
+    <codigo>CT001</codigo>
+    <page>Clientes.aspx</page>
+    <imgMenu></imgMenu>
+    <img>clientes.png</img>
+    <inicial>true</inicial>
+  </cotacao>
+  
+  <digitacao>
+    <nome>Fornecedores</nome>
+    <codigo>CT002</codigo>
+    <page>Fornecedor.aspx</page>
+    <imgMenu></imgMenu>
+    <img>fornecedor.jpg</img>
+    <inicial>true</inicial>
+  </digitacao>
+
+
+</mconfig>

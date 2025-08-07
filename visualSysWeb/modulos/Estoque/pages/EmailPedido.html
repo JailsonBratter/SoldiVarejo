@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Pedido Compra</title>
+    <style type="text/css">
+        table
+        {
+            border-style:solid; border-width:1px; border-collapse: collapse; 
+        }
+        th
+        {
+            border-style:solid; border-width:1px; border-collapse: collapse; 
+        }
+        td
+        {
+            border-style:solid; border-width:1px; border-collapse: collapse; 
+        }
+    </style>
+</head>
+
+<body>
+    <h3>
+        PEDIDO DE COMPRA</h3>
+    <hr />
+    <b><|RazaoSocial|></b><br />
+    <b>CNPJ :</b><|cnpj|> &nbsp;&nbsp; <b>IE :</b><|Ie|><br />
+    <b>Endereço :</b> <|endereco|>, <|numero|> <|complemento|> <b>CEP :</b><|cep|><br />
+    <b>Bairro :</b> <|bairro|> <b>Cidade :</b><|cidade|>  <b>Estado :</b><|uf|>  <br />
+    <b>Telefone :</b> <|Telefone|> 
+    <hr />
+    <h3>FORNECEDOR</h3>
+     <b>Razão Social :</b><|FornecedorRazaoSocial|><br />
+     <b>CNPJ :</b><|fornecedorcnpj|> &nbsp;&nbsp; <b>IE :</b><|fornecedorIe|>   <br />
+    <b>Endereço :</b> <|Fornecedorendereco|>, <|Fornecedornumero|> <|Fornecedorcomplemento|> <b>CEP :</b><|Fornecedorcep|><br />
+    <b>Bairro :</b> <|Fornecedorbairro|> <b>Cidade :</b><|Fornecedorcidade|>  <b>Estado :</b><|Fornecedoruf|>  <br />
+    
+
+    <hr />
+    <h3>PEDIDO</h3>
+    <br /><b>Numero Pedido :</b><|NumeroPedido|>&nbsp;&nbsp; <b>Data :</b><|Data|>&nbsp;&nbsp;&nbsp; <b>Total :</b><|Total|>
+    <br />
+    <hr />
+    <h3>
+        ITENS</h3>
+    <hr />
+    <table style="width:100%; ">
+        <tr>
+            <th style="text-align:left;">
+                PLU
+            </th>
+            
+            <th style="text-align:left;  ">
+                EAN
+            </th>
+            
+            <th style="text-align:left;">
+                COD FORNEC
+            </th>
+            <th style="text-align:left;" >
+                DESCRICAO
+            </th>
+            <th style="text-align:right;">
+                QTDE
+            </th>
+            <th style="text-align:right;">
+                EMBALAGEM
+            </th>
+            <th style="text-align:right;">
+                PREÇO
+            </th>
+            <th style="text-align:right;">
+                TOTAL
+            </th>
+        </tr>
+        <|ITENS|>
+    </table>
+    <hr />
+    <h3>INFORMAÇÕES DE PAGAMENTO</h3>
+    <hr />
+    <table style="width:100%;">
+        <tr>
+            <th style="text-align:left;  ">TIPO PAGAMENTO</th>
+            <th style="text-align:right;  ">VALOR</th>
+        </tr>
+        <|PAGAMENTOS|>
+    </table>
+
+</body>
+</html>

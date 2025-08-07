@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Analise de Vendas por Mes</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_Resumo_Vendas_Mes
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+      <soMesAno>true</soMesAno>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+      <soMesAno>true</soMesAno>
+    </filtro1>
+    <filtro2>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Plu ,a.Ref_fornecedor, a.descricao from mercadoria  a left join ean on a.plu=ean.plu</sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <preencher>
+
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+      </preencher>
+
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>60</largura>
+    </filtro2>
+
+    <filtro3>
+      <tipo>texto</tipo>
+     
+      <titulo>Descrição</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>descricao</campo>
+      <largura>180</largura>
+      <habilitado>false</habilitado> 
+    </filtro3>
+
+
+    <filtro4>
+      <tipo>listafiltro</tipo>
+      <titulo>Grupo</titulo>
+      <sql>select Descricao_Grupo as Descri, Codigo_grupo From Grupo</sql>
+      <valorPadrao/>
+      <sqldetalhe>select descricao from grupo</sqldetalhe>
+      <campo>grupo</campo>
+      <filtropai></filtropai>
+      <campofiltro>codigo_grupo</campofiltro>
+      <camposFiltros>
+        <filtro>Descricao_grupo</filtro>
+        <filtro>codigo_grupo</filtro>
+      </camposFiltros>
+      <largura>150</largura>
+
+    </filtro4>
+
+
+    <filtro5>
+      <tipo>listafiltro</tipo>
+      <titulo>SubGrupo</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>150</largura>
+      <campo>subGrupo</campo>
+      <sql>select distinct Descricao_SubGrupo,codigo_subGrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO</sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>4</filtropai>
+      <campofiltroPai>descricao_grupo</campofiltroPai>
+      <camposFiltros>
+        <filtro>Descricao_SubGrupo</filtro>
+        <filtro>codigo_subGrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+    </filtro5>
+
+    <filtro6>
+      <tipo>listafiltro</tipo>
+      <titulo>Departamento</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>150</largura>
+      <campo>departamento</campo>
+      <sql>select distinct Descricao_Departamento,codigo_Departamento,descricao_subgrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO </sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>5</filtropai>
+      <campofiltroPai>descricao_subgrupo</campofiltroPai>
+      <camposFiltros>
+        <filtro>Descricao_Departamento</filtro>
+        <filtro>codigo_Departamento</filtro>
+        <filtro>descricao_subgrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+
+    </filtro6>
+    <filtro7>
+      <tipo>combo</tipo>
+      <titulo>Incluir</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>CUPOM</campo>
+        <campo>NOTA SAIDA</campo>
+      </lista>
+      <campo>relatorio</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro7>
+    
+  </filtros>
+  <subtotais>
+    
+  </subtotais>
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

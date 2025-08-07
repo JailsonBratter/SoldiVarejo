@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Verifica Tabelas Mercadoria Com Inventario</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_br_Verifica_Tabelas_Mercadoria_Inventario
+  </sql>
+  
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>PLU</titulo>
+      <lista>
+        <campo></campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <largura>120</largura>
+      <campo>PLU</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro0>
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>CODIGO INVENTARIO</titulo>
+      <lista>
+        <campo></campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <largura>120</largura>
+      <campo>CodigoInventario</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro1>
+    <filtro2>
+      <tipo>COMBO</tipo>
+      <titulo>TIPO DE DADOS</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>NEGATIVOS E DIVERGENTES</campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <largura>220</largura>
+      <campo>TIPO</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>5</index>
+    </sub0>
+    <sub1>
+      <index>6</index>
+    </sub1>
+    <sub2>
+      <index>7</index>
+    </sub2>
+    <sub3>
+      <index>8</index>
+    </sub3>
+    <sub4>
+      <index>9</index>
+    </sub4>
+    <sub5>
+      <index>10</index>
+    </sub5>
+    <sub6>
+      <index>11</index>
+    </sub6>
+    <sub7>
+      <index>12</index>
+    </sub7>
+
+   
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+    <campo>3</campo>
+    <campo>4</campo>
+  </camposSemformatacao>
+
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

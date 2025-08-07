@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Resumo  de Vendas Por Grupo</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_VENDAS_POR_GRUPO
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>lista</tipo>
+      <titulo>Grupo</titulo>
+      <sql>select Descricao_Grupo From Grupo</sql>
+      <valorPadrao/>
+      <sqldetalhe>select descricao from grupo</sqldetalhe>
+      <campo>Grupo</campo>
+      <filtropai></filtropai>
+      <camposFiltros>
+        <campo>codigo_grupo</campo>
+        <campo>Descricao_grupo</campo>
+      </camposFiltros>
+    </filtro2>
+     <filtro3>
+      <tipo>lista</tipo>
+      <titulo>SubGrupo</titulo>
+      <sql>select Descricao_SubGrupo,Descricao_Grupo From SubGrupo
+              inner join grupo on subgrupo.Codigo_Grupo = grupo.Codigo_Grupo</sql>
+      <valorPadrao/>
+      <campo>SubGrupo</campo>
+      <filtropai>2</filtropai>
+      <campofiltroPai>grupo.descricao_grupo</campofiltroPai>
+      <camposFiltros>
+        <campo>codigo_subgrupo</campo>
+        <campo>Descricao_subgrupo</campo>
+      </camposFiltros>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>Incluir</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>CUPOM</campo>
+        <campo>NOTA SAIDA</campo>
+      </lista>
+      <campo>relatorio</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+
+  </filtros>
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

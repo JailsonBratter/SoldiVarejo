@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Por Vendedor</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Vendedor
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>Combo</tipo>
+      <titulo>Vendedor</titulo>
+      <sql>select 'TODOS' UNION ALL select nome from Funcionario</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Vendedor</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>ANALITICO</campo>
+        <campo>SINTETICO</campo>
+      </lista>
+      <valorPadrao>ANALITICO</valorPadrao>
+      <campo>Tipo</campo>
+      <campofiltro>Tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+
+  </filtros>
+
+  <subtotais>
+    
+    <sub0>
+      <index>4</index>
+    </sub0>
+    <sub1>
+      <index>5</index>
+    </sub1>
+    <sub2>
+      <index>6</index>
+    </sub2>
+    <sub3>
+      <index>7</index>
+    </sub3>
+    <sub4>
+      <index>9</index>
+    </sub4>
+    <sub5>
+      <index>10</index>
+    </sub5>
+
+
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

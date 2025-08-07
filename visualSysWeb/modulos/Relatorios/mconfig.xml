@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Relatórios</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>venda</_1>
+	  <_1>financeiro</_1>
+    <_1>fiscal</_1>
+    <_1>estoque</_1>
+    <_1>cadastrais</_1>
+    <_1>comanda</_1>
+  </ordem>
+  <_1>gerencial</_1>
+
+
+
+
+
+  <cadastrais>
+    <nome>Cadastrais</nome>
+    <codigo>R001</codigo>
+    <page>Relatorios.aspx?relatorio=cadastrais</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </cadastrais>
+
+  <venda>
+    <nome>Vendas</nome>
+    <codigo>R002</codigo>
+    <page>Relatorios.aspx?relatorio=venda</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </venda>
+  
+   <financeiro>
+    <nome>Financeiro</nome>
+    <codigo>R003</codigo>
+    <page>Relatorios.aspx?relatorio=financeiro</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </financeiro>
+
+
+  <fiscal>
+    <nome>Fiscal</nome>
+    <codigo>R004</codigo>
+    <page>Relatorios.aspx?relatorio=Fiscal</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </fiscal>
+  
+  <estoque>
+    <nome>Estoque</nome>
+    <codigo>R005</codigo>
+    <page>Relatorios.aspx?relatorio=estoque</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </estoque>
+
+  <gerencial>
+    <nome>Gerencial</nome>
+    <codigo>R006</codigo>
+    <page>RelatoriosGraficos.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Grafico.jpg</img>
+    <inicial>true</inicial>
+  </gerencial>
+
+  <comanda>
+    <nome>Comanda</nome>
+    <codigo>R007</codigo>
+    <page>Relatorios.aspx?relatorio=Comanda</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </comanda>
+
+</mconfig>

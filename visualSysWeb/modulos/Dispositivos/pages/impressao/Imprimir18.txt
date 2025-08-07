@@ -1,0 +1,1 @@
+0|PLU|EAN|DESCRICAO|preco|preco_promocao|qtd|

@@ -1,0 +1,11 @@
+﻿ultima alteração na data 04/03/2016
+para colocar uma palavra em negrito dentro do texto de um relatorio deve se colocar a palavra entre
+os caracteres '|-' e '-|'
+
+para pular uma linha incluir no texto os caracteres '||'.
+
+sempre que aparece a palavra Total em uma linha da Grid do relatorio essa linha será considerada como um subTotal então será formatada
+em negrito
+
+
+Quando os caracteres "SFT_" ou "PLU" estiverem no texto do relatorio o campo não terá formatação

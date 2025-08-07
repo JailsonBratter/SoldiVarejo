@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Demonstrativo Financeiro</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_balanceteFinanceiro
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>Emissao</campo>
+        <campo>Vencimento</campo>
+        <campo>Entrada</campo>
+      </lista>
+      <!-- <sql>select 'emissao' as tipo, 'emissao' union all select 'vencimento', 'vencimento' union all select 'entrada', 'entrada'</sql> -->
+      <valorPadrao>emissao</valorPadrao>
+      <campo>tipo</campo>
+      <campofiltro>tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Status</titulo>
+      <lista>
+        <campo>PREVISTO</campo>
+        <campo>ABERTO</campo>
+        <campo>CONCLUIDO</campo>
+        <campo>CANCELADO</campo>
+      </lista>
+      <valorPadrao>PREVISTO</valorPadrao>
+      <campo>Status</campo>
+      <campofiltro>status</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>ANALITICO</campo>
+        <campo>SINTETICO</campo>
+        <campo>CONSOLIDADO MES</campo>
+      </lista>
+      <valorPadrao>SINTETICO</valorPadrao>
+      <campo>Visualizar</campo>
+      <campofiltro>Visualizar</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>Modalidade</titulo>
+      <lista>
+        <campo>RECEITAS</campo>
+        <campo>DESPESAS</campo>
+        <campo>TODOS</campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>Modalidade</campo>
+      <campofiltro>Modalidade</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+    <filtro6>
+      <tipo>listafiltro</tipo>
+      <titulo>Centro de Custo</titulo>
+      <sql>select rtrim(ltrim(codigo_centro_custo)) as codigo, rtrim(ltrim(DESCRICAO_CENTRO_CUSTO)) as CENTRO_CUSTO from CENTRO_CUSTO</sql>
+      <valorPadrao></valorPadrao>
+      <campo>centrocusto</campo>
+      <camposFiltros>
+        <campo>codigo_centro_custo</campo>
+        <campo>Descricao_centro_custo</campo>
+      </camposFiltros>
+    </filtro6>
+  </filtros>
+
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+
+
+
+</Relatorio>

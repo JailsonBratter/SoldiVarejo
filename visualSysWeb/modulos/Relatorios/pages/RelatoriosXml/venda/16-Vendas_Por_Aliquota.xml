@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Por Aliquota</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_VENDAS_POR_ALIQUOTA
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    
+
+  </filtros>
+
+  <subtotais>
+    <sub0>
+      <index>1</index>
+    </sub0>
+    <sub1>
+      <index>2</index>
+    </sub1>
+    <sub2>
+      <index>3</index>
+    </sub2>
+    <sub3>
+      <index>4</index>
+    </sub3>
+    <sub4>
+      <index>5</index>
+    </sub4>
+    <sub5>
+      <index>6</index>
+    </sub5>
+    <sub6>
+      <index>7</index>
+    </sub6>
+    <sub7>
+      <index>8</index>
+    </sub7>
+    <sub8>
+      <index>9</index>
+    </sub8>
+
+    <sub9>
+      <index>10</index>
+    </sub9>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

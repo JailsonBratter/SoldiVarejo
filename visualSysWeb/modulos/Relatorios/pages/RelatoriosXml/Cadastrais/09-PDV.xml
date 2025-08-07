@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Fornecedor</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    select Caixa AS PDV,MODELO, [NUMERO DE SERIE]=FabEqu , [DIRETORIO CARGA]= Diretorio_Carga From Controle_Filial_PDV
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Pdv</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>caixa</campo>
+      <largura>50</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Numero de Serie</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>FabEqu</campo>
+      <largura>150</largura>
+    </filtro1>
+
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Modelo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>MODELO</campo>
+      <largura>100</largura>
+    </filtro2>
+
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+    
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

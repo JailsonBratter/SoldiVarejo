@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Sped</nome>
+  <versao>1.0</versao>
+  <atualizado>-1/07/2016</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>EfdPisCofins</_1>
+    <_1>EfdIcmsIpi</_1>
+    <_1>RegistrosFiscais</_1>
+    <_1>PlanoDeContas</_1>
+    <_1>DocumentosEletronicos</_1>
+    <_1>FechamentoEstoque</_1>
+    <_1>DocEletronicosAuditor</_1>
+
+  </ordem>
+
+  <_1>CadastroBloco</_1>
+  
+  <EfdPisCofins>
+    <nome>PIS-COFINS</nome>
+    <codigo>SPED001</codigo>
+    <page>PisCofins.aspx</page>
+    <imgMenu></imgMenu>
+    <img>sped.png</img>
+    <inicial>true</inicial>
+  </EfdPisCofins>
+
+  <EfdIcmsIpi>
+    <nome>ICMS-IPI</nome>
+    <codigo>SPED002</codigo>
+    <page>IcmsIpi.aspx</page>
+    <imgMenu></imgMenu>
+    <img>sped.png</img>
+    <inicial>true</inicial>
+  </EfdIcmsIpi>
+  
+  <CadastroBloco>
+    <nome>Cadastro Bloco</nome>
+    <codigo>SPED003</codigo>
+    <page>CadastroBloco.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </CadastroBloco>
+
+
+  <RegistrosFiscais>
+    <nome>Registros Fiscais</nome>
+    <codigo>SPED004</codigo>
+    <page>RegistrosFiscais.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </RegistrosFiscais>
+  <PlanoDeContas>
+    <nome>Contas Contábeis</nome>
+    <codigo>SPED005</codigo>
+    <page>ContasContabeis.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </PlanoDeContas>
+  <DocumentosEletronicos>
+    <nome>Documentos Eletronicos</nome>
+    <codigo>SPED006</codigo>
+    <page>DocumentosEletronicos.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </DocumentosEletronicos>
+  <FechamentoEstoque>
+    <nome>Fechamento do Estoque</nome>
+    <codigo>SPED007</codigo>
+    <page>FechamentoEstoque.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </FechamentoEstoque>
+  <DocEletronicosAuditor>
+    <nome>Auditor Documentos Eletronicos</nome>
+    <codigo>SPED008</codigo>
+    <page>DocEletronicosAuditor.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </DocEletronicosAuditor>
+</mconfig>

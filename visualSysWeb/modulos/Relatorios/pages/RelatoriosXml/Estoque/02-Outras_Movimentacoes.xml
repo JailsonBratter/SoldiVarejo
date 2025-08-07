@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Outras Movimentacoes</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Outras_Movimentacoes
+  </sql>
+  <filtros>
+
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataAte</campo>
+    </filtro1>
+
+    <filtro2>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Plu ,ean.ean,a.Ref_fornecedor, a.descricao from mercadoria  a left join ean on a.plu=ean.plu</sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+    </filtro2>
+
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 Ean, a.Plu ,a.Ref_fornecedor, a.descricao from mercadoria a left join ean on a.plu=ean.plu  </sql>
+      <camposFiltros>
+        <campo>ean</campo>
+        <campo>a.plu</campo>
+        <campo>a.descricao</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>2</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <titulo>EAN</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>ean</campo>
+      <largura>100</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Ref_fornecedor, a.Plu ,Ean, a.descricao from mercadoria a left join ean on a.plu=ean.plu  </sql>
+      <camposFiltros>
+        <campo>Ref_fornecedor</campo>
+        <campo>a.plu</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>2</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <titulo>Referencia</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Ref</campo>
+      <largura>80</largura>
+
+    </filtro4>
+
+    <filtro5>
+      <tipo>TEXTO</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>descricao</campo>
+      <largura>250</largura>
+    </filtro5>
+
+
+    <filtro6>
+      <tipo>combo</tipo>
+      <sql> SELECT 'TODOS' UNION ALL select distinct Movimentacao from Tipo_Movimentacao </sql>
+      <titulo>Movimentacao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Movimentacao</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro6>
+    <filtro7>
+      <tipo>combo</tipo>
+      <titulo>Por</titulo>
+      <valorPadrao></valorPadrao>
+      <lista>
+        <campo>PRODUTO</campo>
+        <campo>MOVIMENTACAO</campo>        
+      </lista>
+      <campo>tipo</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro7>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>4</index>
+    </sub0>
+    <sub1>
+      <index>6</index>
+    </sub1>
+    <sub2>
+      <index>8</index>
+    </sub2>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+   
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+
+
+
+</Relatorio>

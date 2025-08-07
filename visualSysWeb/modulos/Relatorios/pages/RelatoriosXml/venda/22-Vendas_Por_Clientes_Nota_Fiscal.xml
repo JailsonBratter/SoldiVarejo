@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Por Cliente Nota Fiscal</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Cliente_nf
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>listafiltro</tipo>
+      <titulo>Grupo</titulo>
+      <sql>select ID,Grupo From Cliente_Grupo</sql>
+      <valorPadrao/>
+      <camposFiltros>
+        <campo>ID</campo>
+        <campo>Grupo</campo>
+      </camposFiltros>
+      <campo>Id</campo>
+    </filtro2>
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <titulo>CNPJ Cliente</titulo>
+      <sql>select CNPJ ,CODIGO_CLIENTE, Nome_cliente, Nome_fantasia From Cliente</sql>
+      <valorPadrao/>
+      <camposFiltros>
+        <campo>CNPJ</campo>
+        <campo>Nome_cliente</campo>
+        <campo>nome_fantasia</campo>
+        <campo>codigo_cliente</campo>
+      </camposFiltros>
+      <campo>CNPJ</campo>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>ANALITICO</campo>
+        <campo>SINTETICO</campo>
+        <campo>CONSOLIDADO</campo>
+      
+      </lista>
+      <valorPadrao>ANALITICO</valorPadrao>
+      <campo>Tipo</campo>
+      <campofiltro>Tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+   </filtros>
+  <subtotais>
+    <sub0>
+      <index>1</index>
+    </sub0>
+    <sub1>
+      <index>2</index>
+    </sub1>
+      <sub2>
+      <index>3</index>
+    </sub2>
+      <sub3>
+      <index>4</index>
+    </sub3>
+    <sub4>
+      <index>5</index>
+    </sub4>
+    <sub5>
+      <index>6</index>
+    </sub5>
+    <sub6>
+      <index>7</index>
+    </sub6>
+  </subtotais>
+ <camposSemformatacao>
+    <campo>5</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Morumbi, 8509 - Santo Amaro, São Paulo - SP, 04703-003
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

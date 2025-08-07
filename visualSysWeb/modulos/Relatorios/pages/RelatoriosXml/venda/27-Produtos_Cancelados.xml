@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Produtos Cancelados</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_produtos_cancelados
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DataDe</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+    </filtro1>
+   
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 Plu , descricao from mercadoria</sql>
+      <camposFiltros>
+        <campo>plu</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>Cupom</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>documento</campo>
+      <largura>80</largura>
+    </filtro4>
+  
+  </filtros>
+
+  <subtotais>
+    <sub0>
+      <index>6</index>
+      
+    </sub0>
+    <sub1>
+      <index>7</index>
+
+    </sub1>
+    <sub2>
+      <index>8</index>
+
+    </sub2>
+    <sub3>
+      <index>9</index>end
+
+    </sub3>
+   
+
+
+
+
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+</Relatorio>

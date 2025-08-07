@@ -1,0 +1,499 @@
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_rel_balanceteFinanceiro]    Script Date: 25/04/2023 11:38:09 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER   procedure [dbo].[sp_rel_balanceteFinanceiro](
+      @filial     varchar(20),
+      @datade     varchar(10),
+      @dataate    varchar(10),
+      @tipo       varchar(50),
+      @status     varchar(10),
+      @visualizar varchar(50),
+      @Modalidade varchar(8),
+  	@centrocusto varchar(10)
+
+)As
+-- sp_rel_balancetefinanceiro 'matriz', '20200801', '20200901', 'emissao', 'previsto', 'CONSOLIDADO MES', 'todos'
+
+Declare @String as varchar(8000)
+Declare @Where as varchar(1024)
+Declare @codStatus as varchar(50)
+DECLARE @String2 as varchar(8000)
+DECLARE @String3 as varchar(8000) 
+Declare @Tabela as varchar(15)
+
+Begin
+
+      if (@status ='ABERTO')
+            begin
+            set @codStatus= ' = 1'
+            end
+      else 
+            begin
+                  if (@status ='CONCLUIDO')
+                        begin
+                              set @codStatus= ' = 2'
+                        end
+                  else 
+                        begin
+                              if (@status ='CANCELADO')
+                                   begin
+                                         set @codStatus= ' = 3'
+                                   end
+                              else 
+                                   begin
+                                         set @codStatus= ' <> 3'
+                                   end
+                        end
+            end
+            if (@tipo ='')
+            begin
+                  set @tipo= 'emissao'
+            end
+
+IF @Modalidade = 'DESPESAS'
+      Set @Tabela = 'Conta_a_Pagar'
+
+
+IF @Modalidade = 'RECEITAS'
+      Set @Tabela = 'Conta_a_Receber'
+
+IF @Modalidade = 'TODOS'                 
+      Set @Tabela = 'W_br_contas'
+
+
+IF @visualizar = 'ANALITICO'
+      Goto CentroCusto
+Else IF @visualizar = 'SINTETICO'
+      Goto Grupo        
+Else if @visualizar='CONSOLIDADO MES'
+	  Goto Consolidado
+
+CentroCusto:      
+      --Monta Clausula Where da Procura
+      set @where = 'Where W_br_contas.Filial = '+ char(39) + @filial + char(39) + '   and status '+@codStatus+' and '
+      set @where = @where + @tipo + ' between ' + char(39) + @datade + char(39) + ' and ' + char(39) + @dataate + char(39)
+	  if @centrocusto <> '' 
+		SET @where = @where + ' and codigo_centro_custo LIKE ' + char(39) + @centrocusto + '%' + CHAR(39)
+      
+      IF @Modalidade <> 'TODOS'
+                  Set @where = @where +' and modalidade = ' + char(39) + @Modalidade + char(39) + ' '
+      --Monta Select
+      set @string = 'Select Codigo,Descricao,replace(isnull(debito,'+ char(39) +'0,00'+ char(39) +'),'+ char(39) +'.'+ char(39) +','+ char(39) +','+ char(39) +') as Debito,Replace(isnull(credito,'+ char(39) +'0,00'+ char(39) +'),'+ char(39) +'.'+ char(39) +','+ char(39) +','+ char(39) +') as Credito from ( '+
+                        /*'Select modalidade, CASE WHEN CODIGO_GRUPO >9  THEN ' + char(39) +'0' + char(39) +'+codigo_grupo ELSE ' + char(39) +'00' + char(39) +'+codigo_grupo end as ordem, CASE WHEN CODIGO_GRUPO >9  THEN ' + char(39) +'0' + char(39) +'+codigo_grupo ELSE ' + char(39) +'00' + char(39) +'+codigo_grupo end as codigo, descricao_Grupo as descricao , ' + char(39) +' ' + char(39) +' as Debito , ' + char(39) +' ' + char(39) +' as Credito, '+char(39)+' '+char(39)+'as saldo from  W_br_contas '+@where+' group by modalidade, codigo_grupo,descricao_Grupo '+
+                        'union '+
+                        'select modalidade,codigo_subgrupo as ordem, codigo_subgrupo as codigo, descricao_subgrupo as descricao ,' + char(39) +' ' + char(39) +' as Debito , ' + char(39) +' ' + char(39) +' as Credito, '+char(39)+' '+char(39)+'as saldo  from  W_br_contas '+@where+' group by modalidade,codigo_grupo,codigo_subgrupo,descricao_subgrupo '+
+                        'union '+
+                        */
+                        'Select  modalidade,codigo_centro_custo as ordem, codigo_centro_custo as codigo ,descricao_centro_custo as descricao, '+
+                        '     Debito = convert(varchar, sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10) , '+
+                        '     Credito = convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10), '+
+                        '           Saldo = '+char(39) +char(39) +
+                        'from  W_br_contas '+@where+' '+
+                        'group by modalidade,codigo_grupo ,codigo_centro_custo,descricao_centro_custo '+
+                        'union '+
+                        
+                        'Select modalidade, CASE WHEN CODIGO_GRUPO >9  THEN ' + char(39) +'0' + char(39) +'+codigo_grupo ELSE ' + char(39) +'00' + char(39) +'+codigo_grupo end+'+CHAR(39)+' '+CHAR(39)+' as ordem,'+CHAR(39)+CHAR(39)+' as codigo , '+CHAR(39)+CHAR(39)+', '+
+                        '     Debito = '+CHAR(39)+CHAR(39)+','+
+                        '     Credito = '+CHAR(39)+CHAR(39)+', '+
+                        '    Saldo = '+CHAR(39)+CHAR(39)+' '+
+                        '     from  W_br_contas '+@where+' '+
+                        'group by modalidade,codigo_grupo,descricao_Grupo '+
+                        'union '+
+                        
+                        'Select modalidade, CASE WHEN CODIGO_GRUPO >9  THEN ' + char(39) +'0' + char(39) +'+codigo_grupo ELSE ' + char(39) +'00' + char(39) +'+codigo_grupo end as ordem, ' + char(39) +'|-' + char(39) +'+CASE WHEN CODIGO_GRUPO >9  THEN ' + char(39) +'0' + char(39) +'+codigo_grupo ELSE ' + char(39) +'00' + char(39) +'+codigo_grupo end +' + char(39) +'-|' + char(39) +' as codigo , ' + char(39) +'|-' + char(39) +'+ descricao_Grupo +' + char(39) +'-|' + char(39) +', '+
+                        '     Debito = ' + char(39) +'|-' + char(39) +'+ convert(varchar, sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10)+' + char(39) +'-|' + char(39) +' , '+
+                        '     Credito = ' + char(39) +'|-' + char(39) +'+  convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10)+' + char(39) +'-|' + char(39) +', '+
+                        '           Saldo = ' + char(39) +'|-' + char(39) +'+  convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end)- '+
+                        '           sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0))else valor_pago end else 0 end),10)+' + char(39) +'-|' + char(39) +' '+
+                        '     from  W_br_contas '+@where+' '+
+                        'group by modalidade,codigo_grupo,descricao_Grupo '+
+                        'union '+
+                        'Select modalidade, rtrim(codigo_subgrupo) as ordem,codigo_subgrupo as codigo, descricao_subgrupo,  '+
+                        '     Debito =  convert(varchar, sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10) , '+
+                        '     Credito =  convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10) ,  '+
+                        '           Saldo = '+char(39) +char(39) +
+                        '     from  W_br_contas '+@where+' '+
+                        'group by modalidade, codigo_subgrupo,descricao_subgrupo '
+                        
+                  set @String2=     'union '+
+                        'Select modalidade ='+char(39) +char(39) +',  '+char(39) +'999' + char(39) +' as ordem,' + char(39) +'|-TOTAL-| ' + char(39) +' as codigo, ' + char(39) + char(39) +',  '+
+                        '     Debito = ' + char(39) +'|-' + char(39) +'+ convert(varchar, sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10)+' + char(39) +'-|' + char(39) +' , '+
+                        '     Credito = ' + char(39) +'|-' + char(39) +'+ convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end),10)+' + char(39) +'-|' + char(39) +' ,  '+
+                        '           Saldo = ' + char(39) +'|-' + char(39) +'+convert(varchar,sum(case when modalidade=' + char(39) +'RECEITAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0)) else valor_pago end else 0 end)- '+
+                        '           sum(case when modalidade=' + char(39) +'DESPESAS' + char(39) +' then case when status=1 then ((isnull(valor,0)-isnull(desconto,0))+isnull(acrescimo,0))else valor_pago end else 0 end),10) +' + char(39) +'-|' + char(39) +''+
+                        '     from  W_br_contas '+@where+' '+
+                        ''+
+                  
+                        
+            ') as a '+
+                  'order by modalidade desc,ordem'
+Goto Fim                
+      
+Grupo:
+		Set @string = 'SELECT Codigo = case when Len(Convert(Varchar,E.codigo_grupo)) = 1 Then ' + char(39) + '00' + char(39) + ' + Convert(Varchar,E.codigo_grupo) when  Len(Convert(Varchar,E.codigo_grupo)) = 2 Then ' + char(39) + '0' + char(39) + ' + Convert(Varchar,E.codigo_grupo) Else Convert(Varchar,E.codigo_grupo) End, '
+		Set @string = @string +' Modalidade = c.Modalidade, '
+		Set @string = @string +' Descricao = E.Descricao_grupo , '
+		Set @string = @string +' Valor = case when a.status = 1 then Sum(Isnull(Valor,0)-ISNULL(Desconto,0)+Isnull(Acrescimo,0)) when a.status = 2 then Sum(Valor_Pago) Else 0 end into #Balancete'
+		Set @string = @string +' FROM ' + @Tabela + ' a INNER JOIN '
+		Set @string = @string +' centro_custo c ON (a.codigo_centro_custo = c.codigo_centro_custo AND a.filial = c.filial) INNER JOIN '
+		Set @string = @string +' subgrupo_cc d ON (c.codigo_subgrupo = d .codigo_subgrupo AND c.filial = d .filial) INNER JOIN '
+		Set @string = @string +' grupo_cc e ON (d .codigo_grupo = e.codigo_grupo AND d .filial = e.filial '
+    
+		IF @Modalidade <> 'TODOS'
+			Set @string = @string +' and c.modalidade = ' + char(39) + @Modalidade + char(39) + ' '
+
+		set @String2 = ' ) Where a.Filial = '+ char(39) + @filial + char(39) + ' and a.status '+@codStatus+' and '
+		set @String2 = @String2 + @tipo + ' between ' + char(39) + @datade + char(39) + ' and ' + char(39) + @dataate + char(39)
+		  if @centrocusto <> '' 
+			SET @where = @where + ' and codigo_centro_custo LIKE ' + char(39) + @centrocusto + '%' + CHAR(39)
+
+		set @String2 = @String2 + ' GROUP BY E.codigo_grupo , E.Descricao_grupo,c.Modalidade, a.status order by codigo ' 
+		set @String2 = @String2 + ' Select Distinct Codigo, Modalidade, Descricao, Valor = replace(convert(varchar(20),Sum(Valor * CASE WHEN MODALIDADE = ' + CHAR(39) + 'DESPESAS' + CHAR(39) + ' THEN -1 ELSE 1 END)),' + char(39) + '.' + char(39) + ',' + char(39) + ',' + char(39) + ') from #Balancete Group by Codigo, Modalidade, Descricao '
+		set @String2 = @String2 + ' UNION all Select '+ char(39) + '|-TOTAL-|' + char(39) + ','+ char(39) + '' + char(39) + ',' + char(39) + '' + char(39) + ','+ char(39)+'|-'+ char(39)+' + replace(convert(varchar(20),Sum(isnull(Valor,0) * CASE WHEN MODALIDADE = ' + CHAR(39) + 'DESPESAS' + CHAR(39) + ' THEN -1 ELSE 1 END)),' + char(39) + '.' + char(39) + ',' + char(39) + ',' + char(39) + ') +'+ char(39)+'-|'+ char(39)+' from #Balancete '
+		/*
+		set @String2 = @String2 + ' UNION Select '+ char(39) + 'TOTAL' + char(39) + ','+ char(39) + '' + char(39) + ',Sum(Isnull(Valor,0)-Isnull(Desconto,0)+Isnull(Acrescimo,0)),SUM(Valor_Pago) '
+		Set @String2 = @String2 +' FROM ' + @Tabela + ' a INNER JOIN '
+		Set @String2 = @String2 +' centro_custo c ON (a.codigo_centro_custo = c.codigo_centro_custo AND a.filial = c.filial) INNER JOIN '
+		Set @String2 = @String2 +' subgrupo_cc d ON (c.codigo_subgrupo = d .codigo_subgrupo AND c.filial = d .filial) INNER JOIN '
+		Set @String2 = @String2 +' grupo_cc e ON (d .codigo_grupo = e.codigo_grupo AND d .filial = e.filial '
+    
+		IF @Operacao <> 'TODOS'
+			Set @String2 = @String2 +' and C.modalidade = ' + char(39) + @operacao + char(39) + ' '
+
+		Set @String2 = @String2 +' ) Where a.Filial = '+ char(39) + @filial + char(39) + ' and a.status '+@codStatus+' and '
+		set @String2 = @String2 + @tipo + ' between ' + char(39) + @datade + char(39) + ' and ' + char(39) + @dataate + char(39)    
+		*/
+		set @String2 = @String2 + '  '
+Goto Fim          
+
+Consolidado:
+	
+	set @datade = CONVERT(VARCHAR,CONVERT(DATE,convert(varchar,DATEPART(YYYY, @datade ))+'-'+Convert(varchar,DATEPART(m, @datade ))+'-01'),112)
+	set @dataate= CONVERT(VARCHAR,DATEADD(D,-1, DATEADD(M,1, convert(varchar,DATEPART(YYYY, @dataate ))+'-'+Convert(varchar,DATEPART(m, @dataate ))+'-01')),112)
+
+
+	
+	Set @string = 'Select ordem = DATEPART(m, '+@tipo+') , ' + char(39)+ 'SFT_' + char(39) +' +convert(varchar,DATEPART(m, '+@tipo+'))+' + char(39) +'/' + char(39) +'+convert(varchar,DATEPART(YY, '+@tipo+'))  AS MES ,'
+	Set @string = @string +'		NOME = CASE'
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 1 THEN ' + char(39) +'JANEIRO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 2 THEN ' + char(39) +'FEVEREIRO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 3 THEN ' + char(39) +'MARÇO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 4 THEN ' + char(39) +'ABRIL' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 5 THEN ' + char(39) +'MAIO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 6 THEN ' + char(39) +'JUNHO' + char(39)
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 7 THEN ' + char(39) +'JULHO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 8 THEN ' + char(39) +'AGOSTO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 9 THEN ' + char(39) +'SETEMBRO' + char(39)
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 10 THEN ' + char(39) +'OUTUBRO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 11 THEN ' + char(39) +'NOVEMBRO' + char(39) 
+	Set @string = @string +'				WHEN DATEPART(M, '+@tipo+') = 12 THEN ' + char(39) +'DEZEMBRO' + char(39) 
+	Set @string = @string +'		END, '
+	Set @string = @string +'		Debito = case when a.modalidade = ' + char(39) +'DESPESAS' + char(39) +' THEN case when a.status = 1 then Isnull(Valor,0)-ISNULL(Desconto,0)+Isnull(Acrescimo,0) when a.status = 2 then Valor_Pago Else 0 end ELSE 0 END,'
+	Set @string = @string +'		Credito = case when a.modalidade = ' + char(39) +'RECEITAS' + char(39) +' THEN case when a.status = 1 then Isnull(Valor,0)-ISNULL(Desconto,0)+Isnull(Acrescimo,0) when a.status = 2 then Valor_Pago Else 0 end ELSE 0 END '
+	Set @string = @string +'INTO #TOTAL from W_br_contas AS a '
+	Set @string = @string +'WHERE  a.Filial = '+ char(39) + @filial + char(39) + '  and a.status '+@codStatus+' and  ' + @tipo + ' between ' + char(39) + @datade + char(39) + ' and ' + char(39) + @dataate + char(39)+';' 
+	if @centrocusto <> '' 
+		SET @string = @string + ' and a.codigo_centro_custo LIKE ' + char(39) + @centrocusto + '%' + CHAR(39)
+
+
+	Set @string = @string +' SELECT MES, NOME, Debito= replace(debito,'+ char(39)+'.'+ char(39)+','+ char(39)+','+ char(39)+'), Credito= replace( Credito,'+ char(39)+'.'+ char(39)+','+ char(39)+','+ char(39)+') from (  '
+	Set @string = @string +' Select ordem ,MES, NOME, Debito= Convert(varchar,SUM(debito)), Credito= convert(varchar,sum(Credito)) from #TOTAL '
+	Set @string = @string +' group by mes, nome, ordem';
+	
+	set @String2 = ' UNION all Select 20, '+ char(39) + '|-TOTAL-|' + char(39) + ','
+			+ char(39)  + char(39) + ','
+			+ char(39)+'|-'+ char(39)+' + convert(varchar,SUM(Debito)) +'+ char(39)+'-|'+ char(39)+','
+			+ char(39)+'|-'+ char(39)+' + convert(varchar,SUM(Credito)) +'+ char(39)+'-|'+ char(39)
+		+' from #TOTAL
+		) as a 
+		order by ordem ;'
+	
+
+Fim:
+      Exec(@string+@String2)
+End
+
+
+ 
+
+GO
+
+ALTER TABLE CFOP ADD CD_ICMS TINYINT DEFAULT 0, CD_PISCOFINS TINYINT DEFAULT 0
+UPDATE CFOP SET CD_PISCOFINS = CASE WHEN CFOP IN(1101,
+1102, 1111,1113,1116,1117,1118,1120,1121,1122,1124,1125,1126,1128,1132,1135,1159,
+1201,1202,1203,1204,1206,1207,1215,1216,1251,1401,1403,1407,1410,1411,1456,1556,
+1651,1652,1653,1660,1661,1662,1922,1933,2101,2102,2111,2113,2116,2117,2118,2120,
+2121,2122,2124,2125,2126,2128,2132,2135,2159,2201,2202,2206,2207,2215,2216,
+2251,2401,2403,2407,2410,2411,2456,2556,2651,2652,2653,2660,2661,2662,2922,2933,
+3101,3102 ,3126,3128,3251,3556,3651,3652,3653) THEN 1 ELSE 0 END
+WHERE CFOP.TIPO = 2
+
+
+GO
+IF (SELECT COUNT(*) FROM PARAMETROS WHERE PARAMETROS.PARAMETRO =  'NATUREZA_DEVOLUCAO_CLIENTE_PDV') <= 0
+BEGIN
+	INSERT INTO PARAMETROS SELECT 
+	'NATUREZA_DEV_CLI_PDV', GETDATE(), '1998', GETDATE(), '1998', 'CODIGO DA NATUREZA DE OPERACAO PARA DEVOLUCAO DE COMPRA DE CLIENTES', 'C', '', 1, '', 0, 0, GETDATE(), 0
+END
+
+
+GO
+IF (SELECT COUNT(*) FROM SEQUENCIAIS WHERE SEQUENCIAIS.TABELA_COLUNA = 'DEVOLUCAO_NFE.CODIGO') <= 0
+BEGIN
+	INSERT INTO SEQUENCIAIS SELECT 
+	'DEVOLUCAO_NFE.CODIGO', 'NUMERO SEQUENCIAL PARA DEVOLUCAO DE CLIENTES', '0', '8', '', '', '', '', '', '', '', '', NULL, 0
+END
+
+go
+USE [BratterWeb]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_NotasFiscais]    Script Date: 05/11/2023 16:20:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+--PROCEDURES =======================================================================================
+ALTER    procedure [dbo].[sp_Rel_NotasFiscais]
+
+     
+
+      @Filial           varchar(20),                -- Loja
+      @DataDe           varchar(8),                 -- Data Inicial
+      @DataAte          varchar(8),                 -- Data Fim
+      @Tipo             varchar(20),                -- Tipo = 1 - Saidas, Tipo = 2 - Entrada
+	  @Nota             varchar(20),                -- Nmero Nota Fiscal
+	  @Fornecedor       varchar(20),                -- Nome Fornecedor
+      @NF_CANC          varchar(20),		    -- Normal = NAO, Cancelada = SIM
+      @plu			   varchar(20),
+      @ean			   varchar(20),
+      @ref             varchar(20),
+      @descricao		varchar(40),
+      @NF_Devolucao    varchar(20),
+      @Excluir_Natureza varchar(20),
+      @Incluir_Natureza varchar(20),
+	  @notaProdutor    varchar(30),
+	  @tipoRelatorio  varchar(40)
+
+As
+begin
+--exec     sp_Rel_NotasFiscais    @Filial='MATRIZ', @datade = '20180701',  @dataate = '20180815',  @plu = '',  @ean = '',  @Ref = '',  @descricao = '',  @tipo = 'TODOS',  @Nota = '',  @fornecedor = '',  @NF_CANC = 'NAO',  @NF_Devolucao = 'NAO',  @Excluir_Natureza = '',  @Incluir_Natureza = '',  @notaProdutor = 'TODOS',  @tipoRelatorio = 'Analitico' 
+
+if(@tipoRelatorio = 'Analitico')
+begin
+    DECLARE @NF varchar(5000)
+      
+    IF LTRIM(RTRIM(@Nota)) <> ''
+		begin
+            SET @NF = 'Select isnull((
+										Case When ISNULL(NF.Dest_Fornec,0) = 0 Then (
+											Select Distinct Ltrim(Rtrim(Nome_Cliente)) 
+											From Cliente c 
+											where c.Codigo_Cliente = NF.Cliente_Fornecedor
+											) 
+										Else  
+											NF.Cliente_Fornecedor 
+										End
+									  ),nf.cliente_fornecedor) Cliente_Fornecedor'
+			SET @NF = @nf +',Plu = '+CHAR(39)+'PLU'+CHAR(39)+'+PLU'
+			SET @NF = @nf +',Ref=CODIGO_REFERENCIA'
+			SET @NF = @nf +',nf_item.Descricao'
+			SET @NF = @nf +',nf_item.Qtde'
+			SET @NF = @nf +',nf_item.Embalagem'
+			SET @NF = @nf +',nf_item.Unitario'
+			SET @NF = @nf +',nf_item.Total '
+            SET @NF = @nf +' from NF_Item INNER JOIN NF '
+			SET @NF = @nf +'     ON NF.CODIGO=NF_ITEM.CODIGO '
+			SET @NF = @nf +'    and nf.Tipo_NF = nf_item.Tipo_NF '
+			SET @NF = @nf +'    and nf.Cliente_Fornecedor= nf_item.Cliente_Fornecedor '
+			SET @NF = @nf +'INNER JOIN NATUREZA_OPERACAO NP ON NF.CODIGO_OPERACAO = NP.CODIGO_OPERACAO '
+			SET @NF = @nf+'	where nf.codigo = '+@nota
+			
+			IF LTRIM(RTRIM(@Tipo)) = '1-Saida'
+				SET @NF = @NF + 'AND NF.Tipo_NF = 1 '
+			IF LTRIM(RTRIM(@Tipo)) = '2-Entrada'
+				SET @NF = @NF + 'AND NF.Tipo_NF = 2 '
+			IF LTRIM(RTRIM(@Fornecedor)) <> ''
+                SET @NF = @NF + 'AND LTRIM(NF.Cliente_Fornecedor) = ' + CHAR(39) + @Fornecedor + CHAR(39) + ' '
+			
+			IF LTRIM(RTRIM(@descricao)) <> ''
+				SET @NF = @NF + 'AND LTRIM(NF_Item.DESCRICAO) like ' + CHAR(39) + @descricao + CHAR(39) + ' '
+			
+		end
+	else
+		begin
+			SET @NF = 'SELECT NF.Filial'
+			SET @NF = @NF + ',Tipo= case when nf.tipo_nf=1 then '+CHAR(39)+'SAIDA'+CHAR(39)+' else '+CHAR(39)+'ENTRADA'+CHAR(39)+' END'
+			SET @NF = @NF + ',Emissao= Convert(Varchar,NF.Emissao,103) '
+			SET @NF = @NF + ',[NF Produtor]= '+CHAR(39)+'SFT_'+CHAR(39)+'+ISNULL(nf.CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') '
+			SET @NF = @NF + ',Nota= '+CHAR(39)+'SFT_'+CHAR(39)+'+NF.Codigo '
+			SET @NF = @NF + ',[Chave NFE] = NF.ID '
+			SET @NF = @NF + ',Destinatario = isnull((
+												Case When ISNULL(NF.Dest_Fornec,0) = 0  Then (
+													Select Distinct Ltrim(Rtrim(Nome_Cliente)) 
+														From Cliente c where c.Codigo_Cliente = NF.Cliente_Fornecedor
+													) 
+													Else  
+													NF.Cliente_Fornecedor 
+												End
+											),nf.cliente_fornecedor
+										) '
+			SET @NF = @NF + ',CNPJ = isnull((
+												Case When ISNULL(NF.Dest_Fornec,0) = 0  Then (
+													Select Distinct Ltrim(Rtrim(CNPJ)) 
+														From Cliente c where c.Codigo_Cliente = NF.Cliente_Fornecedor
+													) 
+													Else  (
+													Select Distinct Ltrim(Rtrim(CNPJ)) 
+														From FORNECEDOR  where FORNECEDOR = NF.Cliente_Fornecedor
+														)
+												End
+											),nf.cliente_fornecedor
+										) '
+			SET @NF = @NF + ',Entrada= Convert(Varchar,NF.Data,103) '
+			SET @NF = @NF + ',[Vlr Prod]= Convert(decimal(15,2),Sum(NF_Item.Total+Isnull(NF.Frete,0))) '
+			SET @NF = @NF + ',[Vlr Nota]= NF.Total'
+
+			SET @NF = @NF + ' From NF_Item Inner Join NF ON NF.Codigo = NF_Item.Codigo '
+			SET @NF = @NF + '							  AND NF.Cliente_Fornecedor = NF_Item.Cliente_Fornecedor  '
+			SET @NF = @NF + '							  AND NF.Filial = NF_Item.Filial '
+			SET @NF = @NF + '              INNER JOIN NATUREZA_OPERACAO NP ON NF.CODIGO_OPERACAO = NP.CODIGO_OPERACAO '
+
+			SET @NF = @NF + 'WHERE NF.Data BETWEEN ' + CHAR(39) +  convert(varchar,@DataDe,112) + CHAR(39) + ' AND '
+
+			SET @NF = @NF + CHAR(39) + convert(varchar,@DataAte,112)  + char(39) + ' '
+      
+      
+			IF LTRIM(RTRIM(@NF_CANC)) = 'SIM'
+
+				SET @NF = @NF + 'AND Isnull(NF.NF_Canc,0) = 1 '
+            
+
+			IF LTRIM(RTRIM(@NF_CANC)) = 'NAO'
+
+				SET @NF = @NF + 'AND Isnull(NF.NF_Canc,0) = 0 '
+      
+			IF LTRIM(RTRIM(@Filial)) <> ''
+				SET @NF = @NF + 'AND LTRIM(NF.Filial) = ' + CHAR(39) + @Filial + CHAR(39) + ' '
+
+			IF LTRIM(RTRIM(@Fornecedor)) <> ''
+
+				SET @NF = @NF + 'AND LTRIM(NF.Cliente_Fornecedor) = ' + CHAR(39) + @Fornecedor + CHAR(39) + ' '
+
+ 
+			IF LTRIM(RTRIM(@Tipo)) = '1-Saida'
+
+				SET @NF = @NF + 'AND NF.Tipo_NF = 1 '
+
+     
+
+			IF LTRIM(RTRIM(@Tipo)) = '2-Entrada'
+
+				SET @NF = @NF + 'AND NF.Tipo_NF = 2 '
+
+ 
+			if(LEN(@plu)>0)
+			begin
+				SET @NF = @NF + ' and nf_item.plu='+CHAR(39)+@plu+CHAR(39)	
+			end
+			IF LTRIM(RTRIM(@descricao)) <> ''
+			begin
+				SET @NF = @NF + 'AND LTRIM(NF_Item.DESCRICAO) like ' + CHAR(39) + @descricao + CHAR(39) + ' '	
+			end
+			if(@NF_Devolucao='SIM')
+			begin
+				SET @NF = @NF + ' and NP.NF_devolucao = 1 '
+			end
+
+			if(@NF_Devolucao='NAO')
+			begin
+				SET @NF = @NF + ' and NP.NF_devolucao = 0 '
+			end
+		
+			if(LEN(@Excluir_Natureza)>0)
+			begin
+				SET @NF = @NF + ' and NP.CODIGO_OPERACAO NOT IN('+@Excluir_Natureza+') '
+			end
+		
+			if(LEN(@Incluir_Natureza)>0)
+			begin
+				SET @NF = @NF + ' and NP.CODIGO_OPERACAO IN('+@Incluir_Natureza+') '
+			end
+		
+			if(@notaProdutor <> 'TODOS')
+			BEGIN 
+				IF(@notaProdutor ='SIM')
+				BEGIN 
+					SET @NF = @NF + ' and ISNULL(CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') <> '+CHAR(39)+CHAR(39)
+				END 
+				ELSE 
+				BEGIN
+					SET @NF = @NF + ' and ISNULL(CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') = '+CHAR(39)+CHAR(39)
+				END
+			END 
+
+			  SET @NF = @NF + ' Group by NF.Filial, NF.Codigo, NF.Cliente_Fornecedor, NF.Emissao, NF.data, NF.Tipo_NF, NF.Total,ISNULL(nf.CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+'),NF.ID,NF.Dest_Fornec '
+
+			  SET @NF = @NF + ' Order By NF.Filial, Convert(Varchar,NF.Data,103), NF.Codigo '
+			end
+     
+	
+  execute(@NF)
+  print @nf
+end 
+else
+begin 
+	Select PLU= 'PLU'+ni.PLU
+		  ,ni.Descricao
+		  ,Qtde =sum(ni.qtde)
+		  ,Total= sum(ni.total_faturado)  
+	from nf_item as ni  
+		 inner join nf on nf.filial  = ni.filial 
+					  and nf.Codigo  = ni.Codigo
+					  and nf.Tipo_NF = ni.Tipo_NF
+					  and nf.Cliente_Fornecedor = ni.Cliente_Fornecedor
+		 inner join Natureza_operacao as nop on nf.Codigo_operacao = nop.Codigo_operacao 
+	where  (NF.Data BETWEEN @DataDe AND @DataAte)
+		 AND Not Exists(Select * From nf_inutilizadas i Where Convert(varchar,i.N_Inicio) >= NF.Codigo And Convert(varchar,i.N_Fim) <= NF.Codigo)
+		 and ltrim(nf.filial) = @Filial
+		 AND (
+				 (@NF_CANC ='TODOS')
+			  OR (@NF_CANC ='SIM' AND Isnull(NF.NF_Canc,0) = 1) 
+			  OR (@NF_CANC ='NAO' AND Isnull(NF.NF_Canc,0) = 0)
+		     )
+		 AND (LTRIM(RTRIM(@Fornecedor)) = '' OR  RTRIM(LTRIM(NF.Cliente_Fornecedor)) =@Fornecedor)
+		 AND  (
+				   (@Tipo= 'TODOS')
+				OR (@Tipo= '1-Saida' and nf.Tipo_NF=1)
+				OR (@Tipo= '2-Entrada' and nf.Tipo_NF=2)
+			  )
+		 AND (LEN(@plu)=0 OR ni.PLU = @PLU)
+		 AND (
+				  (@NF_Devolucao='TODOS' )
+				OR(@NF_Devolucao='SIM' and nop.NF_devolucao =1)
+				OR(@NF_Devolucao='NAO' and nop.NF_devolucao =0)
+			)
+		 AND (LEN(@Excluir_Natureza)=0 OR @Excluir_Natureza like '%'+ convert(varchar,nop.CODIGO_OPERACAO) +'%' )
+		 AND (LEN(@Incluir_Natureza)=0 OR @Incluir_Natureza like '%'+ convert(varchar,nop.CODIGO_OPERACAO) +'%' )
+		 AND (
+				(@notaProdutor = 'TODOS')
+			  OR(@notaProdutor='SIM' AND ISNULL(NF.CodigoNotaProdutor,0) <> '')
+			  OR(@notaProdutor='NAO' AND ISNULL(NF.CodigoNotaProdutor,0) = '')
+			  )
+		and (len(@descricao)=0 or ni.Descricao like @descricao)
+	group by ni.plu,ni.Descricao
+	order by LTRIM(RTRIM( ni.Descricao))
+end 
+
+end
+
+alter table Saida_estoque Add IcmsItemVlr Decimal(12,2)
+
+update Saida_estoque set icmsItemVlr = 
+CONVERt(DECIMAL(12,2), 
+(vlr - ISNULL(desconto, 0) + ISNULL(acrescimo, 0)) * case when ISNULL(Aliquota_ICMS, 0) = 0 THEN 0 ELSE Aliquota_ICMS / 100 END)

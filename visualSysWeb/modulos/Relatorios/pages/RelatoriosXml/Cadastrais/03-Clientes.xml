@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Clientes</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_cliente
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Codigo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>CODIGO</campo>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Nome Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>NOME</campo>
+    </filtro1>
+    
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Cnpj</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>CNPJ</campo>
+    </filtro2>
+    <filtro3>
+      <tipo>COMBO</tipo>
+      <titulo>Tabela</titulo>
+      <sql>
+       select 'TODOS' UNION ALL  select Codigo_tabela from Tabela_Preco
+      </sql>
+      <valorPadrao></valorPadrao>
+      <campo>TABELA</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+      <tipo>COMBO</tipo>
+      <titulo>Simplificado</titulo>
+      <lista>
+        <campo>NAO</campo>
+        <campo>SIM</campo>
+       </lista>
+      <valorPadrao></valorPadrao>
+      <campo>TIPOREL</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+  </filtros>
+ 
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

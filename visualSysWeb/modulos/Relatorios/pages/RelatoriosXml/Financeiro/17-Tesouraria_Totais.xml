@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>TOTAIS TESOURARIA</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_TOTAIS_TESOURARIA 
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data até</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <sql>select 'TODOS' UNION ALL select distinct(RTRIM(LTRIM(id_finalizadora))) as finalizadora from tesouraria</sql>
+      <titulo>Finalizadora</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>finalizadora</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+    <tipo>combo</tipo>
+    <sql>
+      select 'TODOS' as operador UNION ALL 
+      select distinct(convert(varchar,o.ID_Operador) + '-' + replace(replace(replace(replace(replace(replace(replace(replace(replace(UPPER(o.nome),
+      '0',''),'1',''),'2',''),'3',''),'4',''),'5',''),'8',''),'9',''),'-','')) as operador 
+      from tesouraria t inner join operadores o on o.ID_Operador=t.ID_OPERADOR
+    </sql>
+    <titulo>Operador</titulo>
+    <valorPadrao></valorPadrao>
+    <campo>operador</campo>
+    <campofiltro></campofiltro>
+    <obrigatorio>true</obrigatorio>
+</filtro3>
+<filtro4>
+    <tipo>combo</tipo>
+    <sql>
+      select 'FECHADO' As Status UNION ALL
+      select 'PENDENTE' As Status 
+    </sql>
+    <titulo>Status</titulo>
+    <valorPadrao></valorPadrao>
+    <campo>Status</campo>
+    <campofiltro></campofiltro>
+    <obrigatorio>true</obrigatorio>
+</filtro4>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>3</index>
+      <titulo>Total Sistema</titulo>
+      <campo>Registrado_Sistema</campo>
+    </sub0>
+    <sub1>
+      <index>4</index>
+      <titulo>Total Informado</titulo>
+      <campo>Informado_Caixa</campo>
+    </sub1>
+    <sub2>
+      <index>5</index>
+      <titulo>Total Diferenca</titulo>
+      <campo>Diferenca</campo>
+    </sub2>
+  </subtotais>
+  <camposSemformatacao>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Morumbi, 8509 - Santo Amaro - São Paulo - SP - 05606-010
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

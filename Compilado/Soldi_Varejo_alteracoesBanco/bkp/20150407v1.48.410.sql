@@ -1,0 +1,1 @@
+alter table nf_item add origem int

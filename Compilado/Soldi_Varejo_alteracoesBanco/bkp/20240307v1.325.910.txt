@@ -1,0 +1,466 @@
+IF NOT EXISTS(SELECT * FROM Parametros WHERE Parametros.PARAMETRO = 'NF_SEM_PAGAMENTO')
+INSERT INTO PARAMETROS VALUES ('NF_SEM_PAGAMENTO', GETDATE(), 'FALSE', GETDATE(), 'FALSE', 'BLOQUEIA ENTRADA SEM PAGAMENTO', 'C', '', 1, '', 0, 0, NULL, 0)
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_rel_NFe_Complementar]    Script Date: 29/07/2024 08:56:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_rel_NFe_Complementar]
+@FILIAL VARCHAR(20),
+@DATADE	VARCHAR(8),
+@DATAATE VARCHAR(8)
+
+AS
+-- sp_rel_NFe_Complementar 'MATRIZ', '20240601', '20240630'
+BEGIN
+	SELECT Emissao = CONVERT(VARCHAR, nf.emissao, 103),
+	Destinatario = (CASE 
+			WHEN NF.Dest_Fornec = 1 THEN (SELECT TOP 1 FORNECEDOR.Razao_social FROM FORNECEDOR WHERE Fornecedor.Fornecedor = NF.Cliente_Fornecedor)
+			ELSE (SELECT TOP 1 CLIENTE.Nome_Cliente FROM CLIENTE WHERE CLIENTE.Codigo_Cliente = NF.Cliente_Fornecedor) END),
+	NF.Codigo AS NroNF,
+	NF.ID as Chave,
+	ii.base_icms as BaseICMS,
+	ii.icmsv as VlrICMS,
+	(SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo) AS ChaveReferenciada,
+	CONVERT(VARCHAR, (SELECT TOP 1 A.EMISSAO FROM NF A WHERE A.ID = (SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo)), 103) AS EmissaoRef,
+	(SELECT TOP 1 B.Codigo FROM NF B WHERE B.ID = (SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo)) AS NroNFReferenciada
+	from 
+	nf inner join nf_item ii on nf.filial = ii.filial and nf.cliente_fornecedor = ii.cliente_fornecedor
+	and nf.codigo = ii.codigo and nf.serie = ii.serie and nf.tipo_nf = ii.tipo_nf 
+
+	where nf.data between @DataDe AND @DataAte
+	and nf.status =  'AUTORIZADO'
+	and nf.finNFe = 2
+END
+
+
+IF NOT EXISTS(SELECT * FROM PARAMETROS WHERE PARAMETROS.PARAMETRO = 'AUT_OBTER_XML')
+	BEGIN
+		INSERT INTO PARAMETROS VALUES
+		(
+			'AUT_OBTER_XML',
+			GETDATE(),
+			'',
+			GETDATE(),
+			'',
+			'CNPJ COM AUTORIZAÇÃO PARA OBTER O XML JUNTO AO SEFAZ',
+			'C',
+			'',
+			0,
+			'INCLUSO EM 30.07 MEDIANTE SOLICITAÇÃO DA MG CONTÉCNICA',
+			0, 
+			0, 
+			NULL,
+			0
+		)
+	END
+
+GO
+ALTER TABLE Lista_Padrao ADD Tipo VARCHAR(10)
+GO
+ALTER TABLE Lista_Padrao_Itens ADD Ordem Int
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_Rel_ApuracaoICMS]    Script Date: 30/07/2024 11:26:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Rel_ApuracaoICMS]
+@FILIAL VARCHAR(20),
+@DATADE	VARCHAR(8),
+@DATAATE VARCHAR(8)
+
+AS
+BEGIN
+	DECLARE 		@CST VARCHAR(4)
+	DECLARE 		@CFOP VARCHAR(4)
+	DECLARE 		@ALIQUOTA VARCHAR(5)
+
+	SET @CST = ''
+	SET @CFOP = ''
+	SET @ALIQUOTA = ''
+
+		-- sp_Rel_ApuracaoICMS @fILIAL = 'MATRIZ', @DataDe = '20240701', @DataAte = '20240731'
+		IF OBJECT_ID('TEMPDB..#LIXORegistrosFiscais') IS NOT NULL
+			DROP TABLE #LIXORegistrosFiscais
+
+		CREATE TABLE #LIXORegistrosFiscais
+		(CST_ICMS VARCHAR(4),
+		Codigo_Operacao VARCHAR(4),
+		aliquota_icms DECIMAL(6,2),
+		TOTAL_OPERACAO DECIMAL(12,2),
+		BASE_ICMS DECIMAL(12,2),
+		TOTAL_ICMS DECIMAL(12,2),
+		BASE_ICMS_ST DECIMAL(12,2),
+		TOTAL_ICMS_ST DECIMAL(12,2),
+		TOTAL_IPI DECIMAL(12,2),
+		OUTRAS DECIMAL(12,2),
+		TIPONF VARCHAR(1),
+		ORIGEM VARCHAR(3)
+		)
+
+	--// Estorno
+	DECLARE @ESTORNO5927 AS DECIMAL(12,2)
+	DECLARE @ESTORNO5411 AS DECIMAL(12,2)
+	DECLARE @DEBITOCOMPLEMENTAR AS DECIMAL(12,2)
+
+	SELECT 
+	@ESTORNO5927 = SUM(A.TOTAL * CASE WHEN A.ALIQUOTA > 0 THEN A.ALIQUOTA / 100 ELSE 0 END)
+	FROM (
+	SELECT NF.ID, ii.PLU, SUM(II.TOTAL) AS Total,
+	ISNULL((SELECT T.Saida_ICMS
+	FROM MERCADORIA M INNER JOIN TRIBUTACAO T ON M.CODIGO_TRIBUTACAO = T.CODIGO_TRIBUTACAO
+	WHERE M.PLU = II.PLU AND T.INDICE_ST IN ('00', '20')), 0) AS ALIQUOTA
+	from 
+	nf inner join nf_item ii on nf.filial = ii.filial and nf.cliente_fornecedor = ii.cliente_fornecedor
+	and nf.codigo = ii.codigo and nf.serie = ii.serie and nf.tipo_nf = ii.tipo_nf 
+	where nf.data between @DATADE AND @DATAATE   
+	and nf.tipo_nf = 1
+	and nf.Codigo_operacao = '8009'
+	and nf.Status = 'AUTORIZADO'
+	GROUP BY NF.ID, II.PLU ) AS A
+
+	SELECT
+	@ESTORNO5411 = SUM(ICMSV)
+	from 
+	nf inner join nf_item ii on nf.filial = ii.filial and nf.cliente_fornecedor = ii.cliente_fornecedor
+	and nf.codigo = ii.codigo and nf.serie = ii.serie and nf.tipo_nf = ii.tipo_nf 
+	where nf.Data between @DATADE AND @DATAATE  
+	and nf.tipo_nf = 1
+	--and nf.Codigo_operacao = '8003'
+	and ii.codigo_operacao in (5411, 6411)
+	AND II.icmsv > 0
+	and nf.Status = 'AUTORIZADO'
+
+
+	SELECT @DEBITOCOMPLEMENTAR = SUM(II.icmsv)
+	FROM
+	nf inner join nf_item ii on nf.filial = ii.filial and nf.cliente_fornecedor = ii.cliente_fornecedor
+	and nf.codigo = ii.codigo and nf.serie = ii.serie and nf.tipo_nf = ii.tipo_nf 
+	WHERE nf.finNFe = 2
+	and nf.data between @DATADE AND @DATAATE  
+	and nf.status =  'AUTORIZADO'
+
+	IF @ESTORNO5411 IS NULL
+		SET @ESTORNO5411 = 0
+	IF @ESTORNO5927 IS NULL
+		SET @ESTORNO5927 = 0
+	IF @DEBITOCOMPLEMENTAR IS NULL
+		SET @DEBITOCOMPLEMENTAR = 0
+
+	BEGIN
+		INSERT INTO #LIXORegistrosFiscais
+		Select  
+			CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(mercadoria.origem)),'0' ))+ CONVERT(VARCHAR,ISNULL(nf_item.cst_icms,'0')) as CST_ICMS, 
+			nf_item.codigo_operacao, 
+			CASE WHEN nf_item.cst_icms IN ('60', '70', '10', '30') THEN 0 ELSE CAST(ISNULL(aliquota_icms, 0) AS DECIMAL(12, 2 )) END AS aliquota_icms, 
+			cast( SUM(isnull(nf_item.total,0) - isnull(nf_item.desconto_valor, 0) +  isnull(nf_item.frete, 0) +  isnull(nf_item.despesas, 0)  
+			+ isnull(nf_item.iva, 0) + isnull(nf_item.ipiv, 0) ) as decimal(12,2)) AS TOTAL_OPERACAO, 
+			cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 or nf_item.cst_icms in ('60', '70', '10', '30') and nf_item.cst_icms = '00' then 0 
+			else SUM(isnull(base_icms,0))end as decimal(12,2)) AS BASE_ICMS, cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 or nf_item.cst_icms in ( '60','70', '10', '30') and nf_item.codigo_operacao = 1556 and nf_item.cst_icms = '00' then 0 else SUM(case when ISNULL(NF_ITEM.vCredICMSSN, 0) <= 0 THEN   isnull(icmsv,0) ELSE ISNULL(NF_ITEM.vCredICMSSN, 0) end )end as 
+			decimal(12,2))  AS TOTAL_ICMS,  cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 else  SUM(isnull(base_iva,0))end as decimal(12,2)) AS BASE_ICMS_ST,  
+			cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 else SUM(isnull(iva,0))end as decimal(12,2))  AS TOTAL_ICMS_ST, 
+			cast( case when Tributacao.IPI_EmOutrasDespesas=1 then 0 else SUM(isnull(IPIV,0))end as decimal(12,2)) AS TOTAL_IPI , 
+			cast(  SUM(case when Tributacao.IPI_EmOutrasDespesas=1 then isnull(IPIV,0) else 0 end + 	case when Tributacao.ICMSST_EmOutrasDespesas=1 then
+			isnull(iva,0) else  0 end  ) as decimal(12,2)) AS OUTRAS, CASE WHEN NF_Item.Tipo_NF = 1 THEN 'S' ELSE 'E' END AS Tiponf, 'NFe' AS Origem
+		from NF_Item  
+			inner join nf on nf.Codigo=NF_Item.codigo and  nf.Tipo_NF = nf_item.Tipo_NF and  nf.Filial = nf_item.Filial  and nf_item.serie = nf.serie
+			and NF.Cliente_Fornecedor = Nf_item.Cliente_Fornecedor  inner join mercadoria on nf_item.plu = mercadoria.plu  
+			left outer join Tributacao on nf_item.Codigo_Tributacao = Tributacao.Codigo_Tributacao  
+			inner join Natureza_Operacao Nat ON Nat.Codigo_Operacao = Nf.Codigo_Operacao 
+		WHERE nf.Filial=@FILIAL
+			and (
+			(nf.Tipo_NF = 2 AND ISNULL(nat.Imprime_NF,0) = 0) 
+			OR (nf.Tipo_NF = 2 AND ISNULL(nat.Imprime_NF,0) = 1 AND nf.Status = 'AUTORIZADO') 
+			OR (nf.Tipo_NF = 1 AND nf.Status = 'AUTORIZADO')) 
+			and (nf.data between @DATADE AND @DATAATE )  
+			and CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(mercadoria.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(nf_item.cst_icms,'0')) LIKE CASE WHEN  @CST = '' THEN '%%' ELSE @CST END 
+			and nf_item.codigo_operacao LIKE CASE WHEN  @CFOP = '' THEN '%%' ELSE @CFOP END
+			--or nf_item.codigo_operacao LIKE CASE WHEN @CFOP = '' THEN '%%' ELSE '%' + @CFOP + '%'END
+			AND LTRIM(RTRIM(CONVERT(VARCHAR(5), NF_ITEM.ALIQUOTA_ICMS))) LIKE REPLACE(CASE WHEN @ALIQUOTA = '' THEN '%%' ELSE @ALIQUOTA +  
+			CASE WHEN CHARINDEX('.', @ALIQUOTA) > 0 OR CHARINDEX(',', @ALIQUOTA) > 0 THEN '' ELSE '0.00' END  END ,',', '.') 
+		GROUP BY mercadoria.origem,nf_item.cst_icms,nf_item.codigo_operacao, nf_item.Tipo_NF, aliquota_icms,Tributacao.ICMSST_EmOutrasDespesas,Tributacao.IPI_EmOutrasDespesas  
+		ORDER BY 1, 2, 3
+
+
+
+		--** Inserindo SAIDA_ESTOQUE
+	
+
+		IF OBJECT_ID('tempdb..#CST') is not null
+			DROP TABLE #CST 
+
+		CREATE TABLE #CST (CST VARCHAR(3))
+	
+		IF @CST <> ''
+			INSERT INTO #CST VALUES (@CST)
+		ELSE
+			INSERT INTO #CST VALUES
+						('000'),
+						('020'),
+						('040'),
+						('041'),
+						('050'),
+						('051'),
+						('100'),
+						('120'),
+						('140'),
+						('141'),
+						('150'),
+						('151'),
+						('200'),
+						('220'),
+						('240'),
+						('241'),
+						('250'),
+						('251'),
+						('300'),
+						('320'),
+						('340'),
+						('341'),
+						('350'),
+						('351'),
+						('500'),
+						('520'),
+						('540'),
+						('541'),
+						('550'),
+						('551'),
+						('600'),
+						('620'),
+						('640'),
+						('641'),
+						('650'),
+						('651'),
+						('700'),
+						('720'),
+						('740'),
+						('741'),
+						('750'),
+						('751'),
+						('800'),
+						('820'),
+						('840'),
+						('841'),
+						('850'),
+						('851'),					
+						('060'),
+						('160'),
+						('260'),
+						('360'),
+						('560'),
+						('760'),
+						('860');
+					
+		IF @CFOP <> '' AND @CST = ''
+			BEGIN
+				IF CHARINDEX('5102', @CFOP) > 0 
+					BEGIN
+						DELETE FROM #CST;
+						INSERT INTO #CST VALUES
+						('000'),
+						('020'),
+						('040'),
+						('041'),
+						('050'),
+						('051'),
+						('100'),
+						('120'),
+						('140'),
+						('141'),
+						('150'),
+						('151'),
+						('200'),
+						('220'),
+						('240'),
+						('241'),
+						('250'),
+						('251'),
+						('300'),
+						('320'),
+						('340'),
+						('341'),
+						('350'),
+						('351'),
+						('500'),
+						('520'),
+						('540'),
+						('541'),
+						('550'),
+						('551'),
+						('600'),
+						('620'),
+						('640'),
+						('641'),
+						('650'),
+						('651'),
+						('700'),
+						('720'),
+						('740'),
+						('741'),
+						('750'),
+						('751'),
+						('800'),
+						('820'),
+						('840'),
+						('841'),
+						('850'),
+						('851');
+					END
+					--SET @CST = '000'
+				ELSE
+					IF CHARINDEX('5405', @CFOP) > 0
+						BEGIN
+							DELETE FROM #CST;
+							INSERT INTO #CST VALUES
+								('060'),
+								('160'),
+								('260'),
+								('360'),
+								('560'),
+								('660'),
+								('760'),
+								('860');
+						END
+					ELSE
+						DELETE FROM #CST
+			END
+	
+		INSERT INTO #LIXORegistrosFiscais
+		SELECT 
+		CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(M.origem)),'0' ))+ CONVERT(VARCHAR,ISNULL(Saida_Estoque.cst_icms,'0')),
+	
+		CASE WHEN Saida_Estoque.CST_ICMS = '60' THEN '5405' ELSE '5102' END,
+		Saida_Estoque.aliquota_icms,
+		Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0) ,
+		CASE WHEN Saida_Estoque.aliquota_icms > 0 THEN 	Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0)  ELSE 0 END,
+		CASE WHEN Saida_Estoque.aliquota_icms > 0 THEN 	CONVERT(DECIMAL(12,2), (Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0) ) * (Saida_Estoque.aliquota_icms / 100)) ELSE 0 END,
+		0, 0, 0, 0,
+		'S', 'PDV'
+		--SELECT DISTINCT SAIDA_eSTOQUE.Cst_icms 
+		FROM SAIDA_ESTOQUE WITH (INDEX=IX_SAIDA_ESTOQUE, NOLOCK) 
+		INNER JOIN Mercadoria M ON Saida_Estoque.PLU = M.PLU
+		WHERE Saida_Estoque.Filial = @Filial 
+		AND Data_Movimento BETWEEN @DATADE AND @DATAATE AND DATA_CANCELAMENTO IS NULL
+		AND CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(M.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(Saida_Estoque.cst_icms,'0')) COLLATE DATABASE_DEFAULT IN(SELECT #CST.CST COLLATE DATABASE_DEFAULT FROM #CST) 
+		AND LTRIM(RTRIM(CONVERT(VARCHAR(5), Saida_Estoque.ALIQUOTA_ICMS))) LIKE REPLACE(CASE WHEN @ALIQUOTA = '' THEN '%%' ELSE @ALIQUOTA +  
+		CASE WHEN CHARINDEX('.', @ALIQUOTA) > 0 OR CHARINDEX(',', @ALIQUOTA) > 0 THEN '' ELSE '0.00' END  END ,',', '.') 
+
+		/*
+		SELECT CST_ICMS, Codigo_Operacao, aliquota_icms, 
+		SUM(TOTAL_OPERACAO) AS TOTAL_OPERACAO,
+		SUM(BASE_ICMS) AS BASE_ICMS,
+		SUM(TOTAL_ICMS) AS TOTAL_ICMS,
+		SUM(BASE_ICMS_ST) AS BASE_ICMS_ST,
+		SUM(TOTAL_ICMS_ST) AS TOTAL_ICMS_ST,
+		SUM(TOTAL_IPI) AS TOTAL_IPI,
+		SUM(OUTRAS) AS OUTRAS,
+		TIPONF,
+		ORIGEM
+		FROM #LIXORegistrosFiscais
+		GROUP BY CST_ICMS, Codigo_Operacao, aliquota_icms, TIPONF, ORIGEM
+		ORDER BY 1, 2, 3
+		*/
+	END
+
+	SELECT AA.Codigo_Operacao, AA.Descricao, AA.[Valores Contabeis], AA.[Base de Calculo], AA.[Valor ICMS], AA.ST, AA.IPI, AA.OUTROS FROM (
+	SELECT TOP 1000 A.* FROM (SELECT TOP 1000 0 AS REG, Codigo_Operacao, (select top 1 cfop.descricao FROM CFOP WHERE CFOP.CFOP = #LIXORegistrosFiscais.Codigo_Operacao ) as Descricao, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [Valor ICMS], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao < 4999
+	GROUP BY Codigo_Operacao order by 1,2) AS A
+	UNION ALL
+	SELECT 2, '', '|-SUB-|Sub-totais Entradas', 0, 0, 0, 0, 0, 0
+	UNION ALL
+	SELECT B.* FROM (SELECT TOP 1000 3 AS REG, SUBSTRING(Codigo_Operacao, 1, 1) AS CFOP, 
+		CASE WHEN SUBSTRING(Codigo_Operacao, 1, 1) = '1' THEN 'Do Estado'
+		WHEN SUBSTRING(Codigo_Operacao, 1, 1) =  '2' THEN 'De outros Estados'
+		ELSE 'Do Exterior' END AS Descricao
+		, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [ICMS Creditado], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao < 4999
+	GROUP BY SUBSTRING(Codigo_Operacao, 1, 1) order by 1,2) AS B
+	UNION ALL
+	SELECT C.* FROM (SELECT TOP 1000 4 AS REG, '' AS COD, '|-SUB-|Totais entradas' AS DESCRICAO 
+		, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [ICMS Creditado], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao < 4999
+	 order by 1,2) AS C
+	 UNION ALL
+	SELECT D.* FROM (SELECT TOP 1000 5 AS REG, Codigo_Operacao, (select top 1 cfop.descricao FROM CFOP WHERE CFOP.CFOP = #LIXORegistrosFiscais.Codigo_Operacao ) as Descricao, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [Valor ICMS], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao > 4999
+	GROUP BY Codigo_Operacao order by 1,2) AS D
+	UNION ALL
+	SELECT 7, '', '|-SUB-|Sub-totais saidas', 0, 0, 0, 0, 0, 0
+	UNION ALL
+	SELECT E.* FROM (SELECT TOP 1000 8 AS REG, SUBSTRING(Codigo_Operacao, 1, 1) AS CFOP, 
+		CASE WHEN SUBSTRING(Codigo_Operacao, 1, 1) = '5' THEN 'Para o estado'
+		WHEN SUBSTRING(Codigo_Operacao, 1, 1) =  '6' THEN 'Para outros estados'
+		ELSE 'Para o exterior' END AS Descricao
+		, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [ICMS Creditado], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao > 4999
+	GROUP BY SUBSTRING(Codigo_Operacao, 1, 1) order by 1,2) AS E
+	UNION ALL
+	SELECT F.* FROM (SELECT TOP 1000 9 AS REG, '' AS COD, '|-SUB-|Totais saídas' AS DESCRICAO 
+		, SUM(TOTAL_OPERACAO) AS 'Valores Contabeis', SUM(BASE_ICMS) AS 'Base de Calculo', SUM(TOTAL_ICMS) AS [ICMS Creditado], SUM(TOTAL_ICMS_ST) AS ST, SUM(TOTAL_IPI) AS IPI, SUM(TOTAL_OPERACAO - BASE_ICMS - TOTAL_ICMS_ST - TOTAL_IPI) AS OUTROS
+	FROM #LIXORegistrosFiscais
+	WHERE Codigo_Operacao > 4999
+	 order by 1,2) AS F ) AS AA 
+	UNION ALL
+	SELECT '5927', 'ESTORNO DE IMPOSTO CREDITADO QUANDO A MERCADORIA ENTRADA NO ESTABELECIMENTO VIER A PERECER', 0, 0, @ESTORNO5927, 0, 0, 0
+	UNION ALL
+	SELECT '?411', 'ESTORNO DE IMPOSTO DEBITADO REFERENTE A NFE DE DEVOLUCAO COM ENTRADA ST', 0, 0, @ESTORNO5411, 0, 0, 0
+	UNION ALL
+	SELECT '', 'DEBITO NFE COMPLEMENTAR', 0, 0, @DEBITOCOMPLEMENTAR, 0, 0, 0
+	UNION ALL
+	SELECT '', '|-SUB-|APURAÇÃO SALDO DEVEDOR', 0, 0, SUM(CASE WHEN CODIGO_OPERACAO <= 4999 THEN #LIXORegistrosFiscais.TOTAL_ICMS * -1 ELSE #LIXORegistrosFiscais.TOTAL_ICMS end) + @ESTORNO5927 - @ESTORNO5411 + @DEBITOCOMPLEMENTAR, 0, 0, 0
+	FROM #LIXORegistrosFiscais
+END
+GO
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_rel_NFe_Complementar]    Script Date: 30/07/2024 11:26:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+cREATE PROCEDURE [dbo].[sp_rel_NFe_Complementar]
+@FILIAL VARCHAR(20),
+@DATADE	VARCHAR(8),
+@DATAATE VARCHAR(8)
+
+AS
+-- sp_rel_NFe_Complementar 'MATRIZ', '20240601', '20240630'
+BEGIN
+	SELECT Emissao = CONVERT(VARCHAR, nf.emissao, 103),
+	Destinatario = (CASE 
+			WHEN NF.Dest_Fornec = 1 THEN (SELECT TOP 1 FORNECEDOR.Razao_social FROM FORNECEDOR WHERE Fornecedor.Fornecedor = NF.Cliente_Fornecedor)
+			ELSE (SELECT TOP 1 CLIENTE.Nome_Cliente FROM CLIENTE WHERE CLIENTE.Codigo_Cliente = NF.Cliente_Fornecedor) END),
+	NF.Codigo AS NroNF,
+	NF.ID as Chave,
+	ii.base_icms as BaseICMS,
+	ii.icmsv as VlrICMS,
+	(SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo) AS ChaveReferenciada,
+	CONVERT(VARCHAR, (SELECT TOP 1 A.EMISSAO FROM NF A WHERE A.ID = (SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo)), 103) AS EmissaoRef,
+	(SELECT TOP 1 B.Codigo FROM NF B WHERE B.ID = (SELECT TOP 1 NF_DEVOLUCAO.id FROM Nf_Devolucao WHERE Nf_Devolucao.codigo_nf = NF.Codigo)) AS NroNFReferenciada
+	from 
+	nf inner join nf_item ii on nf.filial = ii.filial and nf.cliente_fornecedor = ii.cliente_fornecedor
+	and nf.codigo = ii.codigo and nf.serie = ii.serie and nf.tipo_nf = ii.tipo_nf 
+
+	where nf.data between @DataDe AND @DataAte
+	and nf.status =  'AUTORIZADO'
+	and nf.finNFe = 2
+END
+GO
+
+

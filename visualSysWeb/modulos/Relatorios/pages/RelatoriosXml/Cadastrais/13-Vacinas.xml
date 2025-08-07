@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vacinas</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_Cliente_pet_vacinas
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataDe</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataAte</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>Vacinacao</campo>
+        <campo>Vencimento</campo>
+      </lista>
+      <titulo>Tipo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>tipoData</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>
+        Select top 300 Codigo_Cliente,Nome_Cliente from Cliente
+       </sql>
+      <camposFiltros>
+        <campo>Codigo_Cliente</campo>
+        <campo>Nome_Cliente</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+      </preencher>
+
+      <titulo>Cod Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Codigo_Cliente</campo>
+      <largura>80</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>Nome Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>Nome_cliente</campo>
+    </filtro4>
+    <filtro5>
+      <tipo>listafiltro</tipo>
+      <titulo>Codigo Pet</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>80</largura>
+      <campo>codigo_pet</campo>
+      <sql>Select Codigo_pet , Nome_pet from cliente_pet</sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>6</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>3</filtropai>
+      <campofiltroPai>codigo_cliente</campofiltroPai>
+      <camposFiltros>
+        <filtro>Codigo_pet</filtro>
+        <filtro>Nome_pet</filtro>
+      </camposFiltros>
+    </filtro5>
+    <filtro6>
+      <tipo>texto</tipo>
+      <titulo>Nome Pet</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>Nome_pet</campo>
+    </filtro6>
+    <filtro7>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>VENCIDA</campo>
+        <campo>NAO</campo>
+      </lista>
+      <titulo>Vencida</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>Vencidas</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro7>
+    
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>2</campo>
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

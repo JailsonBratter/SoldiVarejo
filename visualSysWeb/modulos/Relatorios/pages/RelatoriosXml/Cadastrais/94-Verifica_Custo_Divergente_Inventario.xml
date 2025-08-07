@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Verifica Custos Divergentes gerados no Inventario</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_br_Verifica_Custo_Divergente_Inventario
+  </sql>
+  
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>CODIGO INVENTARIO</titulo>
+      <lista>
+        <campo></campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>INVENTARIO</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro0>
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>PLU</titulo>
+      <lista>
+        <campo></campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <largura>120</largura>
+      <campo>PLU</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro1>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>8</index>
+    </sub0>
+    <sub1>
+      <index>9</index>
+    </sub1>
+    <sub2>
+      <index>10</index>
+    </sub2>
+   
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+    <campo>3</campo>
+    <campo>4</campo>
+  </camposSemformatacao>
+
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

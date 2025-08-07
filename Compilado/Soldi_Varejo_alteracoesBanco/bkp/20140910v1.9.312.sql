@@ -1,0 +1,9 @@
+alter table nf_item drop constraint PK_NF_Item 
+GO
+UPDATE NF_Item SET Num_Item = 0 WHERE Num_Item IS NULL
+GO
+ALTER TABLE NF_ITEM ALTER COLUMN NUM_ITEM INT NOT NULL
+GO
+alter table nf_item add constraint  PK_NF_Item 
+PRIMARY KEY (FILIAL,CODIGO,CLIENTE_FORNECEDOR,TIPO_NF,PLU,NUM_ITEM)
+GO

@@ -1,0 +1,36 @@
+
+/****** Object:  Table [dbo].[Filial_IE]    Script Date: 17/09/2024 10:39:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Filial_IE](
+	[Filial] [varchar](20) NOT NULL,
+	[UF] [varchar](2) NOT NULL,
+	[IE] [varchar](50) NULL,
+	[Vcto_Difal_Tipo] TinyInt,
+	[Vcto_Difal_Tipo_Qtde] Tinyint,
+	[Vcto_Difal_Qtde] TinyInt,
+	[Vcto_Difal_Uteis] TinyInt
+CONSTRAINT [PK_Filial_IE] PRIMARY KEY CLUSTERED 
+(
+	[Filial] ASC,
+	[UF] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+GO
+ALTER TABLE Mercadoria ADD
+colesterol_nao	tinyint,
+colesterol_qtde	numeric(12,3),   
+colesterol_vlr_diario	numeric(12,3),
+calcio_nao	tinyint,
+calcio_qtde	numeric(12,3),   
+calcio_vlr_diario	numeric(12,3),
+ferro_nao	tinyint,
+ferro_qtde	numeric(12,3),   
+ferro_vlr_diario	numeric(12,3)
+

@@ -1,0 +1,1 @@
+alter table pedido alter column tabela_desconto varchar(16)

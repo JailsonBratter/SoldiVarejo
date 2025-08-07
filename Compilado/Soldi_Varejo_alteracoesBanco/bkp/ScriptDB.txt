@@ -1,0 +1,156 @@
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_m_Comanda_Consumo]    Script Date: 06/24/2022 09:01:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_m_Comanda_Consumo]
+	@comanda as varchar(10),
+	@consolidado as integer
+AS
+
+	-- SP_M_COMANDA_CONSUMO '8', 0
+	if @consolidado = 1
+		BEGIN
+			IF (OBJECT_ID('tempdb..#SEMCONSOLIDAR')) IS NOT NULL
+				DROP TABLE #SEMCONSOLIDAR
+
+			IF (OBJECT_ID('tempdb..#CONSOLIDAR')) IS NOT NULL
+				DROP TABLE #CONSOLIDAR
+
+			SELECT 
+			codigo = A.PLU,
+			descricao = C.DESCRICAO, 
+			quantidade = A.QTDE, 
+			valor = A.unitario,
+			C.Tipo,
+			C.Peso_Variavel
+			INTO #SEMCONSOLIDAR
+			FROM COMANDA_ITEM AS A 
+			INNER JOIN COMANDA_CONTROLE AS B ON A.COMANDA=B.COMANDA 
+			INNER JOIN MERCADORIA AS C ON A.PLU=C.PLU WHERE
+			A.DATA_CANCELAMENTO IS NULL 
+			AND (B.STATUS = '02' OR B.STATUS = '06') 
+			AND A.CUPOM = '0' AND A.PDV = '0' 
+			AND A.COMANDA = @Comanda
+			AND (C.Tipo = 'PIZZA' OR C.Peso_Variavel = 'PESO')
+
+
+			SELECT 
+			codigo = A.PLU,
+			descricao = C.DESCRICAO, 
+			quantidade = SUM(A.QTDE), 
+			valor = AVG(A.unitario),
+			C.Tipo,
+			C.Peso_Variavel
+			INTO #CONSOLIDAR
+			FROM COMANDA_ITEM AS A 
+			INNER JOIN COMANDA_CONTROLE AS B ON A.COMANDA=B.COMANDA 
+			INNER JOIN MERCADORIA AS C ON A.PLU=C.PLU WHERE
+			A.DATA_CANCELAMENTO IS NULL 
+			AND (B.STATUS = '02' OR B.STATUS = '06') 
+			AND A.CUPOM = '0' AND A.PDV = '0' 
+			AND A.COMANDA = @Comanda
+			AND NOT (C.Tipo = 'PIZZA' OR C.Peso_Variavel = 'PESO')
+			GROUP BY A.PLU, C.Descricao, C.Tipo, C.Peso_Variavel
+
+			select codigo, descricao, quantidade, valor from #SEMCONSOLIDAR
+			union all
+			select codigo, descricao, quantidade, valor from #CONSOLIDAR
+			ORDER BY 2
+		END
+	ELSE
+		BEGIN
+			SELECT 
+			codigo = A.PLU,
+			descricao = C.DESCRICAO, 
+			quantidade = A.QTDE, 
+			valor = A.unitario
+			FROM COMANDA_ITEM AS A 
+			INNER JOIN COMANDA_CONTROLE AS B ON A.COMANDA=B.COMANDA 
+			INNER JOIN MERCADORIA AS C ON A.PLU=C.PLU WHERE
+			A.DATA_CANCELAMENTO IS NULL 
+			AND (B.STATUS = '02' OR B.STATUS = '06') 
+			AND A.CUPOM = '0' AND A.PDV = '0' 
+			AND A.COMANDA = @Comanda
+			ORDER BY A.ID
+		END
+
+GO
+
+CREATE TABLE [dbo].[Fornecedor_Ocorrencia](
+	[Fornecedor] [varchar](50) NOT NULL,
+	[Data] DateTime NOT NULL,
+	[Ocorrencia] nVarchar(MAX) NOT NULL,
+	[Status] [VarChar](20) NOT NULL,
+	[Usuario] [VarChar](20) NOT NULL
+)
+go
+
+GO
+/****** Object:  StoredProcedure [dbo].[LX_SEQUENCIAL]    Script Date: 29/06/2022 10:49:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[LX_SEQUENCIAL] @TABELA_COLUNA VARCHAR(37), @EMPRESA INT = NULL, @SEQUENCIA VARCHAR(20) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE	@SEQUENCIA_ANT VARCHAR(20), 
+		@TAMANHO INT, 
+		@PERMITE_POR_EMPRESA SMALLINT,
+		@EXECUTA SMALLINT,
+		@errno   int,
+		@errmsg  varchar(255)
+
+	--SET
+
+	SELECT @EXECUTA=1
+	WHILE @EXECUTA=1
+	BEGIN
+		SELECT 	@SEQUENCIA_ANT	= ISNULL(SEQUENCIA,0), 
+			@TAMANHO	= ISNULL(TAMANHO,DATALENGTH(RTRIM(SEQUENCIA))), 
+			@PERMITE_POR_EMPRESA =0
+		FROM SEQUENCIAIS 
+		WHERE TABELA_COLUNA=@TABELA_COLUNA
+		IF @@ROWCOUNT=0
+		BEGIN
+			SELECT 	@ERRNO=50001,
+				@ERRMSG='O sequencial #'+RTRIM(@TABELA_COLUNA) +' #nao existe na tabela de sequenciais !!!'
+			GOTO error
+		END
+
+		BEGIN
+			SELECT @SEQUENCIA=RIGHT(REPLICATE('0',@TAMANHO)+CONVERT(VARCHAR(20),CONVERT(INT,@SEQUENCIA_ANT)+1),@TAMANHO)
+
+			UPDATE 	SEQUENCIAIS 
+			SET 	SEQUENCIA = @SEQUENCIA
+			WHERE 	TABELA_COLUNA=@TABELA_COLUNA AND 
+				SEQUENCIA=@SEQUENCIA_ANT
+			
+		END
+		IF @@ROWCOUNT=1 OR @@ERROR <> 0
+			SELECT @EXECUTA=0
+	END
+
+
+RETURN
+error:
+    --raiserror @errno @errmsg
+RETURN
+END
+
+
+
+
+
+
+--PROCEDURE =============================================================================================================================================
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_REL_HISTORIO_ENTRADA_SAIDA_CONSOLIDADE]') AND type in (N'P', N'PC'))
+begin
+	DROP PROCEDURE [SP_REL_HISTORIO_ENTRADA_SAIDA_CONSOLIDADE]
+end

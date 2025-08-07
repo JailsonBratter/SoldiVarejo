@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Cliente Analitico</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_Resumo_Vendas_Cliente
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+      <soMesAno>true</soMesAno>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+      <soMesAno>true</soMesAno>
+    </filtro1>
+
+     <filtro2>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select TOP 200 Cliente=Codigo_Cliente,Nome_Cliente  from (
+         Select Codigo_Cliente,Nome_Cliente from cliente WITH (INDEX(IX_Cliente_Codigo_Nome)) 
+         ) as fornec_cliente
+       </sql>
+       <camposFiltros>
+         <campo>Codigo_Cliente</campo>
+         <campo>Nome_Cliente</campo>
+
+       </camposFiltros>
+
+       <titulo>Cliente</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>Codigo_Cliente</campo>
+       <largura>200</largura>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>SINTETICO</campo>
+        <campo>ANALITICO</campo>
+      </lista>
+      <campo>tipo</campo>
+      <obrigatorio>true</obrigatorio>
+      
+    </filtro3>
+
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>2</index>
+    </sub0>
+    <sub1>
+       <index>6</index>
+    </sub1>
+    <sub2>
+      <index>7</index>
+    </sub2>
+
+  </subtotais>
+  
+  <rodape>
+    Deola Itaim
+    R Joaquim Floriano, 1095
+    Tel/Fax: (11) 3213-7581
+  </rodape>
+  
+</Relatorio>

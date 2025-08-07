@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Notas Fiscais Entrada Imposto</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_nf_entrada_imposto
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+     <filtro2>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select  top 300 Fornecedor,Razao_social from fornecedor
+       </sql>
+       <camposFiltros>
+         <campo>Fornecedor</campo>
+         <campo>Razao_social</campo>
+
+       </camposFiltros>
+
+       <titulo>Fornecedor</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>Fornecedor</campo>
+       <largura>200</largura>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>ENTRADA</campo>
+        <campo>EMISSAO</campo>
+      </lista>
+      <campo>TPData</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+  </filtros>
+  <subtotais>
+
+    <sub0>
+      <index>3</index>
+    </sub0>
+    <sub1>
+      <index>4</index>
+    </sub1>
+   <sub2>
+      <index>5</index>
+    </sub2>
+   <sub3>
+      <index>6</index>
+    </sub3>
+   <sub4>
+      <index>7</index>
+    </sub4>
+   <sub5>
+      <index>8</index>
+    </sub5>
+   <sub6>
+      <index>9</index>
+    </sub6>
+   <sub7>
+      <index>10</index>
+    </sub7>
+   <sub8>
+      <index>11</index>
+    </sub8>
+   <sub9>
+      <index>12</index>
+    </sub9>
+   
+  </subtotais>
+
+  <camposSemformatacao>
+    <campo>0</campo>
+    
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

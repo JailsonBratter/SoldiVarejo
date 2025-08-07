@@ -1,0 +1,131 @@
+﻿.conteudo {
+    min-height: 500px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.col {
+    padding: 10px;
+    border:solid 1px;
+    margin:10px;
+    min-height:490px;
+}
+.colEsquerda{
+    flex:3
+       
+}
+.colDireita {
+    margin:10px 0px;
+    flex:8;
+}
+
+
+input[type="image"] {
+    width:20px;  
+    margin-top:-3px;
+    margin-right:5px;
+    float:left;
+}
+.imgPesq{
+    float:none!important;
+}
+
+.url{
+    width:60%;
+    
+}
+.cabecalho{
+    padding:20px;
+    width: 95%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
+
+.btn{
+    border-radius:5px;
+    background-color: none;
+    padding:10px;
+    margin-top:20px;
+    min-width:100px;
+}
+
+.btn-incluir{
+    background-color: #358f20;
+    color:#FFF
+}
+
+    .btn-incluir:hover {
+        background-color: #225316;
+        cursor:pointer;
+    }
+
+
+.btn-cancelar {
+    background-color: #f61818;
+    color: #FFF
+}
+
+    .btn-cancelar:hover {
+        background-color: #960202;
+        cursor: pointer;
+    }
+
+.btn-fechar{
+    position:absolute;
+    top:0;
+    right:0;
+    padding:5px;
+    
+}
+
+.semCardapio {
+    text-align: center;
+    padding: 5%;
+    margin: auto;
+    margin-top:10%;
+    width: 30%;
+    border: solid 1px;
+    border-radius:5px;
+    overflow: hidden;
+    background:#faeda5;
+    font-size:2em;
+}
+
+.semCategoria {
+    width: 80%;
+    font-size: 1.5em;
+    margin-top: 30%;
+    padding:3% 0px;
+}
+
+.col-btn{
+    width:48%;
+    margin:0px;
+    
+    text-align:center;
+    line-height:50px;
+}
+
+.panel{
+    padding-left:2%;
+    width:100%;
+}
+
+.frameModal{
+    overflow:hidden;
+}
+.btnImprimirDireita{
+    margin-right:80px;
+    padding:10px 0px;
+}

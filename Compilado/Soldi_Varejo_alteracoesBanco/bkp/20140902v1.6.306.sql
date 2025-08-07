@@ -1,0 +1,1 @@
+alter table filial add tipo_certificado varchar(2),diretorio_transmite varchar(50) , diretorio_resposta varchar(50)

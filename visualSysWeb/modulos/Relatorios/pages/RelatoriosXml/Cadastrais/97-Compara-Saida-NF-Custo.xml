@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Compara Saida Estoque com NF_itens e Preço de Custo</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_br_Compara_Saida_NF_Custo
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataDe</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datAte</campo>      
+      <campofiltro></campofiltro>
+    </filtro1>
+  </filtros>
+ <subtotais>
+    <sub0>
+      <index>1</index>
+      <titulo>VENDA_CUPOM</titulo>
+      <campo>venda_cupom</campo>
+    </sub0>
+    <sub1>
+      <index>2</index>
+      <titulo>CUSTO_CUPOM</titulo>
+      <campo>custo_cupom</campo>
+    </sub1>
+    <sub2>
+      <index>4</index>
+      <titulo>VENDA_NF</titulo>
+      <campo>venda_nf</campo>
+    </sub2>
+    <sub3>
+      <index>5</index>
+      <titulo>CUSTO_NF</titulo>
+      <campo>custo_nf</campo>
+    </sub3>
+   
+  </subtotais>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>
+  

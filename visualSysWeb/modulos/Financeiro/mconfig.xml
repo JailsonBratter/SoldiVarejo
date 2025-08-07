@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Financeiro</nome>
+  <versao>1.0</versao>
+  <atualizado>20/03/2013</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>ContasReceber</_1>
+    <_1>ContasPagar</_1>
+    <_1>Cheque</_1>
+    <_1>Caderneta</_1>
+    <_1>Tesouraria</_1>
+    <_1>transferencia</_1>
+  </ordem>
+
+
+  <Tesouraria>
+    <nome>Tesouraria</nome>
+    <codigo>FN001</codigo>
+    <page>Tesouraria.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Tesouraria.png</img>
+    <inicial>true</inicial>
+  </Tesouraria>
+
+  <ContasReceber>
+    <nome>Contas a Receber</nome>
+    <codigo>FN002</codigo>
+    <page>ContasReceber.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Contas.png</img>
+    <inicial>true</inicial>
+  </ContasReceber>
+
+  <ContasPagar>
+    <nome>Contas a Pagar</nome>
+    <codigo>FN003</codigo>
+    <page>ContasPagar.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Contas.png</img>
+    <inicial>true</inicial>
+  </ContasPagar>
+
+  <Cheque>
+    <nome>Cheque Clientes</nome>
+    <codigo>FN004</codigo>
+    <page>ChequeCliente.aspx</page>
+    <imgMenu></imgMenu>
+    <img>check.png</img>
+    <inicial>true</inicial>
+  </Cheque>
+
+  <Caderneta>
+    <nome>Caderneta</nome>
+    <codigo>FN005</codigo>
+    <page>Caderneta.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Caderneta.png</img>
+    <inicial>true</inicial>
+  </Caderneta>
+
+  <transferencia>
+    <nome>Movimentação Bancaria</nome>
+    <codigo>FN006</codigo>
+    <page>TransferenciaContas.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Transferencia.png</img>
+    <inicial>true</inicial>
+  </transferencia>
+
+
+</mconfig>

@@ -1,0 +1,1758 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+body {
+    background: #b6b7bc;
+    font-size: 12px;
+    font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: #465c71;
+}
+
+pwd {
+    font-family: "MT Extra";
+}
+
+a:link, a:visited {
+    color: #034af3;
+}
+
+a:hover {
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active {
+    color: #034af3;
+}
+
+p {
+    margin-top: 1px;
+    margin-bottom: 0px;
+    line-height: 1.6em;
+    color: #465c71;
+}
+
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5em;
+    color: #465c71;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 1.6em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5, h6 {
+    font-size: 1em;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2 {
+    margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page {
+    height: 90%;
+    width: 95%;
+    background-color: #fff;
+    margin: 20px auto 0px auto;
+    border: 1px solid #496077;
+}
+
+.header {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    background: #FFFFFF;
+    width: 100%;
+}
+
+    .header h1 {
+        font-weight: 700;
+        margin: 0px;
+        padding: 0px 0px 0px 20px;
+        color: #4b6c9e;
+        border: none;
+        line-height: 2em;
+        font-size: 2em;
+    }
+
+.main {
+    padding: 0px 12px;
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 420px;
+}
+
+.leftCol {
+    width: 15%;
+    min-height: 200px;
+    float: left;
+}
+
+.footer {
+    color: #4e5766;
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink {
+    background-color: #3a4f63;
+    width: 100%;
+}
+
+div.menu {
+    padding: 4px 0px 4px 8px;
+}
+
+    div.menu ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+        width: auto;
+        z-index: 10;
+    }
+
+        div.menu ul li a, div.menu ul li a:visited {
+            background-color: #465c71;
+            border: 0px #4e667d solid;
+            color: #dde4ec;
+            display: block;
+            line-height: 1.35em;
+            padding: 4px 20px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+            div.menu ul li a:hover {
+                background-color: #bfcbd6;
+                color: #465c71;
+                text-decoration: none;
+            }
+
+            div.menu ul li a:active {
+                background-color: #465c71;
+                color: #cfdbe6;
+                text-decoration: none;
+            }
+
+    div.menu img {
+        border-width: 0px;
+    }
+
+
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset {
+    margin-left: 300px;
+    margin-right: auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+    fieldset p {
+        margin: 2px 12px 10px 10px;
+    }
+
+    fieldset.login label, fieldset.register label, fieldset.changePassword label {
+        display: block;
+    }
+
+    fieldset label.inline {
+        display: inline;
+    }
+
+legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry {
+    border: 1px solid #ccc;
+}
+
+input.passwordEntry {
+    border: 1px solid #ccc;
+}
+
+div.accountInfo {
+    width: 42%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear {
+    clear: both;
+}
+
+.title {
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.titleimg {
+    float: left;
+}
+
+.loginDisplay {
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    padding: 10px;
+    color: #4b6c9e;
+}
+
+    .loginDisplay a:link {
+        color: #4b6c9e;
+    }
+
+    .loginDisplay a:visited {
+        color: #4b6c9e;
+    }
+
+    .loginDisplay a:hover {
+        color: #4b6c9e;
+    }
+
+.login {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 368px;
+}
+
+
+.btnEntrar {
+    width: 88px;
+    color: Blue;
+    background: #FFFFFF;
+}
+
+.login table {
+    margin: auto;
+    margin-top: 40px;
+}
+
+.imgButton {
+    float: left;
+    width: 100px;
+    height: 120px;
+    margin-left: 30px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #465c71;
+}
+
+.titulobtn {
+    float: left;
+    color: #465c71;
+    text-indent: bold;
+    text-align: center;
+    font-size: 15px;
+    margin-left: 10px;
+    height: 40px;
+    vertical-align: text-bottom;
+}
+
+.tituloPermissoes {
+    float: left;
+    width: 100%;
+    color: #465c71;
+    text-indent: bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.cabMenu {
+    float: left;
+    height: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    border-bottom-style: solid;
+    border-width: 2px;
+}
+
+.cabMenuLista {
+    float: left;
+    height: 30px;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    border-bottom-style: solid;
+    border-width: 2px;
+}
+
+.failureNotification {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
+    color: Red;
+}
+
+.formLayout {
+    margin-left: 30px;
+    margin-right: auto;
+}
+
+.imgIco {
+    width: 25px;
+    height: 25px;
+    color: #465c71;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.submitButton {
+    text-align: right;
+    padding-right: 10px;
+    color: #465c71;
+}
+
+.gridTable {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: Black;
+    overflow: auto;
+}
+
+    .gridTable table {
+        margin: auto;
+        text-align: left;
+        width:95%;
+        border-style: solid;
+        border-width: 2px;
+    }
+
+        .gridTable table a {
+            width: 100%;
+            text-decoration: none;
+            font-family: verdana, arial;
+            text-align: left;
+        }
+
+            .gridTable table a:hover {
+                border: 0px solid #000000;
+                background-color: #B0C4DE;
+                width: 100%;
+                color: blue;
+                font-family: verdana, arial;
+            }
+
+.filter {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.frm {
+    margin: auto;
+    width: 75%;
+    color: #465c71;
+}
+
+.framepermissao {
+    margin: auto auto auto auto;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.frame {
+    width: 100%;
+    margin: auto auto auto auto;
+    overflow:hidden;
+}
+
+    .frame table {
+        margin: auto auto auto auto;
+    }
+
+.divFrame {
+    margin: auto auto 30px auto;
+    width: 60%;
+}
+
+
+.panel {
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 45%;
+}
+
+.panelInterno {
+    float: left;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 10px;
+    margin-left: 40px;
+    width: 100%;
+    max-height:600px;
+    overflow:auto;
+}
+
+.panelMargemTop {
+    float: left;
+    border-style: solid;
+    border-width: 1px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.direita {
+    margin: auto;
+    text-align: right;
+    width: 60%;
+}
+
+.direitaFechar {
+    margin: auto;
+    text-align: right;
+}
+
+.opcoes {
+    width: 502px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.tab {
+    margin-left: 15px;
+}
+
+.item {
+    background: #316271;
+    color: white;
+    text-transform: capitalize;
+    width: 50px;
+    text-align: center;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+
+.tab a {
+    width: 90px;
+    color: #FFFFFF;
+}
+
+
+    .tab a:hover {
+        text-decoration: underline;
+        background: blue;
+    }
+
+
+.conteudo {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-color: #465c71;
+    margin: auto auto auto auto;
+    color: #465c71;
+}
+
+    .conteudo table {
+        margin: auto auto auto auto;
+        color: #465c71;
+    }
+
+.selectedTab {
+}
+
+.numero {
+    text-align: right;
+}
+
+.numeroObrigatorio {
+    border-style: solid;
+    border-width: 2px;
+    text-align: right;
+}
+
+.titulos {
+    font-size: 1.5em;
+    color: #465c71;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+    margin-right: 5px;
+    text-align: center;
+    float: left;
+}
+
+.cabecalhoRelatorio {
+    font-size: 1.5em;
+    color: #465c71;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+    text-align: center;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-width: 1px;
+    height: 50px;
+    width: 99%;
+    margin-left: 0.5%;
+}
+
+.rodapeRelatorio {
+    border-top-style: solid;
+    border-width: 1px;
+    height: 40px;
+    width: 99%;
+    margin-top: 10px;
+    margin-left: 0.5%;
+}
+
+.filtros {
+    float: left;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.filtrosRelatorio {
+    float: left;
+    font-size: 1.5em;
+    color: #465c71;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    text-align: left;
+}
+
+.filtrosPesquisa {
+    float: left;
+    font-size: 1.5em;
+    color: #465c71;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.btnImprimirDireita {
+    float: right;
+}
+
+
+
+.fundo {
+    width: 940px;
+    height: 400px;
+    position: fixed;
+    background: #DCDCDC;
+    top: 50px;
+    text-align: right;
+    border-style: solid;
+    border-width: 1px;
+}
+
+    .fundo .lista {
+        margin-top: 40px;
+        position: absolute;
+        overflow: auto;
+        width: 600px;
+        height: 200px;
+        padding: 0px;
+        border-style: solid;
+        border-width: 1px;
+        background: #FFFFFF; /*aqui eu defini a cor do background*/
+        text-align: justify; /*alinhei o texto justificado*/
+        left: 100px; /*alinhei meu texto a esquerda e declarei um valor a ele*/ /*meu texto ficará a 50px do topo*/
+        border: 1px solid #006699; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+        font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+        padding: 10px; /*defini a distância do texto para minha borda*/
+    }
+
+
+
+    .fundo .grid {
+        position: absolute;
+        overflow: auto;
+        width: 95%;
+        height: 200px;
+        padding: 0px;
+        border-style: solid;
+        border-width: 1px;
+        background: #FFFFFF; /*aqui eu defini a cor do background*/
+        text-align: justify; /*alinhei o texto justificado*/
+        left: 10px; /*alinhei meu texto a esquerda e declarei um valor a ele*/
+        top: 20px; /*meu texto ficará a 50px do topo*/
+        border: 1px solid #006699; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+        font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+        padding: 10px; /*defini a distância do texto para minha borda*/
+    }
+
+    .fundo .filtro {
+        position: absolute;
+        width: 600px;
+        height: 50px;
+        padding: 0px;
+        border-style: solid;
+        border-width: 1px;
+        background: #FFFFFF; /*aqui eu defini a cor do background*/
+        text-align: justify; /*alinhei o texto justificado*/
+        left: 100px; /*alinhei meu texto a esquerda e declarei um valor a ele*/ /*meu texto ficará a 50px do topo*/
+        border: 1px solid #006699; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+        font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+        padding: 10px; /*defini a distância do texto para minha borda*/
+    }
+
+.total {
+    float: right;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.inicial {
+    height: 90%;
+    margin-bottom: 30px;
+    overflow: auto;
+}
+
+.MenuEtiqueta {
+    float: left;
+    width: 20%;
+}
+
+.MenuEtiquetaDireita {
+    float: left;
+    width: 70%;
+    height: 500px;
+}
+
+.gridTableEtiqueta {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 270px;
+    color: Black;
+    overflow: auto;
+}
+
+
+.aguarde {
+    width: 100%;
+    height: 300%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+}
+
+.imgaguarde {
+    position: fixed;
+    margin: 20% auto auto auto;
+}
+
+.tituloFinalizadora {
+    float: left;
+    width: 100%;
+    height: 30px;
+    color: #465c71;
+    text-indent: bold;
+    text-align: left;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.tituloFinalizadoraValor {
+    float: left;
+    height: 30px;
+    width: 90%;
+    color: #465c71;
+    text-indent: bold;
+    text-align: right;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.subtotal {
+    border-top: solid 1px blackS;
+    background-color: #FFFFFF;
+    font-weight: bold;
+}
+
+.gridnf {
+    overflow: auto;
+    width: 98%;
+    height: 350px;
+}
+
+    .gridnf .table {
+        width: 200%;
+        margin-left: 10px;
+    }
+
+
+
+.modalBackground {
+    /*background-image: url("/img/bkgaguarde.png");*/
+    top: 0px !important;
+    left: 0px !important;
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.modalForm {
+    width: 1000px;
+    height: 500px;
+    position: fixed;
+    background: #DCDCDC;
+    top: 50px;
+    border-style: solid;
+    border-width: 1px;
+    z-index: 99;
+}
+
+    .modalForm .frame {
+        background: #FFFFFF;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-color: #465c71;
+        margin: auto auto auto auto;
+        width: 95%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        color: #465c71;
+    }
+
+.tabelaLista {
+    margin-left: 20px;
+}
+
+.modalForm .lista {
+    overflow: auto;
+    width: 90%;
+    height: 300px;
+    padding: 0px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    margin: auto auto auto auto;
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+
+.listaDiv {
+    float: left;
+    overflow: auto;
+    width: 80%;
+    height: 150px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+.listaDivPreco {
+    float: left;
+    overflow: auto;
+    width: 95%;
+    height: 290px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+
+.DivBorda {
+    float: left;
+    overflow: auto;
+    height: 320px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.frameDiv {
+    background: #FFFFFF;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-color: #465c71;
+    margin: auto auto auto auto;
+    width: 90%;
+    height: 98%;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    color: #465c71;
+}
+
+.frameCentral {
+    margin-left: 20px;
+    float: left;
+    height: 10%;
+}
+
+.frameModal {
+    position: fixed;
+    background: #FFFFFF;
+    top: 50px;
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    margin: auto auto auto auto;
+}
+
+    .frameModal table {
+        margin: auto auto auto auto;
+        width: 50%;
+    }
+
+.frameConteudo {
+    width: 100%;
+    height: 500px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #465c71;
+}
+
+.frameRespota {
+    width: 800px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #465c71;
+    height: 300px;
+    overflow: auto;
+}
+
+.campoObrigatorio {
+    border-style: solid;
+    border-width: 2px;
+    border-color:black;
+}
+
+
+.gridBorda {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.cargaPDVDireita {
+    flex: 1;
+    overflow: auto;
+    max-height: 500px;
+    margin-bottom:20px;
+}
+
+    .cargaPDVDireita .gridTable {
+        margin-top: 1px;
+        margin-bottom: 30px;
+        color: Black;
+        overflow: auto;
+    }
+
+.FrameDivisaoTela {
+    float: left;
+    width: 90%;
+    margin-left: 0px;
+    margin-right: 0px;
+    overflow: auto;
+}
+
+.FrameDivisaoTelaDireita {
+    float: left;
+    margin-left: 0px;
+    margin-right: 0px;
+    overflow: auto;
+}
+
+.FrameFiltrosRelatorio {
+    float: left;
+    width: 100%;
+}
+
+.maius {
+    text-transform: uppercase;
+}
+
+
+.autocomplete_completionListElement {
+    margin: 0px !important;
+    background-color: white;
+    color: windowtext;
+    border: buttonshadow;
+    border-width: 1px;
+    border-style: solid;
+    cursor: 'default';
+    overflow: auto;
+    height: auto;
+    width: 150%;
+    max-height: 300px;
+    text-align: left;
+    list-style-type: none;
+}
+
+.autocomplete_highlightedListItem {
+    background-color: #87CEEB;
+    color: black;
+    padding: 1px;
+    margin-left: -35px;
+}
+
+.autocomplete_listItem {
+    background-color: window;
+    color: windowtext;
+    padding: 1px;
+    margin-left: -30px;
+}
+
+.FramePlanoDeContas {
+    margin-left: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    color: Black;
+    height: 500px;
+}
+
+    .FramePlanoDeContas h1 {
+        margin-top: 0px;
+        font-size: 1.8em;
+    }
+
+    .FramePlanoDeContas table {
+        margin: auto;
+        text-align: left;
+        width: 95%;
+    }
+
+        .FramePlanoDeContas table a {
+            width: 100%;
+            text-decoration: none;
+            font-family: verdana, arial;
+            text-align: left;
+        }
+
+            .FramePlanoDeContas table a:hover {
+                border: 0px solid #000000;
+                background-color: blue;
+                width: 100%;
+                color: #FFFFFF;
+                font-family: verdana, arial;
+            }
+
+    .FramePlanoDeContas .DivPlano {
+        width: 370px;
+        height: 480px;
+        margin-bottom: 5px;
+        float: left;
+    }
+
+    .FramePlanoDeContas .GridContas {
+        width: 370px;
+        height: 400px;
+        overflow: auto;
+    }
+
+.cabMenuPlanoDeContas {
+    height: 30px;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    border-bottom-style: solid;
+    border-width: 2px;
+}
+
+.modalFormCentro {
+    width: 800px;
+    position: fixed;
+    background: #DCDCDC;
+    top: 50px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+    .modalFormCentro .lista {
+        overflow: auto;
+        width: 90%;
+        height: 300px;
+        padding: 0px;
+        border-style: solid;
+        border-width: 1px;
+        background: #FFFFFF; /*aqui eu defini a cor do background*/
+        text-align: left; /*alinhei o texto justificado*/
+        margin: auto auto auto auto;
+        border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+        font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+        margin-bottom: 10px;
+        padding: 10px; /*defini a distância do texto para minha borda*/
+    }
+
+    .modalFormCentro table {
+        margin: auto auto auto auto;
+    }
+
+    .modalFormCentro .frame {
+        width: 400px;
+        margin: 10px auto auto auto;
+    }
+
+.framePrint {
+    width: 100%;
+    margin: auto auto auto auto;
+}
+
+    .framePrint table {
+        margin: auto auto auto auto;
+    }
+
+    .framePrint p {
+        margin-top: 1px;
+        margin-bottom: 0px;
+        line-height: 1.6em;
+        color: #465c71;
+        font-size: large;
+        font-style: inherit;
+    }
+
+.vendaMercadoria {
+    float: left;
+    width: 25%;
+    margin-left: 1px;
+    margin-right: 1px;
+    overflow: auto;
+}
+
+.vendaGrafico {
+    float: left;
+    width: 45%;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.vendaGraficoComercial {
+    float: left;
+    width: 60%;
+    margin-left: 1px;
+    margin-right: 1px;
+    overflow: auto;
+}
+
+.vendaMercadoriaComercial {
+    float: left;
+    width: 35%;
+    margin-left: 1px;
+    margin-right: 1px;
+    overflow: auto;
+}
+
+.vendaMercadoriaComercialItens {
+    width: 100%;
+    margin-left: 1px;
+    margin-right: 1px;
+    overflow: auto;
+}
+
+.fontehyperlink a {
+    text-decoration: none;
+    color: #466682;
+}
+
+
+.FrameDivisaoMeioTela {
+    float: left;
+    width: 48%;
+    margin-left: 2px;
+    margin-right: 5px;
+    overflow: auto;
+}
+
+.th {
+    position: relative;
+}
+
+
+.Div300-650 {
+    float: left;
+    overflow: auto;
+    width: 650px;
+    height: 300px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+.Div300-400 {
+    float: left;
+    overflow: auto;
+    width: 400px;
+    height: 300px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+
+.Div60porc {
+    float: left;
+    width: 60%;
+    margin-left: 2px;
+    margin-right: 5px;
+    overflow: auto;
+}
+
+.modalFormTelaCheia {
+    width: 1200px;
+    height: 80%;
+    position: fixed;
+    background: #DCDCDC;
+    top: 50px;
+    border-style: solid;
+    border-width: 1px;
+    margin: auto;
+}
+
+.modalFormTelaCheiaframe {
+    float: left;
+    overflow: auto;
+    width: 60%;
+    height: 180px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.modalFormTelaCheiaframeMini {
+    float: left;
+    overflow: auto;
+    width: 30%;
+    height: 180px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.modalFormTelaCheiaframeDiv {
+    background: #FFFFFF;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-color: #465c71;
+    margin: auto auto auto auto;
+    width: 95%;
+    height: 500px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    color: #465c71;
+}
+
+.modalFormTelaCheialistaDiv {
+    float: left;
+    overflow: auto;
+    width: 95%;
+    height: 150px;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-bottom: 10px;
+    margin-left: 20px;
+    padding: 10px; /*defini a distância do texto para minha borda*/
+}
+
+.gridTableTelaCheia {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: Black;
+    overflow: auto;
+}
+
+
+    .gridTableTelaCheia table {
+        margin: auto;
+        text-align: left;
+        width: 95%;
+        border-style: solid;
+        border-width: 2px;
+    }
+
+        .gridTableTelaCheia table a {
+            width: 100%;
+            text-decoration: none;
+            font-family: verdana, arial;
+            text-align: left;
+        }
+
+            .gridTableTelaCheia table a:hover {
+                border: 0px solid #000000;
+                background-color: blue;
+                width: 100%;
+                color: #FFFFFF;
+                font-family: verdana, arial;
+            }
+
+.Agenda {
+    width: 650px;
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    color: Black;
+    background: #FFFAFA;
+}
+
+    .Agenda table {
+        border: 1px solid #000000;
+        font-family: verdana, arial;
+    }
+
+.AgendaCabecalho {
+    border: 0px;
+    float: left;
+    background: #D4CACA;
+    width: 80px;
+    height: 50px;
+    font-family: verdana, arial;
+    line-height: 20px;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+}
+
+.AgendaCelula {
+    border: 0px solid #000000;
+    float: left;
+    border-style: ridge;
+    font-family: verdana, arial;
+    width: 80px;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+    height: 20px;
+}
+
+.tdLivre {
+    border: 0px;
+    font-family: verdana, arial;
+    background: #8CF9AB;
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.tdOcupado {
+    border: 0px;
+    font-family: verdana, arial;
+    background: #CD5C5C;
+    width: 100%;
+    color: White;
+    height: 120%;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.tdIndisponivel {
+    border: 0px;
+    font-family: verdana, arial;
+    background: #DCDCDC;
+    width: 100%;
+    color: White;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.tdOcupadoCliente {
+    border: 0px;
+    font-family: verdana, arial;
+    background: #FFFF00;
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.row {
+    float: left;
+    width: 100%;
+}
+.rowFlex{
+    display:flex;
+}
+.col1{
+    flex:1;
+    padding:5px;
+}
+.col2 {
+    flex: 2;
+    padding:5px;
+}
+.col3 {
+    flex: 3;
+    padding: 5px;
+}
+
+.AgendaCelulaHorario {
+    float: left;
+    border: 0px;
+    font-family: verdana, arial;
+    width: 80px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    height: 20px;
+    background: #DCDCDC;
+}
+
+.AgendaCabecalhoHorario {
+    float: left;
+    border: 0px;
+    background: #D4CACA;
+    width: 80px;
+    height: 50px;
+    font-family: verdana, arial;
+    line-height: 50px;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+}
+
+.panelItem {
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.panelDefault {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+.Paneldireita {
+    text-align: right;
+    margin-right: 40px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.modalFormTelaInteiraConfirma {
+    float: left;
+    width: 90%;
+    border-style: solid;
+    border-width: 1px;
+    background: #FFFFFF; /*aqui eu defini a cor do background*/
+    text-align: left; /*alinhei o texto justificado*/
+    border: 1px solid black; /*coloquei uma borda no meu pop up, borda com 1 pixel solida*/
+    font: 14px/20px Tahoma, Arial, Verdana; /*defini o tamanho e a fonte que ficará o texto da minha popup*/
+    margin-left: 40px;
+    padding: 10px;
+}
+
+.linhaInativo a {
+    color: Red;
+}
+
+.linhaInativo {
+    color: Red;
+}
+
+
+.linhaPromocao a {
+    color: #006400;
+}
+
+.tableSimplesPedido {
+    width: 100%;
+}
+
+    .tableSimplesPedido th {
+        border-bottom-style: dashed;
+        border-top-style: dashed;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
+        text-align: left;
+    }
+
+    .tableSimplesPedido td {
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+    }
+
+
+    .tableSimplesPedido .tdNumero {
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+        text-align: right;
+    }
+
+    .tableSimplesPedido .thNumero {
+        border-bottom-style: dashed;
+        border-top-style: dashed;
+        border-top-width: 2px;
+        border-bottom-width: 2px;
+        text-align: right;
+    }
+
+    .tableSimplesPedido .semBorda {
+        border-bottom-style: none;
+    }
+
+.celulaSpedPar {
+    font-family: verdana, arial;
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 0;
+    height: 20px;
+}
+
+.cabecalhoBloco {
+    font-family: verdana, arial;
+    background: #5d7b9d;
+    color: #FFFFFF;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0;
+    float: left;
+    font-size: 20px;
+}
+
+.BlocoPag {
+    float: left;
+    margin-left: 30px;
+    Height: 680px;
+    width: 40%;
+    border-style: solid;
+}
+
+.BlocoFiltros {
+    float: left;
+    border-style: solid;
+    width: 30%
+}
+
+
+@-webkit-keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+@-o-keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+@keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+.progress {
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.progress-bar {
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #337ab7;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.progress-striped .progress-bar,
+.progress-bar-striped {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+
+.progress.active .progress-bar,
+.progress-bar.active {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+
+.progress-striped .progress-bar-success {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-info {
+    background-color: #5bc0de;
+}
+
+.progress-striped .progress-bar-info {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-warning {
+    background-color: #f0ad4e;
+}
+
+.progress-striped .progress-bar-warning {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+
+.progress-striped .progress-bar-danger {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+
+.hora {
+    height: 17px;
+    width: 70px;
+}
+
+
+.tableNutricial td {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.tableNutricial .cab td {
+    background: #5D7B9D;
+    color: White;
+    height: 25px;
+    font-weight: bold;
+}
+
+.tableNutricial .linhaImpar td {
+    background: #F7F6F3;
+    color: #333333;
+}
+
+.tableNutricial .linhaPar td {
+    background: #BEBEBE;
+    color: #333333;
+}
+
+.linkbutton:a:hover {
+    color: White;
+}
+
+.divCentralizado {
+    float: left;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.texto-ecommerce {
+    background-color: #DCDCDC;
+    border-style: inset;
+    border-bottom-width: 2px;
+    height: 500px;
+    overflow: auto;
+}
+
+
+
+.texto-ecommerce-comercial {
+    border-style: inset;
+    border-bottom-width: 2px;
+    width: 99%;
+    height: 70px;
+    overflow: auto;
+}
+
+
+.subtotal {
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    background: #FFFFFF;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.tituloGrid {
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+.txtSemTitulo {
+    padding-top: 22px;
+}
+#progressContainer {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+    height: 30px;
+}
+#progressBar {
+    height: 30px;
+    width: 0%;
+    background-color: #4CAF50;
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    border-radius: 4px;
+    transition: width 0.3s;
+}

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>FLUXO DE CAIXA</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_FLUXO_CAIXA
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>emissao</campo>
+        <campo>vencimento</campo>
+        <campo>entrada</campo>
+      </lista>
+      <valorPadrao>emissao</valorPadrao>
+      <campo>tipo</campo>
+      <campofiltro>tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Status</titulo>
+      <lista>
+        <campo>PREVISTO</campo>
+        <campo>ABERTO</campo>
+        <campo>CONCLUIDO</campo>
+        <campo>CANCELADO</campo>
+        
+      </lista>
+      <valorPadrao>PREVISTO</valorPadrao>
+      <campo>Status</campo>
+      <campofiltro>status</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+
+      <tipo>listafiltro</tipo>
+      <titulo>Fornecedor</titulo>
+      <sql>select rtrim(ltrim(fornecedor)) as Fornecedor,CNPJ from fornecedor</sql>
+      <camposFiltros>
+        <campo>Fornecedor</campo>
+        <campo>cnpj</campo>
+      </camposFiltros>
+      <valorPadrao></valorPadrao>
+      <campo>fornecedor</campo>
+    </filtro4>
+
+    <filtro5>
+      <tipo>listafiltro</tipo>
+      <sql>
+        Select TOP 200 Cliente=Codigo_Cliente,Nome_Cliente  from (
+        Select Codigo_Cliente,Nome_Cliente from cliente
+        ) as fornec_cliente
+      </sql>
+      <camposFiltros>
+        <campo>Codigo_Cliente</campo>
+        <campo>Nome_Cliente</campo>
+
+      </camposFiltros>
+
+      <titulo>Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Cliente</campo>
+      <largura>200</largura>
+    </filtro5>
+
+  </filtros>
+  <grupoTotais>
+    <totalCampos>7</totalCampos>
+    <agrupar>DATA</agrupar>
+    <!-- campo que vai ser agrupado, se for colocado filtro o valor do filtro vai se considerado o campo agrupado-->
+    <somar0>
+      <campo>SALDO DIA</campo>
+      <posicao>5</posicao>
+    </somar0>
+    <!-- Valor a ser Somado-->
+  </grupoTotais>
+
+
+  <subtotais>
+
+    <sub0>
+      <index>3</index>
+      <titulo>RECEBER</titulo>
+      <campo>A RECEBER</campo>
+    </sub0>
+    <sub1>
+      <index>4</index>
+      <titulo>PAGAR</titulo>
+      <campo>A PAGAR</campo>
+    </sub1>
+
+  </subtotais>
+
+  <camposSemformatacao>
+    <campo>2</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

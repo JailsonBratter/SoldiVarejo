@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Cliente Tabela Desconto</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_desconto_tabela_cliente
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+      <soMesAno>true</soMesAno>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+      <soMesAno>true</soMesAno>
+    </filtro1>
+
+     <filtro2>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select TOP 200 Cliente=Codigo_Cliente,Nome_Cliente  from (
+         Select Codigo_Cliente,Nome_Cliente from cliente WITH (INDEX(IX_Cliente_Codigo_Nome)) 
+         ) as fornec_cliente
+       </sql>
+       <camposFiltros>
+         <campo>Codigo_Cliente</campo>
+         <campo>Nome_Cliente</campo>
+
+       </camposFiltros>
+
+       <titulo>Cliente</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>Codigo_Cliente</campo>
+       <largura>200</largura>
+    </filtro2>
+  
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Plu ,a.Ref_fornecedor, a.descricao from mercadoria  a left join ean on a.plu=ean.plu</sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+ 
+
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>60</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>ANALITICO</campo>
+        <campo>CONSOLIDADO</campo>
+      
+      </lista>
+      <valorPadrao>CONSOLIDADO</valorPadrao>
+      <campo>Tipo</campo>
+      <campofiltro>Tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+   <filtro5>
+      <tipo>listatexto</tipo>
+      <sql>
+      Select * from (
+      Select Tabela = Codigo_tabela from Tabela_Preco
+      union all
+      Select Tabela = 'SEM TABELA'
+      ) as a 
+      </sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+ 
+
+      <titulo>Tabelas</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>tabelas</campo>
+      <largura>200</largura>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+   <filtro6>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro6>
+  </filtros>
+  <subtotais>
+     <sub0>
+      <index>1</index>
+    </sub0>
+    <sub1>
+      <index>2</index>
+    </sub1>
+     <sub2>
+      <index>3</index>
+    </sub2>
+    <sub3>
+      <index>4</index>
+    </sub3>
+    <sub4>
+      <index>5</index>
+    </sub4>
+   <sub5>
+      <index>6</index>
+    </sub5>
+    <sub6>
+      <index>7</index>
+    </sub6>
+  </subtotais>
+  
+  <rodape>
+   
+  </rodape>
+  
+</Relatorio>

@@ -1,0 +1,1 @@
+alter table mercadoria add alcoolico tinyint default 0 ;

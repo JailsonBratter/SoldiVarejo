@@ -1,0 +1,15 @@
+﻿
+.divContainer {
+    float:left;
+    padding: 10px;
+    border: solid 1px;
+    width: 45%;
+    height:700px;
+    margin-left:30px;
+   
+}
+.gridTable {
+    overflow:auto;
+    height:80%;
+    width:100%;
+}

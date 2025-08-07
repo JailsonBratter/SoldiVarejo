@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Cartoes</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_fin_cartao
+  </sql>
+  <sqlImpressaoSimples>
+    sp_rel_fin_cartao_Extrato
+  </sqlImpressaoSimples>
+  <tituloImpSimples>
+    Extrato
+  </tituloImpSimples>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo de Data</titulo>
+      <lista>
+        <campo>EMISSAO</campo>
+        <campo>VENCIMENTO</campo>
+      </lista>
+      <valorPadrao>EMISSAO</valorPadrao>
+      <campo>tipo</campo>
+      <campofiltro>tipo</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Autorizador</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <sql>SELECT 'TODOS' UNION ALL select Descricao from Autorizadora</sql>
+      <campo>autorizador</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+      <tipo>listafiltro</tipo>
+      <titulo>Cartao</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <sql>SELECT Cartao = 'TODOS' UNION ALL select distinct id_cartao from cartao</sql>
+      <valorPadrao></valorPadrao>
+      <camposFiltros>
+        <campo>id_cartao</campo>
+      </camposFiltros>
+      <campo>Cartao</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>Visualizar</titulo>
+      <lista>
+        <campo>ANALITICO</campo>
+        <campo>SINTETICO</campo>
+        <campo>CONSOLIDADO MES</campo>
+      </lista>
+      <valorPadrao>ANALITICO</valorPadrao>
+      <campo>Visualizar</campo>
+      <campofiltro>Visualizar</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+
+
+
+  </filtros>
+
+
+
+  <subtotais>
+
+    <sub0>
+      <index>2</index>
+      <titulo>Total</titulo>
+      <campo>Total</campo>
+    </sub0>
+
+
+    <sub1>
+      <index>5</index>
+      <titulo>Valor</titulo>
+      <campo>Valor</campo>
+    </sub1>
+
+    <sub2>
+      <index>6</index>
+      <titulo>Taxa</titulo>
+      <campo>taxa</campo>
+    </sub2>
+
+    <sub3>
+      <index>7</index>
+      <titulo>Desconto</titulo>
+      <campo>Desconto</campo>
+    </sub3>
+
+    <sub4>
+      <index>8</index>
+      <titulo>Acrescimo</titulo>
+      <campo>Acrescimo</campo>
+    </sub4>
+
+    <sub5>
+      <index>9</index>
+      <titulo>Total</titulo>
+      <campo>Total</campo>
+    </sub5>
+
+
+  </subtotais>
+
+
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+
+
+
+</Relatorio>

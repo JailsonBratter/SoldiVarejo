@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Apuração Por Atendente</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_APURACAO_ATENDENTE
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+ <filtro2>
+      <tipo>Combo</tipo>
+      <titulo>Vendedor</titulo>
+      <sql>select 'TODOS' UNION ALL select nome from Funcionario</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Vendedor</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>    
+
+  </filtros>
+
+  <subtotais>
+    <sub0>
+      <index>1</index>
+    </sub0>
+    <sub1>
+      <index>2</index>
+    </sub1>
+    <sub2>
+      <index>3</index>
+    </sub2>
+    <sub3>
+      <index>4</index>
+    </sub3>
+    <sub4>
+      <index>5</index>
+    </sub4>
+    <sub5>
+      <index>6</index>
+    </sub5>
+    <sub6>
+      <index>7</index>
+    </sub6>
+    <sub7>
+      <index>8</index>
+    </sub7>
+    <sub8>
+      <index>9</index>
+    </sub8>
+    <sub9>
+      <index>10</index>
+    </sub9>
+    
+    
+    <sub10>
+      <index>11</index>
+    </sub10>
+    <sub11>
+      <index>12</index>
+    </sub11>
+    <sub12>
+      <index>13</index>
+    </sub12>
+    <sub13>
+      <index>14</index>
+    </sub13>
+
+    <sub14>
+      <index>15</index>
+    </sub14>
+    <sub15>
+      <index>16</index>
+    </sub15>
+    <sub16>
+      <index>17</index>
+    </sub16>
+    <sub17>
+      <index>18</index>
+    </sub17>
+    <sub18>
+      <index>19</index>
+    </sub18>
+    <sub19>
+      <index>20</index>
+    </sub19>
+
+
+
+
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

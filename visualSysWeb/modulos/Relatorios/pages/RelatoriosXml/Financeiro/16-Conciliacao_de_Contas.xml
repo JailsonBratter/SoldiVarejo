@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>LANÇAMENTOS CONTA</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    SP_REL_LANCAMENTOS_CONTA
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>listafiltro</tipo>
+      <sql>
+        Select id_cc,filial from (
+        Select id_cc,filial  from Conta_Corrente group by id_cc ,filial
+        ) as conta
+      </sql>
+      <camposFiltros>
+        <campo>id_cc</campo>
+      </camposFiltros>
+      <campofiltroPai>conta.filial</campofiltroPai>
+      <titulo>CONTA</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>ID_CONTA</campo>
+      <largura>150</largura>
+      <obrigatorio>true</obrigatorio>
+
+    </filtro2>
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>
+        Select TOP 200 Cliente=Codigo_Cliente,Nome_Cliente  from (
+        Select Codigo_Cliente,Nome_Cliente from cliente
+        union all
+        select rtrim(ltrim(fornecedor)) as Fornecedor,razao_social from fornecedor
+        union all
+        Select codigo+'-'+nome, nome2 from funcionario where funcao='VENDEDOR'
+        ) as fornec_cliente
+      </sql>
+      <camposFiltros>
+        <campo>Codigo_Cliente</campo>
+        <campo>Nome_Cliente</campo>
+
+      </camposFiltros>
+
+      <titulo>Cliente/Fornec</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Cliente</campo>
+      <largura>200</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>Lancamento</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>CREDITO</campo>
+        <campo>DEBITO</campo>
+      </lista>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>lancamento</campo>
+      <obrigatorio>true</obrigatorio>
+
+
+    </filtro4>
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>Incluir Estorno</titulo>
+      <lista>
+        <campo>SIM</campo>
+        <campo>NAO</campo>
+      </lista>
+      <valorPadrao>NAO</valorPadrao>
+      <campo>estorno</campo>
+      <obrigatorio>true</obrigatorio>
+
+
+    </filtro5>
+  
+
+
+  </filtros>
+  <grupoTotais>
+    <totalCampos>9</totalCampos>
+    <agrupar>PAGAMENTO</agrupar>
+    <!-- campo que vai ser agrupado, se for colocado filtro o valor do filtro vai se considerado o campo agrupado-->
+    <somar0>
+      <campo>CREDITO</campo>
+      <posicao>6</posicao>
+    </somar0>
+    <somar1>
+      <campo>DEBITO</campo>
+      <posicao>7</posicao>
+    </somar1>
+    <!-- Valor a ser Somado-->
+  </grupoTotais>
+
+
+
+
+  <camposSemformatacao>
+    <campo>2</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+
+
+
+
+</Relatorio>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Pedidos</nome>
+  <versao>1.0</versao>
+  <atualizado>15/03/2016</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>compra</_1>
+    <_1>venda</_1>
+    <_1>devolucao</_1>
+    <_1>orcamento</_1>
+  </ordem>
+  <_1>devolucaoFornecedor</_1>
+  <compra>
+    <nome>Compra</nome>
+    <codigo>PD001</codigo>
+    <page>PedidoCompra.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pedidoCompra.jpg</img>
+    <inicial>true</inicial>
+  </compra>
+
+  <venda>
+    <nome>Venda</nome>
+    <codigo>PD002</codigo>
+    <page>PedidoVenda.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pedidoVenda.png</img>
+    <inicial>true</inicial>
+  </venda>
+
+  <devolucao>
+    <nome>Devolução Cliente</nome>
+    <codigo>PD003</codigo>
+    <page>PedidoDevolucao.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pedidoDevolucao.png</img>
+    <inicial>true</inicial>
+  </devolucao>
+  
+  <devolucaoFornecedor>
+    <nome>Devolução Fornecedor</nome>
+    <codigo>PD004</codigo>
+    <page>PedidoDevolucaoFornecedor.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pedidoDevolucaoFornecedor.png</img>
+    <inicial>true</inicial>
+  </devolucaoFornecedor>
+  <orcamento>
+    <nome>Orçamento</nome>
+    <codigo>PD005</codigo>
+    <page>PedidoOrcamento.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pedidoVenda.png</img>
+    <inicial>true</inicial>
+  </orcamento>
+
+</mconfig>

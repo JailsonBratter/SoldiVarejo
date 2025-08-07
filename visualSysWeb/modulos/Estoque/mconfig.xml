@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Estoque</nome>
+  <versao>1.0</versao>
+  <atualizado>28/02/2023</atualizado>
+  <inicial>true</inicial>
+  <ordem>
+    <_1>OutrasMovimentacoes</_1>
+    <_1>Cotacao</_1>
+    <_1>Sugestao</_1>
+    <_1>SugestaoCompleto</_1>
+    <_1>SolicitacaoProducao</_1>
+    <_1>SolicitacaoEncomenda</_1>
+    <_1>DevolucaoNFe</_1>
+    <_1>ListaPadraoProdutos</_1>
+  </ordem>
+
+  <_1>FechamentoEstoque</_1>
+
+  <OutrasMovimentacoes>
+    <nome>Outras Movimentações</nome>
+    <codigo>MA001</codigo>
+    <page>OutrasMovimentacoes.aspx</page>
+    <imgMenu></imgMenu>
+    <img>OutrasMovimentacoes.png</img>
+    <inicial>true</inicial>
+  </OutrasMovimentacoes>
+  <Cotacao>
+    <nome>Cotação</nome>
+    <codigo>MA002</codigo>
+    <page>Cotacao.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Cotacao.png</img>
+    <inicial>true</inicial>
+  </Cotacao>
+  <Sugestao>
+    <nome>Sugestao Compra</nome>
+    <codigo>MA003</codigo>
+    <page>SugestaoCompra.aspx</page>
+    <imgMenu></imgMenu>
+    <img>SugestaoCompra.png</img>
+    <inicial>true</inicial>
+  </Sugestao>
+  <SugestaoCompleto>
+    <nome>Solicitacao Compra</nome>
+    <codigo>MA004</codigo>
+    <page>SolicitacaoCompra.aspx</page>
+    <imgMenu></imgMenu>
+    <img>SugestaoCompra.png</img>
+    <inicial>true</inicial>
+  </SugestaoCompleto>
+  <FechamentoEstoque>
+    <nome>Fechamento Estoque</nome>
+    <codigo>MA005</codigo>
+    <page>FechamentoEstoque.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Fechar_Estoque.png</img>
+    <inicial>true</inicial>
+  </FechamentoEstoque>
+  <SolicitacaoProducao>
+    <nome>Solicitacao De Produção</nome>
+    <codigo>MA006</codigo>
+    <page>SolicitacaoDeProducao.aspx</page>
+    <imgMenu/>
+    <img>produzir.png</img>
+    <inicial>true</inicial>
+  </SolicitacaoProducao>
+  <SolicitacaoEncomenda>
+    <nome>Solicitacao Encomenda</nome>
+    <codigo>MA006</codigo>
+    <page>SolicitacaoDeEncomenda.aspx</page>
+    <imgMenu></imgMenu>
+    <img>produzir.png</img>
+    <inicial>true</inicial>
+  </SolicitacaoEncomenda>
+  <DevolucaoNFe>
+    <nome>Devolucao NFe</nome>
+    <codigo>MA007</codigo>
+    <page>DevolucaoNFe.aspx</page>
+    <imgMenu></imgMenu>
+    <img>produzir.png</img>
+    <inicial>false</inicial>
+  </DevolucaoNFe>
+  <ListaPadraoProdutos>
+    <nome>Listagem Produtos</nome>
+    <codigo>MA008</codigo>
+    <page>ListaPadraoProdutos.aspx?tipo=COMPRA</page>
+    <imgMenu></imgMenu>
+    <img>produzir.png</img>
+    <inicial>false</inicial>
+  </ListaPadraoProdutos>
+</mconfig>

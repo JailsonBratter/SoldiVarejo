@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Nota Fiscal</nome>
+  <versao>1.0</versao>
+  <atualizado>-1/07/2013</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>Entrada</_1>
+    <_1>Saida</_1>
+    <_1>Pedido</_1>
+    <_1>precificacao</_1>
+    <_1>precificacaoProduto</_1>
+    <_1>inutilizacao</_1>
+    <_1>manifesto</_1>
+    <_1>NFEntradaDoca</_1>
+    <_1>CTeEntrada</_1>
+
+  </ordem>
+
+  <Entrada>
+    <nome>Nota de Entrada</nome>
+    <codigo>NF001</codigo>
+    <page>NfEntrada.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </Entrada>
+
+  <Saida>
+    <nome>Emissão de Nota</nome>
+    <codigo>NF002</codigo>
+    <page>NfSaida.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </Saida>
+  
+  <precificacao>
+    <nome>Precificação de Nota</nome>
+    <codigo>NF003</codigo>
+    <page>PrecificacaoNF.aspx</page>
+    <imgMenu></imgMenu>
+    <img>PrecificacaoNF.jpg</img>
+    <inicial>true</inicial>
+  </precificacao>
+  <inutilizacao>
+    <nome>Inutilização</nome>
+    <codigo>NF004</codigo>
+    <page>NfInutilizacao.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </inutilizacao>
+
+  <precificacaoProduto>
+    <nome>Precificação Produtos</nome>
+    <codigo>NF005</codigo>
+    <page>PrecificacaoProdutos.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Precificacao.png</img>
+    <inicial>true</inicial>
+
+  </precificacaoProduto>
+
+  <Pedido>
+    <nome>Emissão de Pedido</nome>
+    <codigo>NF007</codigo>
+    <page>NFPedido.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </Pedido>
+  <manifesto>
+    <nome>Manifesto NFE</nome>
+    <codigo>NF008</codigo>
+    <page>ManifestoNFE.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </manifesto>
+  <NFEntradaDoca>
+    <nome>NFE Entrada DOCA</nome>
+    <codigo>NF008</codigo>
+    <page>NFEntradaDoca.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </NFEntradaDoca>
+  <CTeEntrada>
+    <nome>CTe Entrada</nome>
+    <codigo>NF009</codigo>
+    <page>CTeEntrada.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Nf.jpg</img>
+    <inicial>true</inicial>
+  </CTeEntrada>
+</mconfig>

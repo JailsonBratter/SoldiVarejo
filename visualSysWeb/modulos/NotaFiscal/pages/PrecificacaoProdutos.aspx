@@ -1,0 +1,148 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PrecificacaoProdutos.aspx.cs" Inherits="visualSysWeb.modulos.Cadastro.pages.PrecificacaoProdutos" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<center>
+        <h1>
+            PRECIFICAÇÃO DE PRODUTOS</h1>
+    </center>
+    <hr />
+    <asp:Panel ID="pnBtn" runat="server" CssClass="cabMenu">
+    </asp:Panel>
+    <br />
+    <div class="filter" id="filtrosPesq" runat="server" >
+        <table>
+            <asp:Label ID="lblPesquisaErro" runat="server" Text="" ForeColor="Red"></asp:Label>
+            <tr>
+                <td>
+                    <p>
+                        Codigo</p>
+                    <asp:TextBox ID="txtCodigo" runat="server"  ></asp:TextBox>
+                </td>
+                <td>
+                    <p>
+                        Descrição</p>
+                    <asp:TextBox ID="txtDescricao" runat="server"  > </asp:TextBox>
+                    
+                </td>
+                <td>
+                    <p>
+                        De</p>
+                    <asp:TextBox ID="txtDe" runat="server" Width="100px" AutoPostBack="true" 
+                        ontextchanged="txtDe_TextChanged"> </asp:TextBox>
+                    <asp:Image ID="ImgDeCalendario" ImageUrl="~/img/calendar.png" runat="server" Height="15px" />
+                    <asp:CalendarExtender ID="clnDataDe" runat="server" PopupButtonID="imgDeCalendario"
+                        TargetControlID="txtDe">
+                    </asp:CalendarExtender>
+                </td>
+                <td>
+                    <p>
+                        Ate</p>
+                    <asp:TextBox ID="txtAte" runat="server" Width="100px"> </asp:TextBox>
+                    <asp:ImageButton ID="dt_txtAte" runat="server" ImageUrl="~/img/calendar.png" Height="15px" />
+                    <asp:CalendarExtender ID="ClnDataAte" runat="server" PopupButtonID="Dt_txtAte" TargetControlID="txtAte">
+                    </asp:CalendarExtender>
+                </td>
+               
+                <td>
+                    <p>
+                        Status</p>
+                    <asp:DropDownList ID="ddlStatus" runat="server">
+                        <asp:ListItem Value="0">PENDENTE</asp:ListItem>
+                        <asp:ListItem Value="1">PRECIFICADO</asp:ListItem>
+                    </asp:DropDownList>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="gridTable">
+        <asp:GridView ID="gridPesquisa" runat="server" AutoGenerateColumns="False" 
+             ForeColor="#333333" GridLines="Vertical">
+            <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
+            <Columns>
+                <asp:HyperLinkField DataTextField="Codigo" Text="Codigo" Visible="true" HeaderText="Codigo"
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/PrecificacaoProdutosDetalhes.aspx?codigo={0}"
+                    DataNavigateUrlFields="Codigo" />
+                <asp:HyperLinkField DataTextField="Descricao" Text="---"
+                    Visible="true" HeaderText="Descrição" DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/PrecificacaoProdutosDetalhes.aspx?codigo={0}"
+                    DataNavigateUrlFields="Codigo" />
+                <asp:HyperLinkField DataTextField="Data_Cadastro" Text="---" Visible="true" HeaderText="Data"
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/PrecificacaoProdutosDetalhes.aspx?codigo={0}"
+                    DataNavigateUrlFields="Codigo" />
+                <asp:HyperLinkField DataTextField="Usuario" Text="---" Visible="true" HeaderText="Usuario"
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/PrecificacaoProdutosDetalhes.aspx?codigo={0}"
+                    DataNavigateUrlFields="Codigo" />
+                <asp:HyperLinkField DataTextField="status" Text="---" Visible="true" HeaderText="Status"
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/PrecificacaoProdutosDetalhes.aspx?codigo={0}"
+                    DataNavigateUrlFields="Codigo" />
+                
+            </Columns>
+            <EditRowStyle BackColor="#999999" />
+            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+        </asp:GridView>
+        <br />
+    </div>
+    <asp:Panel ID="pnFundo" runat="server" CssClass="modalForm" Style="display: none">
+        <asp:Panel ID="pnFFrame" runat="server" CssClass="frame" DefaultButton="ImgPesquisaLista"
+            Style="font-size: 20px;">
+            <center><h1><asp:Label ID="lbllista" runat="server" Text="" ></asp:Label></h1></center>
+            <hr />
+            <div class="row" style="font-size: 20px; width: 70%; float: left; margin-left: 20px;">
+                Filtrar
+                <asp:TextBox ID="TxtPesquisaLista" runat="server" Width="400px"></asp:TextBox>
+                <asp:ImageButton ID="ImgPesquisaLista" runat="server" ImageUrl="~/img/pesquisaM.png"
+                    Height="15px" OnClick="ImgPesquisaLista_Click" />
+                <asp:Label ID="lblErroPesquisa" runat="server" Text="" ForeColor="Red"></asp:Label>
+            </div>
+            <div class="panel" style="font-size: 20px; width: 20%; float: left; margin-top: -10px;">
+                <div class="row" style="margin-top: 0; margin-bottom: 10px;">
+                    <asp:ImageButton ID="btnConfirmaLista" runat="server" ImageUrl="~/img/confirm.png"
+                        Width="25px" OnClick="btnConfirmaLista_Click" />
+                    <asp:Label ID="Label2" runat="server" Text="Confirma"></asp:Label>
+                </div>
+                <div class="row">
+                    <asp:ImageButton ID="btnCancelaLista" runat="server" ImageUrl="~/img/cancel.png"
+                        Width="25px" OnClick="btnCancelaLista_Click" />
+                    <asp:Label ID="LblCancelaLista" runat="server" Text="Cancela"></asp:Label>
+                </div>
+            </div>
+            <asp:Panel ID="Panel2" runat="server" CssClass="lista">
+                <asp:GridView ID="GridLista" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None"
+                     OnRowDataBound="GridLista_RowDataBound">
+                    <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
+                    <Columns>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:RadioButton ID="RdoListaItem" runat="server" GroupName="GrlistaItem" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <EditRowStyle BackColor="#999999" />
+                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                </asp:GridView>
+            </asp:Panel>
+        </asp:Panel>
+    </asp:Panel>
+    <asp:ModalPopupExtender ID="modalFornecedor" runat="server" BackgroundCssClass="modalBackground"
+        CancelControlID="btnCancelaLista" DropShadow="true" PopupControlID="pnfundo"
+        TargetControlID="lblErroPesquisa">
+    </asp:ModalPopupExtender>
+</asp:Content>

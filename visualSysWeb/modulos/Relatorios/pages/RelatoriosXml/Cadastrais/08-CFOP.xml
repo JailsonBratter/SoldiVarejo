@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de CFOP</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    SELECT CFOP , DESCRICAO, TIPO= CASE WHEN TIPO=2 THEN 'ENTRADA' WHEN TIPO=1 THEN 'SAIDA' END FROM CFOP
+
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Cfop</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>CFOP</campo>
+      <largura>80</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>DESCRICAO</campo>
+      <largura>300</largura>
+    </filtro1>
+
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Tipo</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>ENTRADA</campo>
+        <campo>SAIDA</campo>
+        </lista>
+      <valorPadrao></valorPadrao>
+      <campo>(CASE WHEN TIPO=2 THEN 'ENTRADA' WHEN TIPO=1 THEN 'SAIDA' END)</campo>
+      <obrigatorio>true</obrigatorio>
+     </filtro2>
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

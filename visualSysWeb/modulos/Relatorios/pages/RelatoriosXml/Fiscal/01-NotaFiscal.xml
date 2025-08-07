@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Notas Fiscais</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_NotasFiscais
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Plu ,ean.ean,a.Ref_fornecedor, a.descricao from mercadoria  a left join ean on a.plu=ean.plu</sql>
+      <camposFiltros>
+        <campo>a.plu</campo>
+        <campo>Ref_fornecedor</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+
+      <titulo>Plu</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+
+    </filtro2>
+
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 Ean, a.Plu ,a.Ref_fornecedor, a.descricao from mercadoria a left join ean on a.plu=ean.plu  </sql>
+      <camposFiltros>
+        <campo>ean</campo>
+        <campo>a.plu</campo>
+        <campo>a.descricao</campo>
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>2</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>4</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <titulo>EAN</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>ean</campo>
+      <largura>100</largura>
+      <habilitado>false</habilitado>
+    </filtro3>
+    <filtro4>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 a.Ref_fornecedor, a.Plu ,Ean, a.descricao from mercadoria a left join ean on a.plu=ean.plu  </sql>
+      <camposFiltros>
+        <campo>Ref_fornecedor</campo>
+        <campo>a.plu</campo>
+        <campo>descricao</campo>
+        
+      </camposFiltros>
+      <preencher>
+        <filtroPreenche>
+          <filtro>2</filtro>
+          <campofiltro>2</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>3</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>5</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <titulo>Referencia</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Ref</campo>
+      <largura>80</largura>
+      <habilitado>false</habilitado>
+    </filtro4>
+
+    <filtro5>
+      <tipo>TEXTO</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>descricao</campo>
+      <largura>250</largura>
+    </filtro5>
+
+    <filtro6>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>1-Saida</campo>
+        <campo>2-Entrada</campo>
+      </lista>
+      <titulo>Tipo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>tipo</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro6>
+    <filtro7>
+      <tipo>texto</tipo>
+      <titulo>Nota </titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Nota</campo>
+      <campofiltro></campofiltro>
+    </filtro7>
+     <filtro8>
+       <tipo>listafiltro</tipo>
+       <sql>
+         Select top 300 Cliente_fornecedor=Fornecedor,Razao_social  from (
+         Select  Fornecedor,Razao_social from fornecedor
+         union all
+         Select Codigo_Cliente,Nome_Cliente from cliente
+         ) as fornec_cliente
+       </sql>
+       <camposFiltros>
+         <campo>Fornecedor</campo>
+         <campo>Razao_social</campo>
+
+       </camposFiltros>
+
+       <titulo>Cliente/Fornecedor</titulo>
+       <valorPadrao></valorPadrao>
+       <campo>fornecedor</campo>
+       <largura>200</largura>
+    </filtro8>
+    <filtro9>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>NAO</campo>
+        <campo>SIM</campo>
+      </lista>
+      <titulo>Canceladas</titulo>
+      <valorPadrao>NAO</valorPadrao>
+      <campo>NF_CANC</campo>
+      <obrigatorio>true</obrigatorio>
+     </filtro9>
+
+    <filtro10>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>NAO</campo>
+        <campo>SIM</campo>
+      </lista>
+      <titulo>Devolucao</titulo>
+      <valorPadrao>NAO</valorPadrao>
+      <campo>NF_Devolucao</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro10>
+    <filtro11>
+      <tipo>texto</tipo>
+      <titulo>Excluir_Natureza</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Excluir_Natureza</campo>
+      <campofiltro></campofiltro>
+     </filtro11>
+
+     <filtro12>
+      <tipo>texto</tipo>
+      <titulo>Incluir_Natureza</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Incluir_Natureza</campo>
+      <campofiltro></campofiltro>
+     </filtro12>
+    <filtro13>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>SIM</campo>
+        <campo>NAO</campo>
+      </lista>
+      <titulo>Prod Rural</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>notaProdutor</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro13>
+    <filtro14>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>Analitico</campo>
+        <campo>Sintetico</campo>
+      </lista>
+      <titulo>Tipo Relatorio</titulo>
+      <valorPadrao>Analitico</valorPadrao>
+      <campo>tipoRelatorio</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro14>
+  </filtros>
+  <subtotais>
+
+    <sub0>
+      <index>3</index>
+    
+    </sub0>
+    <sub1>
+      <index>10</index>
+    </sub1>
+   
+  </subtotais>
+
+  <camposSemformatacao>
+   
+    
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

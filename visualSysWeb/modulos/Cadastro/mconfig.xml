@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Cadastros</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+    
+  <ordem>
+    <_1>cliente</_1>
+	  <_1>mercadoria</_1>
+   
+    <_1>fornecedor</_1>
+    <_1>departamento</_1>
+ 
+    
+    <_1>linha</_1>
+    <_1>familia</_1>
+    <_1>comandas</_1>
+    <_1>PlanoContas</_1>
+    <_1>Transportadoras</_1>
+ 
+    
+    <_1>Caixa</_1>
+    <_1>Outros</_1>
+
+    <_1>Contratos</_1>
+    <_1>Promocoes</_1>
+    <_1>PromocaoJornal</_1>
+    <_1>Cardapio</_1>
+    <_1>TabelaPreco</_1>
+    <_1>PlanoContabil</_1>
+    
+  </ordem>
+  
+  <cliente>
+    <nome>Clientes</nome>
+    <codigo>C001</codigo>
+    <page>Clientes.aspx</page>
+    <imgMenu></imgMenu>
+    <img>clientes.png</img>
+    <inicial>true</inicial>
+  </cliente>
+  
+  <fornecedor>
+    <nome>Fornecedores</nome>
+    <codigo>C002</codigo>
+    <page>Fornecedor.aspx</page>
+    <imgMenu></imgMenu>
+    <img>fornecedor.jpg</img>
+    <inicial>true</inicial>
+  </fornecedor>
+
+  <mercadoria>
+    <nome>Produtos</nome>
+    <codigo>C003</codigo>
+    <page>Mercadoria.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Mercadoria.png</img>
+    <inicial>true</inicial>
+
+  </mercadoria>
+  
+
+  <finalizadora>
+    <nome>Finalizadoras</nome>
+    <codigo>C004</codigo>
+    <page>Finalizadoras.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </finalizadora>
+
+  <linha>
+    <nome>Linhas</nome>
+    <codigo>C006</codigo>
+    <page>Linhas.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </linha>
+
+ 
+  <departamento>
+    <nome>Departamentos</nome>
+    <codigo>C008</codigo>
+    <page>Departamentos.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </departamento>
+
+  <familia>
+    <nome>Familia</nome>
+    <codigo>C009</codigo>
+    <page>familia.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </familia>
+
+  <comandas>
+    <nome>Comandas</nome>
+    <codigo>C010</codigo>
+    <page>comandas.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </comandas>
+
+  <cfop>
+    <nome>CFOP</nome>
+    <codigo>C011</codigo>
+    <page>CFOP.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </cfop>
+  
+  
+  <pdv>
+    <nome>PDV</nome>
+    <codigo>C012</codigo>
+    <page>PDV.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </pdv>
+  <AliqEstado>
+    <nome>Aliquota Estado</nome>
+    <codigo>C013</codigo>
+    <page>AliquotasEstado.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+    
+  </AliqEstado>
+  <PlanoContas>
+    <nome>Plano de Contas</nome>
+    <codigo>C014</codigo>
+    <page>PlanosDeContas.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+
+  </PlanoContas>
+  <Transportadoras>
+    <nome>Transportadoras</nome>
+    <codigo>C015</codigo>
+    <page>Transportadoras.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </Transportadoras>
+  <tributacao>
+    <nome>Tributacao</nome>
+    <codigo>C016</codigo>
+    <page>Tributacao.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </tributacao>
+  <funcionario>
+    <nome>Funcionarios</nome>
+    <codigo>C017</codigo>
+    <page>Funcionario.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </funcionario>
+  <operadores>
+    <nome>Operadores</nome>
+    <codigo>C018</codigo>
+    <page>Operadores.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </operadores>
+  <NaturezaOperacao>
+    <nome>Natureza Operação</nome>
+    <codigo>C019</codigo>
+    <page>NaturezaOperacao.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </NaturezaOperacao>
+
+  <CEP>
+    <nome>Consulta CEP</nome>
+    <codigo>C020</codigo>
+    <page>CEP.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+    
+  </CEP>
+  <CEPDelivery>
+    <nome>CEP Delivery</nome>
+    <codigo>C027</codigo>
+    <page>CEPDelivery.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+
+  </CEPDelivery>
+  <cartoes>
+    <nome>Cartao</nome>
+    <codigo>C021</codigo>
+    <page>Cartao.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+
+  </cartoes>
+
+  <ipDevice>
+    <nome>ipDevice</nome>
+    <codigo>C022</codigo>
+    <page>IpDevice.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+
+  </ipDevice>
+  <spoolImpressora>
+    <nome>Spool Impressora</nome>
+    <codigo>C023</codigo>
+    <page>SpoolImpressora.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+
+
+  </spoolImpressora>
+
+  <Caixa>
+    <nome>Frente de Caixa>></nome>
+    <inicial>true</inicial>
+    <subMenu>
+      <pdv/>
+      <finalizadora/>
+      <operadores/>
+      <ipDevice/>
+      <spoolImpressora/>
+      <tributacaoSaida/>
+    </subMenu>
+  </Caixa>
+  
+  <Outros>
+    <nome>Outros>></nome>
+    <inicial>true</inicial>
+    <subMenu>
+      <NaturezaOperacao/>
+      <cfop/>
+      <cfopEntradaSaida/>
+      <tributacao/>
+      <funcionario/>
+      <AliqEstado/>
+      <CEP/>
+      <CEPDelivery/>
+      <cartoes/>
+      <contaCorrente/>
+      <TabelasPet/>
+      <Embaladora/>
+      <ArtigoFiscal/>
+    
+    </subMenu>
+  </Outros>
+
+  <contaCorrente>
+    <nome>Conta Corrente</nome>
+    <codigo>C026</codigo>
+    <page>ContaCorrente.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+  </contaCorrente>
+
+  <tributacaoSaida>
+    <nome>Alterar Trib Saida</nome>
+    <codigo>C029</codigo>
+    <page>AlterarAliquota.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+    
+  </tributacaoSaida>
+  <Contratos>
+    <nome>Contratos Fornecedor</nome>
+    <codigo>C030</codigo>
+    <page>ContratoFornecedor.aspx</page>
+    <imgMenu></imgMenu>
+    <img>ContratoFornec.png</img>
+    <inicial>true</inicial>
+  </Contratos>
+  <Promocoes>
+    <nome>Promoções</nome>
+    <codigo>C031</codigo>
+    <page>CadastroPromocao.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Promocao.png</img>
+    <inicial>true</inicial>
+  </Promocoes>
+  <TabelasPet>
+    <nome>Tabela PET</nome>
+    <codigo>C032</codigo>
+    <page>TabelasPet.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+    
+  </TabelasPet>
+
+  <Embaladora>
+    <nome>Embaladoras</nome>
+    <codigo>C033</codigo>
+    <page>Embaladora.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+
+  </Embaladora>
+
+  <Cardapio>
+    <nome>Cardápios</nome>
+    <codigo>C034</codigo>
+    <page>Cardapios.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </Cardapio>
+  <cfopEntradaSaida>
+    <nome>CFOP Entrada Saida</nome>
+    <codigo>C035</codigo>
+    <page>CFOPEntradaSaida.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </cfopEntradaSaida>
+  <PromocaoJornal>
+    <nome>Promoção Jornal</nome>
+    <codigo>C036</codigo>
+    <page>PromocaoJornal.aspx</page>
+    <imgMenu></imgMenu>
+    <img>Promocao.png</img>
+    <inicial>true</inicial>
+  </PromocaoJornal>
+  <TabelaPreco>
+    <nome>Tabela Preço</nome>
+    <codigo>C037</codigo>
+    <page>TabelaPreco.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+  </TabelaPreco>
+  <PlanoContabil>
+    <nome>Plano de Contas Contábil</nome>
+    <codigo>C038</codigo>
+    <page>PlanosDeContasContabil.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+  </PlanoContabil>
+  <ArtigoFiscal>
+    <nome>Artigo Fiscal</nome>
+    <codigo>C039</codigo>
+    <page>ArtigoFiscal.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+  </ArtigoFiscal>
+</mconfig>

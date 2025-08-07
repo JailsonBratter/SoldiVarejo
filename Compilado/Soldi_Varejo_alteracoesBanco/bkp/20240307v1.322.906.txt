@@ -1,0 +1,77 @@
+
+alter table NF ADD Valor_Difal Decimal(12,2) DEFAULT 0
+alter table NF_Item ADD Aliquota_ICMS_Destino Decimal(12,2), Valor_Difal Decimal(12,2) DEFAULT 0
+
+Alter Table NF_Manifestar ADD Natureza_Operacao VARCHAR(100)
+
+
+IF NOT EXISTS(SELECT * FROM PARAMETROS WHERE PARAMETRO = 'PRECIFIC_NF_OFF')
+INSERT INTO PARAMETROS 
+(PARAMETRO, PENULT_ATUALIZACAO, VALOR_DEFAULT, ULT_ATUALIZACAO, VALOR_ATUAL, DESC_PARAMETRO, TIPO_DADO, RANGE_VALOR_ATUAL, GLOBAL, NOTA_PROGRAMADOR, ESCOPO, POR_USUARIO_OK, DATA_PARA_TRANSFERENCIA, PERMITE_POR_EMPRESA)
+VALUES
+('PRECIFIC_NF_OFF', GETDATE(), 'FALSE', GETDATE(), 'FALSE', 'DESLIGAR PRECIFICACAO DE NF', 'L', 0, 1, '', 0, 0, NULL, 0)
+
+go
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'DBO' 
+                 AND  TABLE_NAME = 'NF_Recebimento'))
+BEGIN
+
+CREATE TABLE [dbo].[NF_Recebimento](
+	[Filial] [varchar](20) NOT NULL,
+	[Cliente_Fornecedor] [varchar](50) NOT NULL,
+	[ID] [varchar](44) NOT NULL,
+	[Codigo] [varchar](20) NOT NULL,
+	[Emissao] [datetime] NOT NULL,
+	[Total] [decimal](12, 2) NOT NULL,
+	[Usuario] [varchar](30) NULL,
+	[Status] [tinyint] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+
+GO
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'DBO' 
+                 AND  TABLE_NAME = 'NF_Recebimento_Itens'))
+BEGIN
+
+CREATE TABLE [dbo].[NF_Recebimento_Itens](
+	[Filial] [varchar](20) NOT NULL,
+	[Cliente_Fornecedor] [varchar](50) NOT NULL,
+	[ID] [varchar](44) NOT NULL,
+	[Codigo] [varchar](20) NOT NULL,
+	[PLU] [varchar](17) NOT NULL,
+	[Lote] [varchar](40) NULL,
+	[Validade] [datetime] NULL,
+	[Qtde_Recebida] [int] NOT NULL,
+	[Qtde_Prevista] [int] NULL,
+	[Qtde_Nota] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC,
+	[PLU] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+
+GO
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'DBO' 
+                 AND  TABLE_NAME = 'NF_Recebimento_Itens_Temp'))
+BEGIN
+
+CREATE TABLE [dbo].[NF_Recebimento_Itens_Temp](
+	[ID] [varchar](44) NULL,
+	[PLU] [varchar](17) NULL,
+	[Qtde] [int] NULL,
+	[Validade] [datetime] NULL
+) ON [PRIMARY]
+END
+

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Gerencial</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>vendasGrafico</_1>
+    <_1>ProgramacaoPrecificacao</_1>
+  </ordem>
+
+  <vendasGrafico>
+    <nome>Vendas</nome>
+    <codigo>GR001</codigo>
+    <page>GraficoVendas.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pesquisaM.png</img>
+    <inicial>false</inicial>
+  </vendasGrafico>
+  <ProgramacaoPrecificacao>
+    <nome>Prog Precificação</nome>
+    <codigo>GR002</codigo>
+    <page>ProgramacaoPrecificacaoProdutos.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </ProgramacaoPrecificacao>
+
+</mconfig>

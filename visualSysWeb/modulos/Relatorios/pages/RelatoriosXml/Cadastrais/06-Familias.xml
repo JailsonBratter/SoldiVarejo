@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Fornecedor</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    select '|-CODIGO:-|'+convert(varchar,A.Codigo_familia)+ '|| |-DESCRICAO-|: '+isnull(a.Descricao_Familia,'___________________________________') +' || |-PRECO-|: '+ isnull(convert(varchar,a.preco),'_____________________') +' || |-ETIQUETAS-|: '+ isnull(convert(varchar,a.qtd_etiquetas),'_____________________')AS 'DADOS GERAIS'
+    from Familia as  a
+
+
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Codigo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.codigo_familia</campo>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.descricao_familia</campo>
+    </filtro1>
+    
+  </filtros>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

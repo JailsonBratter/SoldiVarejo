@@ -1,0 +1,66 @@
+﻿.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+    stroke: #4169E1;
+}
+
+.ct-series-b .ct-bar, .ct-series-b .ct-line, .ct-series-b .ct-point, .ct-series-b .ct-slice-donut {
+    stroke: #F08080;
+}
+
+
+.ct-series-c .ct-bar, .ct-series-c .ct-line, .ct-series-c .ct-point, .ct-series-c .ct-slice-donut {
+    stroke: #48D1CC;
+}
+
+.ct-chart {
+    margin: 10px 0px 5px 10px;
+    font-size: 10px;
+    padding: 0;
+    border: solid;
+    max-height: 300px;
+    max-width: 53%;
+    display: inline-block;
+}
+
+.legenda {
+    float: left;
+    margin: 10px;
+    width: 80px;
+    text-align: center;
+    height: 20px;
+}
+
+.ct-end {
+    font-size: 10px;
+    overflow: hidden;
+}
+
+#MainContent_divRelatorio {
+    float: left;
+    min-height: 300px;
+    width: 42%;
+    padding-top: 10px;
+}
+
+#grafico1 {
+    float: left;
+}
+
+@media print {
+
+
+    #MainContent_divRelatorio {
+        float: left;
+        min-height: 300px;
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .ct-chart {
+        max-width: 100%;
+    }
+
+    #grafico1 {
+        float: left;
+        width: 90%;
+    }
+}

@@ -1,0 +1,658 @@
+GO
+
+/****** Object:  Table [dbo].[Mercadoria_Magento_Atributos]    Script Date: 13/09/2023 12:26:55 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Mercadoria_Magento_Atributos](
+	[PLU] [varchar](17) NOT NULL,
+	[Tipo_Produto] [int] NULL,
+	[Sabor] [varchar](200) NULL,
+	[Especie] [varchar](200) NULL,
+	[Racas] [varchar](200) NULL,
+	[Cuidados] [varchar](200) NULL,
+	[Farmacos] [varchar](200) NULL,
+	[Tipo_Acessorios] [varchar](200) NULL,
+	[Tipo_Petiscos] [varchar](200) NULL,
+	[Porte] [varchar](100) NULL,
+	[Idade] [varchar](100) NULL,
+	[Odor] [varchar](100) NULL,
+	[Tipo_Areia] [varchar](100) NULL,
+	[Tipo_Higienico] [varchar](200) NULL,
+	[Cor] [varchar](100) NULL,
+	[Quantidade_Por_Unidade] [varchar](100) NULL,
+	[Peso_Em_Gramas] [decimal](10, 3) NULL,
+	[Dosagem_Recomendada] [varchar](100) NULL,
+	[Marca] [varchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PLU] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+INSERT INTO PARAMETROS 
+(PARAMETRO, PENULT_ATUALIZACAO, VALOR_DEFAULT, ULT_ATUALIZACAO, VALOR_ATUAL, DESC_PARAMETRO, TIPO_DADO, RANGE_VALOR_ATUAL, GLOBAL, NOTA_PROGRAMADOR, ESCOPO, POR_USUARIO_OK, DATA_PARA_TRANSFERENCIA, PERMITE_POR_EMPRESA)
+VALUES
+('ECOMMERCE_MAGENTO', GETDATE(), 'FALSE', GETDATE(), 'FALSE', 'INTEGRACAO MAGENTO 2.4', 'L', 0, 1, '', 0, 0, NULL, 0)
+
+create table Tipo_Produto(
+id int NOT NULL,
+nome varchar(100) NOT NULL,
+PRIMARY KEY (id)
+)
+
+select * from Tipo_Produto
+go
+insert into Tipo_Produto VALUES
+(9, 'RAÇÃO'),
+(10, 'COMIDA UMIDA'),
+(11, 'PETISCOS'),
+(12, 'AREAIS'),
+(13, 'SHAMPPOS'),
+(14, 'FARMACIA'),
+(15, 'ACESSORIOS')
+
+go
+create table Marca(
+id int NOT NULL,
+descricao varchar(100) NOT NULL,
+PRIMARY KEY (id)
+)
+
+
+alter table especie add id int 
+
+GO
+
+DROP TABLE uf_pobreza
+GO
+
+
+/****** Object:  Table [dbo].[uf_pobreza]    Script Date: 23/08/2023 13:38:39 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[uf_pobreza](
+	[uf] [varchar](2) NULL,
+	[porc] [numeric](12, 2) NULL,
+	[aliq_interna] [numeric](12, 2) NULL,
+	[calc_fora] [tinyint] NULL
+) ON [PRIMARY]
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'AP', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'AM', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'CE', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'DF', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'ES', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'MA', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'MT', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'MS', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'PB', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'PI', CAST(1.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'RJ', CAST(2.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'RN', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'RO', CAST(0.00 AS Numeric(12, 2)), CAST(17.50 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'RR', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'SP', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 1)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'AC', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'BA', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'MG', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'PA', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'PR', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'PE', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'RS', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'SC', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'TO', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 0)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'GO', CAST(0.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 2)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'SE', CAST(0.00 AS Numeric(12, 2)), CAST(18.00 AS Numeric(12, 2)), 2)
+GO
+INSERT [dbo].[uf_pobreza] ([uf], [porc], [aliq_interna], [calc_fora]) VALUES (N'AL', CAST(1.00 AS Numeric(12, 2)), CAST(17.00 AS Numeric(12, 2)), 1)
+GO
+
+
+IF NOT EXISTS(SELECT * FROM PARAMETROS WHERE PARAMETRO = 'SPED_C170_OBRIG_SAIDA')
+	BEGIN
+		INSERT INTO PARAMETROS (PARAMETRO,VALOR_DEFAULT, VALOR_ATUAL,PERMITE_POR_EMPRESA,PENULT_ATUALIZACAO,ULT_ATUALIZACAO,GLOBAL,POR_USUARIO_OK ) 
+				values ('SPED_C170_OBRIG_SAIDA','FALSE', 'FALSE',0,GETDATE(),GETDATE(),0,0);
+	END
+drop index PK__Raca__04A590BA on dbo.Raca 
+alter table raca add Id int
+alter table raca alter column raca varchar(100) not null
+alter table raca alter column especie varchar(50)
+alter table raca add constraint PK__Raca__04A590BA PRIMARY KEY (Raca, Especie)
+
+GO
+
+/****** Object:  UserDefinedFunction [dbo].[F_NFPagamentos]    Script Date: 28/08/2023 16:17:43 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [dbo].[F_NFPagamentos] (
+	@Filial VARCHAR(20), 
+	@ClienteFornecedor VARCHAR(50), 
+	@NumeroNF VARCHAR(20),
+	@Serie INT)
+	RETURNS VARCHAR(1)
+AS
+BEGIN
+	DECLARE @REGNP	AS INTEGER
+	DECLARE @RETORNO AS VARCHAR(1)
+
+	SELECT @REGNP = COUNT(*) 
+	FROM NF_PAGAMENTO NP
+	WHERE NP.FILIAL = @Filial
+	AND NP.CLIENTE_FORNECEDOR = @ClienteFornecedor
+	AND NP.CODIGO = @NumeroNF
+	AND NP.SERIE = @Serie
+
+	IF @REGNP <= 0 
+		SET @RETORNO = '2'
+	ELSE
+		IF @REGNP > 1
+			SET @RETORNO = '1'
+		ELSE
+			SET @RETORNO = '0'
+
+	RETURN @RETORNO
+END
+GO
+
+CREATE TABLE PET_Sabor (id int not null, descricao varchar(200), primary key (id));
+CREATE TABLE PET_Cuidados (id int not null, descricao varchar(200), primary key (id));
+CREATE TABLE PET_Farmacos (id int not null, descricao varchar(200), primary key (id));
+CREATE TABLE PET_Acessorios_Tipo (id int not null, descricao varchar(200), primary key (id));
+
+go
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_NotasFiscais]    Script Date: 18/09/2023 11:14:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+--PROCEDURES =======================================================================================
+ALTER    procedure [dbo].[sp_Rel_NotasFiscais]
+
+     
+
+      @Filial           varchar(20),                -- Loja
+      @DataDe           varchar(8),                 -- Data Inicial
+      @DataAte          varchar(8),                 -- Data Fim
+      @Tipo             varchar(20),                -- Tipo = 1 - Saidas, Tipo = 2 - Entrada
+	  @Nota             varchar(20),                -- Nmero Nota Fiscal
+	  @Fornecedor       varchar(20),                -- Nome Fornecedor
+      @NF_CANC          varchar(20),		    -- Normal = NAO, Cancelada = SIM
+      @plu			   varchar(20),
+      @ean			   varchar(20),
+      @ref             varchar(20),
+      @descricao		varchar(40),
+      @NF_Devolucao    varchar(20),
+      @Excluir_Natureza varchar(20),
+      @Incluir_Natureza varchar(20),
+	  @notaProdutor    varchar(30),
+	  @tipoRelatorio  varchar(40)
+
+As
+begin
+--exec     sp_Rel_NotasFiscais    @Filial='MATRIZ', @datade = '20180701',  @dataate = '20180815',  @plu = '',  @ean = '',  @Ref = '',  @descricao = '',  @tipo = 'TODOS',  @Nota = '',  @fornecedor = '',  @NF_CANC = 'NAO',  @NF_Devolucao = 'NAO',  @Excluir_Natureza = '',  @Incluir_Natureza = '',  @notaProdutor = 'TODOS',  @tipoRelatorio = 'Analitico' 
+
+if(@tipoRelatorio = 'Analitico')
+begin
+    DECLARE @NF varchar(5000)
+      
+    IF LTRIM(RTRIM(@Nota)) <> ''
+		begin
+            SET @NF = 'Select isnull((
+										Case When ISNULL(NF.Dest_Fornec,0) = 0 Then (
+											Select Distinct Ltrim(Rtrim(Nome_Cliente)) 
+											From Cliente c 
+											where c.Codigo_Cliente = NF.Cliente_Fornecedor
+											) 
+										Else  
+											NF.Cliente_Fornecedor 
+										End
+									  ),nf.cliente_fornecedor) Cliente_Fornecedor'
+			SET @NF = @nf +',Plu = '+CHAR(39)+'PLU'+CHAR(39)+'+PLU'
+			SET @NF = @nf +',Ref=CODIGO_REFERENCIA'
+			SET @NF = @nf +',nf_item.Descricao'
+			SET @NF = @nf +',nf_item.Qtde'
+			SET @NF = @nf +',nf_item.Embalagem'
+			SET @NF = @nf +',nf_item.Unitario'
+			SET @NF = @nf +',nf_item.Total '
+            SET @NF = @nf +' from NF_Item INNER JOIN NF '
+			SET @NF = @nf +'     ON NF.CODIGO=NF_ITEM.CODIGO '
+			SET @NF = @nf +'    and nf.Tipo_NF = nf_item.Tipo_NF '
+			SET @NF = @nf +'    and nf.Cliente_Fornecedor= nf_item.Cliente_Fornecedor '
+			SET @NF = @nf +'INNER JOIN NATUREZA_OPERACAO NP ON NF.CODIGO_OPERACAO = NP.CODIGO_OPERACAO '
+			SET @NF = @nf+'	where nf.codigo = '+@nota
+			
+			IF LTRIM(RTRIM(@Tipo)) = '1-Saida'
+				SET @NF = @NF + 'AND NF.Tipo_NF = 1 '
+			IF LTRIM(RTRIM(@Tipo)) = '2-Entrada'
+				SET @NF = @NF + 'AND NF.Tipo_NF = 2 '
+			IF LTRIM(RTRIM(@Fornecedor)) <> ''
+                SET @NF = @NF + 'AND LTRIM(NF.Cliente_Fornecedor) = ' + CHAR(39) + @Fornecedor + CHAR(39) + ' '
+			
+			IF LTRIM(RTRIM(@descricao)) <> ''
+				SET @NF = @NF + 'AND LTRIM(NF_Item.DESCRICAO) like ' + CHAR(39) + @descricao + CHAR(39) + ' '
+			
+		end
+	else
+		begin
+			SET @NF = 'SELECT NF.Filial'
+			SET @NF = @NF + ',Tipo= case when nf.tipo_nf=1 then '+CHAR(39)+'SAIDA'+CHAR(39)+' else '+CHAR(39)+'ENTRADA'+CHAR(39)+' END'
+			SET @NF = @NF + ',Emissao= Convert(Varchar,NF.Emissao,103) '
+			SET @NF = @NF + ',[NF Produtor]= '+CHAR(39)+'SFT_'+CHAR(39)+'+ISNULL(nf.CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') '
+			SET @NF = @NF + ',Nota= '+CHAR(39)+'SFT_'+CHAR(39)+'+NF.Codigo '
+			SET @NF = @NF + ',[Chave NFE] = NF.ID '
+			SET @NF = @NF + ',Destinatario = isnull((
+												Case When ISNULL(NF.Dest_Fornec,0) = 0  Then (
+													Select Distinct Ltrim(Rtrim(Nome_Cliente)) 
+														From Cliente c where c.Codigo_Cliente = NF.Cliente_Fornecedor
+													) 
+													Else  
+													NF.Cliente_Fornecedor 
+												End
+											),nf.cliente_fornecedor
+										) '
+			SET @NF = @NF + ',CNPJ = isnull((
+												Case When ISNULL(NF.Dest_Fornec,0) = 0  Then (
+													Select Distinct Ltrim(Rtrim(CNPJ)) 
+														From Cliente c where c.Codigo_Cliente = NF.Cliente_Fornecedor
+													) 
+													Else  (
+													Select Distinct Ltrim(Rtrim(CNPJ)) 
+														From FORNECEDOR  where FORNECEDOR = NF.Cliente_Fornecedor
+														)
+												End
+											),nf.cliente_fornecedor
+										) '
+			SET @NF = @NF + ',Entrada= Convert(Varchar,NF.Data,103) '
+			SET @NF = @NF + ',[Vlr Prod]= Convert(decimal(15,2),Sum(NF_Item.Total+Isnull(NF.Frete,0))) '
+			SET @NF = @NF + ',[Vlr Nota]= NF.Total'
+
+			SET @NF = @NF + ' From NF_Item Inner Join NF ON NF.Codigo = NF_Item.Codigo '
+			SET @NF = @NF + '							  AND NF.Cliente_Fornecedor = NF_Item.Cliente_Fornecedor  '
+			SET @NF = @NF + '							  AND NF.Filial = NF_Item.Filial '
+			SET @NF = @NF + '              INNER JOIN NATUREZA_OPERACAO NP ON NF.CODIGO_OPERACAO = NP.CODIGO_OPERACAO '
+
+			SET @NF = @NF + 'WHERE NF.Data BETWEEN ' + CHAR(39) +  convert(varchar,@DataDe,112) + CHAR(39) + ' AND '
+
+			SET @NF = @NF + CHAR(39) + convert(varchar,@DataAte,112)  + char(39) + ' '
+      
+      
+			IF LTRIM(RTRIM(@NF_CANC)) = 'SIM'
+
+				SET @NF = @NF + 'AND Isnull(NF.NF_Canc,0) = 1 '
+            
+
+			IF LTRIM(RTRIM(@NF_CANC)) = 'NAO'
+
+				SET @NF = @NF + 'AND Isnull(NF.NF_Canc,0) = 0 '
+      
+			IF LTRIM(RTRIM(@Filial)) <> ''
+				SET @NF = @NF + 'AND LTRIM(NF.Filial) = ' + CHAR(39) + @Filial + CHAR(39) + ' '
+
+			IF LTRIM(RTRIM(@Fornecedor)) <> ''
+
+				SET @NF = @NF + 'AND LTRIM(NF.Cliente_Fornecedor) = ' + CHAR(39) + @Fornecedor + CHAR(39) + ' '
+
+ 
+			IF LTRIM(RTRIM(@Tipo)) = '1-Saida'
+
+				SET @NF = @NF + 'AND NF.Tipo_NF = 1 AND NF.Status = (' + char(39) + 'AUTORIZADO' + CHAR(39) + ')'
+
+     
+
+			IF LTRIM(RTRIM(@Tipo)) = '2-Entrada'
+
+				SET @NF = @NF + 'AND NF.Tipo_NF = 2 '
+
+			IF LTRIM(RTRIM(@Tipo)) = 'TODOS'
+				SET @NF = @NF + ' AND (NF.Tipo_NF = 2 OR (NF.Tipo_NF = 1 AND NF.Status = (' + char(39) + 'AUTORIZADO' + CHAR(39) + ')))' 
+
+			if(LEN(@plu)>0)
+			begin
+				SET @NF = @NF + ' and nf_item.plu='+CHAR(39)+@plu+CHAR(39)	
+			end
+			IF LTRIM(RTRIM(@descricao)) <> ''
+			begin
+				SET @NF = @NF + 'AND LTRIM(NF_Item.DESCRICAO) like ' + CHAR(39) + @descricao + CHAR(39) + ' '	
+			end
+			if(@NF_Devolucao='SIM')
+			begin
+				SET @NF = @NF + ' and NP.NF_devolucao = 1 '
+			end
+
+			if(@NF_Devolucao='NAO')
+			begin
+				SET @NF = @NF + ' and NP.NF_devolucao = 0 '
+			end
+		
+			if(LEN(@Excluir_Natureza)>0)
+			begin
+				SET @NF = @NF + ' and NP.CODIGO_OPERACAO NOT IN('+@Excluir_Natureza+') '
+			end
+		
+			if(LEN(@Incluir_Natureza)>0)
+			begin
+				SET @NF = @NF + ' and NP.CODIGO_OPERACAO IN('+@Incluir_Natureza+') '
+			end
+		
+			if(@notaProdutor <> 'TODOS')
+			BEGIN 
+				IF(@notaProdutor ='SIM')
+				BEGIN 
+					SET @NF = @NF + ' and ISNULL(CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') <> '+CHAR(39)+CHAR(39)
+				END 
+				ELSE 
+				BEGIN
+					SET @NF = @NF + ' and ISNULL(CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+') = '+CHAR(39)+CHAR(39)
+				END
+			END 
+
+			  SET @NF = @NF + ' Group by NF.Filial, NF.Codigo, NF.Cliente_Fornecedor, NF.Emissao, NF.data, NF.Tipo_NF, NF.Total,ISNULL(nf.CodigoNotaProdutor,'+CHAR(39)+CHAR(39)+'),NF.ID,NF.Dest_Fornec '
+
+			  SET @NF = @NF + ' Order By NF.Filial, Convert(Varchar,NF.Data,103), NF.Codigo '
+			end
+     
+	
+  execute(@NF)
+  print @nf
+end 
+else
+begin 
+	Select PLU= 'PLU'+ni.PLU
+		  ,ni.Descricao
+		  ,Qtde =sum(ni.qtde)
+		  ,Total= sum(ni.total_faturado)  
+	from nf_item as ni  
+		 inner join nf on nf.filial  = ni.filial 
+					  and nf.Codigo  = ni.Codigo
+					  and nf.Tipo_NF = ni.Tipo_NF
+					  and nf.Cliente_Fornecedor = ni.Cliente_Fornecedor
+		 inner join Natureza_operacao as nop on nf.Codigo_operacao = nop.Codigo_operacao 
+	where  (NF.Data BETWEEN @DataDe AND @DataAte)
+		 AND Not Exists(Select * From nf_inutilizadas i Where Convert(varchar,i.N_Inicio) >= NF.Codigo And Convert(varchar,i.N_Fim) <= NF.Codigo)
+		 and ltrim(nf.filial) = @Filial
+		 AND (
+				 (@NF_CANC ='TODOS')
+			  OR (@NF_CANC ='SIM' AND Isnull(NF.NF_Canc,0) = 1) 
+			  OR (@NF_CANC ='NAO' AND Isnull(NF.NF_Canc,0) = 0)
+		     )
+		 AND (LTRIM(RTRIM(@Fornecedor)) = '' OR  RTRIM(LTRIM(NF.Cliente_Fornecedor)) =@Fornecedor)
+		 AND  (
+				   (@Tipo= 'TODOS')
+				OR (@Tipo= '1-Saida' and nf.Tipo_NF=1)
+				OR (@Tipo= '2-Entrada' and nf.Tipo_NF=2)
+			  )
+		 AND (LEN(@plu)=0 OR ni.PLU = @PLU)
+		 AND (
+				  (@NF_Devolucao='TODOS' )
+				OR(@NF_Devolucao='SIM' and nop.NF_devolucao =1)
+				OR(@NF_Devolucao='NAO' and nop.NF_devolucao =0)
+			)
+		 AND (LEN(@Excluir_Natureza)=0 OR @Excluir_Natureza like '%'+ convert(varchar,nop.CODIGO_OPERACAO) +'%' )
+		 AND (LEN(@Incluir_Natureza)=0 OR @Incluir_Natureza like '%'+ convert(varchar,nop.CODIGO_OPERACAO) +'%' )
+		 AND (
+				(@notaProdutor = 'TODOS')
+			  OR(@notaProdutor='SIM' AND ISNULL(NF.CodigoNotaProdutor,0) <> '')
+			  OR(@notaProdutor='NAO' AND ISNULL(NF.CodigoNotaProdutor,0) = '')
+			  )
+		and (len(@descricao)=0 or ni.Descricao like @descricao)
+	group by ni.plu,ni.Descricao
+	order by LTRIM(RTRIM( ni.Descricao))
+end 
+
+end
+
+GO
+ALTER TABLE Natureza_Operacao ADD Inativa Tinyint DEFAULT 0
+ALTER TABLE Natureza_Operacao ADD CST_ICMS varchar(4) DEFAULT ''
+
+go
+USE [BratterWeb]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_br_Cons_NFe_DadosFiscais]    Script Date: 29/09/2023 15:15:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_br_Cons_NFe_DadosFiscais]
+	@Filial VARCHAR(20),
+	@Cliente_Fornecedor VARCHAR(50),
+	@Codigo VARCHAR(20),
+	@Serie INT
+AS
+	SELECT 
+	NF_ITEM.Num_Item as Seq, 
+	nf_item.ncm, 
+	NF_ITEM.PLU, 
+	CONVERT(VARCHAR, ISNULL(mercadoria.origem, '0')) + CONVERT(VARCHAR, ISNULL(cst_icms, '0')) as CST_ICMS,  
+	nf_item.codigo_operacao AS CFOP, 
+	aliquota_icms as Aliq_ICMS, 
+	nf_item.total AS Total_Item, 
+	base_icms AS BC_ICMS,  
+	NF_ITEM.redutor_base AS Redutor_Base,  
+	icmsv AS VL_ICMS, base_iva AS BCICMSST, 
+	NF_Item.pCredSN as Aliq_SN,
+	NF_Item.vCredICMSSN as Valor_SN,
+	iva AS VLICMSST, 
+	NF_ITEM.IPI , 
+	IPIV AS VL_IPI,  
+	CASE WHEN NF_ITEM.CSTPIS < '50' THEN (select top 1 DP.CST_ENTRADA FROM PISCofins_CST_DePara DP WHERE DP.CST_Saida = NF_ITEM.cstpis)  ELSE NF_ITEM.cstpis END  AS CST_PISCOFINS, 
+	NF_ITEM.base_pis AS BC_PISCOFINS,  
+	NF_ITEM.aliquota_pis AS ALIQ_PIS, 
+	NF_ITEM.PISV AS VL_PIS,  
+	NF_ITEM.aliquota_cofins AS ALIQ_COFINS, 
+	NF_ITEM.CofinsV AS VL_COFINS  
+	FROM NF_Item 
+	INNER JOIN nf on nf.Filial = nf_item.Filial  and NF.Cliente_Fornecedor = Nf_item.Cliente_Fornecedor  AND nf.Codigo = NF_Item.codigo  AND nf.Tipo_NF = nf_item.Tipo_NF
+	INNER JOIN  mercadoria on nf_item.plu = mercadoria.plu  
+	WHERE  nf.Filial = @FILIAL 
+	AND nf.Cliente_Fornecedor = @Cliente_Fornecedor 
+	AND nf.codigo = @Codigo 
+	AND NF.Serie = @Serie 
+	AND nf.Tipo_NF = 2  
+	ORDER BY 1
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_Cons_Registros_Fiscais]    Script Date: 03/10/2023 15:58:51 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_Cons_Registros_Fiscais] 
+	@FILIAL VARCHAR(20),
+	@DATADE	VARCHAR(8),
+	@DATAATE VARCHAR(8),
+	@CST VARCHAR(4),
+	@CFOP VARCHAR(4),
+	@ALIQUOTA VARCHAR(5)
+
+AS
+
+	-- sp_Cons_Registros_Fiscais @fILIAL = 'MATRIZ', @DataDe = '20230901', @DataAte = '20230930', @CST = '060', @CFOP= '5405',  @Aliquota=''
+	IF OBJECT_ID('TEMPDB..#LIXORegistrosFiscais') IS NOT NULL
+		DROP TABLE #LIXORegistrosFiscais
+
+	CREATE TABLE #LIXORegistrosFiscais
+	(CST_ICMS VARCHAR(4),
+	Codigo_Operacao VARCHAR(4),
+	aliquota_icms DECIMAL(6,2),
+	TOTAL_OPERACAO DECIMAL(12,2),
+	BASE_ICMS DECIMAL(12,2),
+	TOTAL_ICMS DECIMAL(12,2),
+	BASE_ICMS_ST DECIMAL(12,2),
+	TOTAL_ICMS_ST DECIMAL(12,2),
+	TOTAL_IPI DECIMAL(12,2),
+	OUTRAS DECIMAL(12,2),
+	TIPONF VARCHAR(1),
+	ORIGEM VARCHAR(3)
+	)
+
+BEGIN
+	INSERT INTO #LIXORegistrosFiscais
+	Select  
+		CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(mercadoria.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(nf_item.cst_icms,'0')) as CST_ICMS, 
+		nf_item.codigo_operacao, 
+		cast(isnull(aliquota_icms,0)as decimal(12,2)) as aliquota_icms, 
+		cast( SUM(isnull(nf_item.total,0) - isnull(nf_item.desconto_valor, 0) +  isnull(nf_item.frete, 0) +  isnull(nf_item.despesas, 0)  
+		+ isnull(nf_item.iva, 0) + isnull(nf_item.ipiv, 0) ) as decimal(12,2)) AS TOTAL_OPERACAO, cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 
+		else SUM(isnull(base_icms,0))end as decimal(12,2)) AS BASE_ICMS, cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 else SUM(isnull(icmsv,0))end as 
+		decimal(12,2))  AS TOTAL_ICMS,  cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 else  SUM(isnull(base_iva,0))end as decimal(12,2)) AS BASE_ICMS_ST,  
+		cast( case when Tributacao.ICMSST_EmOutrasDespesas=1 then 0 else SUM(isnull(iva,0))end as decimal(12,2)) AS TOTAL_ICMS_ST, 
+		cast( case when Tributacao.IPI_EmOutrasDespesas=1 then 0 else SUM(isnull(IPIV,0))end as decimal(12,2)) AS TOTAL_IPI , 
+		cast(  SUM(case when Tributacao.IPI_EmOutrasDespesas=1 then isnull(IPIV,0) else 0 end + 	case when Tributacao.ICMSST_EmOutrasDespesas=1 then
+		isnull(iva,0) else  0 end  ) as decimal(12,2)) AS OUTRAS, CASE WHEN NF_Item.Tipo_NF = 1 THEN 'S' ELSE 'E' END AS Tiponf, 'NFe' AS Origem
+	from NF_Item  
+		inner join nf on nf.Codigo=NF_Item.codigo and  nf.Tipo_NF = nf_item.Tipo_NF and  nf.Filial = nf_item.Filial  
+		and NF.Cliente_Fornecedor = Nf_item.Cliente_Fornecedor  inner join mercadoria on nf_item.plu = mercadoria.plu  
+		inner join Tributacao on nf_item.Codigo_Tributacao = Tributacao.Codigo_Tributacao  
+		inner join Natureza_Operacao Nat ON Nat.Codigo_Operacao = Nf.Codigo_Operacao 
+	WHERE nf.Filial=@FILIAL
+		and (
+		(nf.Tipo_NF = 2 AND ISNULL(nat.Imprime_NF,0) = 0) 
+		OR (nf.Tipo_NF = 2 AND ISNULL(nat.Imprime_NF,0) = 1 AND nf.Status = 'AUTORIZADO') 
+		OR (nf.Tipo_NF = 1 AND nf.Status = 'AUTORIZADO')) 
+		and (nf.data between @DATADE AND @DATAATE )  
+		and CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(mercadoria.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(nf_item.cst_icms,'0')) LIKE CASE WHEN  @CST = '' THEN '%%' ELSE @CST END 
+		and nf_item.codigo_operacao LIKE CASE WHEN  @CFOP = '' THEN '%%' ELSE @CFOP END
+		AND LTRIM(RTRIM(CONVERT(VARCHAR(5), NF_ITEM.ALIQUOTA_ICMS))) LIKE REPLACE(CASE WHEN @ALIQUOTA = '' THEN '%%' ELSE @ALIQUOTA +  
+		CASE WHEN CHARINDEX('.', @ALIQUOTA) > 0 OR CHARINDEX(',', @ALIQUOTA) > 0 THEN '' ELSE '0.00' END  END ,',', '.') 
+	GROUP BY mercadoria.origem,nf_item.cst_icms,nf_item.codigo_operacao, nf_item.Tipo_NF, aliquota_icms,Tributacao.ICMSST_EmOutrasDespesas,Tributacao.IPI_EmOutrasDespesas  
+	ORDER BY 1, 2, 3
+
+
+
+	--** Inserindo SAIDA_ESTOQUE
+	IF @CFOP <> ''
+		BEGIN
+			IF CHARINDEX('5102', @CFOP) > 0 
+				SET @CST = '000'
+			ELSE
+				IF CHARINDEX('5405', @CFOP) > 0
+					SET @CST = '060'
+				ELSE
+					SET @CST = 'ZZ'
+		END
+
+	INSERT INTO #LIXORegistrosFiscais
+	SELECT 
+	CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(M.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(Saida_Estoque.cst_icms,'0')),
+	CASE WHEN Saida_Estoque.CST_ICMS = '60' THEN '5405' ELSE '5102' END,
+	Saida_Estoque.aliquota_icms,
+	Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0) + ISNULL(Saida_Estoque.Acrescimo, 0),
+	CASE WHEN Saida_Estoque.aliquota_icms > 0 THEN 	Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0) + ISNULL(Saida_Estoque.Acrescimo, 0) ELSE 0 END,
+	CASE WHEN Saida_Estoque.aliquota_icms > 0 THEN 	CONVERT(DECIMAL(12,2), (Saida_Estoque.Vlr - ISNULL(Saida_Estoque.desconto, 0) + ISNULL(Saida_Estoque.Acrescimo, 0)) * (Saida_Estoque.aliquota_icms / 100)) ELSE 0 END,
+	0, 0, 0, 0,
+	'S', 'PDV'
+
+	FROM SAIDA_ESTOQUE WITH (INDEX=IX_SAIDA_ESTOQUE, NOLOCK) 
+	INNER JOIN Mercadoria M ON Saida_Estoque.PLU = M.PLU
+	WHERE Saida_Estoque.Filial = @Filial 
+	AND Data_Movimento BETWEEN @DATADE AND @DATAATE AND DATA_CANCELAMENTO IS NULL
+	and CONVERT(VARCHAR,ISNULL(RTRIM(LTRIM(M.origem)),'0'))+ CONVERT(VARCHAR,ISNULL(Saida_Estoque.cst_icms,'0')) LIKE CASE WHEN  @CST = '' THEN '%%' ELSE @CST END 
+	AND LTRIM(RTRIM(CONVERT(VARCHAR(5), Saida_Estoque.ALIQUOTA_ICMS))) LIKE REPLACE(CASE WHEN @ALIQUOTA = '' THEN '%%' ELSE @ALIQUOTA +  
+	CASE WHEN CHARINDEX('.', @ALIQUOTA) > 0 OR CHARINDEX(',', @ALIQUOTA) > 0 THEN '' ELSE '0.00' END  END ,',', '.') 
+
+	SELECT CST_ICMS, Codigo_Operacao, aliquota_icms, 
+	SUM(TOTAL_OPERACAO) AS TOTAL_OPERACAO,
+	SUM(BASE_ICMS) AS BASE_ICMS,
+	SUM(TOTAL_ICMS) AS TOTAL_ICMS,
+	SUM(BASE_ICMS_ST) AS BASE_ICMS_ST,
+	SUM(TOTAL_ICMS_ST) AS TOTAL_ICMS_ST,
+	SUM(TOTAL_IPI) AS TOTAL_IPI,
+	SUM(OUTRAS) AS OUTRAS,
+	TIPONF,
+	ORIGEM
+	FROM #LIXORegistrosFiscais
+	GROUP BY CST_ICMS, Codigo_Operacao, aliquota_icms, TIPONF, ORIGEM
+	ORDER BY 1, 2, 3
+
+END
+GO
+
+ALTER TRIGGER [dbo].[iStatusEncerramento] ON [dbo].[Inventario]
+AFTER UPDATE
+AS
+BEGIN
+	IF UPDATE(Status)
+		BEGIN
+			DECLARE @STATUS AS VARCHAR(30)
+			DECLARE @CodigoInventario AS VARCHAR(10)
+			DECLARE @Filial AS VARCHAR(20)
+			SELECT @Filial = inserted.Filial, @STATUS = inserted.Status, @CodigoInventario = inserted.Codigo_inventario FROM inserted WITH (NOLOCK);
+
+			IF @STATUS = 'ENCERRADO'
+				UPDATE Inventario SET Inventario.DataHora_Encerramento = GETDATE() WHERE Inventario.Filial = @Filial AND Inventario.Codigo_inventario = @CodigoInventario;
+		END
+END
+
+go
+ALTER TABLE Usuarios_WEB ADD Filial_Financeiro VARCHAR(20)
+
+GO
+
+CREATE TABLE Conta_a_Pagar_Outra_Filial
+(Filial VARCHAR(20),
+Fornecedor VARCHAR(20),
+Documento VARCHAR(20),
+Numero_NF VARCHAR(20),
+Serie INT,
+Emissao DATETIME,
+Vencimento DATETIME,
+Codigo_Centro_Custo VARCHAR(10),
+Valor DECIMAL(12,2),
+Usuario VARCHAR(20),
+Integrado int,
+DataHora_Integracao DATETIME,
+CONSTRAINT PK_FFDS PRIMARY KEY (Filial, Fornecedor, Documento, Serie)
+)
+
+go
+
+alter table Natureza_Operacao ADD Destinatario_Origem Tinyint default 0
+
+go
+
+ALTER TABLE Tesouraria_Detalhes ADD Sequencia BIGINT

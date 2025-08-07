@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Acrescimo SINTETICO</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+	sp_Rel_Fin_ResumoAcrescimo_Analitico
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Data</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>Texto</tipo>
+      <titulo>Hora de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>horade</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>Texto</tipo>
+      <titulo>Hora Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>horaate</campo>
+    </filtro2>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>3</index>
+      <titulo>Total Somado</titulo>
+      <campo>Valor</campo>
+    </sub0>
+  </subtotais>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+</Relatorio>

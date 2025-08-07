@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<modulos>
+  <a>Cadastro</a> <!--módulo Ativo /-->
+  <a>Financeiro</a>
+  <a>NotaFiscal</a>
+  <a>Sped</a>
+  <a>Pedidos</a>
+  <a>Estoque</a>
+  <a>Relatorios</a>
+  <a>Dispositivos</a>
+  <a>Gerencial</a>
+  <a>Manutencao</a>
+  <a>Usuarios</a>
+  <a>PetShop</a>
+</modulos>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>PetShop</nome>
+  <versao>1.0</versao>
+  <atualizado>15/09/2015</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>Agenda</_1>
+   
+  </ordem>
+
+  <Agenda>
+    <nome>Agenda</nome>
+    <codigo>PT001</codigo>
+    <page>Agenda.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </Agenda>
+  
+</mconfig>

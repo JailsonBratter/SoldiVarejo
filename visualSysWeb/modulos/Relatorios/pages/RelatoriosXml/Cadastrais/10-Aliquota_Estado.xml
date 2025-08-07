@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio Aliquota Estado</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    Select UF,NCM,[ICMS INTERESTADUAL]=icms_interestadual,[IVA AJUSTADO]=iva_ajustado, [ICMS ESTADO]=icms_estado,CST from aliquota_imp_estado
+
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>UF</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>UF</campo>
+      <largura>40</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Ncm</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>NCM</campo>
+      <largura>150</largura>
+    </filtro1>
+    
+  </filtros>
+  <camposSemformatacao>
+    
+    <campo>1</campo>
+    <campo>5</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

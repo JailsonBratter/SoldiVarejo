@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Dispositivos</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+    
+  <ordem>
+    <_1>Etiquetas</_1>
+    <_1>CargaBalanca</_1>
+    <_1>CargaPDV</_1>
+  
+  
+  </ordem>
+  <_1>CargaFTP</_1>
+  <Etiquetas>
+    <nome>Impressao Etiquetas</nome>
+    <codigo>E001</codigo>
+    <page>ImprimeEtiquetas.aspx</page>
+    <imgMenu></imgMenu>
+    <img>etiquetaico.jpg</img>
+    <inicial>true</inicial>
+  </Etiquetas>
+  <CargaBalanca>
+    <nome>Carga Balança</nome>
+    <codigo>E002</codigo>
+    <page>CargaBalanca.aspx</page>
+    <imgMenu></imgMenu>
+    <img>balancaico.jpg</img>
+    <inicial>true</inicial>
+  </CargaBalanca>
+  <CargaPDV>
+    <nome>Carga PDV</nome>
+    <codigo>E003</codigo>
+    <page>CargaPDV.aspx</page>
+    <imgMenu></imgMenu>
+    <img>pdvico.jpg</img>
+    <inicial>true</inicial>
+  </CargaPDV>
+  <CargaFTP>
+    <nome>Carga FTP</nome>
+    <codigo>E004</codigo>
+    <page>CargaFTP.aspx</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </CargaFTP>
+ 
+
+</mconfig>

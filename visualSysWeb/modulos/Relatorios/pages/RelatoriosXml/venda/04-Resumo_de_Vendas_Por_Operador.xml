@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Resumo de Vendas Por Operador</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Fin_PorOperadorCancelamento
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <sql>select 'TODOS' UNION ALL select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <titulo>Pdv</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+  <filtro3>
+      <tipo>combo</tipo>
+      <sql>select 'TODOS' UNION ALL select nome from operadores</sql>
+      <titulo>Operador</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Operador</campo>
+      <campofiltro></campofiltro>
+    <obrigatorio>true</obrigatorio>
+    </filtro3>  
+  
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>4</index>
+      <titulo>Cancelados</titulo>
+      <campo>cancelados</campo>
+      </sub0>
+    <sub1>
+      <index>3</index>
+      <titulo>Vendas</titulo>
+      <campo>vendas</campo>
+    </sub1>
+   
+  </subtotais>
+  <camposSemformatacao>
+    <campo>1</campo>
+    
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

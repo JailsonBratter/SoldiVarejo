@@ -1,0 +1,258 @@
+{
+  "Historico": [
+    {
+      "Versao": "v1.328.914",
+      "Conteudo": [
+        {
+          "Correcoes": [
+            { "dados": "Corrigido erro na emissao de NFe qdo exclui um item e efetua a inclusao de outro, o sistema trazia o valor do item anteriormente excluido." }
+          ],
+          "Novidades": [
+          ]
+        }
+      ],
+      "Versao": "v1.328.913",
+      "Conteudo": [
+        {
+          "Correcoes": [
+          ],
+          "Novidades": [
+            { "dados": "Criado em USUARIOS WEB a coluna GRUPO_CLIENTES para limitar o acesso ao usuário somente de um grupo de clientes. Atualmente funcionando em TABELA DE PRECO, PEDIDO DE VENDA e RELATORIO 15 DE VENDAS." }
+          ]
+        }
+      ],
+      "Versao": "v1.327.912",
+      "Conteudo": [
+        {
+          "Correcoes": [
+          ],
+          "Novidades": [
+            { "dados": "Criado tabela FILIAL_IE para armazenar as Inscrições Estaduais em outras unidades federativas. Esta alteração permite a emissão de uma única guia do GNRE para recolhimento do DIFAL ao contrário de emitir uma guia para cada NFe emitida." },
+            { "dados": "Criado relatório para análise de estoque. O relatório apresenta a movimentação com base do fechamento de estoque em Mercadoria_Estoque_Mes." },
+            { "dados": "Adicionado mais 3 opções nas informações nutricionais (COLESTEROL, SODIO e FERRO)." },
+            { "dados": "Adicionado mais uma opção de etiqueta (Etiqueta de informação nutricional)." }
+          ]
+        }
+      ],
+      "Versao": "v1.326.911",
+      "Conteudo": [
+        {
+          "Correcoes": [
+            { "dados": "Correções nos CST´s e aliquotas na emissão de NFE quando se tratar de empresa do simples nacional." },
+            { "dados": "Criado indices para facilitar a seleção dos registros de inventário." }
+          ],
+          "Novidades": [
+            { "dados": "No PEDIDO DE VENDAS foi adicionado uma opção para gravar temporariamente os itens que são incluídos pelo PLU Rápido para recuperação caso de alguma ocorrência que impessa o salvamento" },
+            { "dados": "Relatório para apresentar as vendas efetuadas por NFe com os dados cadastrais dos clientes." }
+          ]
+        }
+      ],
+      "Versao": "v1.326.910",
+      "Conteudo": [
+        {
+          "Correcoes": [
+            { "dados": "CSOSN qdo se trata de emissão de NFe para outra unidade federativa" }
+          ],
+          "Novidades": [
+            { "dados": "No inventário do tipo INV.AGRUPAMENTO será permitido apenas 1 por mês" },
+            { "dados": "Relatório APURAÇÃO DE ICMS e NFE COMPLEMENTAR" },
+            { "dados": "Não permitir a inclusão de NFe qdo a natureza estiver marcada para gerar financeiro e o lcto não conter os dados de pagamento." },
+            { "dados": "Parâmetro para inserir TAG auxML - Autorização para os atores envolvidos no XML obterem o arquivo junto ao SEFAZ." }
+          ]
+        }
+      ],
+      "Versao": "v1.325.909",
+      "Conteudo": [
+        {
+          "Correcoes": [
+          ],
+          "Novidades": [
+            { "dados": "Inclusão na tela de entrada de uma nova aba para receber o CTe" },
+            { "dados": "Enviar imagem diretamente para o FTP do cardápio" },
+            { "dados": "Inclusão do parâmetro para identificar o número de dias entre a emissão e a data de entrada da NFe no sistema." }
+          ]
+        }
+      ],
+      "Versao": "v1.324.908",
+      "Conteudo": [
+        {
+          "Correcoes": [
+            { "dados": "Correção no tratamento de consulta da NFe Validada ao SEFAZ" },
+            { "dados": "Seleção do centro de custo do fornecedor para NFe de devolução; Bloqueio do campo CENTRO DE CUSTO na emissão de NFe para permitir alteração apenas com seleção via LUPA" },
+            { "dados": "Cadastro de operadores foram adicionados COMBO para seleção do nível de operador e LUPA para pesquisar próximo código." },
+            { "dados": "Inclusão de um índice em DOCUMENTO ELETRÔNICO para agilizar a consulta ao DB na tela de emissão de NFe." }
+          ],
+          "Novidades": [
+          ]
+        }
+      ],
+      {
+        "Versao": "v1.323.907",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Gravação do CST_ENTRADA (PIS/COFINS) foram acertados para não mais gravar informações com valores inferiores a 50. 01,02 e 3->50;04->73;05->75;06->73;07->71;08->74;09->72;49->98." },
+              { "dados": "Corrigido procedure sp_Cons_PlusVinculado evitando problemas qdo o campo está vazio." }
+            ],
+            "Novidades": [
+              { "dados": "Na tabela LOG_PRECO passa a serem gravados os dados de custo e vendas anteriores a remarcação (tela de cadastro, precificação de NFe e Entrada de NFe. com isso o sistema passa a mostrar os dados inclusive com suas respectivas margens." },
+              { "dados": "Qdo uma NFe estiver com o status de VALIDADO e o usuário tentar EXCLUIR ou EDITAR o sistema vai solicitar que primeiro ele cheque o STATUS da NFe no SEFAZ" }
+            ]
+          }
+        ],
+        "Versao": "v1.322.906",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Correção na tela de CARDÁPIO para respeitar as definições do permissionamento de usuário." },
+              { "dados": "Acerto no tratamento de bloqueio de Natureza de Operação." }
+            ],
+            "Novidades": [
+              { "dados": "Inclusão da tela de configuração do ICMS por unidade ferederativa. Este processo se dá para cálculo do DIFAL e do Fundo de Combate a Pobreza. No lançamento do Item na emissão da NFe foi incluso o campo que visualiza a aliquota de ICMS de destino" },
+              { "dados": "No módulo MÓBILE, foi adicionado processo para recebimento de produtos via smartphone e tela de NFEntradaDoca para confirmação do recebimento." },
+              { "dados": "Inclusão do parametro PRECIFIC_NF_OFF para atualização da MARGEM de preços de produtos após inserção de NFe que movimenta custo enão permitindo o uso de PRECIFICAÇÃO POR NOTA FISCAL " }
+            ]
+          }
+        ],
+        "Versao": "v1.321.905",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Correções na tela de TESOURARIA para impedir que altere lançamentos com finalizadora + cupom + operador de valores iguais porém de sequências diferentes." },
+              { "dados": "Correções na tela de EMISSÃO DE NFE para permitir a edição de informações ST, CST, PIS coisas que não atualizavam." }
+            ],
+            "Novidades": [
+              { "dados": "Tela de registros fiscais para auditoria da contabilidade" },
+              { "dados": "Inclusõa na tela de TESOURARIA o campo para inserção do codigo de autorização NSU" },
+              { "dados": "Parametro de bloqueio na natureza de operação para impedir que o destinatario seja igual ao CNPJ da loja" },
+              { "dados": "Inclusão de nova aba em PRODUTOS para incluir mais informações quando a integracao for MAGENTO" },
+              { "dados": "Permite a inclusao de títulos para outra filia gravando na tabela CONTA_A_PAGAR_OUTRA_FILIAL quando o usuário estiver configurado para esta particularidade." },
+              { "dados": "Download de documentos eletrônicos SAT CFe, NFe Saida e NFe Entrada" }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.320.904",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Correções na tela de SPED-REGISTROS FISCAIS" }
+            ],
+            "Novidades": [
+              { "dados": "Cadastro de Alíquotas Estado para inclusão semelhante ao SOLDI VAREJO ALTALUCE" },
+              { "dados": "Cadastro de Artigo Fiscal para Vinculação do cadastro de produtos. Este processo temo como definição inserir automaticamente OBS na NFe de venda" },
+              { "dados": "Emissão das informações de REFFORNECEDOR da tabela MERCADORIA para o SOLDI_PDV." },
+              { "dados": "NF de Entrada. Foram inseridos as colunas: serie, fiscal e validado. Coluna Fiscal leva a tela de validação das informações fiscais e permissão para correção de dados que não interferem no valor da NFe." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.319.903",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Correção da precificacao qdo existem muitos itens (mais de 100), o sistema abandonava o processo sem precificar." },
+              { "dados": "Tela de registros fiscais no módulo SPED não estava abrindo." }
+
+            ],
+            "Novidades": [
+              { "dados": "Emissão de NFe a partir de devolucao de produtos executados no caixa com a emissao de vouchers." },
+              { "dados": "Incluido processo para recebimento de mercadorias via SmartPhone a partir de Manifestação na Nuvem." },
+              { "dados": "Na tela de NFe de entrada foram adicionadas duas novas colunas (SERIE e um botão para checagem de dados do SPED." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.318.902",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Correção do cálculo de ST quando o produto possui redução de base (CST 070)." }
+
+            ],
+            "Novidades": [
+              { "dados": "Filtro TIPO no cadastro de produtos." },
+              { "dados": "Criado parametro PROIBE_VENDA_INATIVO para nao listar produtos inativos no pedido." },
+              { "dados": "Nova etiqueta de gondola semelhante a etiqueta de produto, porem, com apenas uma coluna." },
+              { "dados": "Emissão de NFe a partir das devoluções do caixa" },
+              { "dados": "Inclusão de filtros ENTREGA e CADASTRO na seleção entre datas na emissão de NFe a partir de pedidos de venda." },
+              { "dados": "Incluido a coluna INATIVO no envio de produtos para os caixas (Carga). IMPORTANTE: rotina possui atualização no DB de cada CAIXA." },
+              { "dados": "Permite INATIVAR o funcionário no cadastro." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.317.901",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Tratamento para não permitir ENTER, TAB, LINE FEED na descrição de produtos." },
+              { "dados": "Parâmetro VALIDAR_CST_SAIDA = TRUE não vai permitir o cadastro de CST´s PIS e COFINS que não estejam previamente cadastradas" },
+              { "dados": "Etiqueta de Gondola quando gera a barra do PLU (produto sem EAN) o sistema estava erroneamente inserindo um 0 no final da barra." },
+              { "dados": "Assim como na entrada, foi adicionado o uso para as NFes de saída a utilização do UTILIZA_CFOP da Natureza_de_Operação para evitar erros de CFOP´s erradas." }
+
+            ],
+            "Novidades": [
+              { "dados": "Natureza de operação: Incluído opções para tratamento PRECIFICA NF (Só vai para precificação de NF as NF´s que estiverem em sua natureza esta opção marcada. Atualiza_Custo_Médio opção para tratar este novo campo. Ainda em desenvolvimento as opções de custo de médio." },
+              { "dados": "Pedido de Venda. Incluso mais um STATUS => 7-LIBERADO. Esta opção só será validada se o paramâmetro PED_NAO_FECHAR_QDO_SIMPL = TRUE. Desta forma não há o fechamento AUTOMÁTICO quando for pedido simples." },
+              { "dados": "Criada nova etiqueta de Gôndola PRODUTO SEM PREÇO para imprimir as etiquetas de produtos apenas com barra e descrição sem o preço. Necessário atualizar o executável da etiqueta." },
+              { "dados": "Criado relatório de CADASTRO DE NATUREZA DE OPERAÇÃO para listar canpos principais." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.315.900",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Inclusão do parâmetro CPF CNPJ para consulta do relatório de VENDAS CUPOM SINTÉTICO." },
+              { "dados": "Impressão da coluna EMBALAGEM na impressão do pedido de venda (A4)." },
+              { "dados": "Na tela de orçamento de vendas impedir a devolução do estoque ao cancelar (orçamento não movimenta estoque)." },
+              { "dados": "Atualizar o total do item ao alterar a qtde, embalagem ou preço do produto." },
+              { "dados": "Alterado procedure SP_NF_DANFE. No INNER JOIN entre NF e NF_ITEM não estava considerando o TIPO_NF." },
+              { "dados": "Ao abrir o cadastro de clientes, a grid vai estar em ordem de cadastro do mais recente para o mais antigo." }
+            ],
+            "Novidades": [
+              { "dados": "SOLDI VAREJO passa a funcionar em conjunto com o SOLDI NFe para manifestação das notas, com isso, foi desativado o botão consultar todas as NFe´s o que gerava conflito com o novo sistema." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.315.899",
+        "Conteudo": [
+          {
+            "Correcoes": [
+            ],
+            "Novidades": [
+              { "dados": "Inclusão da ABA Ocorrências no cadastro de Fornecedor. Esta informação serve para alertar o comprador antes de efetuar um novo pedido se há pendências a serem resolvidas." }
+            ]
+          }
+        ]
+      },
+      {
+        "Versao": "v1.315.898",
+        "Conteudo": [
+          {
+            "Correcoes": [
+              { "dados": "Criação da TRIGGER utg_Atualiza_Status. Necessário para quando houver alteração no STATUS de uma NFe emitida, que esta seja marcada para ser enviada novmamente a nuvem." },
+              { "dados": "Correção da procedure SP_M_ACUMULADO_GERAL para desconsiderar as vendas canceladas" }
+            ],
+            "Novidades": [
+              { "dados": "Inclusão do FILTRO PDV no relatório TOTAIS DE VENDA" },
+              { "dados": "Inclusão de novas colunas para checagem da abertura e encerramento em OUTRAS MOVIMENTAÇÕES" },
+              { "dados": "Inclusão de novos campos para emissão de NFes quando existir produtos com os NCM´s 3002, 3003, 3004, 3005 e 3006" },
+              { "dados": "Inclusão do FILTRO PDV no relatório TOTAIS DE VENDA" },
+              { "dados": "Inclusão de datas DE ATÉ no relatório de ResumoPorOperador, sendo assim passar a listar mais de um dia no relatório." },
+              { "dados": "Inclusão do FILTRO PRECO-ATACADO no relatório CADASTRAIS -> 02 - PRODUTOS LISTAGEM PREÇO e Inclusão do CHECK em CADASTRO -> PRODUTOS para seleção de produtos com preço atacado > 0 e apresentação do preço na tela" }
+            ]
+          }
+        ]
+      }
+      ]
+    }

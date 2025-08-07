@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Resumo de Vendas Por PDV</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_Resumo_Vendas_Pdv
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+   
+  </filtros>
+    <subtotais>
+    <sub0>
+      <index>3</index>
+      <titulo>Total Somado</titulo>
+      <campo>vlr</campo>
+    </sub0>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>2</campo>
+    
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Resumo Diario das Finalizadoras Por Operador</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_fin_ResumoPorOperador
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>data</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data até</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Operador</titulo>
+      <sql>
+        SELECT NOME
+        FROM (
+        select 0 AS ORD, 'TODOS' AS NOME
+        UNION ALL
+        Select  id_Operador, N =convert(varchar,id_Operador)+'-'+Nome
+        From Operadores ) AS A ORDER BY ORD
+      </sql>
+      <valorPadrao/>
+      <campo>operador</campo>
+      <filtropai></filtropai>
+      <campofiltro>Id_Operador</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro3>
+    <filtro4>
+      <tipo>hora</tipo>
+      <titulo>Hora De</titulo>
+      <valorPadrao>00:00</valorPadrao>
+      <campo>horade</campo>
+      <campofiltro></campofiltro>
+      <largura>60</largura>
+    </filtro4>
+    <filtro5>
+      <tipo>hora</tipo>
+      <titulo>Hora Ate</titulo>
+      <valorPadrao>23:59</valorPadrao>
+      <campo>horaate</campo>
+      <largura>60</largura>
+    </filtro5>
+  </filtros>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

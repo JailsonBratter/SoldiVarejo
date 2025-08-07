@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Pedido Producao</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Pedido_Venda_Producao
+  </sql>
+  <filtros>
+     <filtro0>
+      <tipo>Combo</tipo>
+      <titulo>Agrupamento</titulo>
+      <sql>Select '' UNION ALL SELECT Agrupamento FROM Agrupamento_Producao</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Agrupamento</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>false</obrigatorio>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro1>
+    <filtro2>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro2>
+    <filtro3>
+      <tipo>hora</tipo>
+      <titulo>Hora de</titulo>
+      <valorPadrao>00:00</valorPadrao>
+      <largura>60</largura>
+      <campo>horaInicio</campo>
+    </filtro3>
+
+    <filtro4>
+      <tipo>hora</tipo>
+      <titulo>Hora ate</titulo>
+      <valorPadrao>23:59</valorPadrao>
+      <largura>60</largura>
+      <campo>horaFim</campo>
+    </filtro4>
+    
+    <filtro5>
+      <tipo>texto</tipo>
+      <titulo>PLU</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Plu</campo>
+      <campofiltro></campofiltro>
+    </filtro5>
+    
+    <filtro6>
+      <tipo>texto</tipo>
+      <titulo>Referencia</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Ref_Fornecedor</campo>
+      <campofiltro></campofiltro>
+    </filtro6>
+    <filtro7>
+      <tipo>texto</tipo>
+      <titulo>Descrição</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Descricao</campo>
+      <campofiltro></campofiltro>
+    </filtro7>
+    <filtro8>
+      <tipo>texto</tipo>
+      <titulo>Cliente Nome/Cnpj/CPF</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>cliente</campo>
+      <campofiltro></campofiltro>
+    </filtro8>
+    <filtro9>
+      <tipo>Combo</tipo>
+      <titulo>Vendedor</titulo>
+      <sql>select 'TODOS' UNION ALL select nome from Funcionario</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Vendedor</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro9>
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>4</index>
+      <titulo>Qtde Total</titulo>
+      <campo>Qtde</campo>
+     </sub0>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>3</campo>
+    <campo>5</campo>
+
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>

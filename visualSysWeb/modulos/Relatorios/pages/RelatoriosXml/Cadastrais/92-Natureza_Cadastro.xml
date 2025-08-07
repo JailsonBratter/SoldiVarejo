@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Natureza Cadastro</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_br_Natureza_NF_Completa
+  </sql>
+  <filtros>
+    <filtro0>
+      <tipo>TEXTO</tipo>
+      <titulo>Codigo Natureza</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <campo>Codigo</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro0>
+  </filtros>
+
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+    <campo>3</campo>
+    <campo>4</campo>
+    <campo>5</campo>
+    <campo>6</campo>
+    <campo>7</campo>
+    <campo>8</campo>
+    <campo>9</campo>
+    <campo>10</campo>
+    <campo>11</campo>
+    <campo>12</campo>
+    <campo>13</campo>
+    <campo>14</campo>
+    <campo>15</campo>
+    <campo>16</campo>
+    <campo>17</campo>
+    <campo>18</campo>
+    <campo>19</campo>
+    <campo>20</campo>
+  </camposSemformatacao>
+
+ <subtotais>
+    
+  </subtotais>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+</Relatorio>
+  

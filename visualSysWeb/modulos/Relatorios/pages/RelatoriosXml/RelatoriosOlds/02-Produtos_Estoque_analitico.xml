@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Produtos Analitico</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    Select CONVERT(NUMERIC,PLU)PLU, DESCRICAO,isnull(preco_compra,0) AS [PRECO COMPRA] ,isnull(preco_custo,0) AS [PRECO CUSTO],isnull(a.margem,0) AS [MARGEM], isnull(preco,0) as[PRECO],isnull(saldo_atual,0) AS[SALDO ATUAL] ,(isnull(saldo_atual,0)*isnull(preco_custo,0)) [VALOR ESTOQUE],a.codigo_tributacao[CODIGO TRIBUTACAO],peso_variavel[PESO VARIAVEL]
+    from mercadoria a inner join departamento b on a.codigo_departamento = b.codigo_departamento
+    inner join subgrupo c on b.codigo_subgrupo = c.codigo_subgrupo
+    inner join grupo d on c.codigo_grupo = d.codigo_grupo
+    
+
+  </sql>
+  <order>
+    PLU
+  </order>
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>PLU</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.plu</campo>
+      <largura>80</largura>
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.descricao</campo>
+      <largura>250</largura>
+    </filtro1>
+
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Grupo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>c.codigo_grupo</campo>
+      <sql>select codigo_grupo,Descricao_grupo from grupo </sql>
+      <campofiltroPreenche>codigo_grupo</campofiltroPreenche>
+      <largura>90</largura>
+      <filtroPreenche>3</filtroPreenche>
+      <campoPreenche>Descricao_grupo</campoPreenche>
+
+    </filtro2>
+
+    <filtro3>
+      <tipo>lista</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo></campo>
+      <sql>select Descricao_grupo,Descricao_grupo,codigo_grupo from grupo </sql>
+      <campofiltroPreenche>Descricao_grupo</campofiltroPreenche>
+      <largura>200</largura>
+      <filtroPreenche>2</filtroPreenche>
+      <campoPreenche>codigo_Grupo</campoPreenche>
+      <sqlAutocompleta>true</sqlAutocompleta>
+    </filtro3>
+
+    <filtro4>
+      <tipo>texto</tipo>
+      <titulo>SubGrupo</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>90</largura>
+      <campo>c.codigo_Subgrupo</campo>
+      <sql>select Codigo_SubGrupo,Descricao_SubGrupo from Subgrupo </sql>
+      <campofiltroPreenche>codigo_SubGrupo</campofiltroPreenche>
+
+      <filtroPreenche>5</filtroPreenche>
+      <campoPreenche>Descricao_SubGrupo</campoPreenche>
+      <filtropai>2</filtropai>
+      <campofiltroPai>codigo_grupo</campofiltroPai>
+    </filtro4>
+    <filtro5>
+      <tipo>lista</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo></campo>
+      <sql>select Descricao_SubGrupo,Descricao_SubGrupo,Codigo_SubGrupo from Subgrupo</sql>
+      <filtroPreenche>4</filtroPreenche>
+      <campoPreenche>Codigo_SubGrupo</campoPreenche>
+      <campofiltroPreenche>Descricao_SubGrupo</campofiltroPreenche>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>2</filtropai>
+      <campofiltroPai>codigo_grupo</campofiltroPai>
+
+    </filtro5>
+
+   
+  </filtros>
+  <subtotais>	
+		<sub0>
+			<index>6</index>
+			<titulo>SALDO ATUAL</titulo>
+			<campo>saldo_atual</campo>
+		</sub0>
+
+    <sub1>
+      <index>7</index>
+      <titulo>VALOR ESTOQUE</titulo>
+      <campo>valor_estoque</campo>
+    </sub1>
+  </subtotais>
+  
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

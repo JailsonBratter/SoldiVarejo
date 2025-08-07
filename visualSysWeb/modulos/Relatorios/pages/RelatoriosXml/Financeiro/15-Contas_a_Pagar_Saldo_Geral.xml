@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Contas a Pagar</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_conta_a_pagar_Saldo_geral
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <titulo>Status</titulo>
+      <lista>
+        <campo>PREVISTO</campo>
+        <campo>ABERTO</campo>
+        <campo>CONCLUIDO</campo>
+        <campo>CANCELADO</campo>
+        
+      </lista>
+      <valorPadrao>PREVISTO</valorPadrao>
+      <campo>Status</campo>
+      <campofiltro>status</campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    
+    <filtro3>
+      <tipo>texto</tipo>
+      <titulo>Valor</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>valor</campo>
+      <largura>100</largura>
+    </filtro3>
+    <filtro4>
+      
+      <tipo>listafiltro</tipo>
+      <titulo>Fornecedor</titulo>
+      <sql>select rtrim(ltrim(fornecedor)) as Fornecedor,CNPJ from fornecedor</sql>
+      <camposFiltros>
+        <campo>Fornecedor</campo>
+        <campo>cnpj</campo>
+      </camposFiltros>
+      <valorPadrao></valorPadrao>
+      <campo>fornecedor</campo>
+      <largura>200</largura>
+      
+    </filtro4>
+    <filtro5> 
+      <tipo>listafiltro</tipo>
+      <titulo>Centro de Custo</titulo>
+      <sql>select rtrim(ltrim(codigo_centro_custo)) as codigo, rtrim(ltrim(DESCRICAO_CENTRO_CUSTO)) as CENTRO_CUSTO from CENTRO_CUSTO</sql>
+      <valorPadrao></valorPadrao>
+      <campo>centrocusto</campo>
+      <camposFiltros>
+        <campo>codigo_centro_custo</campo>
+        <campo>Descricao_centro_custo</campo>
+      </camposFiltros>
+
+    </filtro5>
+    <filtro6>
+      <tipo>texto</tipo>
+      <titulo>Cheque</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Cheque</campo>
+      <largura>100</largura>
+    </filtro6>
+    <filtro7>
+      <tipo>combo</tipo>
+      <titulo>Conferido</titulo>
+      <lista>
+        <campo>TODOS</campo>
+        <campo>SIM</campo>
+        <campo>NAO</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>CONFERIDO</campo>
+      <campofiltro></campofiltro>
+      <largura>150</largura>
+      <obrigatorio>true</obrigatorio>
+    </filtro7>
+    <filtro8>
+      <tipo>Combo</tipo>
+      <titulo>Tipo Pagamento</titulo>
+      <sql>SELECT 'TODOS' union all select Tipo_pagamento from Tipo_pagamento</sql>
+      <valorPadrao></valorPadrao>
+      <campo>tipoPagamento</campo>
+      <campofiltro></campofiltro>
+      <obrigatorio>true</obrigatorio>
+    </filtro8>
+  </filtros>
+  <grupoTotais>
+    <totalCampos>8</totalCampos>
+    <agrupar>Vencimento</agrupar><!-- campo que vai ser agrupado, se for colocado filtro o valor do filtro vai se considerado o campo agrupado-->
+    <somar0>
+      <campo>Valor</campo>
+      <posicao>3</posicao>
+    </somar0> <!-- Valor a ser Somado-->
+    <somar1>
+      <campo>Desconto</campo>
+      <posicao>4</posicao>
+    </somar1> <!-- Valor a ser Somado-->
+    <somar2>
+      <campo>Acrescimo</campo>
+      <posicao>5</posicao>
+    </somar2> <!-- Valor a ser Somado-->
+    <somar3>
+      <campo>Valor Pagar</campo>
+      <posicao>6</posicao>
+    </somar3> <!-- Valor a ser Somado-->
+    <somar4>
+      <acumular>TRUE</acumular>
+      <campo>Valor Pagar</campo>
+      <posicao>7</posicao>
+    </somar4>
+  </grupoTotais>
+  
+  
+  
+  <subtotais>
+
+    <sub0>
+      <index>03</index>
+      <titulo>Valor</titulo>
+      <campo>Valor</campo>
+    </sub0>
+
+
+    <sub1>
+      <index>4</index>
+
+      <titulo>Desconto</titulo>
+
+      <campo>Desconto</campo>
+
+    </sub1>
+
+
+    <sub2>
+
+      <index>5</index>
+
+      <titulo>Acrescimo</titulo>
+
+      <campo>Acrescimo</campo>
+
+    </sub2>
+
+
+    <sub3>
+
+      <index>6</index>
+
+      <titulo>ValorPagar</titulo>
+
+      <campo>ValorPagar</campo>
+
+    </sub3>
+  </subtotais>
+
+
+  <camposSemformatacao>
+  >
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

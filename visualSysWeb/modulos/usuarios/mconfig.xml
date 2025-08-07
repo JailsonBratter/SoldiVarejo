@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Usuarios</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+
+  <ordem>
+    <_1>Usuarios</_1>
+    <_1>Permissao</_1>
+    <_1>TrocarSenha</_1>
+	
+  </ordem>
+
+  <Usuarios>
+    <nome>Usuarios</nome>
+    <codigo>U001</codigo>
+    <page>Usuarios.aspx</page>
+    <imgMenu></imgMenu>
+    <img>User.png</img>
+    <inicial>true</inicial>
+  </Usuarios>
+
+  <Permissao>
+    <nome>Permissões</nome>
+    <codigo>U002</codigo>
+    <page>Permissoes.aspx</page>
+    <imgMenu></imgMenu>
+    <img>relatorio.gif</img>
+    <inicial>true</inicial>
+  </Permissao>
+
+  <TrocarSenha>
+    <nome>Trocar Senha</nome>
+    <codigo>U003</codigo>
+    <page>TrocarSenha.aspx</page>
+    <imgMenu></imgMenu>
+    <img>senha.png</img>
+    <inicial>true</inicial>
+  </TrocarSenha>
+
+</mconfig>

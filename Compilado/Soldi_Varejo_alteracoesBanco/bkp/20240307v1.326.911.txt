@@ -1,0 +1,80 @@
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_VendasNFe]    Script Date: 08/08/2024 08:12:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_Rel_VendasNFe]
+@Filial AS VARCHAR(20),
+@DataDe AS VARCHAR(8),
+@DataAte AS VARCHAR(8)
+AS
+BEGIN
+	SELECT 
+	NP.Descricao,
+	CONVERT(VARCHAR, NF.Emissao, 103) AS DtEmissao,
+	NF.Codigo as NumeroNF,
+	C.Codigo_Cliente as CodCliente,
+	C.Nome_Cliente,
+	C.UF,
+	NF.Total,
+	ISNULL(NF.Pedido, '') AS Pedido,
+	ISNULL((SELECT TOP 1 Pedido.Obs FROM Pedido WHERE Pedido.Tipo = 1 AND Pedido.Pedido = nf.Pedido), '') AS ObsPedido,
+	CASE
+	 WHEN NF.tPag = '01' THEN 'DINHEIRO'
+	 WHEN NF.tPag = '02' THEN 'CHEQUE'
+	 WHEN NF.tPag = '03' THEN 'CARTAO CREDITO'
+	 WHEN NF.tPag = '04' THEN 'CARTAO DEBITO'
+	 WHEN NF.tPag = '05' THEN 'CREDITO LOJA'
+	 WHEN NF.tPag = '10' THEN 'VALE ALIMENTACAO'
+	 WHEN NF.tPag = '11' THEN 'VALE REFEICACAO'
+	 WHEN NF.tPag = '12' THEN 'VALE PRESENTE'
+	 WHEN NF.tPag = '13' THEN 'VALE COMBUSTIVEL'
+	 WHEN NF.tPag = '15' THEN 'BOLETO'
+	 WHEN NF.tPag = '16' THEN 'DEPOSITO'
+	 WHEN NF.tPag = '17' THEN 'PIX'
+	 WHEN NF.tPag = '18' THEN 'TRANSFERENCIA'
+	 WHEN NF.tPag = '19' THEN 'FIDELIDADE'
+	 WHEN NF.tPag = '90' THEN 'SEM PAGAMENTO'
+	 ELSE 'OUTROS' END AS TipoPgto,
+	 ISNULL(NF.idCadIntTran, '') AS Canal,
+	 ISNULL(C.Endereco, '') AS Logradouro,
+	 ISNULL(C.endereco_nro, '') AS Numero,
+	 ISNULL(C.Complemento, '') AS Complemento,
+	 ISNULL(C.Bairro, '') AS Bairro,
+	 ISNULL(C.Cidade, '') AS Cidade,
+	 ISNULL(c.CEP, '') AS CEP
+	FROM NF
+	INNER JOIN Natureza_Operacao np ON NF.Codigo_Operacao = np.codigo_operacao
+	INNER JOIN Cliente C ON NF.Cliente_Fornecedor = C.Codigo_Cliente 
+	WHERE
+	NF.FILIAL = @Filial
+	AND NF.Emissao BETWEEN @DataDe AND @DataAte
+	AND NF.Tipo_NF = 1
+	AND NF.STATUS = 'AUTORIZADO'
+	AND NP.Descricao LIKE 'VENDA%'
+END
+GO
+ALTER TABLE Inventario
+ADD CONSTRAINT PK_Inventario PRIMARY KEY (Filial, Codigo_Inventario)
+GO
+ALTER TABLE Inventario_Itens
+ADD CONSTRAINT PK_Inventario_Itens PRIMARY KEY (Filial, Codigo_Inventario, PLU)
+GO
+
+
+CREATE TABLE Pedido_Itens_Temp 
+(
+	Filial VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS,
+	IP_Origem VARCHAR(50),
+	Usuario VARCHAR(50),
+	DTCadastro DATETIME,
+	ID VARCHAR(50),
+	Sequencia INT,
+	PLU VARCHAR(17) COLLATE SQL_Latin1_General_CP1_CI_AS,
+	Qtde DECIMAL(12,3),
+	Embalagem DECIMAL(6,3),
+	Unitario DECIMAL(12,2),
+	Desconto DECIMAL(6,4)
+)

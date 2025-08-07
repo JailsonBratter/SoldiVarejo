@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Verifica_Tabelas_Mercadoria</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_br_Verifica_Tabelas_Mercadoria
+  </sql>
+  
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>VALORES DIVERGENTES</titulo>
+      <valorPadrao>TODOS</valorPadrao>
+      <largura>100</largura>
+      <campo>ALL</campo>
+    </filtro0>
+  </filtros>
+
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+    <campo>3</campo>
+  </camposSemformatacao>
+
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

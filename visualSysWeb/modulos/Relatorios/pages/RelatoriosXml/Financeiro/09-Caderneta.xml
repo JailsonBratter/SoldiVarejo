@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Caderneta</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Caderneta_Utilizado
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Codigo Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>codigo_cliente</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Nome Cliente</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Nome_cliente</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+
+  </filtros>
+  
+  
+  
+  <subtotais>
+
+    <sub0>
+      <index>2</index>
+    </sub0>
+    <sub1>
+      <index>3</index>
+    </sub1>
+    <sub2>
+      <index>4</index>
+    </sub2>
+
+
+  </subtotais>
+
+
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+  
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

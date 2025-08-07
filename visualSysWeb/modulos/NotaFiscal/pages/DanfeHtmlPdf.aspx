@@ -1,0 +1,96 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DanfeHtmlPdf.aspx.cs" Inherits="visualSysWeb.modulos.NotaFiscal.pages.DanfeHtmlPdf" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<link href="../css/DanfeHtmlPdf.css" rel="stylesheet" />
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+      <form id="form1" runat="server">
+        <div class="container">
+            <div class="cab cabInicio" runat="server">
+                <div class="cab1">
+                    <div class="cab cab-2-5">
+                        <div class="cab0 cab-2-6">
+                            <img src="../../../img/logo.jpg" />
+                        </div>
+                        <div class="cab0 cab-4-6">
+                            <h5>IDENTIFICAÇÃO DO EMITENTE</h5>
+                            <h1>
+                                DONA DEOLA MIRANDEZ REST LANCI PIZZ E CONV LTDA
+                            </h1>
+                            <h2>
+                                RUA CONSELHEIRO BROTERO 1422-SANTA CECILIA 01232-010
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="cab cab-1-5">
+
+                    </div>
+                    <div class="cab cab-2-5">
+
+                    </div>
+
+                </div>
+                <div class="cab2">
+                    <div class="cab cab-3-5">
+
+                    </div>
+                    <div class="cab cab-2-5">
+
+                    </div>
+                </div>
+                <div class="cab2">
+                    <div class="cab cab-2-6">
+
+                    </div>
+                    <div class="cab cab-2-6">
+
+                    </div>
+                    <div class="cab cab-2-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var bottom = 0; /* Position of first page number - 0 for bottom of first page */
+    var pagNum = 2; /* First sequence - Second number */
+    $(document).ready(function () {
+        /* For each 10 paragraphs, this function: clones the h3 with a new page number */
+        $("p:nth-child(10n)").each(function () {
+            bottom += 100;
+            botString = bottom.toString();
+            var $counter = $('h3.pag1').clone().removeClass('pag1');
+            $counter.css("bottom", botString + "vh");
+            numString = pagNum.toString();
+            $counter.addClass("pag" + numString);
+            ($counter).insertBefore('.insert');
+            pagNum = parseInt(numString);
+            pagNum++; /* Next number */
+        });
+        var pagTotal = $('.pag').length; /* Gets the total amount of pages by total classes of paragraphs */
+        pagTotalString = pagTotal.toString();
+        $("h3[class^=pag]").each(function () {
+            /* Gets the numbers of each classes and pages */
+            var numId = this.className.match(/\d+/)[0];
+            document.styleSheets[0].addRule('h3.pag' + numId + '::before', 'content: " ' + numId + ' / ' + pagTotalString + '";');
+        });
+    });
+
+    $('.print').on('click', function () {
+        window.print();
+        return false;
+    });
+</script>

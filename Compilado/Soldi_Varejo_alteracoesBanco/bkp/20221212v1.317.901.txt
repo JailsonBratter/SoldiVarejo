@@ -1,0 +1,103 @@
+go
+ALTER TABLE Natureza_Operacao 
+	ADD Incide_Custo_Medio Tinyint DEFAULT 0, 
+	Precificacao Tinyint Default 0;
+GO
+UPDATE Natureza_operacao SET Incide_custo_medio = 0, Precificacao = 1;
+GO
+ALTER TABLE Mercadoria_estoque_mes add 
+Saldo_Estoque_Inicial Decimal(12,3),
+Estoque_Inicial_Valor Decimal(18,2), 
+Estoque_Inicial_Qtde Decimal(12,3),
+Entrada_Valor Decimal(18,2), 
+Entrada_Qtde Decimal(18,3),
+Custo_Medio Decimal(12,2)
+
+GO
+if not exists(select * from parametros where parametro = 'PED_NAO_FECHAR_QDO_SIMPL')
+begin
+INSERT PARAMETROS
+(PARAMETRO, PENULT_ATUALIZACAO, VALOR_DEFAULT, ULT_ATUALIZACAO, VALOR_ATUAL, DESC_PARAMETRO, TIPO_DADO, 
+RANGE_VALOR_ATUAL, GLOBAL, NOTA_PROGRAMADOR, ESCOPO, POR_USUARIO_OK, DATA_PARA_TRANSFERENCIA, PERMITE_POR_EMPRESA)
+VALUES
+('PED_NAO_FECHAR_QDO_SIMPL', GETDATE(), 'FALSE', GETDATE(), 'FALSE', 'NAO FECHAR O PEDIDO [STATUS=2] QDO SETADO PEDIDO SIMPLES, 
+ROTINA PARA O BOTÃO [FECHAR PEDIDO]', 'L', 0, 1, 'CRIADO PARA O GATAO', 0, 0, NULL, 0)
+end
+
+GO
+if not exists(select * from parametros where parametro = 'VALIDAR_CST_SAIDA')
+begin
+INSERT PARAMETROS
+(PARAMETRO, PENULT_ATUALIZACAO, VALOR_DEFAULT, ULT_ATUALIZACAO, VALOR_ATUAL, DESC_PARAMETRO, TIPO_DADO, 
+RANGE_VALOR_ATUAL, GLOBAL, NOTA_PROGRAMADOR, ESCOPO, POR_USUARIO_OK, DATA_PARA_TRANSFERENCIA, PERMITE_POR_EMPRESA)
+VALUES
+('VALIDAR_CST_SAIDA', GETDATE(), 'TRUE', GETDATE(), 'TRUE', 'VALIDA REGRAS TRIB DE CST PIS COFINS', 'L', 0, 1, '', 0, 0, NULL, 0)
+end
+
+GO
+create PROCEDURE [dbo].[sp_br_Natureza_NF_Completa]
+@Filial		As Varchar(20),
+@Codigo		As Varchar(20)
+AS
+BEGIN
+
+--exec sp_br_Natureza_NF_Completa 'MATRIZ','TODOS'
+
+
+if(@Codigo = 'TODOS')
+begin
+select 
+[Codigo] = Codigo_operacao,
+[Descrição] = substring(Descricao,0,25),
+[NF Devolução] = case when Nf_Devolucao  = 1 then 'SIM' else 'NÃO' end,
+[Imprime NFe] = case when Imprime_NF  = 1 then 'SIM' else 'NÃO' end,
+[Tipo Natureza] = case when Saida  = 1 then 'SAIDA' else 'ENTRADA' end,
+[Tipo Preço] = case when Preco_Venda  = 1 then 'VENDA' else 'CUSTO' end,
+[CFOP] = case when utilizaCFOP  = 1 then cfop else '' end,
+[CFOP ST] = case when utilizaCFOP  = 1 then cfop_st else '' end,
+[Incide ICMS]  = case when Incide_ICMS  = 1 then 'SIM' else 'NÃO' end,
+[Incide ICMS ST]  = case when INCIDE_ST  = 1 then 'SIM' else 'NÃO' end,
+[Cod Trib Saida] = isnull(tributacao_padrao,''),
+[Incide IPI] = case when Incide_IPI  = 1 then 'SIM' else 'NÃO' end,
+[Incide Pis e Cofins] = case when incide_pisCofins  = 1 then 'SIM' else 'NÃO' end,
+[CST Pis/Cofins Entrada] = isnull(cst_pis_cofins,''),
+[Atualiza Estoque] = case when Baixa_estoque = 1 then 'SIM' else 'NÃO' end,
+[Atualiza Custo] = case when Gera_custo  = 1 then 'SIM' else 'NÃO' end,
+[Atualiza Custo Médio] = case when Incide_Custo_Medio = 1 then 'SIM' else 'NÃO' end,
+[Lança Financeiro] =  case when Gera_apagar_receber  = 1 then 'SIM' else 'NÃO' end,
+[Precifica NF] =  case when Precificacao  = 1 then 'SIM' else 'NÃO' end,
+[Considera Venda] = case when Gera_venda = 1 then 'SIM' else 'NÃO' end,
+[Permite Desconto] = case when Permite_Desconto = 1 then 'SIM' else 'NÃO' end,
+[Gera Caderneta] = case when Gera_caderneta= 1 then 'SIM' else 'NÃO' end
+from Natureza_operacao
+order by Codigo asc
+end
+else
+begin
+select 
+[Codigo] = Codigo_operacao,
+[Descrição] = substring(Descricao,0,25),
+[NF Devolução] = case when Nf_Devolucao  = 1 then 'SIM' else 'NÃO' end,
+[Imprime NFe] = case when Imprime_NF  = 1 then 'SIM' else 'NÃO' end,
+[Tipo Natureza] = case when Saida  = 1 then 'SAIDA' else 'ENTRADA' end,
+[Tipo Preço] = case when Preco_Venda  = 1 then 'VENDA' else 'CUSTO' end,
+[CFOP] = case when utilizaCFOP  = 1 then cfop else '' end,
+[CFOP ST] = case when utilizaCFOP  = 1 then cfop_st else '' end,
+[Incide ICMS]  = case when Incide_ICMS  = 1 then 'SIM' else 'NÃO' end,
+[Incide ICMS ST]  = case when INCIDE_ST  = 1 then 'SIM' else 'NÃO' end,
+[Cod Trib Saida] = isnull(tributacao_padrao,''),
+[Incide IPI] = case when Incide_IPI  = 1 then 'SIM' else 'NÃO' end,
+[Incide Pis e Cofins] = case when incide_pisCofins  = 1 then 'SIM' else 'NÃO' end,
+[CST Pis/Cofins Entrada] = isnull(cst_pis_cofins,''),
+[Atualiza Estoque] = case when Baixa_estoque = 1 then 'SIM' else 'NÃO' end,
+[Atualiza Custo] = case when Gera_custo  = 1 then 'SIM' else 'NÃO' end,
+[Atualiza Custo Médio] = case when Incide_Custo_Medio = 1 then 'SIM' else 'NÃO' end,
+[Lança Financeiro] =  case when Gera_apagar_receber  = 1 then 'SIM' else 'NÃO' end,
+[Precifica NF] =  case when Precificacao  = 1 then 'SIM' else 'NÃO' end,
+[Considera Venda] = case when Gera_venda = 1 then 'SIM' else 'NÃO' end,
+[Permite Desconto] = case when Permite_Desconto = 1 then 'SIM' else 'NÃO' end,
+[Gera Caderneta] = case when Gera_caderneta= 1 then 'SIM' else 'NÃO' end
+from Natureza_operacao where Codigo_operacao = @Codigo
+order by Codigo asc
+end 
+END

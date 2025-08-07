@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Relatorio de Fornecedor</cabecalho>
+  <tipoConsulta>sql</tipoConsulta>
+  <sql>
+    select '|-Fornecedor:-|'+a.Fornecedor+ '|| |-RAZAO SOCIAL-|: '+isnull(a.Razao_social,'___________________________________') +' || |-CNPJ-|: '+ isnull(a.cnpj,'_____________________')+ '  |-IE-|: '+ISNULL(a.Ie,'_____________________')+  '|| ||' AS 'DADOS GERAIS',
+    '|-ENDERECO-|:'+isnull(a.endereco,'_______________________________') +','+isnull(a.endereco_nro,'___')+' |-BAIRRO-|:'+isnull(a.Bairro,'____________')+' |-CIDADE-|:'+ isnull(a.cidade,'_________')+' |-UF-|:'+isnull(a.Uf,'__') + '||' +
+    ' |-TELEFONE-| :' + ISNULL((Select  top 1 id_comunicacao from Fornecedor_meio_comunicacao AS b where b.fornecedor = a.fornecedor and (b.meio_comunicacao like 'FONE%' OR b.meio_comunicacao like 'CELULAR%') ),'_____________') +
+    ' |-E-MAIL-|:'+ ISNULL((Select  top 1 id_comunicacao from Fornecedor_meio_comunicacao AS c where c.fornecedor = a.fornecedor and c.meio_comunicacao like 'EMAIL%'),'_________________________')  +  '|| ||' +
+    ' |-TIPO=-|:'+(CASE WHEN  ISNULL(tipo_fornecedor,0) = 0  THEN 'COMERCIAL ' ELSE 'ADMINISTRATIVO' END )
+    as 'DETALHES'
+    from fornecedor as  a
+
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>texto</tipo>
+      <titulo>Fornecedor</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.fornecedor</campo>
+    
+    </filtro0>
+
+    <filtro1>
+      <tipo>texto</tipo>
+      <titulo>Razao Social</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.Razao_Social</campo>
+    </filtro1>
+    
+    <filtro2>
+      <tipo>texto</tipo>
+      <titulo>Cnpj</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>a.CNPJ</campo>
+    </filtro2>
+    <filtro3>
+      <tipo>combo</tipo>
+      <titulo>Tipo</titulo>
+      <lista>
+        <campo>COMERCIAL</campo>
+        <campo>ADMINISTRATIVO</campo>
+      </lista>
+      <valorPadrao></valorPadrao>
+      <campo>(CASE WHEN  ISNULL(tipo_fornecedor,0) = 0  THEN 'COMERCIAL ' ELSE 'ADMINISTRATIVO' END )</campo>
+    </filtro3>
+
+  </filtros>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

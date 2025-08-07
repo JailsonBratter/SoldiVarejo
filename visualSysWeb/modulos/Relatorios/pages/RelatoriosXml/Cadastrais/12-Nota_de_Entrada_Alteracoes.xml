@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Notas de Entrada Alteracoes</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_nota_entrada_alteracao
+  </sql>
+  
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataDe</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataAte</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>combo</tipo>
+      <lista>
+        <campo>Emissao</campo>
+        <campo>Alteracao</campo>
+      </lista>
+      <titulo>Tipo</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>tipoData</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro2>
+    
+    <filtro3>
+      <tipo>listafiltro</tipo>
+      <sql>
+        Select top 300 Fornecedor,Razao_social from fornecedor
+       </sql>
+      <camposFiltros>
+        <campo>Fornecedor</campo>
+        <campo>Razao_social</campo>
+      </camposFiltros>
+
+      <titulo>Fornecedor</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>fornecedor</campo>
+      <largura>200</largura>
+    </filtro3>
+    <filtro4>
+      <tipo>listaFiltro</tipo>
+      <sql>
+        Select * from (
+        Select distinct Nome, Usuario from usuarios_web 
+        ) as a
+      </sql>
+      <camposFiltros>
+        <campo>Nome</campo>
+        <campo>Usuario</campo>
+        
+      </camposFiltros>
+
+      <titulo>Usuario</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Usuario</campo>
+      <largura>100</largura>
+
+    </filtro4>
+  </filtros>
+  <camposSemformatacao>
+    <campo>0</campo>
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

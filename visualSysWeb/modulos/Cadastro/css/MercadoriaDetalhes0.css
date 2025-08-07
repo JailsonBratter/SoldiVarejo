@@ -1,0 +1,160 @@
+﻿.pratoDia {
+    border: solid 1px;
+    display: inline-block;
+    padding: 10px;
+    font-weight: bold;
+    margin: 30px 22%;
+    font-size: large;
+}
+
+
+    .pratoDia .pratoDiaDetalhe {
+        padding-top: 10px;
+        font-size: medium;
+        margin-top: 10px;
+        font-weight: initial;
+    }
+
+    .pratoDia input[type=checkbox] {
+        -webkit-transform: scale(1.5); /* Safari and Chrome */
+        margin-left: 10px;
+    }
+
+
+.divEstoque {
+    width: 22%;
+    padding: 1%;
+    box-sizing: border-box;
+    margin: 0.5%;
+}
+
+    .divEstoque .estoqueGeral {
+        width: 48%;
+        padding: 0px;
+        margin: auto;
+    }
+
+.nutricional {
+    position: relative;
+}
+
+.divNutricional {
+    float: left;
+    display: inline-block;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.divInformacoesExtras {
+    float: left;
+    display: inline-block;
+    width: 45%;
+    margin-left: 30px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+
+.itensPLUReceita {
+    float: left;
+    display: inline-block;
+    width: 100%;
+}
+
+    .itensPLUReceita .panelItem {
+        margin: 10px;
+    }
+
+.itensIncluidos {
+    float: left;
+    display: inline-block;
+    width: 55%;
+    padding: 20px;
+}
+
+    .itensIncluidos table {
+        width: 100%;
+    }
+
+.itensTotais {
+    float: left;
+    display: inline-block;
+    width: 40%;
+    text-align: center;
+    font-weight: bold;
+}
+
+    .itensTotais .panelItem {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+.itensProgramacao {
+    margin: 5px;
+}
+
+    .itensProgramacao table {
+        border: solid 1px;
+        border-collapse: collapse;
+        text-align: center;
+        width: 90%;
+    }
+
+        .itensProgramacao table td {
+            border: solid 1px;
+            text-align: center;
+        }
+
+        .itensProgramacao table th {
+            border: solid 1px;
+            text-align: center;
+        }
+
+.totaisReceitas {
+    font-size: 11px;
+    text-align: right;
+    float: right;
+}
+
+.ImgEcommerce {
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:30px;
+}
+.btnDefault{
+    width:20px;
+}
+.btnImgEcommercer{
+    position:relative;
+    top:0%;
+    left:30%;
+    background-color:rgb(128, 128, 128);
+    border:none;
+    border-radius:5px;
+    padding:5px;
+    color:#FFF;
+}
+.btnImgEcommercer:hover {
+    background-color: rgb(128, 128, 128,0.8);
+    cursor:pointer;
+}
+
+.ImgBtnAcao{
+    width: 30px;
+    height: 30px;
+    margin-top:20px;
+}
+.pnImgEcommerce {
+    display: flex;
+}
+.pnAcaoOrdem {
+    display: flex;
+    flex-direction:column;
+    margin-top:10px;
+}

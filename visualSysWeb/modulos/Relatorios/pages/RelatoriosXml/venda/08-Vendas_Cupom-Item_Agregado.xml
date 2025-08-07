@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Vendas Cupom/item Agregado</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_rel_venda_itens_agregado
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data de</titulo>
+      <valorPadrao></valorPadrao>
+      
+      <campo>DataDe</campo>
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+    </filtro1>
+    <filtro2>
+      <tipo>HORA</tipo>
+      <titulo>Hora de</titulo>
+      <valorPadrao>00:00</valorPadrao>
+      <campo>horaInicio</campo>
+      <largura>60</largura>
+    </filtro2>
+    <filtro3>
+      <tipo>HORA</tipo>
+      <titulo>Hora Ate</titulo>
+      <valorPadrao>23:59</valorPadrao>
+      <campo>horafim</campo>
+      <largura>60</largura>
+    </filtro3>
+
+    <filtro4>
+      <tipo>listafiltro</tipo>
+      <sql>Select top 300 Plu , descricao from mercadoria</sql>
+      <camposFiltros>
+        <campo>plu</campo>
+        <campo>descricao</campo>
+      </camposFiltros>
+      <titulo>Plu</titulo>
+      <obrigatorio>true</obrigatorio>
+      <valorPadrao></valorPadrao>
+      <campo>plu</campo>
+      <largura>80</largura>
+    </filtro4>
+
+
+  </filtros>
+  <subtotais>
+
+    <sub0>
+      <index>4</index>
+      <titulo>Total</titulo>
+      <campo>Total</campo>
+    </sub0>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+  </camposSemformatacao>
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+</Relatorio>

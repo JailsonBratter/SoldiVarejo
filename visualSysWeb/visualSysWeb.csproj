@@ -1,0 +1,3298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A728D11E-CB6E-4626-B411-454668DD1BD6}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>visualSysWeb</RootNamespace>
+    <AssemblyName>visualSysWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <ExcludeApp_Data>false</ExcludeApp_Data>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+    <PublishDatabases>true</PublishDatabases>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ajax">
+      <HintPath>..\..\20180816V1.210.694_Soldi_Varejo.prj\Soldi_Oficial\visualSysWeb\bin\Ajax.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\20180816V1.210.694_Soldi_Varejo.prj\Soldi_Oficial\visualSysWeb\bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\..\20180816V1.210.694_Soldi_Varejo.prj\Soldi_Oficial\visualSysWeb\bin\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="bsenha, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\projetos\Bratter\bsenha\bsenha\bin\Release\bsenha.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="OfficeOpenXml.Extends, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OfficeOpenXml.Extends.1.0.6.0\lib\net40\OfficeOpenXml.Extends.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\AD.System.Web.Helpers.dll.2.0.0\lib\net20\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WinSCPnet, Version=1.15.0.14916, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinSCP.6.3.3\lib\net40\WinSCPnet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Login.aspx" />
+    <Content Include="code\BaixarArquivo.aspx" />
+    <Content Include="code\ConfiguracaoColetor.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="img\aguarde.gif" />
+    <Content Include="img\arquivo-download-grande.png" />
+    <Content Include="img\arquivo-download.png" />
+    <Content Include="img\arquivo-txt-Grande.png" />
+    <Content Include="img\arquivo-txt.png" />
+    <Content Include="img\arquivo-upload.png" />
+    <Content Include="img\arquivo-xls.png" />
+    <Content Include="img\BarCode.png" />
+    <Content Include="img\BarCodeIcone.png" />
+    <Content Include="img\botao-apagar.png" />
+    <Content Include="img\Bratter.ico" />
+    <Content Include="img\cancel.png" />
+    <Content Include="img\confirm.png" />
+    <Content Include="img\edit.png" />
+    <Content Include="img\email.png" />
+    <Content Include="img\excel.png" />
+    <Content Include="img\Grafico.jpg" />
+    <Content Include="img\help.png" />
+    <Content Include="img\ico-cel.png" />
+    <Content Include="img\ico-doc-danfe.png" />
+    <Content Include="img\icon_voltar.jpg" />
+    <Content Include="img\ico_edit.png" />
+    <Content Include="img\Img.png" />
+    <Content Include="img\NFE.jpg" />
+    <Content Include="modulos\Cadastro\css\PlanosDeContasContabil.css" />
+    <Content Include="modulos\Cadastro\imgs\OrdemDown.png" />
+    <Content Include="modulos\Cadastro\imgs\OrdemUp.png" />
+    <Content Include="img\plus.png" />
+    <Content Include="img\posicaofinanceira.jpg" />
+    <Content Include="img\Refresh.png" />
+    <Content Include="img\remove.png" />
+    <Content Include="img\Vendas.jpg" />
+    <Content Include="img\visualizar.png" />
+    <Content Include="modulos\Cadastro\css\ClienteDetalhes.css" />
+    <Content Include="modulos\Cadastro\css\Mercadoria.css" />
+    <Content Include="modulos\Cadastro\css\TabelaPrecoDetalhes.css" />
+    <Content Include="modulos\Cadastro\imgs\default.png" />
+    <Content Include="modulos\Cadastro\imgs\defaultSelect.png" />
+    <Content Include="modulos\Cadastro\imgs\Promocao.png" />
+    <Content Include="modulos\Cadastro\js\FornecedorDetalhes.js" />
+    <Content Include="modulos\Cadastro\js\ClienteDetalhes1.js" />
+    <Content Include="modulos\Cadastro\js\TabelaPrecoDetalhes.js" />
+    <Content Include="modulos\Cadastro\pages\ArtigoFiscal.aspx" />
+    <Content Include="modulos\Cadastro\pages\ArtigoFiscalDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\CadastroPromocao.aspx" />
+    <Content Include="modulos\Cadastro\pages\CadastroPromocaoDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Cardapios.aspx" />
+    <Content Include="modulos\Cadastro\pages\CFOPEntradaSaida.aspx" />
+    <Content Include="modulos\Cadastro\pages\CFOPEntradaSaidaDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\ImageBase64.aspx" />
+    <Content Include="modulos\Cadastro\pages\PlanosDeContasContabil.aspx" />
+    <Content Include="modulos\Cadastro\pages\Embaladora.aspx" />
+    <Content Include="modulos\Cadastro\pages\EmbaladoraDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\MercadoriaUpload.aspx" />
+    <Content Include="modulos\Cadastro\pages\ProdutosVinculados.aspx" />
+    <Content Include="modulos\Cadastro\pages\PromocaoJornal.aspx" />
+    <Content Include="modulos\Cadastro\pages\PromocaoJornalDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\TabelaPreco.aspx" />
+    <Content Include="modulos\Cadastro\pages\TabelaPrecoDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\TabelasPet.aspx" />
+    <Content Include="modulos\Dispositivos\imgs\balanca7.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\carga_0.png" />
+    <Content Include="modulos\Dispositivos\imgs\carga_1.png" />
+    <Content Include="modulos\Dispositivos\imgs\carga_2.png" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta15.jpg" />
+    <Content Include="modulos\Dispositivos\pages\CargaFTP.aspx" />
+    <Content Include="modulos\Estoque\imgs\produzir.png" />
+    <Content Include="modulos\Estoque\pages\CotacaoNaoCotadosPrint.aspx" />
+    <Content Include="modulos\Estoque\pages\DevolucaoNFe.aspx" />
+    <Content Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx" />
+    <Content Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoDeEncomenda.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoDeEncomendaDetalhes.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoDeProducao.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoDeProducaoDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\imgs\CadernetaPequeno.png" />
+    <Content Include="modulos\Financeiro\imgs\Transferencia.png" />
+    <Content Include="modulos\Financeiro\pages\BaixarArquivo.aspx" />
+    <Content Include="modulos\Cadastro\css\Cardapio.css" />
+    <Content Include="modulos\Financeiro\pages\FinalizadorasRecebimento.aspx" />
+    <Content Include="modulos\Financeiro\pages\TransferenciaContas.aspx" />
+    <Content Include="modulos\Financeiro\pages\TransferenciaContasDetalhes.aspx" />
+    <Content Include="modulos\Gerencial\css\GraficoVendas.css" />
+    <Content Include="modulos\Gerencial\css\ProgramacaoPrecificacaoProdutosDetalhes.css" />
+    <Content Include="modulos\Gerencial\imgs\form.png" />
+    <Content Include="modulos\Gerencial\js\ProgramacaoPrecificacaoProdutosDetalhes.js" />
+    <Content Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutos.aspx" />
+    <Content Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutosDetalhes.aspx" />
+    <Content Include="modulos\Manutencao\css\Parametros.css" />
+    <Content Include="modulos\Manutencao\css\ProdutosPratoDoDia.css" />
+    <Content Include="modulos\Manutencao\css\DepartamentosManutencao.css" />
+    <Content Include="modulos\Cadastro\css\MercadoriaDetalhes0.css" />
+    <Content Include="modulos\Cadastro\imgs\final.png" />
+    <Content Include="modulos\Cadastro\imgs\form.png" />
+    <Content Include="modulos\Cadastro\js\Mercadoria.js" />
+    <Content Include="modulos\Cadastro\pages\AlterarAliquota.aspx" />
+    <Content Include="modulos\Cadastro\pages\Contabilidade.aspx" />
+    <Content Include="modulos\Cadastro\pages\ContabilidadeDetalhes.aspx" />
+    <Content Include="modulos\Manutencao\imgs\form.png" />
+    <Content Include="modulos\Manutencao\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Cadastro\pages\Cardapio.aspx" />
+    <Content Include="modulos\Manutencao\pages\ConfiguracaoDepartamentosCE.aspx" />
+    <Content Include="modulos\Manutencao\pages\DepartamentosManutencao.aspx" />
+    <Content Include="modulos\Manutencao\pages\Filial.aspx" />
+    <Content Include="modulos\Manutencao\pages\FilialDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\imgs\ContratoFornec.png" />
+    <Content Include="modulos\Cadastro\pages\ContratoFornecedor.aspx" />
+    <Content Include="modulos\Cadastro\pages\ContratoFornecedorDetalhe.aspx" />
+    <Content Include="modulos\Manutencao\pages\HistoricoVersao.aspx" />
+    <Content Include="modulos\Manutencao\pages\Parametros.aspx" />
+    <Content Include="modulos\Manutencao\pages\ProdutosPratoDoDia.aspx" />
+    <Content Include="modulos\Gerencial\js\GraficoVendas.js" />
+    <Content Include="modulos\Gerencial\pages\GraficoVendas.aspx" />
+    <Content Include="modulos\Estoque\js\OutrasMovimentacoesDetalhes.js" />
+    <Content Include="modulos\Estoque\pages\FechamentoEstoque.aspx" />
+    <Content Include="modulos\Estoque\pages\FechamentoEstoqueDetalhes.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoCompra.aspx" />
+    <Content Include="modulos\Estoque\pages\SolicitacaoCompraDetalhes.aspx" />
+    <Content Include="modulos\Mobile\JS\LerBarcodeQuagga.js" />
+    <Content Include="modulos\Mobile\JS\quagga.min.js" />
+    <Content Include="modulos\Mobile\JS\Smartphone.js" />
+    <Content Include="modulos\Mobile\pages\Estoque\lerBarra.html" />
+    <Content Include="modulos\Mobile\pages\Estoque\ReceberNFe.aspx" />
+    <Content Include="modulos\Mobile\SmartPhone_Espelho.aspx" />
+    <Content Include="modulos\Mobile\SmartPhone_EspelhoCego.aspx" />
+    <Content Include="modulos\Mobile\SmartPhone_Menu.aspx" />
+    <Content Include="modulos\Mobile\SmartPhone_NF_Detalhe.aspx" />
+    <Content Include="modulos\Mobile\SmartPhone_Resultado.aspx" />
+    <Content Include="modulos\NotaFiscal\css\CartaCorrecaoHtmlPdf.css" />
+    <Content Include="modulos\NotaFiscal\css\DanfeHtmlPdf.css" />
+    <Content Include="modulos\NotaFiscal\css\ManifetoNFE.css" />
+    <Content Include="modulos\NotaFiscal\imgs\precificacao.png" />
+    <Content Include="modulos\Cadastro\js\MercadoriaDetalhes2.js" />
+    <Content Include="modulos\Cadastro\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Cadastro\pages\AliquotasEstado.aspx" />
+    <Content Include="modulos\Cadastro\pages\AliquotasEstadoDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Cartao.aspx" />
+    <Content Include="modulos\Cadastro\pages\CartaoDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\CEP.aspx" />
+    <Content Include="modulos\Cadastro\pages\CEPDelivery.aspx" />
+    <Content Include="modulos\Cadastro\pages\CEPDeliveryDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\CFOP.aspx" />
+    <Content Include="modulos\Cadastro\pages\CFOPDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\ClienteDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Clientes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Comandas.aspx" />
+    <Content Include="modulos\Cadastro\pages\ComandasDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\ContaCorrente.aspx" />
+    <Content Include="modulos\Cadastro\pages\ContaCorrenteDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Departamentos.aspx" />
+    <Content Include="modulos\Cadastro\pages\Familia.aspx" />
+    <Content Include="modulos\Cadastro\pages\FamiliaDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\FinalizadoraDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Finalizadoras.aspx" />
+    <Content Include="modulos\Cadastro\pages\Fornecedor.aspx" />
+    <Content Include="modulos\Cadastro\pages\FornecedorDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Funcionario.aspx" />
+    <Content Include="modulos\Cadastro\pages\FuncionarioDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\IpDevice.aspx" />
+    <Content Include="modulos\Cadastro\pages\IpDeviceDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Linhas.aspx" />
+    <Content Include="modulos\Cadastro\pages\LinhasDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Mercadoria.aspx" />
+    <Content Include="img\add.png" />
+    <Content Include="modulos\Cadastro\imgs\clientes.png" />
+    <Content Include="modulos\Cadastro\imgs\clientesM.png" />
+    <Content Include="modulos\Cadastro\imgs\fornecedor.jpg" />
+    <Content Include="modulos\Cadastro\imgs\fornecedorM.jpg" />
+    <Content Include="img\icoEmpresa.png" />
+    <Content Include="img\ico_empresa.jpg" />
+    <Content Include="img\logo.jpg" />
+    <Content Include="modulos\Cadastro\imgs\mercadoria.png" />
+    <Content Include="modulos\Cadastro\imgs\mercadoriaM.png" />
+    <Content Include="img\pesquisaM.jpg" />
+    <Content Include="img\pesquisaM.png" />
+    <Content Include="img\senha.png" />
+    <Content Include="img\User.png" />
+    <Content Include="img\calendar.png" />
+    <Content Include="modulos\Cadastro\pages\MercadoriaDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\NaturezaOperacao.aspx" />
+    <Content Include="modulos\Cadastro\pages\NaturezaOperacaoDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Operadores.aspx" />
+    <Content Include="modulos\Cadastro\pages\OperadoresDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\PDV.aspx" />
+    <Content Include="modulos\Cadastro\pages\PDVDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\PlanosDeContas.aspx" />
+    <Content Include="modulos\NotaFiscal\js\NFFiscalDetalhes.js" />
+    <Content Include="modulos\NotaFiscal\js\NfPedidosDetalhes.js" />
+    <Content Include="modulos\NotaFiscal\js\NfSaidaDetalhes.js" />
+    <Content Include="modulos\NotaFiscal\js\PrecificacaoProdutos.js" />
+    <Content Include="modulos\NotaFiscal\pages\CTeEntrada.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\CTeEntradaDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\ManifestoNFE.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\DanfeHtmlPdf.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\DanfeHtmlPdfSalvar.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\DanfeReport.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NFEntradaDoca.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NFFiscalDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfPedido.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfPedidoDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\PrecificacaoProdutos.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\PrecificacaoProdutosDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\SpoolImpressora.aspx" />
+    <Content Include="modulos\Cadastro\pages\SpoolImpressoraDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Transportadoras.aspx" />
+    <Content Include="modulos\Cadastro\pages\TransportadorasDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\Tributacao.aspx" />
+    <Content Include="modulos\Cadastro\pages\TributacaoDetalhes.aspx" />
+    <Content Include="modulos\Dispositivos\imgs\balanca0.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca2.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca3.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca4.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca5.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balancaico.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca1.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\balanca6.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta0.JPG" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta1.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta10.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta11.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta12.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\Etiqueta13.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\Etiqueta2.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta3.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta4.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta5.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\Etiqueta6.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta7.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta8.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiqueta9.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\etiquetaico.JPG" />
+    <Content Include="modulos\Dispositivos\imgs\etiquetaicomenu.JPG" />
+    <Content Include="modulos\Dispositivos\imgs\pdv0.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\pdv1.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\pdv2.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\pdvico.jpg" />
+    <Content Include="modulos\Dispositivos\imgs\relatorio.gif" />
+    <Content Include="modulos\Dispositivos\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Dispositivos\pages\baixar.aspx" />
+    <Content Include="modulos\Dispositivos\pages\CargaBalanca.aspx" />
+    <Content Include="modulos\Dispositivos\pages\CargaPDV.aspx" />
+    <Content Include="modulos\Dispositivos\pages\EtiquetaA4.aspx" />
+    <Content Include="modulos\Dispositivos\pages\impressao\Imprimir1.txt" />
+    <Content Include="modulos\Dispositivos\pages\ImprimeEtiquetas.aspx" />
+    <Content Include="modulos\Financeiro\imgs\Caderneta.png" />
+    <Content Include="modulos\Financeiro\imgs\check.png" />
+    <Content Include="modulos\Financeiro\js\TesourariaDetalhes.js" />
+    <Content Include="modulos\Financeiro\pages\Caderneta.aspx" />
+    <Content Include="modulos\Financeiro\pages\CadernetaDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\pages\CadernetaPrint.aspx" />
+    <Content Include="modulos\Financeiro\imgs\Contas.png" />
+    <Content Include="modulos\Financeiro\imgs\ContasMenu.png" />
+    <Content Include="modulos\Financeiro\imgs\TesourariaDisabled.png" />
+    <Content Include="modulos\Financeiro\imgs\Tesouraria.png" />
+    <Content Include="modulos\Financeiro\imgs\TesourariaMenu.png" />
+    <Content Include="modulos\Financeiro\pages\ChequeCliente.aspx" />
+    <Content Include="modulos\Financeiro\pages\ChequeClienteDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\pages\ContasPagarDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\pages\ContasReceber.aspx" />
+    <Content Include="modulos\Financeiro\pages\ContasReceberDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\pages\ContasPagar.aspx" />
+    <Content Include="modulos\Financeiro\pages\TesourariaDetalhes.aspx" />
+    <Content Include="modulos\Financeiro\pages\TesourariaReciboPrint.aspx" />
+    <Content Include="modulos\Financeiro\pages\TesourariaReport.aspx" />
+    <Content Include="modulos\Estoque\imgs\Cotacao.png" />
+    <Content Include="img\form.png" />
+    <Content Include="modulos\Estoque\imgs\OutrasMovimentacoes.png" />
+    <Content Include="modulos\Estoque\imgs\OutrasMovimentacoesM.png" />
+    <Content Include="modulos\Estoque\imgs\PrecificacaoFamilia.png" />
+    <Content Include="modulos\Estoque\imgs\PrecificacaoFamiliaM.png" />
+    <Content Include="modulos\Estoque\imgs\SugestaoCompra.png" />
+    <Content Include="modulos\Estoque\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Estoque\pages\Cotacao.aspx" />
+    <Content Include="modulos\Estoque\pages\CotacaoDetalhes.aspx" />
+    <Content Include="modulos\Estoque\pages\EmailPedido.html" />
+    <Content Include="modulos\Estoque\pages\OutrasMovimentacoes.aspx" />
+    <Content Include="modulos\Estoque\pages\OutrasMovimentacoesDetalhes.aspx" />
+    <Content Include="modulos\Estoque\pages\OutrasMovimentacoesPrint.aspx" />
+    <Content Include="modulos\Estoque\pages\SugestaoCompra.aspx" />
+    <Content Include="modulos\Mobile\Mobile_Default.aspx" />
+    <Content Include="modulos\Mobile\Mobile_Login.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Grafico.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Posicao_Financeiro.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Vendas.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Venda_Departamento.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Venda_Grupo.aspx" />
+    <Content Include="modulos\Mobile\pages\Mobile_Venda_SubGrupo.aspx" />
+    <Content Include="modulos\NotaFiscal\imgs\consultaSituacao.png" />
+    <Content Include="modulos\NotaFiscal\imgs\consultaSituacao1.png" />
+    <Content Include="modulos\NotaFiscal\imgs\nf.jpg" />
+    <Content Include="modulos\NotaFiscal\imgs\nfmenu.jpg" />
+    <Content Include="modulos\NotaFiscal\imgs\Observacao.ico" />
+    <Content Include="modulos\NotaFiscal\imgs\PrecificacaoNF.jpg" />
+    <Content Include="modulos\NotaFiscal\mconfig.xml" />
+    <Content Include="modulos\NotaFiscal\pages\NfEntrada.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfEntradaDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfInutilizacao.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfSaida.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NfSaidaDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\NotaPrint.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\PrecificacaoNF.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\PrecificacaoNFDetalhes.aspx" />
+    <Content Include="modulos\NotaFiscal\pages\CartaCorrecaoHtmlPdf.aspx" />
+    <Content Include="modulos\Pedidos\css\PedidoVendaDetalhes.css" />
+    <Content Include="modulos\Pedidos\imgs\pedidoDevolucao.png" />
+    <Content Include="modulos\Pedidos\imgs\pedidoDevolucaoFornecedor.png" />
+    <Content Include="modulos\Pedidos\js\PedidoVendaDetalhes1.js" />
+    <Content Include="modulos\Pedidos\pages\PedidoConsolidadeDetalhes.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoConsolidado.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoDevolucao.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoDevolucaoDetalhes.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedor.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedorDetalhes.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoDevolucaoPrint.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoPrint.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoPrintCompra.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoOrcamento.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoVenda.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoCompra.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoCompraDetalhes.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoOrcamentoDetalhes.aspx" />
+    <Content Include="modulos\Pedidos\pages\PedidoVendaDetalhes.aspx" />
+    <Content Include="modulos\Gerencial\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\PetShop\img\Config.png" />
+    <Content Include="modulos\PetShop\js\Agenda.js" />
+    <Content Include="modulos\PetShop\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\PetShop\pages\Agenda.aspx" />
+    <Content Include="modulos\PetShop\pages\AgendaPrint.aspx" />
+    <Content Include="modulos\Relatorios\imgs\Grafico.jpg" />
+    <Content Include="modulos\Relatorios\imgs\relatorio.gif" />
+    <Content Include="img\icon_imprimir.gif" />
+    <Content Include="modulos\Relatorios\js\Relatorios0.js" />
+    <Content Include="modulos\Relatorios\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\modulos.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Pedidos\imgs\pedidoCompra.jpg" />
+    <Content Include="modulos\Pedidos\imgs\pedidoCompraM.jpg" />
+    <Content Include="modulos\Pedidos\imgs\pedidoVenda.png" />
+    <Content Include="modulos\Pedidos\imgs\pedidoVendaM.png" />
+    <Content Include="modulos\Pedidos\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatorioEditar.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelatorioPrint.aspx" />
+    <Content Include="modulos\Relatorios\pages\Relatorios.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosGraficos.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\03-Clientes.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\06-Familias.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\07-Finalizadora.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\08-CFOP.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\09-PDV.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\10-Aliquota_Estado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\13-Vacinas.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\12-Nota_de_Entrada_Alteracoes.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\11-Linhas.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\02-Produtos_Listagem_Precos.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\05-Fornecedores_Produtos.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\14-Natureza_de_Operacao.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Comanda\01-Comanda_Historico.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Comanda\02-Comanda_Vendas.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Comanda\03-Comanda_Produtos_Cancelados.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\01-Produtos_Estoque.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\02-Outras_Movimentacoes.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\05-Produtos_Por_Validade.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\04-Historico_Entrada_Saida_Consolidado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\06-Estoque_Na_Data.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\16-Conciliacao_de_Contas.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\15-Contas_a_Pagar_Saldo_Geral.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\04-Contas_a_Pagar.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\06-Contas_a_Receber.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\03-Fluxo_Caixa_Simplificado.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\02-Fluxo_Caixa.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\05-Contas_a_Pagar_Simplificado.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\07-Contas_a_Receber_Simplificado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\08-Extrato_de_Cartoes.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\09-Caderneta.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\10-Consulta_Posicao_de_Cliente.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\11-Recebimento_Simplificado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\12-Ficha_Cliente.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\13-Extrato_Contas_a_Pagar.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\14-Fechamento_Fornecedor.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\07-Sped_impostos_saida.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\06-Fiscal_Vendas.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\05-NotaFiscal_Entrada_Imposto.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\01-NotaFiscal.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\02-MapaResumo.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\04-Mapa_Resumo_SAT.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\04-Fornecedores.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Financeiro\01-Demonstrativo_Financeiro.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Fiscal\03-Produtos_imposto_cadastrado.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\01-Analise_de_Vendas_por_Dia.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\26-Vendas_Por_Cliente_Tabela_Desconto.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\25-Vendas_Por_Cliente_Produtos.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\23-Media_de_Vendas_por_Hora.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\22-Vendas_Por_Clientes_Nota_Fiscal.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\19-Analise_de_Vendas_por_Mes.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\04-Resumo_de_Vendas_Por_Operador.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\10-Resumo_de_Operadores_Por_Hora.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\09-Resumo_Diario_das_Finalizadora_Por_Operador.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Estoque\03-Historico_Entrada_Saida_Analitico.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\Cadastrais\01-Produtos.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\RelatoriosOlds\02-Produtos_Estoque_analitico.xml" />
+    <Content Include="modulos\NotaFiscal\pages\schemas\consReciNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\consReciNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\consSitNFe_v2.01.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\consSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\consStatServ_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\consStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\enviNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\enviNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\inutNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\inutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteCancNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteConsSitNFe_v2.01.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteConsSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteConsStatServ_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteConsStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteConsultaCadastro_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteInutNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\leiauteNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\nfe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\nfe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\procCancNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\procInutNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\procInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\procNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\procNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retCancNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsCad_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsReciNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsReciNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsSitNFe_v2.01.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsStatServ_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retConsStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retEnviNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retEnviNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retInutNFe_v2.00.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\retInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\tiposBasico_v1.03.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\tiposBasico_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\NotaFiscal\pages\schemas\xmldsig-core-schema_v1.01.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\dicas_Formatacao_Relatorio.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\03-Curva_ABC_Vendas.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\06-Resumo_de_Vendas_Por_Produto.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\02-Totais_de_Vendas.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\05-Resumo_de_Vendas_Por_PDV.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\RelatoriosOlds\09-Valores_Acrescimo_Analitico.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\RelatoriosOlds\10-Valores_Acrescimo_Sintetico.xml" />
+    <Content Include="modulos\Financeiro\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Financeiro\pages\Tesouraria.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\RelatoriosOlds\07-Vendas_Grupo-SubGrupo.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\07-Vendas_Cupom_Sintetico.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\11-Resumo_de_Vendas_Por_Grupo.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\12-Vendas_Pedidos_Simplificado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\13-Vendas_Notas_Fiscais.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\08-Vendas_Cupom-Item_Agregado.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\14-Vendas_Pedidos_Analitico.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\15-Vendas_Pedidos_Cliente.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\16-Vendas_Por_Aliquota.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\17-Vendas_Por_Finalizadora.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\18-Vendas_Por_Vendedor.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\20-Vendas_Por_Cliente.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\21-Analise_de_Vendas_por_Hora.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\css\VendasHoraMedia.css" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\js\VendasHoraMedia.js" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\24-Apuracao_Por_Atendente.xml" />
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\27-Produtos_Cancelados.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Relatorios\pages\RelatoriosXml\venda\page\VendasHoraMedia.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelatorioVendasGerencial.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelComercial.aspx" />
+    <Content Include="modulos\Relatorios\pages\RelImpostos.aspx" />
+    <Content Include="modulos\Sped\imgs\form.png" />
+    <Content Include="modulos\Sped\imgs\sped.png" />
+    <Content Include="modulos\Sped\js\IcmsIpi.js" />
+    <Content Include="modulos\Sped\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\Sped\pages\CadastroBloco.aspx" />
+    <Content Include="modulos\Sped\pages\DocEletronicosAuditor.aspx" />
+    <Content Include="modulos\Sped\pages\DocumentosEletronicos.aspx" />
+    <Content Include="modulos\Sped\pages\FechamentoEstoque.aspx" />
+    <Content Include="modulos\Sped\pages\IcmsIpi.aspx" />
+    <Content Include="modulos\Sped\pages\PisCofins.aspx" />
+    <Content Include="modulos\Sped\pages\ContasContabeis.aspx" />
+    <Content Include="modulos\Sped\pages\ContasContabeisDetalhes.aspx" />
+    <Content Include="modulos\Sped\pages\RegistrosFiscais.aspx" />
+    <Content Include="modulos\Sped\pages\RegistrosFiscaisDetalhes.aspx" />
+    <Content Include="modulos\usuarios\imgs\relatorio.gif" />
+    <Content Include="modulos\usuarios\imgs\senha.png" />
+    <Content Include="modulos\usuarios\imgs\User.png" />
+    <Content Include="modulos\usuarios\js\PermissoesDetalhes1.js" />
+    <Content Include="modulos\usuarios\mconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="modulos\usuarios\pages\PermissoesDetalhes.aspx" />
+    <Content Include="modulos\usuarios\pages\Usuarios.aspx" />
+    <Content Include="modulos\usuarios\pages\Permissoes.aspx" />
+    <Content Include="modulos\usuarios\pages\TrocarSenha.aspx" />
+    <Content Include="modulos\usuarios\pages\UsuariosDetalhes.aspx" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chartist\chartist.min.css" />
+    <Content Include="Scripts\chartist\chartist.min.js" />
+    <Content Include="Scripts\ckeditor\adapters\jquery.js" />
+    <Content Include="Scripts\ckeditor\build-config.js" />
+    <Content Include="Scripts\ckeditor\ckeditor.js" />
+    <Content Include="Scripts\ckeditor\config.js" />
+    <Content Include="Scripts\ckeditor\contents.css" />
+    <Content Include="Scripts\ckeditor\lang\en.js" />
+    <Content Include="Scripts\ckeditor\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\az.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de-ch.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es-mx.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\oc.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Scripts\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.css" />
+    <Content Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\cursors\cursor-disabled.svg" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\cursors\cursor.svg" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\styles\copyformatting.css" />
+    <Content Include="Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Scripts\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Scripts\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Scripts\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Scripts\ckeditor\plugins\icons.png" />
+    <Content Include="Scripts\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Scripts\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Scripts\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Scripts\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Scripts\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Scripts\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Scripts\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Scripts\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Scripts\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Scripts\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="Scripts\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Scripts\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="Scripts\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Scripts\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Scripts\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Scripts\ckeditor\plugins\preview\preview.html" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\dialogs\dialog.css" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\skins\moono-lisa\scayt.css" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\az.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de-ch.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en-au.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en-ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\es-mx.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\oc.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Scripts\ckeditor\plugins\tableselection\styles\tableselection.css" />
+    <Content Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\skins\moono-lisa\wsc.css" />
+    <Content Include="Scripts\ckeditor\samples\css\samples.css" />
+    <Content Include="Scripts\ckeditor\samples\img\github-top.png" />
+    <Content Include="Scripts\ckeditor\samples\img\header-bg.png" />
+    <Content Include="Scripts\ckeditor\samples\img\header-separator.png" />
+    <Content Include="Scripts\ckeditor\samples\img\logo.png" />
+    <Content Include="Scripts\ckeditor\samples\img\navigation-tip.png" />
+    <Content Include="Scripts\ckeditor\samples\index.html" />
+    <Content Include="Scripts\ckeditor\samples\js\sample.js" />
+    <Content Include="Scripts\ckeditor\samples\js\sf.js" />
+    <Content Include="Scripts\ckeditor\samples\old\ajax.html" />
+    <Content Include="Scripts\ckeditor\samples\old\api.html" />
+    <Content Include="Scripts\ckeditor\samples\old\appendto.html" />
+    <Content Include="Scripts\ckeditor\samples\old\assets\inlineall\logo.png" />
+    <Content Include="Scripts\ckeditor\samples\old\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Scripts\ckeditor\samples\old\assets\sample.jpg" />
+    <Content Include="Scripts\ckeditor\samples\old\assets\uilanguages\languages.js" />
+    <Content Include="Scripts\ckeditor\samples\old\datafiltering.html" />
+    <Content Include="Scripts\ckeditor\samples\old\dialog\assets\my_dialog.js" />
+    <Content Include="Scripts\ckeditor\samples\old\dialog\dialog.html" />
+    <Content Include="Scripts\ckeditor\samples\old\divreplace.html" />
+    <Content Include="Scripts\ckeditor\samples\old\enterkey\enterkey.html" />
+    <Content Include="Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Scripts\ckeditor\samples\old\htmlwriter\outputforflash.html" />
+    <Content Include="Scripts\ckeditor\samples\old\htmlwriter\outputhtml.html" />
+    <Content Include="Scripts\ckeditor\samples\old\index.html" />
+    <Content Include="Scripts\ckeditor\samples\old\inlineall.html" />
+    <Content Include="Scripts\ckeditor\samples\old\inlinebycode.html" />
+    <Content Include="Scripts\ckeditor\samples\old\inlinetextarea.html" />
+    <Content Include="Scripts\ckeditor\samples\old\jquery.html" />
+    <Content Include="Scripts\ckeditor\samples\old\magicline\magicline.html" />
+    <Content Include="Scripts\ckeditor\samples\old\readonly.html" />
+    <Content Include="Scripts\ckeditor\samples\old\replacebyclass.html" />
+    <Content Include="Scripts\ckeditor\samples\old\replacebycode.html" />
+    <Content Include="Scripts\ckeditor\samples\old\sample.css" />
+    <Content Include="Scripts\ckeditor\samples\old\sample.js" />
+    <Content Include="Scripts\ckeditor\samples\old\tabindex.html" />
+    <Content Include="Scripts\ckeditor\samples\old\toolbar\toolbar.html" />
+    <Content Include="Scripts\ckeditor\samples\old\uicolor.html" />
+    <Content Include="Scripts\ckeditor\samples\old\uilanguages.html" />
+    <Content Include="Scripts\ckeditor\samples\old\wysiwygarea\fullpage.html" />
+    <Content Include="Scripts\ckeditor\samples\old\xhtmlstyle.html" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\css\fontello.css" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.svg" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\font\LICENSE.txt" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\index.html" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\js\abstracttoolbarmodifier.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\js\fulltoolbareditor.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\js\toolbarmodifier.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\js\toolbartextmodifier.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.css" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\javascript.js" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\neo.css" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.css" />
+    <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.js" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\dialog.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\dialog_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\dialog_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\dialog_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\dialog_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor_gecko.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\editor_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\icons.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\icons_hidpi.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\arrow.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\hidpi\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\hidpi\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\hidpi\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moonocolor\images\spinner.gif" />
+    <Content Include="Scripts\ckeditor\styles.js" />
+    <Content Include="Scripts\Excel\jquery.base64.js" />
+    <Content Include="Scripts\Excel\jquery.btechco.excelexport.js" />
+    <Content Include="Scripts\fixGrid.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\JScriptsPadrao.js" />
+    <Content Include="modulos\NotaFiscal\pages\CrystalNotaPedido.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalNotaPedido.cs</LastGenOutput>
+    </Content>
+    <Content Include="code\json\coletor.json" />
+    <Content Include="modulos\Manutencao\pages\HistoricoVersao.json" />
+    <None Include="modulos\NotaFiscal\pages\schemas\leiauteNFe_v4.00.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\Soldi Oficial.pubxml" />
+    <None Include="Scripts\ckeditor\CHANGES.md" />
+    <None Include="Scripts\ckeditor\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <None Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\scayt\README.md" />
+    <None Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\wsc\README.md" />
+    <None Include="Scripts\ckeditor\README.md" />
+    <None Include="Scripts\ckeditor\samples\old\assets\posteddata.php" />
+    <None Include="Scripts\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <None Include="Scripts\ckeditor\samples\old\sample_posteddata.php" />
+    <None Include="Scripts\ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <None Include="Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <None Include="Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <None Include="Scripts\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <None Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <None Include="Scripts\ckeditor\skins\moonocolor\readme.md" />
+    <None Include="Service References\ServerSenha\Service1.wsdl" />
+    <None Include="Service References\ServerSenha\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServerSenha\Service11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServerSenha\Service1.disco" />
+    <None Include="Service References\ServerSenha\configuration91.svcinfo" />
+    <None Include="Service References\ServerSenha\configuration.svcinfo" />
+    <None Include="Service References\ServerSenha\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReferenceLocal\Service1.disco" />
+    <None Include="Service References\ServiceReferenceLocal\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReferenceLocal\configuration.svcinfo" />
+    <None Include="Service References\ServiceReferenceLocal\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\Site2.css" />
+    <Content Include="Styles\mobile.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReferenceLocal\Service1.wsdl" />
+    <None Include="Service References\ServiceReferenceLocal\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReferenceLocal\Service11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\homologacao3NfeInutilizacao\nfeinutilizacao2.wsdl" />
+    <None Include="Web References\homologacao3NfeInutilizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Homologacao3NFeRetAutorizacao\nferetautorizacao.wsdl" />
+    <None Include="Web References\Homologacao3NFeRetAutorizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Homologacao3NfeAutorizacao\nfeautorizacao.wsdl" />
+    <None Include="Web References\Homologacao3NfeAutorizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Homologacao3RecepcaoEvento\recepcaoevento.wsdl" />
+    <None Include="Web References\Homologacao3RecepcaoEvento\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\HomologacaoNfeRecepcao2\NfeRecepcao2.wsdl" />
+    <None Include="Web References\HomologacaoNfeRecepcao2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\HomologacaoNfeRetRecepcao2\NfeRetRecepcao2.wsdl" />
+    <None Include="Web References\HomologacaoNfeRetRecepcao2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\HomologacaoRecepcaoEvento\RecepcaoEvento.wsdl" />
+    <None Include="Web References\HomologacaoRecepcaoEvento\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeConsultaCadastro\cadconsultacadastro2.wsdl" />
+    <None Include="Web References\NfeConsultaCadastro\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeConsultaProtocolo\nfeconsulta2.wsdl" />
+    <None Include="Web References\NfeConsultaProtocolo\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeInutilizacao2\nfeinutilizacao2.wsdl" />
+    <None Include="Web References\NfeInutilizacao2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeRecepcao2\nferecepcao2.disco" />
+    <None Include="Web References\NfeRetRecepcao2\nferetrecepcao2.disco" />
+    <None Include="Web References\NfeInutilizacao2\nfeinutilizacao2.disco" />
+    <None Include="Web References\NfeConsultaProtocolo\nfeconsulta2.disco" />
+    <None Include="Web References\NfeStatusServico2\nfestatusservico2.disco" />
+    <None Include="Web References\NfeConsultaCadastro\cadconsultacadastro2.disco" />
+    <None Include="Web References\Producao3NfAutorizacao\nfeautorizacao.wsdl" />
+    <None Include="Web References\Producao3NfAutorizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Producao3NfeInutilizacao\nfeinutilizacao2.wsdl" />
+    <None Include="Web References\Producao3NfeInutilizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Producao3NfeRetAutorizacao\nferetautorizacao.wsdl" />
+    <None Include="Web References\Producao3NfeRetAutorizacao\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Producao3RecepcaoEvento\recepcaoevento.wsdl" />
+    <None Include="Web References\Producao3RecepcaoEvento\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RecepcaoEvento\RecepcaoEvento.disco" />
+    <None Include="Web References\HomologacaoNfeRecepcao2\NfeRecepcao2.disco" />
+    <None Include="Web References\HomologacaoNfeRetRecepcao2\NfeRetRecepcao2.disco" />
+    <None Include="Web References\Homologacao3NfeAutorizacao\nfeautorizacao.disco" />
+    <None Include="Web References\Homologacao3NFeRetAutorizacao\nferetautorizacao.disco" />
+    <None Include="Web References\Homologacao3RecepcaoEvento\recepcaoevento.disco" />
+    <None Include="Web References\HomologacaoRecepcaoEvento\RecepcaoEvento.disco" />
+    <None Include="Web References\Producao3RecepcaoEvento\recepcaoevento.disco" />
+    <None Include="Web References\Producao3NfAutorizacao\nfeautorizacao.disco" />
+    <None Include="Web References\Producao3NfeRetAutorizacao\nferetautorizacao.disco" />
+    <None Include="Web References\homologacao3NfeInutilizacao\nfeinutilizacao2.disco" />
+    <None Include="Web References\Producao3NfeInutilizacao\nfeinutilizacao2.disco" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <None Include="Web References\NfeRecepcao2\nferecepcao2.wsdl" />
+    <None Include="Web References\NfeRecepcao2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeRetRecepcao2\nferetrecepcao2.wsdl" />
+    <None Include="Web References\NfeRetRecepcao2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NfeStatusServico2\nfestatusservico2.wsdl" />
+    <None Include="Web References\NfeStatusServico2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RecepcaoEvento\RecepcaoEvento.wsdl" />
+    <None Include="Web References\RecepcaoEvento\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="code\BaixarArquivo.aspx.cs">
+      <DependentUpon>BaixarArquivo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="code\BaixarArquivo.aspx.designer.cs">
+      <DependentUpon>BaixarArquivo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="code\Coletor.cs" />
+    <Compile Include="code\CollectionHelper.cs" />
+    <Compile Include="code\ConfiguracaoColetor.aspx.cs">
+      <DependentUpon>ConfiguracaoColetor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="code\ConfiguracaoColetor.aspx.designer.cs">
+      <DependentUpon>ConfiguracaoColetor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="code\FTPEnviarArquivo.cs" />
+    <Compile Include="code\Funcoes.cs" />
+    <Compile Include="code\Menus.cs" />
+    <Compile Include="code\PagePadrao.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="code\ResponseHelper.cs" />
+    <Compile Include="code\Tela.cs" />
+    <Compile Include="dao\filialDAO.cs" />
+    <Compile Include="dao\FilialIEDAO.cs" />
+    <Compile Include="modulos\Cadastro\code\ApiCardapio.cs" />
+    <Compile Include="modulos\Cadastro\code\APIiFood.cs" />
+    <Compile Include="modulos\Cadastro\code\FiltroClientes.cs" />
+    <Compile Include="modulos\Cadastro\code\FiltroFornecedor.cs" />
+    <Compile Include="modulos\Cadastro\code\FiltroFuncionario.cs" />
+    <Compile Include="modulos\Cadastro\code\FiltrosMercadoria.cs" />
+    <Compile Include="modulos\Cadastro\code\FornecedorMercadoria.cs" />
+    <Compile Include="modulos\Cadastro\code\KCWCategorias.cs" />
+    <Compile Include="modulos\Cadastro\code\KCWSFabricante.cs" />
+    <Compile Include="modulos\Cadastro\code\KCWSProduto.cs" />
+    <Compile Include="modulos\Cadastro\code\KCWSProdutoCategoria.cs" />
+    <Compile Include="modulos\Cadastro\code\KCWSProdutoEstoque.cs" />
+    <Compile Include="modulos\Cadastro\code\Redefinir.cs" />
+    <Compile Include="modulos\Cadastro\dao\aliquota_imp_estadoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ArtigoFiscalDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_iFood_Categoria.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_iFood_Item.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_iFood_Produto.cs" />
+    <Compile Include="modulos\Cadastro\dao\cartaoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\cfDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\PlanoDeContasContabioDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\CategoriaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\centro_custoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\CEP_Brasil_DeliveryDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\CFOPEntradaSaidaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ClientePetImagens.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cliente_FidelidadeDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\cliente_petDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cliente_Pet_VacinaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ClienteObservacao_veterinarioDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\conta_correnteDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\EmbaladoraDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\FornecedorDepartamento.cs" />
+    <Compile Include="modulos\Cadastro\dao\funcionarioDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Funcionario_metasDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\grupo_ccDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ipDeviceDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\OperadoresDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\PDVDAO.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\dao\CFOPDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ComandasDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\itemDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\mercadoria_lojaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\mercadoria_obsDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\precificacaoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\precificacao_itensDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\preco_mercadoriaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\PromocaoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\PromocaoJornalDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\PromocaoJornalItensDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Promocao_itensDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Spool_impressorasDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\subgrupo_ccDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\TabelaPrecoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\TransportadoraDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\mercadoria_AtributosMagentoDAO.cs" />
+    <Compile Include="modulos\Cadastro\pages\AliquotasEstado.aspx.cs">
+      <DependentUpon>AliquotasEstado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\AliquotasEstado.aspx.designer.cs">
+      <DependentUpon>AliquotasEstado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\AliquotasEstadoDetalhes.aspx.cs">
+      <DependentUpon>AliquotasEstadoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\AliquotasEstadoDetalhes.aspx.designer.cs">
+      <DependentUpon>AliquotasEstadoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\AlterarAliquota.aspx.cs">
+      <DependentUpon>AlterarAliquota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\AlterarAliquota.aspx.designer.cs">
+      <DependentUpon>AlterarAliquota.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ArtigoFiscal.aspx.cs">
+      <DependentUpon>ArtigoFiscal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ArtigoFiscal.aspx.designer.cs">
+      <DependentUpon>ArtigoFiscal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ArtigoFiscalDetalhes.aspx.cs">
+      <DependentUpon>ArtigoFiscalDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ArtigoFiscalDetalhes.aspx.designer.cs">
+      <DependentUpon>ArtigoFiscalDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CadastroPromocao.aspx.cs">
+      <DependentUpon>CadastroPromocao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CadastroPromocao.aspx.designer.cs">
+      <DependentUpon>CadastroPromocao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CadastroPromocaoDetalhes.aspx.cs">
+      <DependentUpon>CadastroPromocaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CadastroPromocaoDetalhes.aspx.designer.cs">
+      <DependentUpon>CadastroPromocaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Cardapios.aspx.cs">
+      <DependentUpon>Cardapios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Cardapios.aspx.designer.cs">
+      <DependentUpon>Cardapios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Cartao.aspx.cs">
+      <DependentUpon>Cartao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Cartao.aspx.designer.cs">
+      <DependentUpon>Cartao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CartaoDetalhes.aspx.cs">
+      <DependentUpon>CartaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CartaoDetalhes.aspx.designer.cs">
+      <DependentUpon>CartaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEP.aspx.cs">
+      <DependentUpon>CEP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEP.aspx.designer.cs">
+      <DependentUpon>CEP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEPDelivery.aspx.cs">
+      <DependentUpon>CEPDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEPDelivery.aspx.designer.cs">
+      <DependentUpon>CEPDelivery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEPDeliveryDetalhes.aspx.cs">
+      <DependentUpon>CEPDeliveryDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CEPDeliveryDetalhes.aspx.designer.cs">
+      <DependentUpon>CEPDeliveryDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPEntradaSaida.aspx.cs">
+      <DependentUpon>CFOPEntradaSaida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPEntradaSaida.aspx.designer.cs">
+      <DependentUpon>CFOPEntradaSaida.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOP.aspx.cs">
+      <DependentUpon>CFOP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOP.aspx.designer.cs">
+      <DependentUpon>CFOP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPEntradaSaidaDetalhes.aspx.cs">
+      <DependentUpon>CFOPEntradaSaidaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPEntradaSaidaDetalhes.aspx.designer.cs">
+      <DependentUpon>CFOPEntradaSaidaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPDetalhes.aspx.cs">
+      <DependentUpon>CFOPDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\CFOPDetalhes.aspx.designer.cs">
+      <DependentUpon>CFOPDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ClienteDetalhes.aspx.cs">
+      <DependentUpon>ClienteDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ClienteDetalhes.aspx.designer.cs">
+      <DependentUpon>ClienteDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Comandas.aspx.cs">
+      <DependentUpon>Comandas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Comandas.aspx.designer.cs">
+      <DependentUpon>Comandas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ComandasDetalhes.aspx.cs">
+      <DependentUpon>ComandasDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ComandasDetalhes.aspx.designer.cs">
+      <DependentUpon>ComandasDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Contabilidade.aspx.cs">
+      <DependentUpon>Contabilidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Contabilidade.aspx.designer.cs">
+      <DependentUpon>Contabilidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContabilidadeDetalhes.aspx.cs">
+      <DependentUpon>ContabilidadeDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContabilidadeDetalhes.aspx.designer.cs">
+      <DependentUpon>ContabilidadeDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContaCorrente.aspx.cs">
+      <DependentUpon>ContaCorrente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContaCorrente.aspx.designer.cs">
+      <DependentUpon>ContaCorrente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContaCorrenteDetalhes.aspx.cs">
+      <DependentUpon>ContaCorrenteDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContaCorrenteDetalhes.aspx.designer.cs">
+      <DependentUpon>ContaCorrenteDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ImageBase64.aspx.cs">
+      <DependentUpon>ImageBase64.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ImageBase64.aspx.designer.cs">
+      <DependentUpon>ImageBase64.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PlanosDeContasContabil.aspx.cs">
+      <DependentUpon>PlanosDeContasContabil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PlanosDeContasContabil.aspx.designer.cs">
+      <DependentUpon>PlanosDeContasContabil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Departamentos.aspx.cs">
+      <DependentUpon>Departamentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Departamentos.aspx.designer.cs">
+      <DependentUpon>Departamentos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Embaladora.aspx.cs">
+      <DependentUpon>Embaladora.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Embaladora.aspx.designer.cs">
+      <DependentUpon>Embaladora.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\EmbaladoraDetalhes.aspx.cs">
+      <DependentUpon>EmbaladoraDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\EmbaladoraDetalhes.aspx.designer.cs">
+      <DependentUpon>EmbaladoraDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\MercadoriaUpload.aspx.cs">
+      <DependentUpon>MercadoriaUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\MercadoriaUpload.aspx.designer.cs">
+      <DependentUpon>MercadoriaUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ProdutosVinculados.aspx.cs">
+      <DependentUpon>ProdutosVinculados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ProdutosVinculados.aspx.designer.cs">
+      <DependentUpon>ProdutosVinculados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PromocaoJornal.aspx.cs">
+      <DependentUpon>PromocaoJornal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PromocaoJornal.aspx.designer.cs">
+      <DependentUpon>PromocaoJornal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PromocaoJornalDetalhes.aspx.cs">
+      <DependentUpon>PromocaoJornalDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PromocaoJornalDetalhes.aspx.designer.cs">
+      <DependentUpon>PromocaoJornalDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelaPreco.aspx.cs">
+      <DependentUpon>TabelaPreco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelaPreco.aspx.designer.cs">
+      <DependentUpon>TabelaPreco.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelaPrecoDetalhes.aspx.cs">
+      <DependentUpon>TabelaPrecoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelaPrecoDetalhes.aspx.designer.cs">
+      <DependentUpon>TabelaPrecoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelasPet.aspx.cs">
+      <DependentUpon>TabelasPet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TabelasPet.aspx.designer.cs">
+      <DependentUpon>TabelasPet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\dao\FtpCode.cs" />
+    <Compile Include="modulos\Dispositivos\dao\FtpItem.cs" />
+    <Compile Include="modulos\Dispositivos\pages\CargaFTP.aspx.cs">
+      <DependentUpon>CargaFTP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\CargaFTP.aspx.designer.cs">
+      <DependentUpon>CargaFTP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\code\ListaCompraPrecoFiltro.cs" />
+    <Compile Include="modulos\Estoque\code\ListaPrecosPesquisa.cs" />
+    <Compile Include="modulos\Estoque\code\ListaPrecosPesquisaItens.cs" />
+    <Compile Include="modulos\Estoque\dao\ListaProdutoPadraoDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\ListaProdutoPadraoItensDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\solicitacao_producaoDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\solicitacao_producao_itensDAO.cs" />
+    <Compile Include="modulos\Estoque\pages\CotacaoNaoCotadosPrint.aspx.cs">
+      <DependentUpon>CotacaoNaoCotadosPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\CotacaoNaoCotadosPrint.aspx.designer.cs">
+      <DependentUpon>CotacaoNaoCotadosPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\DevolucaoNFe.aspx.cs">
+      <DependentUpon>DevolucaoNFe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\DevolucaoNFe.aspx.designer.cs">
+      <DependentUpon>DevolucaoNFe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx.cs">
+      <DependentUpon>ListaPadraoProdutos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx.designer.cs">
+      <DependentUpon>ListaPadraoProdutos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx.cs">
+      <DependentUpon>ListaPadraoProdutosDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx.designer.cs">
+      <DependentUpon>ListaPadraoProdutosDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeEncomenda.aspx.cs">
+      <DependentUpon>SolicitacaoDeEncomenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeEncomenda.aspx.designer.cs">
+      <DependentUpon>SolicitacaoDeEncomenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeEncomendaDetalhes.aspx.cs">
+      <DependentUpon>SolicitacaoDeEncomendaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeEncomendaDetalhes.aspx.designer.cs">
+      <DependentUpon>SolicitacaoDeEncomendaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeProducao.aspx.cs">
+      <DependentUpon>SolicitacaoDeProducao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeProducao.aspx.designer.cs">
+      <DependentUpon>SolicitacaoDeProducao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeProducaoDetalhes.aspx.cs">
+      <DependentUpon>SolicitacaoDeProducaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoDeProducaoDetalhes.aspx.designer.cs">
+      <DependentUpon>SolicitacaoDeProducaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\code\TransferenciaFiltro.cs" />
+    <Compile Include="modulos\Financeiro\dao\AlteracaoFinalizadoraDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\CartaoDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\contabil_eventosDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\conta_a_pagar_outra_filialDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\lancamento_contabilDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\OrigemFinalizadoraDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\TesourariaDetalhesDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\transferencias_contasDAO.cs" />
+    <Compile Include="modulos\Financeiro\pages\BaixarArquivo.aspx.cs">
+      <DependentUpon>BaixarArquivo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\BaixarArquivo.aspx.designer.cs">
+      <DependentUpon>BaixarArquivo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\dao\CardapioDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_CategoriaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_produtosDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Cardapio_Produtos_ObservacoesDAO.cs" />
+    <Compile Include="modulos\Financeiro\pages\FinalizadorasRecebimento.aspx.cs">
+      <DependentUpon>FinalizadorasRecebimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\FinalizadorasRecebimento.aspx.designer.cs">
+      <DependentUpon>FinalizadorasRecebimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TransferenciaContas.aspx.cs">
+      <DependentUpon>TransferenciaContas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TransferenciaContas.aspx.designer.cs">
+      <DependentUpon>TransferenciaContas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TransferenciaContasDetalhes.aspx.cs">
+      <DependentUpon>TransferenciaContasDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TransferenciaContasDetalhes.aspx.designer.cs">
+      <DependentUpon>TransferenciaContasDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Gerencial\code\ListaPrecificacaoPesquisa.cs" />
+    <Compile Include="modulos\Gerencial\code\ListaPrecificacaoPesquisaItens.cs" />
+    <Compile Include="modulos\Gerencial\code\PrecificacaoFiltro.cs" />
+    <Compile Include="modulos\Gerencial\dao\Programacao_PrecificacaoDAO.cs" />
+    <Compile Include="modulos\Gerencial\dao\Programacao_Precificacao_ItemDAO.cs" />
+    <Compile Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutos.aspx.cs">
+      <DependentUpon>ProgramacaoPrecificacaoProdutos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutos.aspx.designer.cs">
+      <DependentUpon>ProgramacaoPrecificacaoProdutos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutosDetalhes.aspx.cs">
+      <DependentUpon>ProgramacaoPrecificacaoProdutosDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Gerencial\pages\ProgramacaoPrecificacaoProdutosDetalhes.aspx.designer.cs">
+      <DependentUpon>ProgramacaoPrecificacaoProdutosDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\dao\ParametroDao.cs" />
+    <Compile Include="modulos\Manutencao\dao\Soldi_Gusto_CE_DepartamentoDAO.cs" />
+    <Compile Include="modulos\Cadastro\pages\Cardapio.aspx.cs">
+      <DependentUpon>Cardapio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Cardapio.aspx.designer.cs">
+      <DependentUpon>Cardapio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\ConfiguracaoDepartamentosCE.aspx.cs">
+      <DependentUpon>ConfiguracaoDepartamentosCE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\ConfiguracaoDepartamentosCE.aspx.designer.cs">
+      <DependentUpon>ConfiguracaoDepartamentosCE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\DepartamentosManutencao.aspx.cs">
+      <DependentUpon>DepartamentosManutencao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\DepartamentosManutencao.aspx.designer.cs">
+      <DependentUpon>DepartamentosManutencao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\Filial.aspx.cs">
+      <DependentUpon>Filial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\Filial.aspx.designer.cs">
+      <DependentUpon>Filial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\FilialDetalhes.aspx.cs">
+      <DependentUpon>FilialDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\FilialDetalhes.aspx.designer.cs">
+      <DependentUpon>FilialDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Funcionario.aspx.cs">
+      <DependentUpon>Funcionario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Funcionario.aspx.designer.cs">
+      <DependentUpon>Funcionario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FuncionarioDetalhes.aspx.cs">
+      <DependentUpon>FuncionarioDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FuncionarioDetalhes.aspx.designer.cs">
+      <DependentUpon>FuncionarioDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\IpDevice.aspx.cs">
+      <DependentUpon>IpDevice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\IpDevice.aspx.designer.cs">
+      <DependentUpon>IpDevice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\IpDeviceDetalhes.aspx.cs">
+      <DependentUpon>IpDeviceDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\IpDeviceDetalhes.aspx.designer.cs">
+      <DependentUpon>IpDeviceDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\MercadoriaDetalhes.aspx.cs">
+      <DependentUpon>MercadoriaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\MercadoriaDetalhes.aspx.designer.cs">
+      <DependentUpon>MercadoriaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\NaturezaOperacao.aspx.cs">
+      <DependentUpon>NaturezaOperacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\NaturezaOperacao.aspx.designer.cs">
+      <DependentUpon>NaturezaOperacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\NaturezaOperacaoDetalhes.aspx.cs">
+      <DependentUpon>NaturezaOperacaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\NaturezaOperacaoDetalhes.aspx.designer.cs">
+      <DependentUpon>NaturezaOperacaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Operadores.aspx.cs">
+      <DependentUpon>Operadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Operadores.aspx.designer.cs">
+      <DependentUpon>Operadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\OperadoresDetalhes.aspx.cs">
+      <DependentUpon>OperadoresDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\OperadoresDetalhes.aspx.designer.cs">
+      <DependentUpon>OperadoresDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PDV.aspx.cs">
+      <DependentUpon>PDV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PDV.aspx.designer.cs">
+      <DependentUpon>PDV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PDVDetalhes.aspx.cs">
+      <DependentUpon>PDVDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PDVDetalhes.aspx.designer.cs">
+      <DependentUpon>PDVDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PlanosDeContas.aspx.cs">
+      <DependentUpon>PlanosDeContas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\PlanosDeContas.aspx.designer.cs">
+      <DependentUpon>PlanosDeContas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\dao\Contrato_fornecedorDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Contrato_Fornecedor_FilialDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\Contrato_fornecedor_itemDAO.cs" />
+    <Compile Include="modulos\Manutencao\pages\HistoricoVersao.aspx.cs">
+      <DependentUpon>HistoricoVersao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\HistoricoVersao.aspx.designer.cs">
+      <DependentUpon>HistoricoVersao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\Parametros.aspx.cs">
+      <DependentUpon>Parametros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\Parametros.aspx.designer.cs">
+      <DependentUpon>Parametros.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\ProdutosPratoDoDia.aspx.cs">
+      <DependentUpon>ProdutosPratoDoDia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Manutencao\pages\ProdutosPratoDoDia.aspx.designer.cs">
+      <DependentUpon>ProdutosPratoDoDia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\dao\Contas_a_pagar_grupoDAO.cs" />
+    <Compile Include="modulos\Gerencial\pages\GraficoVendas.aspx.cs">
+      <DependentUpon>GraficoVendas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Gerencial\pages\GraficoVendas.aspx.designer.cs">
+      <DependentUpon>GraficoVendas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\dao\solicitacao_compraDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\solicitacao_compra_itensDAO.cs" />
+    <Compile Include="modulos\Cadastro\pages\ContratoFornecedor.aspx.cs">
+      <DependentUpon>ContratoFornecedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContratoFornecedor.aspx.designer.cs">
+      <DependentUpon>ContratoFornecedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContratoFornecedorDetalhe.aspx.cs">
+      <DependentUpon>ContratoFornecedorDetalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\ContratoFornecedorDetalhe.aspx.designer.cs">
+      <DependentUpon>ContratoFornecedorDetalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\FechamentoEstoque.aspx.cs">
+      <DependentUpon>FechamentoEstoque.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\FechamentoEstoque.aspx.designer.cs">
+      <DependentUpon>FechamentoEstoque.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\FechamentoEstoqueDetalhes.aspx.cs">
+      <DependentUpon>FechamentoEstoqueDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\FechamentoEstoqueDetalhes.aspx.designer.cs">
+      <DependentUpon>FechamentoEstoqueDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoCompra.aspx.cs">
+      <DependentUpon>SolicitacaoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoCompra.aspx.designer.cs">
+      <DependentUpon>SolicitacaoCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoCompraDetalhes.aspx.cs">
+      <DependentUpon>SolicitacaoCompraDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SolicitacaoCompraDetalhes.aspx.designer.cs">
+      <DependentUpon>SolicitacaoCompraDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\code\EspelhoCego.cs" />
+    <Compile Include="modulos\Mobile\code\EspelhoCegoItens.cs" />
+    <Compile Include="modulos\Mobile\code\ItensNFeTmp .cs" />
+    <Compile Include="modulos\Mobile\code\ItensNFe.cs" />
+    <Compile Include="modulos\Mobile\code\Nota.cs" />
+    <Compile Include="modulos\Mobile\code\NotaEspelho.cs" />
+    <Compile Include="modulos\Mobile\dao\NFDAORec.cs" />
+    <Compile Include="modulos\Mobile\dao\NFItemDAORec.cs" />
+    <Compile Include="modulos\Mobile\pages\Estoque\ReceberNFe.aspx.cs">
+      <DependentUpon>ReceberNFe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Estoque\ReceberNFe.aspx.designer.cs">
+      <DependentUpon>ReceberNFe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Espelho.aspx.cs">
+      <DependentUpon>SmartPhone_Espelho.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Espelho.aspx.designer.cs">
+      <DependentUpon>SmartPhone_Espelho.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_EspelhoCego.aspx.cs">
+      <DependentUpon>SmartPhone_EspelhoCego.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_EspelhoCego.aspx.designer.cs">
+      <DependentUpon>SmartPhone_EspelhoCego.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Menu.aspx.cs">
+      <DependentUpon>SmartPhone_Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Menu.aspx.designer.cs">
+      <DependentUpon>SmartPhone_Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_NF_Detalhe.aspx.cs">
+      <DependentUpon>SmartPhone_NF_Detalhe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_NF_Detalhe.aspx.designer.cs">
+      <DependentUpon>SmartPhone_NF_Detalhe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Resultado.aspx.cs">
+      <DependentUpon>SmartPhone_Resultado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\SmartPhone_Resultado.aspx.designer.cs">
+      <DependentUpon>SmartPhone_Resultado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\code\CupomImportar.cs" />
+    <Compile Include="modulos\NotaFiscal\code\Item.cs" />
+    <Compile Include="modulos\NotaFiscal\code\NfItemImportaDev.cs" />
+    <Compile Include="modulos\NotaFiscal\code\NfManifesto.cs" />
+    <Compile Include="modulos\NotaFiscal\code\NfSaidaFiltro.cs" />
+    <Compile Include="modulos\NotaFiscal\code\PedidoImporta.cs" />
+    <Compile Include="modulos\NotaFiscal\code\Produto.cs" />
+    <Compile Include="modulos\NotaFiscal\code\XML.cs" />
+    <Compile Include="modulos\Estoque\dao\DevolucaoNFeDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\Documento_EletronicoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\NfManifestoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\Nf_CentroCustoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\NF_CTeDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\nf_justificativa_edicaoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\Nf_RecebimentoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\NF_Recebimento_ItensDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\UfPobrezaDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\pages\CTeEntrada.aspx.cs">
+      <DependentUpon>CTeEntrada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CTeEntrada.aspx.designer.cs">
+      <DependentUpon>CTeEntrada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CTeEntradaDetalhes.aspx.cs">
+      <DependentUpon>CTeEntradaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CTeEntradaDetalhes.aspx.designer.cs">
+      <DependentUpon>CTeEntradaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\ManifestoNFE.aspx.cs">
+      <DependentUpon>ManifestoNFE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\ManifestoNFE.aspx.designer.cs">
+      <DependentUpon>ManifestoNFE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CrystalNotaPedido.cs">
+      <DependentUpon>CrystalNotaPedido.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeHtmlPdf.aspx.cs">
+      <DependentUpon>DanfeHtmlPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeHtmlPdf.aspx.designer.cs">
+      <DependentUpon>DanfeHtmlPdf.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeHtmlPdfSalvar.aspx.cs">
+      <DependentUpon>DanfeHtmlPdfSalvar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeHtmlPdfSalvar.aspx.designer.cs">
+      <DependentUpon>DanfeHtmlPdfSalvar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeReport.aspx.cs">
+      <DependentUpon>DanfeReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\DanfeReport.aspx.designer.cs">
+      <DependentUpon>DanfeReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NFEntradaDoca.aspx.cs">
+      <DependentUpon>NFEntradaDoca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NFEntradaDoca.aspx.designer.cs">
+      <DependentUpon>NFEntradaDoca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NFFiscalDetalhes.aspx.cs">
+      <DependentUpon>NFFiscalDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NFFiscalDetalhes.aspx.designer.cs">
+      <DependentUpon>NFFiscalDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfPedido.aspx.cs">
+      <DependentUpon>NfPedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfPedido.aspx.designer.cs">
+      <DependentUpon>NfPedido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfPedidoDetalhes.aspx.cs">
+      <DependentUpon>NfPedidoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfPedidoDetalhes.aspx.designer.cs">
+      <DependentUpon>NfPedidoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoProdutos.aspx.cs">
+      <DependentUpon>PrecificacaoProdutos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoProdutos.aspx.designer.cs">
+      <DependentUpon>PrecificacaoProdutos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoProdutosDetalhes.aspx.cs">
+      <DependentUpon>PrecificacaoProdutosDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoProdutosDetalhes.aspx.designer.cs">
+      <DependentUpon>PrecificacaoProdutosDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\SpoolImpressora.aspx.cs">
+      <DependentUpon>SpoolImpressora.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\SpoolImpressora.aspx.designer.cs">
+      <DependentUpon>SpoolImpressora.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\SpoolImpressoraDetalhes.aspx.cs">
+      <DependentUpon>SpoolImpressoraDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\SpoolImpressoraDetalhes.aspx.designer.cs">
+      <DependentUpon>SpoolImpressoraDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Transportadoras.aspx.cs">
+      <DependentUpon>Transportadoras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Transportadoras.aspx.designer.cs">
+      <DependentUpon>Transportadoras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TransportadorasDetalhes.aspx.cs">
+      <DependentUpon>TransportadorasDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TransportadorasDetalhes.aspx.designer.cs">
+      <DependentUpon>TransportadorasDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Tributacao.aspx.cs">
+      <DependentUpon>Tributacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Tributacao.aspx.designer.cs">
+      <DependentUpon>Tributacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TributacaoDetalhes.aspx.cs">
+      <DependentUpon>TributacaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\TributacaoDetalhes.aspx.designer.cs">
+      <DependentUpon>TributacaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\dao\CargaDAO.cs" />
+    <Compile Include="modulos\Dispositivos\pages\baixar.aspx.cs">
+      <DependentUpon>baixar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\baixar.aspx.designer.cs">
+      <DependentUpon>baixar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\CargaBalanca.aspx.cs">
+      <DependentUpon>CargaBalanca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\CargaBalanca.aspx.designer.cs">
+      <DependentUpon>CargaBalanca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\CargaPDV.aspx.cs">
+      <DependentUpon>CargaPDV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\CargaPDV.aspx.designer.cs">
+      <DependentUpon>CargaPDV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\EtiquetaA4.aspx.cs">
+      <DependentUpon>EtiquetaA4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\EtiquetaA4.aspx.designer.cs">
+      <DependentUpon>EtiquetaA4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\ImprimeEtiquetas.aspx.cs">
+      <DependentUpon>ImprimeEtiquetas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Dispositivos\pages\ImprimeEtiquetas.aspx.designer.cs">
+      <DependentUpon>ImprimeEtiquetas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\code\ContasPagarFiltro.cs" />
+    <Compile Include="modulos\Financeiro\code\ContasReceberFiltro.cs" />
+    <Compile Include="modulos\Financeiro\dao\cadernetaDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\chequeDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\status_pdvDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\tesourariaDAO.cs" />
+    <Compile Include="modulos\Financeiro\pages\Caderneta.aspx.cs">
+      <DependentUpon>Caderneta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\Caderneta.aspx.designer.cs">
+      <DependentUpon>Caderneta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\CadernetaDetalhes.aspx.cs">
+      <DependentUpon>CadernetaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\CadernetaDetalhes.aspx.designer.cs">
+      <DependentUpon>CadernetaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\CadernetaPrint.aspx.cs">
+      <DependentUpon>CadernetaPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\CadernetaPrint.aspx.designer.cs">
+      <DependentUpon>CadernetaPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ChequeCliente.aspx.cs">
+      <DependentUpon>ChequeCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ChequeCliente.aspx.designer.cs">
+      <DependentUpon>ChequeCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ChequeClienteDetalhes.aspx.cs">
+      <DependentUpon>ChequeClienteDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ChequeClienteDetalhes.aspx.designer.cs">
+      <DependentUpon>ChequeClienteDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaReciboPrint.aspx.cs">
+      <DependentUpon>TesourariaReciboPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaReciboPrint.aspx.designer.cs">
+      <DependentUpon>TesourariaReciboPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaReport.aspx.cs">
+      <DependentUpon>TesourariaReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaReport.aspx.designer.cs">
+      <DependentUpon>TesourariaReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\dao\cotacaoDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\cotacao_itemDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\inventarioDAO.cs" />
+    <Compile Include="modulos\Estoque\dao\inventario_itensDAO.cs" />
+    <Compile Include="modulos\Estoque\pages\Cotacao.aspx.cs">
+      <DependentUpon>Cotacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\Cotacao.aspx.designer.cs">
+      <DependentUpon>Cotacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\CotacaoDetalhes.aspx.cs">
+      <DependentUpon>CotacaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\CotacaoDetalhes.aspx.designer.cs">
+      <DependentUpon>CotacaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoes.aspx.cs">
+      <DependentUpon>OutrasMovimentacoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoes.aspx.designer.cs">
+      <DependentUpon>OutrasMovimentacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoesDetalhes.aspx.cs">
+      <DependentUpon>OutrasMovimentacoesDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoesDetalhes.aspx.designer.cs">
+      <DependentUpon>OutrasMovimentacoesDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoesPrint.aspx.cs">
+      <DependentUpon>OutrasMovimentacoesPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\OutrasMovimentacoesPrint.aspx.designer.cs">
+      <DependentUpon>OutrasMovimentacoesPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SugestaoCompra.aspx.cs">
+      <DependentUpon>SugestaoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Estoque\pages\SugestaoCompra.aspx.designer.cs">
+      <DependentUpon>SugestaoCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\Mobile_Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Mobile_Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\Mobile_Default.aspx.designer.cs">
+      <DependentUpon>Mobile_Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\Mobile_Login.aspx.cs">
+      <DependentUpon>Mobile_Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\Mobile_Login.aspx.designer.cs">
+      <DependentUpon>Mobile_Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Grafico.aspx.cs">
+      <DependentUpon>Mobile_Grafico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Grafico.aspx.designer.cs">
+      <DependentUpon>Mobile_Grafico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Posicao_Financeiro.aspx.cs">
+      <DependentUpon>Mobile_Posicao_Financeiro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Posicao_Financeiro.aspx.designer.cs">
+      <DependentUpon>Mobile_Posicao_Financeiro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Vendas.aspx.cs">
+      <DependentUpon>Mobile_Vendas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Vendas.aspx.designer.cs">
+      <DependentUpon>Mobile_Vendas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_Departamento.aspx.cs">
+      <DependentUpon>Mobile_Venda_Departamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_Departamento.aspx.designer.cs">
+      <DependentUpon>Mobile_Venda_Departamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_Grupo.aspx.cs">
+      <DependentUpon>Mobile_Venda_Grupo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_Grupo.aspx.designer.cs">
+      <DependentUpon>Mobile_Venda_Grupo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_SubGrupo.aspx.cs">
+      <DependentUpon>Mobile_Venda_SubGrupo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Mobile\pages\Mobile_Venda_SubGrupo.aspx.designer.cs">
+      <DependentUpon>Mobile_Venda_SubGrupo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\dao\cor_linhaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\DepartamentoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\familiaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\finalizadoraDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\grupoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\linhaDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\SubGrupoDAO.cs" />
+    <Compile Include="modulos\Cadastro\pages\Familia.aspx.cs">
+      <DependentUpon>Familia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Familia.aspx.designer.cs">
+      <DependentUpon>Familia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FamiliaDetalhes.aspx.cs">
+      <DependentUpon>FamiliaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FamiliaDetalhes.aspx.designer.cs">
+      <DependentUpon>FamiliaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FinalizadoraDetalhes.aspx.cs">
+      <DependentUpon>FinalizadoraDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FinalizadoraDetalhes.aspx.designer.cs">
+      <DependentUpon>FinalizadoraDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Finalizadoras.aspx.cs">
+      <DependentUpon>Finalizadoras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Finalizadoras.aspx.designer.cs">
+      <DependentUpon>Finalizadoras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Linhas.aspx.cs">
+      <DependentUpon>Linhas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Linhas.aspx.designer.cs">
+      <DependentUpon>Linhas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\LinhasDetalhes.aspx.cs">
+      <DependentUpon>LinhasDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\LinhasDetalhes.aspx.designer.cs">
+      <DependentUpon>LinhasDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\dao\conta_a_pagarDAO.cs" />
+    <Compile Include="modulos\Financeiro\dao\conta_a_receberDAO.cs" />
+    <Compile Include="modulos\Financeiro\pages\ContasPagarDetalhes.aspx.cs">
+      <DependentUpon>ContasPagarDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasPagarDetalhes.aspx.designer.cs">
+      <DependentUpon>ContasPagarDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasReceber.aspx.cs">
+      <DependentUpon>ContasReceber.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasReceber.aspx.designer.cs">
+      <DependentUpon>ContasReceber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasReceberDetalhes.aspx.cs">
+      <DependentUpon>ContasReceberDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasReceberDetalhes.aspx.designer.cs">
+      <DependentUpon>ContasReceberDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasPagar.aspx.cs">
+      <DependentUpon>ContasPagar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\ContasPagar.aspx.designer.cs">
+      <DependentUpon>ContasPagar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaDetalhes.aspx.cs">
+      <DependentUpon>TesourariaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\TesourariaDetalhes.aspx.designer.cs">
+      <DependentUpon>TesourariaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\dao\tributacaoDAO.cs" />
+    <Compile Include="modulos\Cadastro\pages\Clientes.aspx.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Clientes.aspx.designer.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Fornecedor.aspx.cs">
+      <DependentUpon>Fornecedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Fornecedor.aspx.designer.cs">
+      <DependentUpon>Fornecedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FornecedorDetalhes.aspx.cs">
+      <DependentUpon>FornecedorDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\FornecedorDetalhes.aspx.designer.cs">
+      <DependentUpon>FornecedorDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Mercadoria.aspx.cs">
+      <DependentUpon>Mercadoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Cadastro\pages\Mercadoria.aspx.designer.cs">
+      <DependentUpon>Mercadoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dao\Conexao.cs" />
+    <Compile Include="code\gerarClasse.cs" />
+    <Compile Include="modulos\Cadastro\dao\ClienteDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\fornecedorDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\MercadoriaDAO.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\code\xmlNFE.cs" />
+    <Compile Include="modulos\Cadastro\dao\natureza_operacaoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\nfDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\nf_itemDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\nf_pagamentoDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\dao\PrecificacaoNFDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\pages\NfEntrada.aspx.cs">
+      <DependentUpon>NfEntrada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfEntrada.aspx.designer.cs">
+      <DependentUpon>NfEntrada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfEntradaDetalhes.aspx.cs">
+      <DependentUpon>NfEntradaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfEntradaDetalhes.aspx.designer.cs">
+      <DependentUpon>NfEntradaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfInutilizacao.aspx.cs">
+      <DependentUpon>NfInutilizacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfInutilizacao.aspx.designer.cs">
+      <DependentUpon>NfInutilizacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfSaida.aspx.cs">
+      <DependentUpon>NfSaida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfSaida.aspx.designer.cs">
+      <DependentUpon>NfSaida.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfSaidaDetalhes.aspx.cs">
+      <DependentUpon>NfSaidaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NfSaidaDetalhes.aspx.designer.cs">
+      <DependentUpon>NfSaidaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NotaPrint.aspx.cs">
+      <DependentUpon>NotaPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\NotaPrint.aspx.designer.cs">
+      <DependentUpon>NotaPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoNF.aspx.cs">
+      <DependentUpon>PrecificacaoNF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoNF.aspx.designer.cs">
+      <DependentUpon>PrecificacaoNF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoNFDetalhes.aspx.cs">
+      <DependentUpon>PrecificacaoNFDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\PrecificacaoNFDetalhes.aspx.designer.cs">
+      <DependentUpon>PrecificacaoNFDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CartaCorrecaoHtmlPdf.aspx.cs">
+      <DependentUpon>CartaCorrecaoHtmlPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\NotaFiscal\pages\CartaCorrecaoHtmlPdf.aspx.designer.cs">
+      <DependentUpon>CartaCorrecaoHtmlPdf.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\code\APIMagento.cs" />
+    <Compile Include="modulos\Pedidos\code\KCWSPedido.cs" />
+    <Compile Include="modulos\Cadastro\code\WSCEP.cs" />
+    <Compile Include="modulos\Pedidos\code\PesquisaProduto.cs" />
+    <Compile Include="modulos\Pedidos\dao\pedidoDAO.cs" />
+    <Compile Include="modulos\Pedidos\dao\pedido_itensDAO.cs" />
+    <Compile Include="modulos\Pedidos\dao\pedido_itens_tempDAO.cs" />
+    <Compile Include="modulos\Pedidos\dao\pedido_pagamentoDAO.cs" />
+    <Compile Include="modulos\Pedidos\pages\PedidoConsolidadeDetalhes.aspx.cs">
+      <DependentUpon>PedidoConsolidadeDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoConsolidadeDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoConsolidadeDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoConsolidado.aspx.cs">
+      <DependentUpon>PedidoConsolidado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoConsolidado.aspx.designer.cs">
+      <DependentUpon>PedidoConsolidado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucao.aspx.cs">
+      <DependentUpon>PedidoDevolucao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucao.aspx.designer.cs">
+      <DependentUpon>PedidoDevolucao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoDetalhes.aspx.cs">
+      <DependentUpon>PedidoDevolucaoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoDevolucaoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedor.aspx.cs">
+      <DependentUpon>PedidoDevolucaoFornecedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedor.aspx.designer.cs">
+      <DependentUpon>PedidoDevolucaoFornecedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedorDetalhes.aspx.cs">
+      <DependentUpon>PedidoDevolucaoFornecedorDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoFornecedorDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoDevolucaoFornecedorDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoPrint.aspx.cs">
+      <DependentUpon>PedidoDevolucaoPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoDevolucaoPrint.aspx.designer.cs">
+      <DependentUpon>PedidoDevolucaoPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoPrint.aspx.cs">
+      <DependentUpon>PedidoPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoPrint.aspx.designer.cs">
+      <DependentUpon>PedidoPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoPrintCompra.aspx.cs">
+      <DependentUpon>PedidoPrintCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoPrintCompra.aspx.designer.cs">
+      <DependentUpon>PedidoPrintCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoOrcamento.aspx.cs">
+      <DependentUpon>PedidoOrcamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoOrcamento.aspx.designer.cs">
+      <DependentUpon>PedidoOrcamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoVenda.aspx.cs">
+      <DependentUpon>PedidoVenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoVenda.aspx.designer.cs">
+      <DependentUpon>PedidoVenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoCompra.aspx.cs">
+      <DependentUpon>PedidoCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoCompra.aspx.designer.cs">
+      <DependentUpon>PedidoCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoCompraDetalhes.aspx.cs">
+      <DependentUpon>PedidoCompraDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoCompraDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoCompraDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoOrcamentoDetalhes.aspx.cs">
+      <DependentUpon>PedidoOrcamentoDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoOrcamentoDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoOrcamentoDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoVendaDetalhes.aspx.cs">
+      <DependentUpon>PedidoVendaDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Pedidos\pages\PedidoVendaDetalhes.aspx.designer.cs">
+      <DependentUpon>PedidoVendaDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\PetShop\dao\AgendaDAO.cs" />
+    <Compile Include="modulos\PetShop\pages\Agenda.aspx.cs">
+      <DependentUpon>Agenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\PetShop\pages\Agenda.aspx.designer.cs">
+      <DependentUpon>Agenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\PetShop\pages\AgendaPrint.aspx.cs">
+      <DependentUpon>AgendaPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\PetShop\pages\AgendaPrint.aspx.designer.cs">
+      <DependentUpon>AgendaPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\code\Filtro.cs" />
+    <Compile Include="modulos\Relatorios\code\GrupoSubtotal.cs" />
+    <Compile Include="modulos\Relatorios\code\Relatorio.cs" />
+    <Compile Include="modulos\Relatorios\code\RelatorioIO.cs" />
+    <Compile Include="modulos\Relatorios\code\Total.cs" />
+    <Compile Include="modulos\Relatorios\pages\RelatorioEditar.aspx.cs">
+      <DependentUpon>RelatorioEditar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatorioEditar.aspx.designer.cs">
+      <DependentUpon>RelatorioEditar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatorioPrint.aspx.cs">
+      <DependentUpon>RelatorioPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatorioPrint.aspx.designer.cs">
+      <DependentUpon>RelatorioPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\Relatorios.aspx.cs">
+      <DependentUpon>Relatorios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\Relatorios.aspx.designer.cs">
+      <DependentUpon>Relatorios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\Tesouraria.aspx.cs">
+      <DependentUpon>Tesouraria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Financeiro\pages\Tesouraria.aspx.designer.cs">
+      <DependentUpon>Tesouraria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatoriosGraficos.aspx.cs">
+      <DependentUpon>RelatoriosGraficos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatoriosGraficos.aspx.designer.cs">
+      <DependentUpon>RelatoriosGraficos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatoriosXml\venda\page\VendasHoraMedia.aspx.cs">
+      <DependentUpon>VendasHoraMedia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatoriosXml\venda\page\VendasHoraMedia.aspx.designer.cs">
+      <DependentUpon>VendasHoraMedia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatorioVendasGerencial.aspx.cs">
+      <DependentUpon>RelatorioVendasGerencial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelatorioVendasGerencial.aspx.designer.cs">
+      <DependentUpon>RelatorioVendasGerencial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelComercial.aspx.cs">
+      <DependentUpon>RelComercial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelComercial.aspx.designer.cs">
+      <DependentUpon>RelComercial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelImpostos.aspx.cs">
+      <DependentUpon>RelImpostos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Relatorios\pages\RelImpostos.aspx.designer.cs">
+      <DependentUpon>RelImpostos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\code\ArquivosBloco.cs" />
+    <Compile Include="modulos\Sped\code\DocumentosFiltros.cs" />
+    <Compile Include="modulos\Sped\code\FiltroRegistroFiscal.cs" />
+    <Compile Include="modulos\Sped\code\PlanoContasFiltros.cs" />
+    <Compile Include="modulos\Sped\dao\ArquivosGerar.cs" />
+    <Compile Include="modulos\Sped\dao\ContaContabilDAO.cs" />
+    <Compile Include="modulos\Sped\dao\DocumentoEletronicoDAO.cs" />
+    <Compile Include="modulos\Sped\dao\Sped_blocosDAO.cs" />
+    <Compile Include="modulos\Sped\dao\Sped_blocos_parametrosDAO.cs" />
+    <Compile Include="modulos\Sped\pages\CadastroBloco.aspx.cs">
+      <DependentUpon>CadastroBloco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\CadastroBloco.aspx.designer.cs">
+      <DependentUpon>CadastroBloco.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\DocEletronicosAuditor.aspx.cs">
+      <DependentUpon>DocEletronicosAuditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\DocEletronicosAuditor.aspx.designer.cs">
+      <DependentUpon>DocEletronicosAuditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\DocumentosEletronicos.aspx.cs">
+      <DependentUpon>DocumentosEletronicos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\DocumentosEletronicos.aspx.designer.cs">
+      <DependentUpon>DocumentosEletronicos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\FechamentoEstoque.aspx.cs">
+      <DependentUpon>FechamentoEstoque.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\FechamentoEstoque.aspx.designer.cs">
+      <DependentUpon>FechamentoEstoque.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\IcmsIpi.aspx.cs">
+      <DependentUpon>IcmsIpi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\IcmsIpi.aspx.designer.cs">
+      <DependentUpon>IcmsIpi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\PisCofins.aspx.cs">
+      <DependentUpon>PisCofins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\PisCofins.aspx.designer.cs">
+      <DependentUpon>PisCofins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\ContasContabeis.aspx.cs">
+      <DependentUpon>ContasContabeis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\ContasContabeis.aspx.designer.cs">
+      <DependentUpon>ContasContabeis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\ContasContabeisDetalhes.aspx.cs">
+      <DependentUpon>ContasContabeisDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\ContasContabeisDetalhes.aspx.designer.cs">
+      <DependentUpon>ContasContabeisDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\RegistrosFiscais.aspx.cs">
+      <DependentUpon>RegistrosFiscais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\RegistrosFiscais.aspx.designer.cs">
+      <DependentUpon>RegistrosFiscais.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\RegistrosFiscaisDetalhes.aspx.cs">
+      <DependentUpon>RegistrosFiscaisDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\Sped\pages\RegistrosFiscaisDetalhes.aspx.designer.cs">
+      <DependentUpon>RegistrosFiscaisDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\usuarios\dao\usuarios_webDAO.cs" />
+    <Compile Include="modulos\usuarios\pages\PermissoesDetalhes.aspx.cs">
+      <DependentUpon>PermissoesDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\PermissoesDetalhes.aspx.designer.cs">
+      <DependentUpon>PermissoesDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\Permissoes.aspx.cs">
+      <DependentUpon>Permissoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\Permissoes.aspx.designer.cs">
+      <DependentUpon>Permissoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\TrocarSenha.aspx.cs">
+      <DependentUpon>TrocarSenha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\TrocarSenha.aspx.designer.cs">
+      <DependentUpon>TrocarSenha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\UsuariosDetalhes.aspx.cs">
+      <DependentUpon>UsuariosDetalhes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="modulos\usuarios\pages\UsuariosDetalhes.aspx.designer.cs">
+      <DependentUpon>UsuariosDetalhes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServerSenha\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServiceReferenceLocal\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="dao\User.cs" />
+    <Compile Include="Web References\homologacao3NfeInutilizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Homologacao3NFeRetAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Homologacao3NfeAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Homologacao3RecepcaoEvento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\HomologacaoNfeRecepcao2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\HomologacaoNfeRetRecepcao2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\HomologacaoRecepcaoEvento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeConsultaCadastro\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeConsultaProtocolo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeInutilizacao2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeRecepcao2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeRetRecepcao2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\NfeStatusServico2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Producao3NfAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Producao3NfeInutilizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Producao3NfeRetAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\Producao3RecepcaoEvento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RecepcaoEvento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="modulos\Estoque\pages\importacao\" />
+    <Folder Include="modulos\NotaFiscal\pages\schemas\PL_006s\" />
+    <Folder Include="modulos\PetShop\code\" />
+    <Folder Include="modulos\usuarios\code\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\HomologacaoRecepcaoEvento\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_HomologacaoRecepcaoEvento_RecepcaoEvento</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\HomologacaoNfeRecepcao2\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRecepcao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_HomologacaoNfeRecepcao2_NfeRecepcao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\HomologacaoNfeRetRecepcao2\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/NfeRetRecepcao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_HomologacaoNfeRetRecepcao2_NfeRetRecepcao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Homologacao3NfeAutorizacao\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Homologacao3NfeAutorizacao_NfeAutorizacao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homologacao3NfeInutilizacao\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_homologacao3NfeInutilizacao_NfeInutilizacao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Homologacao3NFeRetAutorizacao\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Homolocao3NFeRetAutorizacao_NfeRetAutorizacao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://homologacao.nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Homologacao3RecepcaoEvento\</RelPath>
+      <UpdateFromURL>https://homologacao.nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Homologacao3RecepcaoEvento_RecepcaoEvento</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RecepcaoEvento\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/eventosWEB/services/RecepcaoEvento.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_RecepcaoEvento_RecepcaoEvento</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeConsultaCadastro\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/cadconsultacadastro2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_NfeConsultaCadastro_CadConsultaCadastro2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeConsultaProtocolo\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_NfeConsultaProtocolo_NfeConsulta2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeInutilizacao2\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_NfeInutilizacao2_NfeInutilizacao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeRecepcao2\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Nferecepcao2_NfeRecepcao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeRetRecepcao2\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_NfeRetRecepcao2_NfeRetRecepcao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NfeStatusServico2\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_NfeStatusServico2_NfeStatusServico2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Producao3NfAutorizacao\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Producao3NfAutorizacao_NfeAutorizacao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Producao3NfeInutilizacao\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/ws/nfeinutilizacao2.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Producao3NfeInutilizacao_NfeInutilizacao2</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Producao3NfeRetAutorizacao\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/ws/nferetautorizacao.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Producao3NfeRetAutorizacao_NfeRetAutorizacao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Producao3RecepcaoEvento\</RelPath>
+      <UpdateFromURL>https://nfe.fazenda.sp.gov.br/ws/recepcaoevento.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>visualSysWeb_Producao3RecepcaoEvento_RecepcaoEvento</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServerSenha\" />
+    <WCFMetadataStorage Include="Service References\ServiceReferenceLocal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modulos\NotaFiscal\pages\CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3026</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3027/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties modulos_4Manutencao_4pages_4HistoricoVersao_1json__JSONSchema="https://citation-file-format.github.io/1.2.0/schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\WinSCP.6.3.3\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.6.3.3\build\WinSCP.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WinSCP.6.3.3\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.6.3.3\build\WinSCP.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

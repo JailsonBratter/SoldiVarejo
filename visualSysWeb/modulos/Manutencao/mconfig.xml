@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mconfig>
+  <nome>Manutenção</nome>
+  <versao>1.0</versao>
+  <atualizado>13/08/2012</atualizado>
+  <inicial>true</inicial>
+    
+  <ordem>
+    <_1>PratoDia</_1>
+    <_1>departamentoManutencao</_1>
+    <_1>filiais</_1>
+    <_1>DepCE</_1>
+    <_1>Parametros</_1>
+    <_1>Historico</_1>
+   
+  </ordem>
+  
+ <departamentoManutencao>
+    <nome>Departamentos Manutenção</nome>
+    <codigo>M031</codigo>
+    <page>DepartamentosManutencao.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </departamentoManutencao>
+  
+  <PratoDia>
+    <nome>Produtos Prato do Dia</nome>
+    <codigo>M032</codigo>
+    <page>ProdutosPratoDoDia.aspx</page>
+    <imgMenu></imgMenu>
+    <img>form.png</img>
+    <inicial>true</inicial>
+  </PratoDia>
+
+  <filiais>
+    <nome>Filial</nome>
+    <codigo>M033</codigo>
+    <page>Filial.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </filiais>
+
+  <DepCE>
+    <nome>Departamentos Graficos CE</nome>
+    <codigo>M034</codigo>
+    <page>ConfiguracaoDepartamentosCE.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </DepCE>
+
+  <Parametros>
+    <nome>Parâmetros</nome>
+    <codigo>M035</codigo>
+    <page>Parametros.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </Parametros>
+  <Historico>
+    <nome>Histórico de versões</nome>
+    <codigo>M036</codigo>
+    <page>HistoricoVersao.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>false</inicial>
+  </Historico>
+ 
+
+</mconfig>
