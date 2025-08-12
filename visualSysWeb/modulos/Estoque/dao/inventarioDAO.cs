@@ -137,6 +137,11 @@ namespace visualSysWeb.dao
             String sql = "Select * from  inventario where codigo_inventario ='" + Codigo_inventario.Trim() + "' and filial='" + Filial + "'";
             SqlDataReader rs = Conexao.consulta(sql, usr, false);
             carregarDados(rs);
+            //Atualiza o SALDO_ATUAL dos itens existentes no inventario.
+            if (this.status.Equals("INICIADO"))
+            {
+                atualizarSaldoAtual(this.Codigo_inventario);
+            }
             CarregarItens();
         }
 
@@ -304,7 +309,7 @@ namespace visualSysWeb.dao
 
                     }
 
-                    Funcoes.atualizaSaldoPLU(Filial, item.PLU, saldoValor, conn, trans, contagemEInventario);
+                    Funcoes.atualizaSaldoPLU(Filial, item.PLU, saldoValor, conn, trans, DateTime.Today, (saldoValor < 0 ? "SO": "EO"), contagemEInventario);
 
                     string tipoMovimentacaoSaldoDiario = "EO";
                     //Checa se trata-se de inventário, o sistema vai assumir a divergência
@@ -611,6 +616,26 @@ namespace visualSysWeb.dao
                                 " inner join Departamento on mercadoria.Codigo_departamento = Departamento.Codigo_departamento "+
                                 " where codigo_inventario='" + Codigo_inventario.Trim() + "' order by " + (quebraDepartamento ? "Departamento.Descricao_departamento," : "") + " mercadoria.descricao ";
             return Conexao.GetTable(SqlItens, usr, false);
+        }
+
+        private void atualizarSaldoAtual(string codigoInventario)
+        {
+            SqlConnection conn = Conexao.novaConexao();
+
+            using (SqlCommand cmd = conn.CreateCommand())
+            {
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "UPDATE Inventario_Itens SET Inventario_Itens.Saldo_atual = ML.Saldo_Atual FROM Mercadoria_Loja ML WHERE " +
+                                    " Inventario_Itens.Filial = '" + Filial + "' AND Inventario_Itens.Codigo_inventario = '" + Codigo_inventario + "' AND Inventario_Itens.Filial = ML.Filial AND Inventario_Itens.PLU = ml.PLU";
+                cmd.ExecuteNonQuery();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+                conn.Dispose();
+                SqlConnection.ClearPool(conn);
+            }
         }
 
     }

@@ -1582,7 +1582,7 @@ namespace visualSysWeb.dao
                             rsUltAlteracao.Close();
 
                         //volta o estoque 
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (vLogQtde * vLogEmbalagen), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (vLogQtde * vLogEmbalagen), conn, tran, dataMovimento, "EN");
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (isnull(saldo_atual,0) -" + Funcoes.decimalPonto((vLogQtde * vLogEmbalagen).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque, conn, tran);
 
@@ -1599,7 +1599,7 @@ namespace visualSysWeb.dao
 
                     try
                     {
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran, dataMovimento, "EN");
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (ISNULL(saldo_atual,0) +" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque, conn, tran);
                         //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";
@@ -1852,7 +1852,7 @@ namespace visualSysWeb.dao
                     {
                         if (naturezaOperacao.Baixa_estoque)
                         {
-                            Funcoes.atualizaSaldoPLU(Filial, PLU, -(Qtde * Embalagem), conn, tran);
+                            Funcoes.atualizaSaldoPLU(Filial, PLU, -(Qtde * Embalagem), conn, tran, dataMovimentacao,"EN");
                             //String SqlEstoque = " update mercadoria_loja set  saldo_atual = (isnull(saldo_atual,0) -" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                             //Conexao.executarSql(SqlEstoque, conn, tran);
                             //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";
@@ -1864,7 +1864,7 @@ namespace visualSysWeb.dao
                     {
                         if (naturezaOperacao.Baixa_estoque)
                         {
-                            Funcoes.atualizaSaldoPLU(Filial, PLU, ((Qtde * Embalagem)), conn, tran);
+                            Funcoes.atualizaSaldoPLU(Filial, PLU, ((Qtde * Embalagem)), conn, tran, dataMovimentacao, "EN");
                             //String SqlEstoque = " update mercadoria_loja set  saldo_atual = (isnull(saldo_atual,0) +" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                             //Conexao.executarSql(SqlEstoque, conn, tran);
                             //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";
@@ -1919,7 +1919,7 @@ namespace visualSysWeb.dao
                 {
                     try
                     {
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (Qtde * Embalagem), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (Qtde * Embalagem), conn, tran, dataMovimentacao, "EN");
 
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (isnull(saldo_atual,0) -" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque, conn, tran);
@@ -1938,7 +1938,7 @@ namespace visualSysWeb.dao
                 {
                     try
                     {
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran,  dataMovimentacao, "SN");
 
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (isnull(saldo_atual,0) +" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque, conn, tran);
@@ -1970,7 +1970,7 @@ namespace visualSysWeb.dao
                 {
                     try
                     {
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (Qtde * Embalagem), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, -1 * (Qtde * Embalagem), conn, tran, dataMovimento, "EN");
 
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (isnull(saldo_atual,0) -" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque);
@@ -1988,7 +1988,7 @@ namespace visualSysWeb.dao
                 {
                     try
                     {
-                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran);
+                        Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran, dataMovimento, "SN");
 
                         //String SqlEstoque = "update mercadoria_Loja set  saldo_atual = (isnull(saldo_atual,0) +" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                         //Conexao.executarSql(SqlEstoque);

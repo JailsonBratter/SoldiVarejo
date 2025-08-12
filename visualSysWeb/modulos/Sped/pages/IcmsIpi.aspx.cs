@@ -1025,24 +1025,32 @@ namespace visualSysWeb.modulos.Sped.pages
 
 
                                 Decimal vNatOp = 0;
-                                Decimal.TryParse(rsBloco["COD_NAT"].ToString(), out vNatOp);
-                                ntOP = new natureza_operacaoDAO(vNatOp.ToString(), usr);
-
-
-                                if (vNatOp >= 6000)
+                                try
                                 {
-                                    criaBloco = true;
+                                    Decimal.TryParse(rsBloco["COD_NAT"].ToString(), out vNatOp);
+                                    ntOP = new natureza_operacaoDAO(vNatOp.ToString(), usr);
                                 }
-                                if (ntOP.NF_devolucao)
+                                catch
                                 {
-                                    criaBloco = true;
+                                    ntOP = null;
                                 }
 
-                                if (SPEDC170_Obrigatorio)
+                                if (ntOP != null)
                                 {
-                                    criaBloco = true;
-                                }
+                                    if (vNatOp >= 6000)
+                                    {
+                                        criaBloco = true;
+                                    }
+                                    if (ntOP.NF_devolucao)
+                                    {
+                                        criaBloco = true;
+                                    }
 
+                                    if (SPEDC170_Obrigatorio)
+                                    {
+                                        criaBloco = true;
+                                    }
+                                }
                             }
                         }
                         if (bloco.bloco.Equals("C176"))

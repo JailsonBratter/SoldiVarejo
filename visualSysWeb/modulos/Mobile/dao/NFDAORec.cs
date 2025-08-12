@@ -423,7 +423,7 @@ namespace visualSysWeb.modulos.Mobile.dao
                     foreach (NFItemDAORec item in Itens)
                     {
                         item.insert(conn, trans);
-                        Funcoes.atualizaSaldoPLU(item.Filial, item.PLU, (item.Qtde * item.Embalagem), conn, trans);
+                        Funcoes.atualizaSaldoPLU(item.Filial, item.PLU, (item.Qtde * item.Embalagem), conn, trans, DateTime.Today, "EN");
                         Funcoes.atualizaSaldoPLUDia(item.Filial, item.PLU, (item.Qtde * item.Embalagem), conn, trans, "EN", DateTime.Today);
                     }
 

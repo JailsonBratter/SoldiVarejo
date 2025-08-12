@@ -115,11 +115,12 @@ namespace visualSysWeb.code
             }
             return vlrFinal;
         }
-        public static void atualizaSaldoPLU(String Filial, String PLU, decimal qtdeAlterar,SqlConnection conn, SqlTransaction tran, bool inventario = false)
+        public static void atualizaSaldoPLU(String Filial, String PLU, decimal qtdeAlterar,SqlConnection conn, SqlTransaction tran, DateTime dataMovimentacao, string tipoMovimentacao, bool inventario = false)
         {
             SqlDataReader rs = null;
             try
             {
+                
                 rs = Conexao.consulta(@"Select tipo.Estoque, tipo.Permite_item, MERCADORIA.PLU_Vinculado, MERCADORIA.fator_Estoque_Vinculado, isnull(ML.saldo_atual,0) saldo_atual
                                         from mercadoria INNER JOIN Mercadoria_Loja ml ON mercadoria.plu = ml.PLU
                                         inner join tipo on mercadoria.Tipo = tipo.Tipo
@@ -163,16 +164,21 @@ namespace visualSysWeb.code
 
                             while (rsItens.Read())
                             {
-                                String sql = "update mercadoria_loja set " +
-                                 "   saldo_atual = isnull(saldo_atual,0) + (" + decimalPonto(qtdeAlterar) + " * " + decimalPonto(decTry(rsItens["fator_conversao"].ToString())) + ") " +
-                                 " where plu =  '" + rsItens["Plu_item"].ToString() + "' and filial = '" + Filial + "';";
+                                String sql = "";
+                                //String sql = "update mercadoria_loja set " +
+                                // "   saldo_atual = isnull(saldo_atual,0) + (" + decimalPonto(qtdeAlterar) + " * " + decimalPonto(decTry(rsItens["fator_conversao"].ToString())) + ") " +
+                                // " where plu =  '" + rsItens["Plu_item"].ToString() + "' and filial = '" + Filial + "';";
 
-                                Conexao.executarSql(sql, conn, tran);
+                                //Conexao.executarSql(sql, conn, tran);
 
-                                sql = "update mercadoria set  " +
-                                            "saldo_atual = (select sum(isnull(saldo_atual, 0))from mercadoria_loja b where b.plu = mercadoria.plu) " +
-                                        "where mercadoria.plu = '" + rsItens["Plu_item"].ToString() + "'";
-                                Conexao.executarSql(sql, conn, tran);
+                                //sql = "update mercadoria set  " +
+                                //            "saldo_atual = (select sum(isnull(saldo_atual, 0))from mercadoria_loja b where b.plu = mercadoria.plu) " +
+                                //        "where mercadoria.plu = '" + rsItens["Plu_item"].ToString() + "'";
+                                //Conexao.executarSql(sql, conn, tran);
+
+                                atualizaSaldoPLU(Filial, rsItens["Plu_item"].ToString(), (qtdeAlterar * decTry(rsItens["fator_conversao"].ToString())), conn, tran, dataMovimentacao, tipoMovimentacao);
+                                atualizaSaldoPLUDia(Filial, rsItens["Plu_item"].ToString(), (qtdeAlterar * decTry(rsItens["fator_conversao"].ToString())), conn, tran, tipoMovimentacao, dataMovimentacao);
+
 
                                 //Inserção em outras movimentações de acordo com o item de origem
                                 try
@@ -219,7 +225,7 @@ namespace visualSysWeb.code
                     if (!rs["PLU_Vinculado"].ToString().Equals(""))
                     {
                         Decimal fator = decTry(rs["fator_Estoque_Vinculado"].ToString());
-                        atualizaSaldoPLU(Filial, rs["PLU_Vinculado"].ToString(), qtdeAlterar * fator, conn, tran);
+                        atualizaSaldoPLU(Filial, rs["PLU_Vinculado"].ToString(), qtdeAlterar * fator, conn, tran, dataMovimentacao, tipoMovimentacao);
                         //Inserção em outras movimentações de acordo com o item de origem
                         try
                         {

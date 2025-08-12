@@ -389,8 +389,8 @@ namespace visualSysWeb.dao
             try
             {
                 //Desativado processo de atualização via tabela direta e substituíto pela função
-                Funcoes.atualizaSaldoPLU(Filial, PLU, ((Qtde * Embalagem) * -1), conn, tran, false) ;
-
+                Funcoes.atualizaSaldoPLU(Filial, PLU, ((Qtde * Embalagem) * -1), conn, tran, DateTime.Today, "SO") ;
+                Funcoes.atualizaSaldoPLUDia(Filial, PLU, ((Qtde * Embalagem) * -1), conn, tran, "SO", DateTime.Today);
                 //String SqlEstoque = " update mercadoria_loja set  saldo_atual = (isnull(saldo_atual,0) -" + (Qtde * Embalagem).ToString().Replace(',', '.') + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                 //Conexao.executarSql(SqlEstoque, conn, tran);
                 //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";
@@ -411,7 +411,8 @@ namespace visualSysWeb.dao
             //{
             try
             {
-                Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran, false);
+                Funcoes.atualizaSaldoPLU(Filial, PLU, (Qtde * Embalagem), conn, tran, DateTime.Today, "SO", false);
+                Funcoes.atualizaSaldoPLUDia(Filial, PLU, (Qtde * Embalagem), conn, tran, "SO", DateTime.Today);
                 //String SqlEstoque = " update mercadoria_loja set  saldo_atual = (isnull(saldo_atual,0) +" + (Qtde * Embalagem).ToString().Replace(',', '.') + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                 //Conexao.executarSql(SqlEstoque, conn, tran);
                 //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";
