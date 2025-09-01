@@ -19,7 +19,9 @@ namespace visualSysWeb.Cadastro
         String sql = "Select a.plu as PLU,isnull(b.EAN,'---') EAN, isnull(a.Ref_Fornecedor,'---') AS Refer, REPLACE(a.descricao,' ','_')  AS Mercadoria, l.Preco_Custo," +
                                 "l.preco, preco_promocao = case when l.promocao=1then l.preco_promocao else 0 end, convert(varchar,l.Data_Alteracao,103)Data_Alteracao,ICMS_SAIDA = right(replicate('0',3)+isnull(ltrim(rtrim(t.Indice_ST)),'00'),3)+'-'+RIGHT( REPLICATE('0',4) + CONVERT(VARCHAR(10),CONVERT(MONEY,isnull(t.ICMS_Efetivo,0))), 5)  , a.cst_saida as PISCofins, isnull(a.cf,'') ncm  " +
                                 " ,Saldo_atual = case when isnull((Select permite_item from tipo where tipo=a.tipo ),0)=1 then 0 else l.Saldo_atual end " +
-                                ",l.margem,a.peso_bruto, ISNULL(Convert(varchar, l.Data_Inventario, 103), '1900.01.01') AS DataInventario " +
+                                ",l.margem,a.peso_bruto, ISNULL(Convert(varchar, ISNULL((select max(i.datahora_encerramento) " +
+                                " FROM Inventario i inner join Inventario_itens ii on i.Codigo_inventario = ii.Codigo_inventario " +
+                                " WHERE ii.PLU = mercadoria_loja.PLU), '1900-01-01'), 103), '1900.01.01') AS DataInventario " +
                                 "   from mercadoria a  LEFT join ean b on a.plu=b.plu  inner join mercadoria_loja l on l.plu=a.plu	inner join Tributacao t on a.Codigo_Tributacao = t.Codigo_Tributacao  " +
                                  "  left join W_BR_CADASTRO_DEPARTAMENTO d on (a.codigo_departamento= d.codigo_Departamento) left join Familia f on a.Codigo_familia = f.Codigo_familia";
         static String ultimaOrdem = "";

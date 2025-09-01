@@ -604,8 +604,9 @@ namespace visualSysWeb.modulos.Estoque.pages
             {
 
 
+                //rsplu = Conexao.consulta("Select top 1 mercadoria.PLU,mercadoria.descricao, isnull(mercadoria_loja.saldo_atual,0)saldo_atual,isnull(mercadoria_loja.preco_custo,0)custo FROM mercadoria inner join mercadoria_loja on mercadoria.plu=mercadoria_loja.plu left join ean on mercadoria.plu=ean.plu INNER JOIN Tipo ON Tipo.Tipo = Mercadoria.Tipo AND ISNULL(Tipo.Estoque, 0) = 1 WHERE mercadoria_loja.filial='" + usr.getFilial() + "' and ( mercadoria.plu='" + txtPlu.Text + "' or ean.EAN='" + txtPlu.Text + "')", null, false);
 
-                rsplu = Conexao.consulta("Select top 1 mercadoria.PLU,mercadoria.descricao, isnull(mercadoria_loja.saldo_atual,0)saldo_atual,isnull(mercadoria_loja.preco_custo,0)custo FROM mercadoria inner join mercadoria_loja on mercadoria.plu=mercadoria_loja.plu left join ean on mercadoria.plu=ean.plu INNER JOIN Tipo ON Tipo.Tipo = Mercadoria.Tipo AND ISNULL(Tipo.Estoque, 0) = 1 WHERE mercadoria_loja.filial='" + usr.getFilial() + "' and ( mercadoria.plu='" + txtPlu.Text + "' or ean.EAN='" + txtPlu.Text + "')", null, false);
+                rsplu = Conexao.consulta("Select top 1 mercadoria.PLU,mercadoria.descricao, isnull(mercadoria_loja.saldo_atual,0)saldo_atual,isnull(mercadoria_loja.preco_custo,0)custo FROM mercadoria inner join mercadoria_loja on mercadoria.plu=mercadoria_loja.plu left join ean on mercadoria.plu=ean.plu INNER JOIN Tipo ON Tipo.Tipo = Mercadoria.Tipo  WHERE mercadoria_loja.filial='" + usr.getFilial() + "' and ( mercadoria.plu='" + txtPlu.Text + "' or ean.EAN='" + txtPlu.Text + "')", null, false);
                 if (rsplu.Read())
                 {
                     txtPlu.Text = rsplu["plu"].ToString();

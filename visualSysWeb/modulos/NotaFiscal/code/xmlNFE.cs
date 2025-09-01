@@ -1746,13 +1746,24 @@ namespace visualSysWeb.modulos.NotaFiscal.code
                 xml.Append(funGrava("indPag", indPag));     // Indicador da forma de pagamento 0 - Pagamento a Vista; 1 - Pagamento à Prazo; 2 - Outros
             xml.Append(funGrava("tPag", tPg));
             xml.Append(funGrava("vPag", tPg.Equals("90") ? "0.00" : Funcoes.decimalPonto(nf.TotalPag().ToString("N2"))));
-            if (!nf.CNPJPagamento.Trim().Equals(""))
+
+            //Alteração para adicionar elemento CARD
+            if (tPg.Equals("03") || tPg.Equals("04") || tPg.Equals("17"))
             {
                 xml.Append("<card>");
                 xml.Append(funGrava("tpIntegra", "2"));
-                xml.Append(funGrava("CNPJ", nf.CNPJPagamento));
                 xml.Append("</card>");
             }
+
+            //Comentado em 01/09/2025
+            //if (!nf.CNPJPagamento.Trim().Equals(""))
+            //{
+            //    xml.Append("<card>");
+            //    xml.Append(funGrava("tpIntegra", "2"));
+            //    xml.Append(funGrava("CNPJ", nf.CNPJPagamento));
+            //    xml.Append("</card>");
+            //}
+
             xml.Append("</detPag>");
 
             xml.Append("</pag>");
