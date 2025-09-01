@@ -603,7 +603,10 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
 
                     nfDAO obj = (nfDAO)Session["objNfEntrada" + urlSessao()];
+                    //Grava data e hora do lançamento
+                    obj.dataHoraLancamento = DateTime.Now;
                     obj.salvar(status.Equals("incluir"));
+
                     lblTotalPagamentos.Text = obj.TotalPag().ToString("N2");
                     showMessage("Salvo com Sucesso", false);
 

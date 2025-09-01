@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using visualSysWeb.code;
 using visualSysWeb.dao;
 using visualSysWeb.modulos.Estoque.code;
-using visualSysWeb.modulos.Estoque.dao;
+using visualSysWeb.modulos.Cadastro.dao;
 
 namespace visualSysWeb.modulos.Estoque.pages
 {
@@ -20,26 +20,24 @@ namespace visualSysWeb.modulos.Estoque.pages
         protected void Page_Load(object sender, EventArgs e)
         {
             User usr = (User)Session["User"];
-          
             if (usr != null)
             {
-                String tipo = Request["tipo"].ToString();
+                //String tipo = Request["tipo"].ToString();
                 if (!IsPostBack)
                 {
                     ListaProdutoPadraoDAO lista = null;
                     if (Request["novo"] != null)
                     {
-                        lblTipoLista.Text = tipo;
                         status = "incluir";
                         ListaProdutoPadraoDAO listaManter = (ListaProdutoPadraoDAO)Session["manterListaPadrao"];
-                        if(listaManter !=null)
+                        if (listaManter != null)
                         {
                             modalConfirmaManter.Show();
                         }
                         else
                         {
-                            
-                            lista = new ListaProdutoPadraoDAO(tipo);
+
+                            lista = new ListaProdutoPadraoDAO();
                             Session.Remove("listaProduto" + urlSessao());
                             Session.Add("listaProduto" + urlSessao(), lista);
                             novaLista();
@@ -48,8 +46,8 @@ namespace visualSysWeb.modulos.Estoque.pages
                     }
                     else if (Request["codigo"] != null)
                     {
-                        int cod =  Funcoes.intTry(Request["codigo"].ToString());
-                        lista = new ListaProdutoPadraoDAO(cod,tipo);
+                        int cod = Funcoes.intTry(Request["codigo"].ToString());
+                        lista = new ListaProdutoPadraoDAO(cod);
                         status = "visualizar";
                     }
 
@@ -61,7 +59,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 }
             }
             carregabtn(pnBtn);
-           
+
         }
 
         private void novaLista()
@@ -75,21 +73,21 @@ namespace visualSysWeb.modulos.Estoque.pages
 
         protected override void btnIncluir_Click(object sender, EventArgs e)
         {
-            String tipo = Request["tipo"].ToString();
+            String tipo = ddlTipo.Text;
             ListaProdutoPadraoDAO lista = (ListaProdutoPadraoDAO)Session["listaProduto" + urlSessao()];
             Session.Remove("manterLista");
             Session.Add("manterLista", lista);
-            Response.Redirect("ListaPadraoProdutosDetalhes.aspx?novo=true&tipo="+tipo);
+            Response.Redirect("ListaPadraoProdutosDetalhes.aspx?novo=true");
         }
 
 
         protected override void btnEditar_Click(object sender, EventArgs e)
         {
-                status = "editar";
-                HabilitarCampos(true);
-                carregabtn(pnBtn);
-                carregarMercadorias();
-         }
+            status = "editar";
+            HabilitarCampos(true);
+            carregabtn(pnBtn);
+            carregarMercadorias();
+        }
 
         private void CarregarDados()
         {
@@ -98,7 +96,7 @@ namespace visualSysWeb.modulos.Estoque.pages
             {
                 txtCodigo.Text = lista.id.ToString();
                 txtNome.Text = lista.descricao;
-                
+
                 carregarGrids();
             }
 
@@ -107,15 +105,16 @@ namespace visualSysWeb.modulos.Estoque.pages
         private void CarregarDadosObj()
         {
             ListaProdutoPadraoDAO lista = (ListaProdutoPadraoDAO)Session["listaProduto" + urlSessao()];
-            lista.id= Funcoes.intTry(txtCodigo.Text);
+            lista.id = Funcoes.intTry(txtCodigo.Text);
             lista.descricao = txtNome.Text;
-           
+            lista.tipo = ddlTipo.Text;
+
 
             Session.Remove("listaProduto" + urlSessao());
             Session.Add("listaProduto" + urlSessao(), lista);
 
         }
-       
+
         private void carregarGrids()
         {
             ListaProdutoPadraoDAO lista = (ListaProdutoPadraoDAO)Session["listaProduto" + urlSessao()];
@@ -127,9 +126,9 @@ namespace visualSysWeb.modulos.Estoque.pages
                 if (lista.itens.Count > 0)
                 {
                     divAvisoItens.Visible = false;
-                    int nfim = (lista.itensFim > lista.itens.Count ? lista.itens.Count : lista.itensFim );
+                    int nfim = (lista.itensFim > lista.itens.Count ? lista.itens.Count : lista.itensFim);
 
-                    lblRegistros.Text = (lista.itensInicio + 1) + " ate " + nfim + " de " +lista.itens.Count + " Incluido(s) ";
+                    lblRegistros.Text = (lista.itensInicio + 1) + " ate " + nfim + " de " + lista.itens.Count + " Incluido(s) ";
                     lblRegistrosSeleciona.Text = lblRegistros.Text;
 
                     gridItens.DataSource = lista.GridItens();
@@ -143,8 +142,8 @@ namespace visualSysWeb.modulos.Estoque.pages
                     divAvisoItens.Visible = true;
                 }
 
-                
-             
+
+
             }
         }
 
@@ -154,25 +153,25 @@ namespace visualSysWeb.modulos.Estoque.pages
             EnabledControls(tabItens, enable);
             EnabledControls(TabSelecionarItens, enable);
             EnabledControls(cabecalho, enable);
-            String tipo = Request["tipo"].ToString();
-            if(tipo.Equals("PRODUCAO"))
+            String tipo = "COMPRA";
+            if (tipo.Equals("PRODUCAO"))
             {
                 divCompra.Visible = false;
                 divProducao.Visible = true;
             }
-            else if(tipo.Equals("COMPRA"))
+            else if (tipo.Equals("COMPRA"))
             {
 
                 divCompra.Visible = true;
                 divProducao.Visible = false;
             }
             divBtnImprimirEncerrado.Visible = !enable;
-          
+
         }
         protected override void btnPesquisar_Click(object sender, EventArgs e)
         {
-            String tipo = Request["tipo"].ToString();
-            Response.Redirect("ListaPadraoProdutos.aspx?tipo="+tipo);
+            //String tipo = Request["tipo"].ToString();
+            Response.Redirect("ListaPadraoProdutos.aspx");
         }
 
         protected override void btnExcluir_Click(object sender, EventArgs e)
@@ -184,7 +183,7 @@ namespace visualSysWeb.modulos.Estoque.pages
         protected bool validaCamposObrigatorios()
         {
 
-           
+
             if (validaCampos(cabecalho) && validaCampos(conteudo))
                 return true;
             else
@@ -202,7 +201,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 status = "visualizar";
 
                 showMessage("SALVO COM SUCESSO", false);
-               
+
                 CarregarDados();
                 carregabtn(pnBtn);
                 HabilitarCampos(false);
@@ -211,14 +210,14 @@ namespace visualSysWeb.modulos.Estoque.pages
             catch (Exception err)
             {
 
-                showMessage(err.Message,true);
+                showMessage(err.Message, true);
             }
         }
 
         protected override void btnCancelar_Click(object sender, EventArgs e)
         {
-            String tipo = Request["tipo"].ToString();
-            Response.Redirect("ListaPadraoProdutos.aspx?tipo="+tipo);
+            //String tipo = Request["tipo"].ToString();
+            Response.Redirect("ListaPadraoProdutos.aspx");
         }
 
         protected override bool campoDesabilitado(Control campo)
@@ -255,10 +254,10 @@ namespace visualSysWeb.modulos.Estoque.pages
         protected void btnOkError_Click(object sender, EventArgs e)
         {
 
-            if(lblErroPanel.Text.Equals("Excluido com Sucesso"))
+            if (lblErroPanel.Text.Equals("Excluido com Sucesso"))
             {
-                String tipo = Request["tipo"].ToString();
-                Response.Redirect("ListaPadraoProdutos.aspx?tipo=" + tipo);
+                //String tipo = Request["tipo"].ToString();
+                Response.Redirect("ListaPadraoProdutos.aspx");
             }
             modalError.Hide();
         }
@@ -277,9 +276,9 @@ namespace visualSysWeb.modulos.Estoque.pages
             modalError.Show();
         }
 
-        
-      
-   
+
+
+
         protected void imgPlu_Click(object sender, ImageClickEventArgs e)
         {
             if (!txtPlu.Text.Trim().Equals(""))
@@ -287,7 +286,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 txtDescricaoItem.Text = Conexao.retornaUmValor("Select descricao from mercadoria where plu ='" + txtPlu.Text + "'", null);
                 if (txtDescricaoItem.Text.Equals(""))
                 {
-                    showMessage("PRODUTO NÃO ENCONTRADO",true);
+                    showMessage("PRODUTO NÃO ENCONTRADO", true);
                 }
                 else
                 {
@@ -330,8 +329,8 @@ namespace visualSysWeb.modulos.Estoque.pages
             }
 
         }
-       
-        
+
+
 
         protected void imgFornecedor_Click(object sender, ImageClickEventArgs e)
         {
@@ -456,10 +455,10 @@ namespace visualSysWeb.modulos.Estoque.pages
                 lblMercadoriaLista.Text = "Inclusão de Produto";
 
                 User usr = (User)Session["user"];
-                String tipo = Request["tipo"].ToString();
+                String tipo = ddlTipo.Text;
                 ListaPrecosPesquisa pesq = (ListaPrecosPesquisa)Session["pesq" + urlSessao()];
                 if (pesq == null)
-                    pesq = new ListaPrecosPesquisa(usr,tipo);
+                    pesq = new ListaPrecosPesquisa(usr, tipo);
 
                 int nPorPagina = Funcoes.intTry(Funcoes.valorParametro("ITENS_POR_PAG", usr));
                 pesq.grupo = txtGrupo.Text;
@@ -468,18 +467,28 @@ namespace visualSysWeb.modulos.Estoque.pages
                 pesq.linha = ddlLinha.Text;
                 pesq.plu_descricao = txtfiltromercadoria.Text;
                 pesq.cozinha = txtCozinha.Text;
-                pesq.tipoProducao = "'"+txtTipoProducao.Text+"'";
+                pesq.tipoProducao = "'" + txtTipoProducao.Text + "'";
                 pesq.agrupamento = txtAgrupamento.Text;
                 pesq.gridInicio = 0;
                 pesq.gridFim = nPorPagina;
                 pesq.codigo_lista = txtcodListaPadrao.Text;
+                pesq.vendasHa = "";
+                pesq.comprasHa = "";
+                if (!ddlVendas.SelectedValue.Equals(""))
+                {
+                    pesq.vendasHa = ddlVendas.SelectedValue;
+                }
+                if (!ddlCompras.SelectedValue.Equals(""))
+                {
+                    pesq.comprasHa = ddlCompras.SelectedValue;
+                }
 
                 pesq.atualizarPesquia();
                 Session.Remove("pesq" + urlSessao());
                 Session.Add("pesq" + urlSessao(), pesq);
 
                 atualizaGridPesquisa();
-             
+
             }
             catch (Exception err)
             {
@@ -574,7 +583,7 @@ namespace visualSysWeb.modulos.Estoque.pages
             }
         }
 
-        
+
         protected void imgBtnIncluirSelecionados_Click(object sender, ImageClickEventArgs e)
         {
             selecionadosPag();
@@ -587,7 +596,7 @@ namespace visualSysWeb.modulos.Estoque.pages
 
                 btnTodosItensSelecionados.Text = pesq.ItensEncontrados.Count.ToString() + " Itens Encontrados";
                 int qtdeSelec = pesq.ItensSelecionados.Count;
-            
+
 
                 btnApenasTela.Text = qtdeSelec.ToString() + " Itens Selecionados";
 
@@ -719,7 +728,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                     decimal pagInicio = (decimal.Truncate(nFim / nPorPagina) * nPorPagina);
                     obj.itensInicio = Convert.ToInt32(pagInicio);
                     if (obj.itensInicio == nFim)
-                        obj.itensInicio = (nFim -obj.qtdePorPagina);
+                        obj.itensInicio = (nFim - obj.qtdePorPagina);
                     obj.itensFim = nFim;
                 }
             }
@@ -733,7 +742,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 obj.itensFim = nFim;
             }
             carregarGrids();
-            if(status.Equals("visualizar"))
+            if (status.Equals("visualizar"))
             {
                 HabilitarCampos(false);
             }
@@ -831,22 +840,22 @@ namespace visualSysWeb.modulos.Estoque.pages
                 ListaPrecosPesquisa pesq = (ListaPrecosPesquisa)Session["pesq" + urlSessao()];
                 ListaProdutoPadraoDAO lista = (ListaProdutoPadraoDAO)Session["listaProduto" + urlSessao()];
 
-                
+
                 if (grid)
                 {
 
                     foreach (ListaPrecosPesquisaItem itemSele in pesq.ItensSelecionados)
                     {
                         ListaProdutoPadraoItensDAO item = new ListaProdutoPadraoItensDAO();
-                            item.PLU = itemSele.PLU;
-                            item.descricao = itemSele.Descricao;
-                            lista.addItens(item);
-                        
+                        item.PLU = itemSele.PLU;
+                        item.descricao = itemSele.Descricao;
+                        lista.addItens(item);
+
                     }
                 }
                 else
                 {
-                  
+
                     foreach (ListaPrecosPesquisaItem item in pesq.ItensEncontrados)
                     {
                         ListaProdutoPadraoItensDAO nitem = new ListaProdutoPadraoItensDAO();
@@ -869,11 +878,11 @@ namespace visualSysWeb.modulos.Estoque.pages
 
         }
 
-      
-       
-       
 
-       
+
+
+
+
         protected void gridItens_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int index = Convert.ToInt32(e.CommandArgument);
@@ -886,13 +895,13 @@ namespace visualSysWeb.modulos.Estoque.pages
 
         protected void gridPesquisaFornecedor_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            
+
         }
 
         protected void imgBtnConfirmaExluirItem_Click(object sender, ImageClickEventArgs e)
         {
             ListaProdutoPadraoDAO lista = (ListaProdutoPadraoDAO)Session["listaProduto" + urlSessao()];
-            if(!lblPluExcluir.Text.Equals(""))
+            if (!lblPluExcluir.Text.Equals(""))
             {
                 lista.excluirItem(lblPluExcluir.Text);
 
@@ -905,14 +914,14 @@ namespace visualSysWeb.modulos.Estoque.pages
             modalExcluirItem.Hide();
         }
 
-       
 
-       
-        
+
+
+
 
         protected void btnCancelarInativar_Click(object sender, ImageClickEventArgs e)
         {
-           
+
         }
 
         protected void imgBtnConfirmaManter_Click(object sender, ImageClickEventArgs e)
@@ -936,7 +945,7 @@ namespace visualSysWeb.modulos.Estoque.pages
             novaLista();
         }
 
-       
+
 
         protected void selecionadosPag()
         {
@@ -1027,7 +1036,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 {
                     sheet.Cells[row, 1].Value = Double.Parse(item.PLU);
                     sheet.Cells[row, 2].Value = item.descricao;
-                
+
                     row++;
                 }
 
@@ -1054,34 +1063,34 @@ namespace visualSysWeb.modulos.Estoque.pages
             try
             {
 
-            
 
-            if (status.Equals("visualizar"))
-                throw new Exception("Para importar Clique antes em Editar");
 
-            //String pasta = Server
-            String path = Server.MapPath("~/modulos/Estoque/pages/uploads/");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+                if (status.Equals("visualizar"))
+                    throw new Exception("Para importar Clique antes em Editar");
 
-            UploadArquivo(path);
+                //String pasta = Server
+                String path = Server.MapPath("~/modulos/Estoque/pages/uploads/");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
-            String[] files = Directory.GetFiles(path);
+                UploadArquivo(path);
 
-            foreach (String arq in files)
-            {
-                lerExcel(arq);
-            }
+                String[] files = Directory.GetFiles(path);
 
-            foreach (String arq in files)
-            {
-                File.Delete(arq);
-            }
+                foreach (String arq in files)
+                {
+                    lerExcel(arq);
+                }
+
+                foreach (String arq in files)
+                {
+                    File.Delete(arq);
+                }
             }
             catch (Exception err)
             {
 
-                showMessage(err.Message,true);
+                showMessage(err.Message, true);
             }
         }
         private void lerExcel(String caminhoExcel)
@@ -1119,7 +1128,7 @@ namespace visualSysWeb.modulos.Estoque.pages
 
                                             plu = reader.GetDouble(0).ToString();
                                             bool exclui = false;
-                                            if (reader.FieldCount>=3 && !reader.IsDBNull(2))
+                                            if (reader.FieldCount >= 3 && !reader.IsDBNull(2))
                                             {
 
                                                 string comando = reader.GetString(2);
@@ -1136,10 +1145,10 @@ namespace visualSysWeb.modulos.Estoque.pages
                                                     itensExcluidos++;
                                             }
                                             else
-                                            {       
-                                                    String descricao = Conexao.retornaUmValor("Select descricao from mercadoria where plu ='" + plu + "'", null);
-                                                    obj.addItens(new ListaProdutoPadraoItensDAO() {PLU= plu, descricao= descricao });
-                                                    linhasImportadas++;
+                                            {
+                                                String descricao = Conexao.retornaUmValor("Select descricao from mercadoria where plu ='" + plu + "'", null);
+                                                obj.addItens(new ListaProdutoPadraoItensDAO() { PLU = plu, descricao = descricao });
+                                                linhasImportadas++;
                                             }
 
                                         }

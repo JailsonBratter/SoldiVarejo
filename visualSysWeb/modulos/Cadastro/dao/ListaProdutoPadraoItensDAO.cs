@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace visualSysWeb.modulos.Estoque.dao
+namespace visualSysWeb.dao
 {
     public class ListaProdutoPadraoItensDAO
     {

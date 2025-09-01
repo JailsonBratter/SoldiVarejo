@@ -13,6 +13,7 @@ namespace visualSysWeb.dao
 {
     public class nfDAO
     {
+        #region Propriedades
         private String strCod = "";
         public String Codigo
         {
@@ -451,6 +452,10 @@ namespace visualSysWeb.dao
         public bool StatusConsultadoAntesDaExclusao = false;
 
         public NF_CTeDAO NFCTe = null;
+
+        public DateTime dataHoraLancamento = DateTime.Parse("1900-01-01");
+
+        #endregion Propriedades
 
         public nfDAO(User usr, string tipoNF)
         {
@@ -1617,7 +1622,8 @@ namespace visualSysWeb.dao
                               ",intermedCnpj='" + intermedCnpj.Trim() + "'" +
                               ",idCadIntTran='" + idCadIntTran.Trim() + "'" +
                               ",CNPJPagamento='" + CNPJPagamento + "'" +
-                    " where filial='" + Filial + "' AND  codigo =" + Codigo + " and tipo_nf = " + Tipo_NF + " and cliente_fornecedor = '" + Cliente_Fornecedor + "'";
+                              ",DataHora_Lancamento = '" + dataHoraLancamento.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
+                    " where filial='" + Filial + "' AND  RTRIM(LTRIM(codigo)) = '" + Codigo.Trim() + "' and tipo_nf = " + Tipo_NF + " and cliente_fornecedor = '" + Cliente_Fornecedor + "'";
 
                 Conexao.executarSql(sql, conn, tran);
 
@@ -5318,6 +5324,8 @@ namespace visualSysWeb.dao
 
             verificaTribItens();
 
+            dataHoraLancamento = DateTime.Now;
+
             SqlConnection conn = Conexao.novaConexao();
             SqlTransaction tran = conn.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted);
             try
@@ -5788,6 +5796,7 @@ namespace visualSysWeb.dao
                             ",CNPJPagamento" +
                             ",Validacao_Fiscal" +
                             ", Valor_Difal" +
+                            ", DataHora_Lancamento" +
 
                      " )values (" +
                             "'" + Codigo + "'" +
@@ -5861,6 +5870,7 @@ namespace visualSysWeb.dao
                             ",'" + CNPJPagamento + "'" +
                             ",'" + validacaoFiscal + "'" +
                             ", " + Funcoes.decimalPonto(vValorDifal.ToString())+
+                            ", '" + dataHoraLancamento.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
                  ");";
 
                 Conexao.executarSql(sql, conn, tran);
@@ -6383,7 +6393,7 @@ namespace visualSysWeb.dao
                 sql += " WHERE Mercadoria_Estoque_Dia.Filial = '" + usr.getFilial() + "'";
                 sql += " AND Mercadoria_Estoque_Dia.Data < '" +  dataMovimentacao.ToString("yyyy-MM-dd") + "'";
                 sql += " AND Mercadoria_Estoque_Dia.plu = '" + PLU + "'";
-                return Funcoes.intTry(Conexao.retornaUmValor(sql, usr)) > 0 ? true : false;
+                return Funcoes.intTry(Conexao.retornaUmValor(sql, usr)) > 0 ? false : true;
             }
             catch (Exception e)
             {

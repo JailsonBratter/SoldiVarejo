@@ -29,6 +29,7 @@
     <_1>Cardapio</_1>
     <_1>TabelaPreco</_1>
     <_1>PlanoContabil</_1>
+    <_1>ListaPadraoProdutos</_1>
     
   </ordem>
   
@@ -368,4 +369,12 @@
     <img></img>
     <inicial>true</inicial>
   </ArtigoFiscal>
+  <ListaPadraoProdutos>
+    <nome>Lista Padrao de Produtos</nome>
+    <codigo>C040</codigo>
+    <page>ListaPadraoProdutos.aspx</page>
+    <imgMenu></imgMenu>
+    <img></img>
+    <inicial>true</inicial>
+  </ListaPadraoProdutos>
 </mconfig>

@@ -21,6 +21,8 @@ namespace visualSysWeb.modulos.Estoque.code
         public String agrupamento = "";
         public String tipoProducao = "";
         public String tipoPesquisa = "";
+        public String vendasHa = "";
+        public String comprasHa = "";
         private User usr = null;
         public int gridInicio = 0;
         public int gridFim = 20;
@@ -44,6 +46,8 @@ namespace visualSysWeb.modulos.Estoque.code
             else if (tipoPesquisa.Equals("PRODUCAO"))
                 sqlMercadoria += " m.tipo='PRODUCAO' " +
                     " AND ISNULL((Select m3.filial_produzido from mercadoria as m3 where  m3.plu = m.plu_receita),'') <>''";
+            else
+                sqlMercadoria += " m.descricao <> ''";
 
             if (Funcoes.isnumero(plu_descricao))
             {
@@ -105,6 +109,19 @@ namespace visualSysWeb.modulos.Estoque.code
             {
                 sqlMercadoria += " and m.Agrupamento_producao='" + agrupamento + "'";
             }
+            //Especiais
+            if (Funcoes.isnumero(vendasHa))
+            {
+                sqlMercadoria += " and m.plu IN(SELECT s.PLU FROM Saida_Estoque S WITH (INDEX=IX_SAIDA_ESTOQUE, NOLOCK) WHERE S.Filial = '" + usr.filial.Filial + "'";
+                sqlMercadoria += " AND s.Data_Movimento >= DATEADD(MONTH, -" + vendasHa + ", GETDATE())" + ")";
+            }
+            if (Funcoes.isnumero(comprasHa))
+            {
+                sqlMercadoria += " AND M.PLU IN(SELECT I.PLU ";
+                sqlMercadoria += " FROM NF WITH(INDEX = IX_NF_01, NOLOCK) INNER JOIN NF_ITEM I WITH(INDEX = IX_NF_ITEM_01, NOLOCK) ON NF.Filial = I.Filial AND NF.Cliente_Fornecedor = I.Cliente_Fornecedor ";
+                sqlMercadoria += " AND NF.Codigo = I.Codigo AND NF.Tipo_NF = I.Tipo_NF AND NF.serie = I.serie WHERE NF.Data >= DATEADD(MONTH, -" + comprasHa + ", GETDATE()))";
+            }
+
             ItensEncontrados.Clear();
             ItensSelecionados.Clear();
             SqlDataReader rs = null;

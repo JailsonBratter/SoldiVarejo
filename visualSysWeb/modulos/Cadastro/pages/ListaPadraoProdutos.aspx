@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListaPadraoProdutos.aspx.cs" Inherits="visualSysWeb.modulos.Estoque.pages.ListaPadraoProdutos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListaPadraoProdutos.aspx.cs" Inherits="visualSysWeb.modulos.Cadastro.pages.ListaPadraoProdutos" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <center><h1>LISTA PADRAO DE <asp:Label ID="lblTipoLista" runat="server" Text="" ></asp:Label></h1></center>
+    <center><h1>LISTA PADRAO DE PRODUTOS</h1></center>
     <asp:Label ID="lblPesquisaErro" runat="server" Text="" ForeColor="Red"></asp:Label>
     <hr />
     <asp:Panel ID="pnBtn" runat="server" CssClass="cabMenu">
@@ -26,6 +26,16 @@
                         </p>
                         <asp:TextBox ID="txtDescricao" runat="server" Width="300px"> </asp:TextBox>
                     </div>
+                <div class="panelItem">
+                    <p>
+                        Tipo</p>
+                    <asp:DropDownList ID="ddlTipo" runat="server">
+                        <asp:ListItem Value="TODOS">TODOS</asp:ListItem>
+                        <asp:ListItem Value="INVENTARIO">INVENTARIO</asp:ListItem>
+                        <asp:ListItem Value="PRODUCAO">PRODUCAO</asp:ListItem>
+                        <asp:ListItem Value="COMPRAS">COMPRAS</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
                    
                   
                 </td>
@@ -38,10 +48,13 @@
             <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
             <Columns>
                 <asp:HyperLinkField DataTextField="id" Text="---" Visible="true" HeaderText="Codigo"
-                    DataNavigateUrlFormatString="~/modulos/estoque/pages/ListaPadraoProdutosDetalhes.aspx?codigo={0}&tipo={1}"
+                    DataNavigateUrlFormatString="~/modulos/cadastro/pages/ListaPadraoProdutosDetalhes.aspx?codigo={0}&tipo={1}"
                     DataNavigateUrlFields="id,tipo" />
                 <asp:HyperLinkField DataTextField="descricao" Text="----" Visible="true" HeaderText="Nome"
-                    DataNavigateUrlFormatString="~/modulos/estoque/pages/ListaPadraoProdutosDetalhes.aspx?codigo={0}&tipo={1}"
+                    DataNavigateUrlFormatString="~/modulos/cadastro/pages/ListaPadraoProdutosDetalhes.aspx?codigo={0}&tipo={1}"
+                    DataNavigateUrlFields="id,tipo" />
+                <asp:HyperLinkField DataTextField="Tipo" Text="----" Visible="true" HeaderText="Tipo"
+                    DataNavigateUrlFormatString="~/modulos/cadastro/pages/ListaPadraoProdutosDetalhes.aspx?codigo={0}&tipo={1}"
                     DataNavigateUrlFields="id,tipo" />
                 
             </Columns>

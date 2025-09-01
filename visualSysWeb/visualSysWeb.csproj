@@ -168,6 +168,7 @@
     <Content Include="img\ico_edit.png" />
     <Content Include="img\Img.png" />
     <Content Include="img\NFE.jpg" />
+    <Content Include="modulos\Cadastro\css\ListaPadraoProdutosDetalhes.css" />
     <Content Include="modulos\Cadastro\css\PlanosDeContasContabil.css" />
     <Content Include="modulos\Cadastro\imgs\OrdemDown.png" />
     <Content Include="modulos\Cadastro\imgs\OrdemUp.png" />
@@ -213,8 +214,8 @@
     <Content Include="modulos\Estoque\imgs\produzir.png" />
     <Content Include="modulos\Estoque\pages\CotacaoNaoCotadosPrint.aspx" />
     <Content Include="modulos\Estoque\pages\DevolucaoNFe.aspx" />
-    <Content Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx" />
-    <Content Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx" />
+    <Content Include="modulos\Cadastro\pages\ListaPadraoProdutos.aspx" />
+    <Content Include="modulos\Cadastro\pages\ListaPadraoProdutosDetalhes.aspx" />
     <Content Include="modulos\Estoque\pages\SolicitacaoDeEncomenda.aspx" />
     <Content Include="modulos\Estoque\pages\SolicitacaoDeEncomendaDetalhes.aspx" />
     <Content Include="modulos\Estoque\pages\SolicitacaoDeProducao.aspx" />
@@ -1680,11 +1681,11 @@
     <Compile Include="modulos\Dispositivos\pages\CargaFTP.aspx.designer.cs">
       <DependentUpon>CargaFTP.aspx</DependentUpon>
     </Compile>
-    <Compile Include="modulos\Estoque\code\ListaCompraPrecoFiltro.cs" />
+    <Compile Include="modulos\Cadastro\code\ListaCompraPrecoFiltro.cs" />
     <Compile Include="modulos\Estoque\code\ListaPrecosPesquisa.cs" />
     <Compile Include="modulos\Estoque\code\ListaPrecosPesquisaItens.cs" />
-    <Compile Include="modulos\Estoque\dao\ListaProdutoPadraoDAO.cs" />
-    <Compile Include="modulos\Estoque\dao\ListaProdutoPadraoItensDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ListaProdutoPadraoDAO.cs" />
+    <Compile Include="modulos\Cadastro\dao\ListaProdutoPadraoItensDAO.cs" />
     <Compile Include="modulos\Estoque\dao\solicitacao_producaoDAO.cs" />
     <Compile Include="modulos\Estoque\dao\solicitacao_producao_itensDAO.cs" />
     <Compile Include="modulos\Estoque\pages\CotacaoNaoCotadosPrint.aspx.cs">
@@ -1701,18 +1702,18 @@
     <Compile Include="modulos\Estoque\pages\DevolucaoNFe.aspx.designer.cs">
       <DependentUpon>DevolucaoNFe.aspx</DependentUpon>
     </Compile>
-    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx.cs">
+    <Compile Include="modulos\Cadastro\pages\ListaPadraoProdutos.aspx.cs">
       <DependentUpon>ListaPadraoProdutos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutos.aspx.designer.cs">
+    <Compile Include="modulos\Cadastro\pages\ListaPadraoProdutos.aspx.designer.cs">
       <DependentUpon>ListaPadraoProdutos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx.cs">
+    <Compile Include="modulos\Cadastro\pages\ListaPadraoProdutosDetalhes.aspx.cs">
       <DependentUpon>ListaPadraoProdutosDetalhes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="modulos\Estoque\pages\ListaPadraoProdutosDetalhes.aspx.designer.cs">
+    <Compile Include="modulos\Cadastro\pages\ListaPadraoProdutosDetalhes.aspx.designer.cs">
       <DependentUpon>ListaPadraoProdutosDetalhes.aspx</DependentUpon>
     </Compile>
     <Compile Include="modulos\Estoque\pages\SolicitacaoDeEncomenda.aspx.cs">

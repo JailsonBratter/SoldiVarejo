@@ -4,9 +4,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using visualSysWeb.code;
-using visualSysWeb.dao;
 
-namespace visualSysWeb.modulos.Estoque.dao
+namespace visualSysWeb.dao
 {
     public class ListaProdutoPadraoDAO
     {
@@ -19,6 +18,16 @@ namespace visualSysWeb.modulos.Estoque.dao
         internal int itensInicio;
         internal int qtdeItens;
 
+        public ListaProdutoPadraoDAO()
+        {
+            qtdePorPagina = Funcoes.intTry(Funcoes.valorParametro("ITENS_POR_PAG", null));
+            if (qtdePorPagina == 0)
+                qtdePorPagina = 100;
+
+            itensFim = qtdePorPagina;
+
+        }
+
         public ListaProdutoPadraoDAO(string tipo)
         {
             this.tipo = tipo;
@@ -28,9 +37,14 @@ namespace visualSysWeb.modulos.Estoque.dao
 
             itensFim = qtdePorPagina;
         }
-        public ListaProdutoPadraoDAO(int id,string tipo) : this(tipo)
+        public ListaProdutoPadraoDAO(int id) //: this(tipo)
         {
             this.id = id;
+            qtdePorPagina = Funcoes.intTry(Funcoes.valorParametro("ITENS_POR_PAG", null));
+            if (qtdePorPagina == 0)
+                qtdePorPagina = 100;
+
+            itensFim = qtdePorPagina;
 
 
             SqlDataReader rs = null;
@@ -38,10 +52,11 @@ namespace visualSysWeb.modulos.Estoque.dao
 
             try
             {
-                rs = Conexao.consulta("Select * from LISTA_PADRAO WHERE ID =" + id +" and tipo ='"+tipo+"'", null, false);
+                rs = Conexao.consulta("Select * from LISTA_PADRAO WHERE ID =" + id, null, false); // +" and tipo ='"+tipo+"'", null, false);
                 if (rs.Read())
                 {
                     descricao = rs["descricao"].ToString();
+                    tipo = rs["Tipo"].ToString();
                 }
 
                 rsItens = Conexao.consulta("Select lt.plu ,m.descricao,Ordem " +

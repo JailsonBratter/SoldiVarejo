@@ -9,7 +9,7 @@
     <div class="cabMenu">
         <center>
             <h1>
-                LISTA PADRAO DE  <asp:Label ID="lblTipoLista" runat="server" Text="" ></asp:Label></h1>
+                LISTA PADRAO DE PRODUTOS</h1>
         </center>
     </div>
     <div id="divPage" runat="server">
@@ -37,6 +37,15 @@
                                 Nome
                             </p>
                             <asp:TextBox ID="txtNome" runat="server" Width="250px" OnChange="javascript:this.value = this.value.toUpperCase();"></asp:TextBox>
+                        </div>
+                        <div class="panelItem">
+                            <p>
+                                Tipo</p>
+                            <asp:DropDownList ID="ddlTipo" runat="server">
+                                <asp:ListItem Value="INVENTARIO">INVENTARIO</asp:ListItem>
+                                <asp:ListItem Value="PRODUCAO">PRODUCAO</asp:ListItem>
+                                <asp:ListItem Value="COMPRAS">COMPRAS</asp:ListItem>
+                            </asp:DropDownList>
                         </div>
 
                     </td>
@@ -219,6 +228,34 @@
                                         <td colspan="2">
                                             <asp:TextBox ID="txtfiltromercadoria" runat="server" Width="200px" OnTextChanged="txtfiltromercadoria_TextChanged"
                                                 autocomplete="off"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Venderam há:
+                                        </td>
+                                        <td colspan="2">
+                                            <asp:DropDownList ID="ddlVendas" runat="server" AutoPostBack="True" Width="200px"
+                                                OnSelectedIndexChanged="ddlLinha_SelectedIndexChanged">
+                                                <asp:ListItem Value=""></asp:ListItem>
+                                                <asp:ListItem Value="3">3 MESES</asp:ListItem>
+                                                <asp:ListItem Value="6">6 MESES</asp:ListItem>
+                                                <asp:ListItem Value="9">9 MESES</asp:ListItem>
+                                                <asp:ListItem Value="12">12 MESES</asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Entraram há:
+                                        </td>
+                                        <td colspan="2">
+                                            <asp:DropDownList ID="ddlCompras" runat="server" AutoPostBack="True" Width="200px"
+                                                OnSelectedIndexChanged="ddlLinha_SelectedIndexChanged">
+                                                <asp:ListItem Value=""></asp:ListItem>
+                                                <asp:ListItem Value="3">3 MESES</asp:ListItem>
+                                                <asp:ListItem Value="6">6 MESES</asp:ListItem>
+                                                <asp:ListItem Value="9">9 MESES</asp:ListItem>
+                                                <asp:ListItem Value="12">12 MESES</asp:ListItem>
+                                            </asp:DropDownList>
                                         </td>
                                     </tr>
                                     <tr>

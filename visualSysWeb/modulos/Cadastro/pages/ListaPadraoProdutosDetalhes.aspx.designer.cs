@@ -13,15 +13,6 @@ namespace visualSysWeb.modulos.Estoque.pages {
     public partial class ListaPadraoProdutosDetalhes {
         
         /// <summary>
-        /// Controle lblTipoLista.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipoLista;
-        
-        /// <summary>
         /// Controle divPage.
         /// </summary>
         /// <remarks>
@@ -92,6 +83,15 @@ namespace visualSysWeb.modulos.Estoque.pages {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNome;
+        
+        /// <summary>
+        /// Controle ddlTipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipo;
         
         /// <summary>
         /// Controle conteudo.
@@ -407,6 +407,24 @@ namespace visualSysWeb.modulos.Estoque.pages {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtfiltromercadoria;
+        
+        /// <summary>
+        /// Controle ddlVendas.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlVendas;
+        
+        /// <summary>
+        /// Controle ddlCompras.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompras;
         
         /// <summary>
         /// Controle txtcodListaPadrao.

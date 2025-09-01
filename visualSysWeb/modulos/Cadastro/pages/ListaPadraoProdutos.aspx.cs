@@ -5,36 +5,34 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using visualSysWeb.dao;
-using visualSysWeb.modulos.Estoque.code;
+using visualSysWeb.modulos.Cadastro.code;
 
-namespace visualSysWeb.modulos.Estoque.pages
+namespace visualSysWeb.modulos.Cadastro.pages
 {
     public partial class ListaPadraoProdutos : visualSysWeb.code.PagePadrao
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request["tipo"] != null)
+            if (!IsPostBack)
             {
-                pesquisar(pnBtn);
-                if (!IsPostBack)
-                {
-                    ListaCompraPrecoFiltro filtro = (ListaCompraPrecoFiltro)Session["filtro" + urlSessao()];
-                    if (filtro != null)
-                    {
-                        txtCodigo.Text = filtro.Codigo;
-                        txtDescricao.Text = filtro.Descricao;
+                //ListaCompraPrecoFiltro filtro = (ListaCompraPrecoFiltro)Session["filtro" + urlSessao()];
+                //if (filtro != null)
+                //{
+                //    txtCodigo.Text = filtro.Codigo;
+                //    txtDescricao.Text = filtro.Descricao;
 
-                    }
+                //}
 
-                    carregarPesquisa();
-                }
-
+                carregarPesquisa();
             }
+
+            pesquisar(pnBtn);
+
         }
         protected override void btnIncluir_Click(object sender, EventArgs e)
         {
-            String tipo = Request["tipo"].ToString();
-            Response.Redirect("~/modulos/estoque/pages/ListaPadraoProdutosDetalhes.aspx?novo=true&tipo="+tipo); 
+            //String tipo = Request["tipo"].ToString();
+            Response.Redirect("~/modulos/cadastro/pages/ListaPadraoProdutosDetalhes.aspx?novo=true"); 
         }
 
         protected override void btnPesquisar_Click(object sender, EventArgs e)
@@ -48,17 +46,13 @@ namespace visualSysWeb.modulos.Estoque.pages
             ListaCompraPrecoFiltro filtro = new ListaCompraPrecoFiltro();
             filtro.Codigo = txtCodigo.Text;
             filtro.Descricao = txtDescricao.Text;
-
-            String tipo = Request["tipo"].ToString();
-            filtro.tipo = tipo;
-            lblTipoLista.Text = tipo;
-
+            filtro.tipo = ddlTipo.Text;
 
             Session.Remove("filtro" + urlSessao());
             Session.Add("filtro" + urlSessao(), filtro);
 
 
-            String sql = "Select * from lista_padrao  where tipo ='"+tipo+"'";
+            String sql = "Select * from lista_padrao WHERE Tipo " + (filtro.tipo.Equals("TODOS") ? "<> ''" : " = '" + filtro.tipo + "'");
 
 
             if (!txtCodigo.Text.Equals("")) //colocar nome do campo de pesquisa
