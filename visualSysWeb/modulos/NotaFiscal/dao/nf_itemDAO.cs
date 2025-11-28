@@ -456,9 +456,17 @@ namespace visualSysWeb.dao
 
             if (finNFe == 2)
             {
-                if (Tipo_NF.Equals("2"))
+                if (Tipo_NF.Equals("2") && indFinal != 1)
                 {
                     vIva = 0;
+                }
+                if (indFinal == 1)
+                {
+                    vIva = 0;
+                    vPIva = 0;
+                    vBaseIva = 0;
+                    vIva = 0;
+                    vAliquota_iva = 0;
                 }
                 return vIva;
             }
@@ -829,7 +837,8 @@ namespace visualSysWeb.dao
                     //Qdo existir o Frete, o valor deverá compor a base de cálculo.
                     //** a partir de 01/05/2023 o valor do ICMS deverá ser excluído da base de pis e cofins
                     //vPBasePisCofins = vtotal_produto - DescontoValor  + (indFinal == 1 ? Frete : 0);
-                    vPBasePisCofins = (vtotal_produto - DescontoValor) - vicms; // + (indFinal == 1 ? Frete : 0); Retirada do Frete na BASE
+                    if ((vtotal_produto - vDesconto_valor) > 0)
+                        vPBasePisCofins = (vtotal_produto - DescontoValor) - vicms; // + (indFinal == 1 ? Frete : 0); Retirada do Frete na BASE
                 }
                 else
                 {
@@ -1060,6 +1069,10 @@ namespace visualSysWeb.dao
                 UfPobrezaDAO uf = UfPobrezaDAO.objUFPobreza(ufCliente);
                 aliquota_imp_estadoDAO impEstado = new aliquota_imp_estadoDAO(ufCliente, NCM, null);
                 //vAliquota_iva = (uf.aliq_interna - vAliquota_icms);
+                if (impEstado.icms_interestadual > 0 && aliquota_ICMS_Destino == 0)
+                {
+                    aliquota_ICMS_Destino = impEstado.icms_interestadual;
+                }
                 vAliquota_iva = (aliquota_ICMS_Destino - vAliquota_icms);
                 decimal vAliqDifal = (vAliquota_iva / 100);
                 if (uf.calc_Fora == 1)
@@ -1163,7 +1176,7 @@ namespace visualSysWeb.dao
                     }
 
                     //Checa se a BASE do PIS/COFINS é superior ao valor do produto
-                    if (vBASEPisCofins > vtotal_produto)
+                    if (vBASEPisCofins > vtotal_produto || vBASEPisCofins < 0)
                     {
                         vBASEPisCofins = vtotal_produto;
                     }

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using visualSysWeb.dao;
+using visualSysWeb.code;
+using System.Data;
 
 namespace visualSysWeb.modulos.Estoque.pages
 {
@@ -22,7 +24,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                 lblTipoMovimentacao.Text = obj.tipoMovimentacao;
                 lblDescricao.Text = obj.Descricao_inventario;
                 lblStatus.Text = obj.status;
-                lblData.Text = obj.DataBr();
+                lblData.Text = "Inicio: " + obj.dataInclusao.ToString("dd/MM/yyyy HH:mm:ss") + " Término: " + obj.dataEncerramento.ToString("dd/MM/yyyy HH:mm:ss"); //     obj.DataBr();
                 lblUsuario.Text = obj.Usuario;
                 String tipoRelatorio = Request.Params["TIPO"];
                 if (tipoRelatorio == null || tipoRelatorio.Equals("CONTAGEM"))
@@ -72,29 +74,54 @@ namespace visualSysWeb.modulos.Estoque.pages
                 }
                 else if (tipoRelatorio.Equals("ENCERRADO"))
                 {
-                    if (obj.tSaidaEntrada == 2)
+                    //Alteração para efeitos de divergência
+                    if (!(Funcoes.valorParametro("REL_INV_DIV_TP2", usr).ToUpper().Equals("TRUE") && obj.tSaidaEntrada == 2))
                     {
-                        gridMercadoriasSelecionadas.Columns[7].HeaderText = "Saldo Atual"; // TEXTO CONTADO
-                        gridMercadoriasSelecionadas.Columns[13].Visible = false; // Total Final
-                        
+                        gridMercadoriasDeola.Visible = false;
+                        if (obj.tSaidaEntrada == 2)
+                        {
+                            gridMercadoriasSelecionadas.Columns[7].HeaderText = "Saldo Atual"; // TEXTO CONTADO
+                            gridMercadoriasSelecionadas.Columns[13].Visible = false; // Total Final
+
+                        }
+                        else
+                        {
+                            gridMercadoriasSelecionadas.Columns[7].HeaderText = "Qtde"; // TEXTO CONTADO
+                            gridMercadoriasSelecionadas.Columns[8].Visible = false; // divergencia
+                            gridMercadoriasSelecionadas.Columns[12].Visible = false; //  total divergencia
+                            gridMercadoriasSelecionadas.Columns[11].HeaderText = "Total ajuste"; // TOTAL CONTADO
+
+
+                        }
+                        gridMercadoriasSelecionadas.Columns[9].Visible = false; //CAMPO EM BRANCO
+                        gridMercadoriasSelecionadas.Columns[6].HeaderText = "Saldo (Ant)"; // TEXTO CONTADO
                     }
                     else
                     {
-                        gridMercadoriasSelecionadas.Columns[7].HeaderText = "Qtde"; // TEXTO CONTADO
-                        gridMercadoriasSelecionadas.Columns[8].Visible = false; // divergencia
-                        gridMercadoriasSelecionadas.Columns[12].Visible = false; //  total divergencia
-                        gridMercadoriasSelecionadas.Columns[11].HeaderText = "Total ajuste"; // TOTAL CONTADO
-                        
+                        gridMercadoriasSelecionadas.Visible = false;
+                        gridMercadoriasDeola.Visible = true;
+                        try
+                        {
+                            DataTable dt = new DataTable();
+                            dt = Conexao.GetTable("sp_Rel_Movimentacao_Inventario '" + usr.filial.Filial + "', '" + obj.Codigo_inventario + "', '" + obj.dataEncerramento.ToString("yyyy-MM-dd HH:mm:ss") + "'", usr, false);
+                            gridMercadoriasDeola.DataSource = dt;
+                            gridMercadoriasDeola.DataBind();
+                        }
+                        catch (Exception eX)
+                        {
+
+                        }
 
                     }
-                    gridMercadoriasSelecionadas.Columns[9].Visible = false; //CAMPO EM BRANCO
-                    gridMercadoriasSelecionadas.Columns[6].HeaderText = "Saldo (Ant)"; // TEXTO CONTADO
                 }
 
 
-
-                gridMercadoriasSelecionadas.DataSource = obj.itensImprimir();
-                gridMercadoriasSelecionadas.DataBind();
+                //Alteração para efeitos de divergência
+                if (!Funcoes.valorParametro("NOME_FANTASIA_ENF", usr).ToUpper().Equals("TRUE"))
+                {
+                    gridMercadoriasSelecionadas.DataSource = obj.itensImprimir();
+                    gridMercadoriasSelecionadas.DataBind();
+                }
             }
             else
             {
@@ -155,6 +182,16 @@ namespace visualSysWeb.modulos.Estoque.pages
                 {
                     gridMercadoriasSelecionadas.FooterRow.Visible = false;
                 }
+        }
+
+        protected void gridMercadoriasDeola_DataBinding(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void gridMercadoriasDeola_DataBound(object sender, EventArgs e)
+        {
+
         }
     }
 }

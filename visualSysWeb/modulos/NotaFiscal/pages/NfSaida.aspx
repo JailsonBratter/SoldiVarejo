@@ -92,26 +92,26 @@
             <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
             <Columns>
                 <asp:HyperLinkField DataTextField="Codigo" Text="Codigo" Visible="true" HeaderText="Codigo"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="Codigo" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="Codigo" />
                 <asp:HyperLinkField DataTextField="cliente_fornecedor" Text="cliente_fornecedor"
-                    Visible="true" HeaderText="Cod" DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="cliente_fornecedor" />
+                    Visible="true" HeaderText="Cod" DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="cliente_fornecedor" />
                 <asp:HyperLinkField DataTextField="Cliente" Text="---" Visible="true" HeaderText="Destinatario"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="Cliente" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="Cliente" />
                 <asp:HyperLinkField DataTextField="Data" Text="Data" Visible="true" HeaderText="Data"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="Data" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="Data" />
                 <asp:HyperLinkField DataTextField="Emissao" Text="Emissao" Visible="true" HeaderText="Emissao"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="Emissao" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="Emissao" />
                 <asp:HyperLinkField DataTextField="Total" Text="Total" Visible="true" ItemStyle-HorizontalAlign="Right"
-                    HeaderText="Total" DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="total" />
+                    HeaderText="Total" DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="total" />
                 <asp:HyperLinkField DataTextField="Status" Text="DIGITACAO" Visible="true" HeaderText="Status"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="status" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="status" />
                 <asp:ButtonField ButtonType="Image"  ImageUrl="../../../img/ico-doc-danfe.png" CommandName="Danfe"
                                     Text="" HeaderText="Pré     Danfe">
                                     <ControlStyle Height="20px" Width="20px" />
@@ -121,8 +121,11 @@
                                     <ControlStyle Height="20px" Width="20px" />
                                 </asp:ButtonField>
                 <asp:HyperLinkField DataTextField="XML" Text="" Visible="true" HeaderText="XML"
-                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}"
-                    DataNavigateUrlFields="Codigo,cliente_Fornecedor" SortExpression="XML" />
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="XML" />
+                <asp:HyperLinkField DataTextField="Serie" Text="Serie" Visible="true" HeaderText="Serie"
+                    DataNavigateUrlFormatString="~/modulos/NotaFiscal/pages/NfSaidaDetalhes.aspx?codigo={0}&cliente={1}&serie={2}"
+                    DataNavigateUrlFields="Codigo,cliente_Fornecedor,serie" SortExpression="Serie" />
             </Columns>
             <EditRowStyle BackColor="#999999" />
             <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />

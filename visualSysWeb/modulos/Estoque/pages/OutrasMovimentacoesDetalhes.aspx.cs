@@ -671,7 +671,7 @@ namespace visualSysWeb.modulos.Estoque.pages
                     break;
             }
             User usr = (User)Session["User"];
-            GridLista.DataSource = Conexao.GetTable(sqlLista, null, true);
+            GridLista.DataSource = Conexao.GetTable(sqlLista, null, (campo.ToUpper().Equals("LISTAPADRAO") ? false : true));
             GridLista.DataBind();
 
             modalLista.Show();

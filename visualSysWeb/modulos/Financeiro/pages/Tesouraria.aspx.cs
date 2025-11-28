@@ -13,6 +13,7 @@ namespace visualSysWeb.modulos.Tesouraria.pages
 {
     public partial class Tesouraria : visualSysWeb.code.PagePadrao
     {
+        decimal total = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             User usr = (User)Session["User"];
@@ -158,6 +159,7 @@ namespace visualSysWeb.modulos.Tesouraria.pages
                                                  ")" +
                                     ", Status = isnull(sp.Status,'OPERANDO')      " +
                                     " ,Total = sum(isnull(lf.total,0))"+
+                                    ", Terceiros = ISNULL((select top 1 cfp.pdv_terceiros from controle_filial_pdv cfp WHERE CFP.caixa = sp.pdv),'')"+
                            " from   Status_Pdv as  sp " +
                            " inner join Operadores as op on  op.ID_Operador=sp.id_operador " +
                            " left join Lista_finalizadora  as lf WITH(INDEX(ix_lf_tesouraria))  on sp.Id_Operador = lf.Operador " +
@@ -268,9 +270,6 @@ namespace visualSysWeb.modulos.Tesouraria.pages
 
         protected void imgBtnRelatorio_Click(object sender, ImageClickEventArgs e)
         {
-
-
-
             string strOperador = "TODOS";
             if (!ddlOperador.Text.Equals("0"))
             {
@@ -285,20 +284,42 @@ namespace visualSysWeb.modulos.Tesouraria.pages
 
         protected void gridHistorico_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            User usr = (User)Session["User"];
+
+            int index = Convert.ToInt32(e.CommandArgument);
+
+            HyperLink lkFechamento = (HyperLink)gridHistorico.Rows[index].Cells[0].Controls[0];
+            HyperLink lkpdv = (HyperLink)gridHistorico.Rows[index].Cells[4].Controls[0];
+            HyperLink lkOperador = (HyperLink)gridHistorico.Rows[index].Cells[9].Controls[0];
+
+            string fechamento = lkFechamento.Text;
+            string pdv = lkpdv.Text;
+            string operador = lkOperador.Text;
+
             if (e.CommandName == "Finalizadoras")
             {
-
-                int index = Convert.ToInt32(e.CommandArgument);
-
-                HyperLink lkFechamento = (HyperLink)gridHistorico.Rows[index].Cells[0].Controls[0];
-                HyperLink lkpdv = (HyperLink)gridHistorico.Rows[index].Cells[4].Controls[0];
-                HyperLink lkOperador = (HyperLink)gridHistorico.Rows[index].Cells[9].Controls[0];
-
-                string fechamento = lkFechamento.Text;
-                string pdv = lkpdv.Text;
-                string operador = lkOperador.Text;
-
                 RedirectNovaAba("~/modulos/Financeiro/pages/FinalizadorasRecebimento.aspx?fechamento=" + fechamento + "&pdv=" + pdv + "&operador=" + operador);
+            }
+            else if (e.CommandName == "Help")
+            {
+                string sql = "select hp.Tipo_Pagamento, hp.Valor_Total FROM Help_Fechamento  hf INNER JOIN Help_Pagamentos hp on hf.Id_Sessao = hp.Id_Sessao WHERE ";
+                sql += "hf.Id_Operador = " + operador + " AND HF.Num_Serie_Nfe = " + pdv + " AND HF.id_Fechamento = " + fechamento;
+
+                GridLista.DataSource = Conexao.GetTable(sql, usr, false);
+                GridLista.DataBind();
+
+                modalPnFundo.Show();
+
+                //int index = Convert.ToInt32(e.CommandArgument);
+
+                //HyperLink lkFechamento = (HyperLink)gridHistorico.Rows[index].Cells[0].Controls[0];
+                //HyperLink lkpdv = (HyperLink)gridHistorico.Rows[index].Cells[4].Controls[0];
+                //HyperLink lkOperador = (HyperLink)gridHistorico.Rows[index].Cells[9].Controls[0];
+
+                //string fechamento = lkFechamento.Text;
+                //string pdv = lkpdv.Text;
+                //string operador = lkOperador.Text;
+
             }
 
         }
@@ -323,7 +344,48 @@ namespace visualSysWeb.modulos.Tesouraria.pages
                     row.Cells[10].Controls.Clear();
                     //row[]
                 }
+
+                var pdvterceiros = row.Cells[12].Text;
+                if (!pdvterceiros.Equals("HELP"))
+                {
+                    row.Cells[11].Controls.Clear();
+                }
             }
+
+
+            User usr = (User)Session["User"];
+
+            if (Funcoes.intTry(Conexao.retornaUmValor("SELECT COUNT(*) AS Reg  FROM Controle_Filial_PDV WHERE ISNULL(PDV_Terceiros ,'') <> ''", usr)) <= 0)
+            {
+                gridHistorico.Columns[11].Visible = false;
+                gridHistorico.Columns[12].Visible = false;
+            }
+
+        }
+
+        protected void btnFechar_Click(object sender, ImageClickEventArgs e)
+        {
+            modalPnFundo.Hide();
+        }
+
+        protected void GridLista_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            // Somar valores
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                decimal valor = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "Valor_Total"));
+                total += valor;
+            }
+
+            // Mostrar total no rodapé
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                e.Row.Cells[0].Text = "Total:";
+                e.Row.Cells[1].Text = total.ToString("N2"); // separador de milhar
+                e.Row.Cells[1].HorizontalAlign = HorizontalAlign.Right;
+                e.Row.Font.Bold = true;
+            }
+
         }
     }
 }

@@ -268,15 +268,16 @@ namespace visualSysWeb.dao
                                                 "         lf.cupom = td.cupom and " +
                                                 "         lf.emissao = td.emissao and  " +
                                                 "         lf.pdv = td.pdv  and" +
-                                                "         lf.filial = td.filial " +
-                                                " where	("+
+                                                "         lf.filial = td.filial and" +
+                                                "         td.cupom is null		" +
+                                                " where	(" +
                                                 "        lf.Emissao >=" + (Data_Abertura.ToString("yyyy-MM-dd").Equals("0001-01-01") ? "null" : "'" + Data_Abertura.ToString("yyyy-MM-dd") + "'") + " and  " +
                                                 "         lf.pdv=" + Pdv + " and " +
                                                 "         lf.operador = " + Id_Operador + " and " +
                                                 "         lf.filial='" + this.Filial + "' and " +
+                                                "         lf.id_movimento = " + this.id_fechamento + " AND " +
                                                 "         isnull(lf.Cancelado,0) <>1" +
                                                 "             ) " +
-                                                "         and  td.cupom is null		" +
                                                 " order by cartao.id_cartao ";
 
             Conexao.executarSql(sqlDetalhes, conn, tran);
@@ -290,12 +291,29 @@ namespace visualSysWeb.dao
             {
 
                 SqlDataReader rsTes = null;
-                String sql = "Select emissao,vencimento, finalizadora ,id_finalizadora, rede_cartao,td.id_cartao,td.id_bandeira, sum(total) as total, sum(td.taxa) as taxa ,c.centro_custo "+
-                             ",dif = (Select top 1 ( Total_Entregue - Total_Sistema ) as Dif from tesouraria where  id_fechamento  = td.id_fechamento and pdv = td.pdv and ID_OPERADOR = td.operador and id_finalizadora= td.id_finalizadora)"+
-                             " from tesouraria_detalhes as td left join cartao as c on td.id_cartao = c.id_cartao and c.id_Bandeira = td.id_bandeira and td.rede_cartao = c.id_Rede" +
-                             " where emissao = "+Funcoes.dateSql(Data_Abertura)+" and id_fechamento = " + id_fechamento + " and td.pdv = "+Pdv+" and td.operador=  "+ Id_Operador+
-                             " group by emissao, vencimento,td.id_fechamento, td.pdv,td.operador, td.finalizadora,td.id_finalizadora,rede_cartao,td.id_bandeira,td.id_cartao, c.centro_custo";
-                
+                String sql = "";
+                if (Funcoes.valorParametro("CARTAO_SEMTEF", usr).ToUpper().Equals("TRUE"))
+                {
+                    sql = " SELECT A.* FROM ";
+                    sql += " (SELECT T.DATA_ABERTURA AS Emissao, Vencimento = master.dbo.F_BR_PROX_DIA_UTIL(t.Data_Abertura + isnull(Cartao.dias, 0)),";
+                    sql += " T.Finalizadora, Id_Finalizadora = F.Finalizadora, Rede_Cartao = ISNULL(Cartao.id_Rede, ''), ID_Cartao = ISNULL(Cartao.id_cartao, ''),";
+                    sql += " ID_Bandeira = ISNULL(cartao.id_Bandeira, ''), Total = T.Total_Sistema, Taxa = CASE WHEN ISNULL(Cartao.Taxa, 0) > 0 THEN ";
+                    sql += " CONVERT(DECIMAL(12, 2), ((T.TOTAL_Entregue * Cartao.taxa) / 100)) ELSE 0 END,";
+                    sql += " Centro_Custo = ISNULL(Cartao.centro_custo, F.Codigo_centro_custo), dif = (T.Total_Entregue - T.Total_Sistema)";
+                    sql += " FROM TESOURARIA T INNER JOIN FinaliZadora F ON T.Finalizadora = F.Nro_Finalizadora ";
+                    sql += " LEFT OUTER JOIN Cartao ON T.FINALIZADORA = Cartao.Nro_Finalizadora";
+                    sql += " WHERE t.DATA_ABERTURA = " + Funcoes.dateSql(Data_Abertura) + " and T.id_fechamento = " + id_fechamento + " AND T.pdv =  " + Pdv + " AND ";
+                    sql += " T.ID_OPERADOR = 1) AS A WHERE A.Total + A.dif > 0";
+                }
+                else
+                {
+                    sql = "Select emissao,vencimento, finalizadora ,id_finalizadora, rede_cartao,td.id_cartao,td.id_bandeira, sum(total) as total, sum(td.taxa) as taxa ,c.centro_custo " +
+                                 ",dif = (Select top 1 ( Total_Entregue - Total_Sistema ) as Dif from tesouraria where  id_fechamento  = td.id_fechamento and pdv = td.pdv and ID_OPERADOR = td.operador and id_finalizadora= td.id_finalizadora)" +
+                                 " from tesouraria_detalhes as td left join cartao as c on td.id_cartao = c.id_cartao and c.id_Bandeira = td.id_bandeira and td.rede_cartao = c.id_Rede" +
+                                 " where emissao = " + Funcoes.dateSql(Data_Abertura) + " and id_fechamento = " + id_fechamento + " and td.pdv = " + Pdv + " and td.operador=  " + Id_Operador +
+                                 " group by emissao, vencimento,td.id_fechamento, td.pdv,td.operador, td.finalizadora,td.id_finalizadora,rede_cartao,td.id_bandeira,td.id_cartao, c.centro_custo";
+                }
+
                 try
                 {
                     Hashtable finaDif = new Hashtable();
@@ -318,7 +336,7 @@ namespace visualSysWeb.dao
                         rec.entrada = Data_Abertura;
                         rec.Vencimento = Funcoes.dtTry(rsTes["vencimento"].ToString());
                         rec.taxa += Funcoes.decTry(rsTes["taxa"].ToString());
-                        rec.Valor += Funcoes.decTry(rsTes["total"].ToString());
+                        rec.Valor += Funcoes.decTry(rsTes["total"].ToString()) + Funcoes.decTry(rsTes["dif"].ToString());
                         decimal dif = Funcoes.decTry(rsTes["dif"].ToString());
                         
                         rec.status = 1;
@@ -483,11 +501,28 @@ namespace visualSysWeb.dao
             {
 
                 SqlDataReader rsTes = null;
-                String sql = "Select emissao,vencimento, finalizadora ,id_finalizadora, rede_cartao,td.id_cartao,td.id_bandeira, sum(total) as total, sum(td.taxa) as taxa ,c.centro_custo " +
-                             ",dif = (Select top 1 ( Total_Entregue - Total_Sistema ) as Dif from tesouraria where  id_fechamento  = td.id_fechamento and pdv = td.pdv and ID_OPERADOR = td.operador and id_finalizadora= td.id_finalizadora)" +
-                             " from tesouraria_detalhes as td left join cartao as c on td.id_cartao = c.id_cartao and c.id_Bandeira = td.id_bandeira and td.rede_cartao = c.id_Rede" +
-                             " where emissao = " + Funcoes.dateSql(Data_Abertura) + " and id_fechamento = " + id_fechamento + " and td.pdv = " + Pdv + " and td.operador=  " + Id_Operador +
-                             " group by emissao, vencimento,td.id_fechamento, td.pdv,td.operador, td.finalizadora,td.id_finalizadora,rede_cartao,td.id_bandeira,td.id_cartao, c.centro_custo";
+                String sql = "";
+                if (Funcoes.valorParametro("CARTAO_SEMTEF", usr).ToUpper().Equals("TRUE"))
+                {
+                    sql = " SELECT A.* FROM ";
+                    sql += " (SELECT T.DATA_ABERTURA AS Emissao, Vencimento = master.dbo.F_BR_PROX_DIA_UTIL(t.Data_Abertura + isnull(Cartao.dias, 0)),";
+                    sql += " T.Finalizadora, Id_Finalizadora = F.Finalizadora, Rede_Cartao = ISNULL(Cartao.id_Rede, ''), ID_Cartao = ISNULL(Cartao.id_cartao, ''),";
+                    sql += " ID_Bandeira = ISNULL(cartao.id_Bandeira, ''), Total = T.Total_Sistema, Taxa = CASE WHEN ISNULL(Cartao.Taxa, 0) > 0 THEN ";
+                    sql += " CONVERT(DECIMAL(12, 2), ((T.TOTAL_Entregue * Cartao.taxa) / 100)) ELSE 0 END,";
+                    sql += " Centro_Custo = ISNULL(Cartao.centro_custo, F.Codigo_centro_custo), dif = (T.Total_Entregue - T.Total_Sistema)";
+                    sql += " FROM TESOURARIA T INNER JOIN FinaliZadora F ON T.Finalizadora = F.Nro_Finalizadora ";
+                    sql += " LEFT OUTER JOIN Cartao ON T.FINALIZADORA = Cartao.Nro_Finalizadora";
+                    sql += " WHERE t.DATA_ABERTURA = " + Funcoes.dateSql(Data_Abertura) + " and T.id_fechamento = " + id_fechamento + " AND T.pdv =  " + Pdv + " AND ";
+                    sql += " T.ID_OPERADOR = 1) AS A WHERE A.Total + A.dif > 0";
+                }
+                else
+                {
+                    sql = "Select emissao,vencimento, finalizadora ,id_finalizadora, rede_cartao,td.id_cartao,td.id_bandeira, sum(total) as total, sum(td.taxa) as taxa ,c.centro_custo " +
+                            ",dif = (Select top 1 ( Total_Entregue - Total_Sistema ) as Dif from tesouraria where  id_fechamento  = td.id_fechamento and pdv = td.pdv and ID_OPERADOR = td.operador and id_finalizadora= td.id_finalizadora)" +
+                            " from tesouraria_detalhes as td left join cartao as c on td.id_cartao = c.id_cartao and c.id_Bandeira = td.id_bandeira and td.rede_cartao = c.id_Rede" +
+                            " where emissao = " + Funcoes.dateSql(Data_Abertura) + " and id_fechamento = " + id_fechamento + " and td.pdv = " + Pdv + " and td.operador=  " + Id_Operador +
+                            " group by emissao, vencimento,td.id_fechamento, td.pdv,td.operador, td.finalizadora,td.id_finalizadora,rede_cartao,td.id_bandeira,td.id_cartao, c.centro_custo";
+                }
 
                 try
                 {
@@ -528,7 +563,7 @@ namespace visualSysWeb.dao
                         rec.entrada = Data_Abertura;
                         rec.Vencimento = Funcoes.dtTry(rsTes["vencimento"].ToString());
                         rec.taxa -= Funcoes.decTry(rsTes["taxa"].ToString());
-                        rec.Valor -= Funcoes.decTry(rsTes["total"].ToString());
+                        rec.Valor -= (Funcoes.decTry(rsTes["total"].ToString()) + Funcoes.decTry(rsTes["dif"].ToString()));
                         decimal dif = Funcoes.decTry(rsTes["dif"].ToString());
 
                         rec.status = 1;

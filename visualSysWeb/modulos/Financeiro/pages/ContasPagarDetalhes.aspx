@@ -3,6 +3,14 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .auto-style1 {
+            margin: 2px;
+            float: left;
+            width: 100%;
+            height: 106px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="cabMenu">
@@ -163,7 +171,7 @@
         </table>
     </div>
     <div id="conteudo" runat="server" class="conteudo" enableviewstate="false">
-        <asp:TabContainer ID="TabContainer1" runat="server" ActiveTabIndex="0" Height="400px">
+        <asp:TabContainer ID="TabContainer1" runat="server" ActiveTabIndex="0" Height="90%"> <!-- Height="400px"-->
             <asp:TabPanel runat="server" HeaderText="TabPanel1" ID="TabPanel1">
                 <HeaderTemplate>
                     Geral
@@ -297,9 +305,9 @@
 
                                 <div class="row">
                                     <p>Codido de Barras</p>
-                                    <asp:TextBox ID="txtCodBarras" runat="server" Width="98%" OnTextChanged="txtCodBarras_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                    <asp:TextBox ID="txtCodBarras" runat="server" Width="98%" OnTextChanged="txtCodBarras_TextChanged" AutoPostBack="True"></asp:TextBox>
                                 </div>
-                                <div class="panelItem" style="width: 100%">
+                                <div class="auto-style1">
                                     <p>
                                         Observação
                                     </p>
@@ -309,7 +317,7 @@
                         </tr>
                     </table>
                     <hr />
-                    <div id="divTitulosDoMesmoGrupo" runat="server" style="margin-bottom: 30px;">
+                    <div id="divTitulosDoMesmoGrupo" runat="server" style="margin-bottom: 30px;"> 
                         <center><h2>
                             Títulos Relacionados
                             <br />  <asp:Label ID="lblparcelasCondicoes" runat="server"></asp:Label>

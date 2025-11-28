@@ -23,6 +23,8 @@ namespace visualSysWeb.dao
         public Decimal acrecimo { get; set; }
         public String id_Bandeira { get; set; }
         public String id_Rede { get; set; }
+        public bool inativo { get; set; } = false;
+
         public cartaoDAO(User usr) {
             this.filial = usr.getFilial();
         }
@@ -62,6 +64,22 @@ namespace visualSysWeb.dao
                 acrecimo = (Decimal)(rs["acrecimo"].ToString().Equals("") ? new Decimal() : rs["acrecimo"]);
                 id_Bandeira = rs["id_Bandeira"].ToString();
                 id_Rede = rs["id_Rede"].ToString();
+                try
+                {
+                    if (int.Parse(rs["inativo"].ToString()).ToString().Equals("1"))
+                    {
+                        inativo = true;
+                    }
+                    else
+                    {
+                        inativo = false;
+                    }
+                }
+                catch
+                {
+                    inativo = false;
+                }
+                
             }
             if (rs != null)
                 rs.Close();
@@ -84,6 +102,7 @@ namespace visualSysWeb.dao
                               ",acrecimo=" + acrecimo.ToString().Replace(",", ".") +
                               ",id_Bandeira='" + id_Bandeira + "'" +
                               ",id_Rede='" + id_Rede + "'" +
+                              ",inativo = " + (inativo ? 1 : 0 ).ToString() +
                     "  where    nro_Finalizadora=" + nro_Finalizadora + " and id_cartao='" + id_cartao + "'";
                 ;
                 Conexao.executarSql(sql);
@@ -132,6 +151,7 @@ namespace visualSysWeb.dao
                           "acrecimo," +
                           "id_Bandeira," +
                           "id_Rede" +
+                          ", inativo" + 
                      " )values (" +
                           nro_Finalizadora +
                           "," + "'" + filial + "'" +
@@ -147,6 +167,7 @@ namespace visualSysWeb.dao
                           "," + acrecimo.ToString().Replace(",", ".") +
                           "," + "'" + id_Bandeira + "'" +
                           "," + "'" + id_Rede + "'" +
+                          "," + (inativo ? "1" : "0") +
                          ");";
 
                 Conexao.executarSql(sql);

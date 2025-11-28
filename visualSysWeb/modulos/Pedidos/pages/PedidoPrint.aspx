@@ -12,43 +12,46 @@
             <div class="cabMenu">
                 <center>
                     <asp:Label ID="lblTituloPedido" runat="server" Text="Pedido" Font-Size="X-Large"></asp:Label>
+                    <p>Não é documento fiscal - Não é válido como recibo e como garantia de mercadoria</p>
                 </center>
             </div>
 
             <div class="framePrint">
-                <div id="divFilial" runat="server">
-                    <div class="row">
-                        <div class="panelItem">
-                            <p>CNPJ</p>
-                            <asp:Label ID="lblFilialCnpj" runat="server"></asp:Label>
-                        </div>
-                        <div class="panelItem" style="margin-left:30%">
-                            <p>Razao Social</p>
-                            <asp:Label ID="lblFilialRazaoSocial" runat="server"></asp:Label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="panelItem">
-                            <p>Endereço</p>
-                            <asp:Label ID="lblFilialEndereco" runat="server"></asp:Label>
-                        </div>
-                    </div>
-                </div>
-                <table width="100%">
-                    <tr>
-                        <td colspan="8">
-                            <asp:Panel ID="pnSimples" runat="server">
-                                <asp:Label ID="lblPedidoSimplificado" runat="server" Text="Pedido Simplificado" Font-Size="X-Large"></asp:Label>
-                            </asp:Panel>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <!--
+                <div id="divFilial" runat="server" style="border:1px solid #465c71; padding:10px;">
+                    <table width="100%">
+                        <tr>
+                            <td rowspan="4" style="width: 10%; text-align:center;vertical-aliqn:middle;" >
+                                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/img/logo.jpg"
+                       AlternateText="Logo" Width="80px" />
+                            </td>
+                            <td style="width:90%; font-size:18px; font-weight:bold"> <asp:Label ID="lblFilialRazaoSocial" runat="server"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>CNPJ:  <asp:Label ID="lblFilialCnpj" runat="server"></asp:Label> &nbsp; - Insc. Estadual: <asp:Label ID="lblFilialIE" runat="server"></asp:Label>  </td>
+                        </tr>
+                        <tr>
+                            <td><asp:Label ID="lblFilialEndereco" runat="server"></asp:Label> </td>
+                        </tr>
+                        <tr>
+                            <td>Fone: <asp:Label ID="lblFilialContato" runat="server"></asp:Label> </td>
+                        </tr>
+                    </table>
+            </div>
+            <br />
+            <table width="100%">
+                <tr>
+                    <td colspan="8">
+                        <asp:Panel ID="pnSimples" runat="server">
+                            <asp:Label ID="lblPedidoSimplificado" runat="server" Text="Pedido Simplificado" Font-Size="X-Large"></asp:Label>
+                        </asp:Panel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!--
                         <p>
                             Pedido</p> -->
-                            Pedido:<br />
+            Pedido:<br />
                             <asp:Label ID="lblPedido" runat="server" Font-Bold="True" Font-Size="X-Large"></asp:Label>
                         </td>
                         <td>
@@ -108,9 +111,9 @@
                         <p>
                             <asp:Label ID="LbltituloCliente_Fornec" runat="server" Text="Nome Cliente"></asp:Label>
                         </p> -->
-                            Nome Cliente:<br />
-                            <asp:Label ID="lblCliente_Fornec" runat="server" Text=""></asp:Label>
-                            <asp:Label ID="lblNomeClie_Fornec" runat="server" Text=""></asp:Label><br />
+                            Dados Cliente:<br />
+                            <asp:Label ID="lblCliente_Fornec" runat="server" Text="" Font-Bold="true" Font-Size="18px"></asp:Label>
+                            <asp:Label ID="lblNomeClie_Fornec" runat="server" Text="" Font-Bold="true" Font-Size="18px"></asp:Label><br />
                             <asp:Label ID="lblEndereco_Completo" runat="server" Text=""></asp:Label>
                         </td>
                         <!--
@@ -168,7 +171,7 @@
                             <asp:BoundField DataField="Embalagem" HeaderText="Emb" ItemStyle-HorizontalAlign="Right" Visible="true">
                                 <ItemStyle HorizontalAlign="Right"></ItemStyle>
                             </asp:BoundField>
-                           <%-- <asp:BoundField DataField="TabDesc" HeaderText="Tab Desc" Visible="False"></asp:BoundField>
+                            <%-- <asp:BoundField DataField="TabDesc" HeaderText="Tab Desc" Visible="False"></asp:BoundField>
                             <asp:BoundField DataField="Desc" HeaderText="Desc%" ItemStyle-HorizontalAlign="Right">
                                 <ItemStyle HorizontalAlign="Right"></ItemStyle>
                             </asp:BoundField>--%>

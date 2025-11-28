@@ -405,7 +405,7 @@ namespace visualSysWeb.dao
                 {
                     origemCodigoContabilEvento = false;
                 }
-
+                
                 carregarContasPagarGrupo();
             }
             if (rs != null)

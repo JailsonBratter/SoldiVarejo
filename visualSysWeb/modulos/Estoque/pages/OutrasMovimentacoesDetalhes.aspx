@@ -183,7 +183,7 @@
                                 <asp:TemplateField HeaderText="Contado">
                                     <ItemTemplate>
                                         <center>
-                                            <asp:TextBox ID="txtGridContado" runat="server" Text='<%# Eval("Contada", "{0:N3}") %>' Width="80px" OnTextChanged="txtGridContado_textChanged" AutoPostBack="true"
+                                            <asp:TextBox ID="txtGridContado" runat="server" Text='<%# Eval("Contada", "{0:N3}") %>' Width="80px" OnChange="atualizarDiferenca(this)"
                                             CssClass="numero"   ></asp:TextBox></center>
                                     </ItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" />

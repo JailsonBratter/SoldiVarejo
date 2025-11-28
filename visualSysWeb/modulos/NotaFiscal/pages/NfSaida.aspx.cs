@@ -15,9 +15,10 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
     {
         static DataTable tb;
         static String ultimaOrdem = "";
-        static String sqlGrid = "select ltrim(rtrim(Codigo)) as Codigo, cliente_fornecedor,isnull(Nome_cliente,fornecedor.razao_social) cliente"
+        static String sqlGrid = "select ltrim(rtrim(Codigo)) as Codigo, ISNULL(cliente_fornecedor,'') AS Cliente_Fornecedor,isnull(Nome_cliente,fornecedor.razao_social) cliente"
             + ", convert(varchar,data,103) as Data,convert(varchar,emissao,103) as Emissao,total, Status, XML = CASE WHEN ISNULL((SELECT COUNT(*) from Documento_Eletronico docE WITH (INDEX=ix_IDDocumento, NOLOCK)"
             + " WHERE docE.Filial = Nf.Filial AND docE.ID_Chave = NF.ID),0) > 0 THEN 'SIM' ELSE '' END "
+            + ", ISNULL(NF.Serie, 0) AS Serie"
             +" FROM nf  left join cliente on nf.cliente_fornecedor = cliente.codigo_cliente "+
             " left join Fornecedor on nf.cliente_fornecedor = fornecedor.fornecedor  "+
             " INNER JOIN Natureza_operacao ON NF.Codigo_operacao= Natureza_operacao.Codigo_operacao where natureza_operacao.filial='MATRIZ' and (TIPO_NF =1 OR (tipo_nf = 2 AND Imprime_NF=1)) ";//colocar os campos no select que ser?o apresentados na tela
@@ -171,7 +172,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 lblPesquisaErro.Text = "";
 
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 lblPesquisaErro.Text = "Digite uma Data Valida";
             }

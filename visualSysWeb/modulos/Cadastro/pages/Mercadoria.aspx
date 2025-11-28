@@ -18,6 +18,7 @@
         Limpar Filtros
         <asp:ImageButton ID="imgBtnLimpar" runat="server" OnClick="imgBtnLimpar_Click" ImageUrl="../../../img/botao-apagar.png"
             Style="width: 20px" />
+        <asp:Button ID="btnGETIN" Text="Validar GTINs" runat="server" OnClick="btnGETIN_Click" visible="false" />
     </div>
     <div class="filter" id="filtrosPesq" runat="server" style="margin-bottom: 0px;">
         <asp:Label ID="lblPesquisaErro" runat="server" Text="" ForeColor="Red"></asp:Label>

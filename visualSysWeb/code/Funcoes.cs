@@ -2827,7 +2827,7 @@ namespace visualSysWeb.code
 
                 bool ssl = Funcoes.valorParametro("EMAIL_SSL", null).ToUpper().Equals("TRUE");
                 client.EnableSsl = ssl;
-                client.UseDefaultCredentials = true;
+                client.UseDefaultCredentials = false;
 
                 client.Credentials = new NetworkCredential(usr.email, usr.emailSenha);
 

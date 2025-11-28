@@ -89,6 +89,10 @@
                     <asp:TextBox ID="txtid_Rede" runat="server" Width="80px"></asp:TextBox>
                 </div>
             </div>
+            <div class="row">
+                <asp:CheckBox ID="chkInativo" runat="server" Text="Inativo" Checked="false" />
+
+            </div>
         </div>
     </div>
 

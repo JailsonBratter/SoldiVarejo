@@ -28,6 +28,18 @@
                         Bandeira</p>
                     <asp:TextBox ID="txtBandeira" runat="server"> </asp:TextBox>
                 </div>
+
+                <div class="panelItem">
+                    <p>
+                        Situação</p>
+                    <asp:DropDownList ID="DllStatus" runat="server" CssClass="sem">
+                        <asp:ListItem Value="">TODOS</asp:ListItem>
+                        <asp:ListItem Value="1">Inativo</asp:ListItem>
+                        <asp:ListItem Value="0">Ativo</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -37,7 +49,7 @@
     </div>
     <div class="gridTable">
         <asp:GridView ID="gridPesquisa" runat="server" AutoGenerateColumns="False" ForeColor="#333333"
-            GridLines="Vertical">
+            GridLines="Vertical" OnRowDataBound="gridPesquisa_RowDataBound">
             <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
             <Columns>
                 <asp:HyperLinkField DataTextField="nro_Finalizadora" Text="nro_Finalizadora" Visible="true"
@@ -56,6 +68,9 @@
                     DataNavigateUrlFormatString="~/modulos/Cadastro/Pages/cartaoDetalhes.aspx?id_cartao={0}&nro_finalizadora={1}"
                     DataNavigateUrlFields="id_cartao,nro_Finalizadora" />
                 <asp:HyperLinkField DataTextField="bandeira" Text="bandeira" Visible="true" HeaderText="Bandeira"
+                    DataNavigateUrlFormatString="~/modulos/Cadastro/Pages/cartaoDetalhes.aspx?id_cartao={0}&nro_finalizadora={1}"
+                    DataNavigateUrlFields="id_cartao,nro_Finalizadora" />
+                <asp:HyperLinkField DataTextField="Situacao" Text="" Visible="true" HeaderText="Situação"
                     DataNavigateUrlFormatString="~/modulos/Cadastro/Pages/cartaoDetalhes.aspx?id_cartao={0}&nro_finalizadora={1}"
                     DataNavigateUrlFields="id_cartao,nro_Finalizadora" />
             </Columns>

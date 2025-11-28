@@ -105,6 +105,11 @@
                     <asp:ButtonField ButtonType="Image" ImageUrl="~/modulos/Financeiro/imgs/CadernetaPequeno.png" CommandName="Finalizadoras" 
                         HeaderText="Editar" Text="" ItemStyle-Width="20px" ItemStyle-Height="20px">
                     </asp:ButtonField>
+
+                    <asp:ButtonField ButtonType="Image" ImageUrl="~/img/pesquisaM.png" CommandName="Help" 
+                        HeaderText="" Text="" ItemStyle-Width="20px" ItemStyle-Height="20px">
+                    </asp:ButtonField>
+                    <asp:BoundField DataField="terceiros" HeaderText="Origem" />
                     
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
@@ -120,4 +125,46 @@
             </asp:GridView>
         </div>
     </div>
+    <asp:Panel ID="pnFundo" runat="server" CssClass="modalForm" Style="display: none">
+        <asp:Panel ID="pnFundoFrame" runat="server" CssClass="frame" DefaultButton="btnFechar"
+            Style="font-size: 20px;">
+            <center><h1><asp:Label ID="lbllista" runat="server" Text="" ></asp:Label></h1></center>
+            <hr />
+            <div class="panel" style="font-size: 20px; width: 20%; float: left; margin-top: -10px;">
+                <div class="row" style="margin-top: 0; margin-bottom: 10px;">
+                    <asp:ImageButton ID="btnFechar" runat="server" ImageUrl="~/img/confirm.png"
+                        Width="25px" OnClick="btnFechar_Click" />
+                    <asp:Label ID="Label4" runat="server" Text="OK"></asp:Label>
+                </div>
+            </div>
+
+            <asp:Panel ID="Panel2" runat="server" CssClass="lista">
+                <asp:GridView ID="GridLista" runat="server" AutoGenerateColumns="false" CellPadding="4" 
+                    ForeColor="#333333" GridLines="None" ShowFooter="true" OnRowDataBound="GridLista_RowDataBound">
+                    <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775"  />
+                    <Columns>
+                        <asp:BoundField DataField="Tipo_Pagamento" HeaderText="Tipo" ItemStyle-Width="200" />
+                        <asp:BoundField DataField="Valor_Total" HeaderText="Total" 
+                            DataFormatString="{0:N2}" HtmlEncode="false" 
+                            ItemStyle-HorizontalAlign="Right" 
+                            FooterStyle-HorizontalAlign="Right" />
+                    </Columns>
+                    <EditRowStyle BackColor="#999999" />
+                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                </asp:GridView>
+            </asp:Panel>
+        </asp:Panel>
+    </asp:Panel>
+    <asp:ModalPopupExtender ID="modalPnFundo" runat="server" BackgroundCssClass="modalBackground"
+        DropShadow="true" PopupControlID="pnFundo" TargetControlID="lbllista">
+    </asp:ModalPopupExtender>
+
 </asp:Content>

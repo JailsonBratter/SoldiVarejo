@@ -60,7 +60,7 @@
                         </div>
                         <div>
                             <p>Atualizar dados IBPT</p>
-                            <asp:Button ID="btnIBPT" runat="server" with="80px" OnClick="btnIBPT_Click" >IBPT</asp:Button>
+                            <asp:Button ID="btnIBPT" runat="server" with="80px" OnClick="btnIBPT_Click" Text="IBPT"></asp:Button>
                         </div>
                     </div>
                 </td>

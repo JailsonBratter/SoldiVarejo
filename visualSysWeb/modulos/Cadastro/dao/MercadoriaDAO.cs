@@ -751,6 +751,7 @@ namespace visualSysWeb.dao
                                         " Left Outer Join Natureza_Operacao on  Natureza_Operacao.Filial = NF.Filial AND Natureza_Operacao.Codigo_Operacao =  NF.Codigo_Operacao " +
                                         " WHERE NF.Tipo_NF = '1' AND PLU = '" + PLU + "' " +
                                         " AND NF.Status IN('AUTORIZADO', 'AUTORIZADA')" +
+                                        " AND ISNULL(Natureza_Operacao.Baixa_Estoque, 0) = 1" +
                                         " ORDER BY convert(varchar,NF.EMISSAO,102) Desc";
                 return Conexao.GetTable(sqlHistorico, null, true);
 
@@ -2950,6 +2951,59 @@ namespace visualSysWeb.dao
                         reader.Read();
                         CSTPIS = reader["cstpis"].ToString();
                         CST = reader["cst"].ToString();
+                    }
+                }
+            }
+        }
+    }
+
+    public class MercadoriaGTINs
+    {
+        public string PLU { get; set; }
+        public string NCM = "";
+        public string CEST = "";
+        public string EAN { get; set; }
+        public string Descricao { get; set; }
+        public List<MercadoriaGTINs> produtosGTINs;
+
+        public MercadoriaGTINs()
+        {
+
+        }
+        public MercadoriaGTINs(string ean = "")
+        {
+            produtosGTINs = new List<MercadoriaGTINs>();
+            string sql = "";
+            if (ean.Equals(""))
+            {
+                sql = "SELECT M.PLU, EAN.EAN, M.DESCRICAO, ISNULL(M.CF,'') AS NCM, ISNULL(M.CEST, 0) AS CEST FROM Mercadoria M INNER JOIN EAN ON M.PLU = EAN.PLU WHERE (EAN.EAN LIKE '789%' OR EAN.EAN LIKE '790%')";
+            }
+            else
+            {
+                sql = "SELECT M.PLU, EAN.EAN, M.DESCRICAO, ISNULL(M.CF,'') AS NCM, ISNULL(M.CEST, 0) AS CEST FROM Mercadoria M INNER JOIN EAN ON M.PLU = EAN.PLU WHERE ";
+                sql += " EAN.EAN = '" + ean + "'";
+            }
+            using (SqlConnection conn = Conexao.novaConexao())
+            {
+                SqlTransaction tran = conn.BeginTransaction(System.Data.IsolationLevel.ReadCommitted);
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            MercadoriaGTINs item = new MercadoriaGTINs();
+                            item.PLU = dr["PLU"].ToString();
+                            item.NCM = dr["NCM"].ToString();
+                            item.CEST = dr["CEST"].ToString();
+                            item.EAN = dr["EAN"].ToString();
+                            item.Descricao = dr["Descricao"].ToString();
+                            produtosGTINs.Add(item);
+                        }
                     }
                 }
             }

@@ -115,7 +115,18 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
                             String codigo = Request.Params["codigo"].ToString();
                             String cliente = Request.Params["cliente"].ToString();
-                            obj = new nfDAO(codigo, "1", cliente, usr);
+                            if (Request.Params["serie"] != null)
+                            {
+                                string serie = Request.Params["serie"].ToString();
+                                int serieNFe = 0;
+                                int.TryParse(serie, out serieNFe);
+                                obj = new nfDAO(codigo, "1", cliente, serieNFe, usr);
+                            }
+                            else
+                            {
+                                obj = new nfDAO(codigo, "1", cliente, usr);
+
+                            }
                             if (obj.status.Equals("TRANSMITIDO") || obj.status.Equals("AUTORIZADO") || obj.status.Equals("CANCELADA"))
                             {
                                 status = "pesquisar";
@@ -1217,6 +1228,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 case "txtCliente_CNPJ":
                 case "txtFiltroCupomVarios":
                 case "txtFiltroPedidoVarios":
+                case "txtCodigoClienteImporta":
                     ddlTipoDestinatario.Visible = true;
 
                     if (ddlTipoDestinatario.Text.Equals("FORNECEDOR"))
@@ -1751,9 +1763,6 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                         {
                             txt.Text = txt.Text.Trim().PadLeft(8, '0').Replace(".", "");
                         }
-
-
-
 
                         if (txt.ID.Equals("txtCliente_CNPJ"))
                         {
@@ -3212,7 +3221,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                     btnProximo.Visible = true;
                     throw new Exception(ResultadoXML);
                 }
-                else if (ResultadoXML.IndexOf("Status:100") >= 0)
+                else if (ResultadoXML.IndexOf("Status:100") >= 0 || ResultadoXML.IndexOf("Status:150") >= 0) //Uso autorizado ou Uso autorizado fora de prazo.
                 {
                     if (!nf.status.Equals("AUTORIZADO"))
                     {
@@ -4677,6 +4686,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                         cpItem.numero = item.Cells[2].Text;
                         cpItem.caixa = item.Cells[3].Text;
                         cpItem.dt = Funcoes.dtTry(item.Cells[4].Text);
+                        cpItem.cliente = txtFiltroCupomVarios.Text.Replace(".","").Replace("/","").Replace("-","");
                         imp.Add(cpItem);
                     }
 
@@ -4738,6 +4748,9 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
         protected void pesquisaVariosCupons()
         {
             User usr = (User)Session["User"];
+
+            Session.Remove("clienteVarios" + urlSessao());
+            Session.Add("clienteVarios" + urlSessao(), txtFiltroCupomVarios.Text);
 
             DateTime dtDe = Funcoes.dtTry(txtDataDeCupomVarios.Text);
             DateTime dtAte = Funcoes.dtTry(txtDataAteCupomVarios.Text);
@@ -4978,6 +4991,14 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             {
                 ddlindPres.SelectedValue = "2";
             }
+        }
+
+        protected void imgBtnClienteImporta_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove("campoLista" + urlSessao());
+            Session.Add("campoLista" + urlSessao(), "txtCodigoClienteImporta");
+            exibeLista();
+
         }
     }
 }

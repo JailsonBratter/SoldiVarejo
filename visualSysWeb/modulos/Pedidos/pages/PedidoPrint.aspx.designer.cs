@@ -49,13 +49,13 @@ namespace visualSysWeb.modulos.Pedidos.pages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFilial;
         
         /// <summary>
-        /// Controle lblFilialCnpj.
+        /// Controle imgLogo.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFilialCnpj;
+        protected global::System.Web.UI.WebControls.Image imgLogo;
         
         /// <summary>
         /// Controle lblFilialRazaoSocial.
@@ -67,6 +67,24 @@ namespace visualSysWeb.modulos.Pedidos.pages {
         protected global::System.Web.UI.WebControls.Label lblFilialRazaoSocial;
         
         /// <summary>
+        /// Controle lblFilialCnpj.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFilialCnpj;
+        
+        /// <summary>
+        /// Controle lblFilialIE.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFilialIE;
+        
+        /// <summary>
         /// Controle lblFilialEndereco.
         /// </summary>
         /// <remarks>
@@ -74,6 +92,16 @@ namespace visualSysWeb.modulos.Pedidos.pages {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFilialEndereco;
+        
+        /// <summary>
+        /// Controle lblFilialContato.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFilialContato;
+        
         
         /// <summary>
         /// Controle pnSimples.

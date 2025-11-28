@@ -1070,7 +1070,7 @@ namespace visualSysWeb.dao
             }
 
 
-            Total =  Seguro + Outras + vFCPST + vIPIDevol; // Jailson - 2025-06-27 14:15 IPIDevol adicionado. 
+            Total = Seguro + Outras + vFCPST;// + vIPIDevol; // Jailson - 2025-06-27 14:15 IPIDevol adicionado. 
 
             Total += TotalCusto - Desconto_geral;
             if (vIPIDevol > 0)
@@ -2819,9 +2819,9 @@ namespace visualSysWeb.dao
                     {
                         //String teste = rsItens["det_prod_cEAN"].ToString();
                         long cEan = 0;
-                        long.TryParse(rsItens["det_prod_cEAN"].ToString(), out cEan);
+                        long.TryParse(rsItens["det_prod_cEANTrib"].ToString(), out cEan);
                         if (cEan == 0)
-                            long.TryParse(rsItens["det_prod_cEANTrib"].ToString(), out cEan);
+                            long.TryParse(rsItens["det_prod_cEAN"].ToString(), out cEan);
 
 
                         strSqlplu = "SELECT TOP 1 plu FROM EAN WHERE EAN.EAN ='" + cEan + "'";
@@ -3554,7 +3554,7 @@ namespace visualSysWeb.dao
             }
         }
 
-        public void importarCupom(String numeroCupom, String caixa, DateTime dt)
+        public void importarCupom(String numeroCupom, String caixa, DateTime dt, string codigoCliente = "")
         {
             SqlDataReader rs = null;
             try
@@ -3572,16 +3572,25 @@ namespace visualSysWeb.dao
                     String sqlCupomTest = "select top 1  s.id_chave " +
                                    "	from saida_estoque s with (index=ix_saida_estoque) inner join mercadoria m on s.PLU=m.PLU  " +
                                    "	LEFT OUTER JOIN tributacao d ON  S.nro_ECF = d.Nro_ECF  and d.Saida_ICMS = s.Aliquota_ICMS " +
-                                   " where s.filial='" + usr.getFilial() + "'"+
+                                   "    LEFT OUTER JOIN Cliente c ON s.Codigo_Cliente = c.Codigo_Cliente "+
+                                   " where s.filial='" + usr.getFilial() + "'" +
                                    " AND s.data_movimento = '" + dt.ToString("yyyy-MM-dd") + "' and s.data_cancelamento is null " +
-                                   " AND s.Caixa_Saida = " + caixa + " AND Documento ='" + numeroCupom + "'" +
-                                   " AND d.Indice_ST in ('00','40','41','60','101','102','500') " +
-                                   "  GROUP BY S.Filial , documento , codigo_cliente, s.plu, (vlr/Qtde) ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, cf, m.cst_saida , und, m.Origem,m.margem_iva,isnull(m.CEST,''),s.id_chave" +
+                                   " AND s.Caixa_Saida = " + caixa + " AND Documento ='" + numeroCupom + "'";
+                    if (!codigoCliente.Equals(""))
+                    {
+                        sqlCupomTest += " and (s.codigo_cliente = '" + codigoCliente + "'" +
+                                      " or c.nome_cliente like '%" + codigoCliente + "%'" +
+                                      " or replace(replace(replace(c.cnpj,'.',''),'-',''), '/','') like '" + codigoCliente.Replace(".", "").Replace("-", "").Replace("/", "") + "'" +
+
+                            ")";
+                    }
+                    sqlCupomTest +=" AND d.Indice_ST in ('00','40','41','60','101','102','500') " +
+                                   "  GROUP BY S.Filial , documento , c.codigo_cliente, s.plu, (vlr/Qtde) ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, cf, m.cst_saida , und, m.Origem,m.margem_iva,isnull(m.CEST,''),s.id_chave" +
                                    " ,m.indEscala,m.cnpj_Fabricante,m.cBenef ";
                     String id_chave = Conexao.retornaUmValor(sqlCupomTest, usr);
                     if (id_chave.Replace(" ", "").Length > 0)
                     {
-                        id_chave = id_chave.Replace(" ", "").Replace("CFe", "").Trim();
+                        id_chave = id_chave.Replace(" ", "").Replace("CFe", "").Replace("NFe","").Trim();
                         String nSAT = id_chave.Substring(22, 9);
                         String exSat = id_chave.Substring(31, 6);
                         if (Conexao.countSql("select codigo from nf where observacao like '%Extrato N." + exSat + " Data:" + dt.ToString("dd/MM/yyyy") + " Chave:" + id_chave + " |%'", null) > 0)
@@ -3593,16 +3602,25 @@ namespace visualSysWeb.dao
                 }
 
                 //Query para importar os itens do cupom
-                String sqlCupom = "select  s.filial , documento , codigo_cliente, s.plu, SUM(Qtde)Qtde, (vlr/Qtde) vlr ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, isnull(m.cf,'') as cf, isnull(m.cst_saida,'') as CST , isnull(m.und,'') as und,m.origem,margem_iva =isnull(m.margem_iva,0), isnull(m.CEST,'') as CEST,sum(isnull(s.Desconto,0)) as Desconto, sum(isnull(acrescimo,0)) as Acrescimo " +
+                String sqlCupom = "select  s.filial , documento , s.codigo_cliente, s.plu, SUM(Qtde)Qtde, (vlr/Qtde) vlr ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, isnull(m.cf,'') as cf, isnull(m.cst_saida,'') as CST , isnull(m.und,'') as und,m.origem,margem_iva =isnull(m.margem_iva,0), isnull(m.CEST,'') as CEST,sum(isnull(s.Desconto,0)) as Desconto, sum(isnull(acrescimo,0)) as Acrescimo " +
                                     " ,s.id_chave " +
                                     " ,m.indEscala,m.cnpj_Fabricante,m.cBenef " +
                                     "	from saida_estoque s  with (index=ix_saida_estoque) inner join mercadoria m on s.PLU=m.PLU  " +
                                     "	LEFT OUTER JOIN tributacao d ON  S.nro_ECF = d.Nro_ECF  and d.Saida_ICMS = s.Aliquota_ICMS " +
+                                    "    LEFT OUTER JOIN Cliente c ON s.Codigo_Cliente = c.Codigo_Cliente " +
                                     " where  s.filial='" + usr.getFilial() + "'" +
                                      " and s.data_movimento='" + dt.ToString("yyyy-MM-dd") + "' and s.data_cancelamento is null " +
-                                     " AND s.caixa_saida = " + caixa +" AND Documento ='" + numeroCupom + "'" +
-                                     " and d.Indice_ST in ('00','40','41','60','101','102','500')  " +
-                                    "  GROUP BY S.Filial , documento , codigo_cliente, s.plu, (vlr/Qtde) ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, cf, m.cst_saida , und, m.Origem,m.margem_iva,isnull(m.CEST,''),s.id_chave" +
+                                     " AND s.caixa_saida = " + caixa + " AND Documento ='" + numeroCupom + "'";
+                    if (!codigoCliente.Equals(""))
+                    {
+                        sqlCupom += " and (s.codigo_cliente = '" + codigoCliente + "'" +
+                                      " or c.nome_cliente like '%" + codigoCliente + "%'" +
+                                      " or replace(replace(replace(c.cnpj,'.',''),'-',''), '/','') like '" + codigoCliente.Replace(".", "").Replace("-", "").Replace("/", "") + "'" +
+
+                            ")";
+                    }
+                sqlCupom += " and d.Indice_ST in ('00','40','41','60','101','102','500')  " +
+                                    "  GROUP BY S.Filial , documento , s.codigo_cliente, s.plu, (vlr/Qtde) ,m.embalagem ,m.descricao ,s.aliquota_icms, d.codigo_tributacao, m.IPI, cf, m.cst_saida , und, m.Origem,m.margem_iva,isnull(m.CEST,''),s.id_chave" +
                                     " ,m.indEscala,m.cnpj_Fabricante,m.cBenef ";
 
                 if (nome_transportadora.Equals(""))
@@ -3637,7 +3655,7 @@ namespace visualSysWeb.dao
                         {
                             if (rs["id_chave"].ToString().Replace(" ", "").Length > 0)
                             {
-                                String idChave = rs["id_chave"].ToString().Replace(" ", "").Replace("CFe", "").Trim();
+                                String idChave = rs["id_chave"].ToString().Replace(" ", "").Replace("CFe", "").Replace("NFe","").Trim();
                                 Ref_ECF = false;
                                 if (NfReferencias.Count >= 50)
                                 {
@@ -3831,7 +3849,7 @@ namespace visualSysWeb.dao
 
             foreach (CupomImportar item in lCupons)
             {
-                importarCupom(item.numero, item.caixa, item.dt);
+                importarCupom(item.numero, item.caixa, item.dt, item.cliente);
             }
 
 
@@ -6271,7 +6289,7 @@ namespace visualSysWeb.dao
                                 {
                                     if (!rsDev["chavecfe"].ToString().Equals(""))
                                     {
-                                        NfReferencias.Add(rsDev["chavecfe"].ToString().ToUpper().Replace("CFE",""));
+                                        NfReferencias.Add(rsDev["chavecfe"].ToString().ToUpper().Replace("CFE","").Replace("NFe",""));
                                     }
 
                                 }
@@ -6391,7 +6409,7 @@ namespace visualSysWeb.dao
             {
                 string sql = "SELECT REG = count(*) FROM Mercadoria_Estoque_Dia ";
                 sql += " WHERE Mercadoria_Estoque_Dia.Filial = '" + usr.getFilial() + "'";
-                sql += " AND Mercadoria_Estoque_Dia.Data < '" +  dataMovimentacao.ToString("yyyy-MM-dd") + "'";
+                sql += " AND Mercadoria_Estoque_Dia.Data <= '" +  dataMovimentacao.ToString("yyyy-MM-dd") + "'";
                 sql += " AND Mercadoria_Estoque_Dia.plu = '" + PLU + "'";
                 return Funcoes.intTry(Conexao.retornaUmValor(sql, usr)) > 0 ? false : true;
             }

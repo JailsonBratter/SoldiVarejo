@@ -169,7 +169,7 @@ namespace visualSysWeb.dao
             strSql.Append(" from mercadoria as m ");
             strSql.Append("  inner join mercadoria_loja as ml on m.plu = ml.plu ");
             strSql.Append("  left join ean on m.plu = ean.plu ");
-            strSql.Append("  inner join tributacao as t on m.codigo_tributacao = t.codigo_tributacao");
+            strSql.Append("  inner join tributacao as t on m.filial = t.filial and m.codigo_tributacao = t.codigo_tributacao");
             strSql.Append("  inner join peso_variavel as pesov on rtrim(ltrim(m.peso_variavel)) = pesov.peso_variavel");
             strSql.Append("  inner join tipo  on Tipo.Tipo = m.Tipo");
 
@@ -346,7 +346,7 @@ namespace visualSysWeb.dao
                     strSql.Append(" from mercadoria as m ");
                     strSql.Append("  inner join mercadoria_loja as ml on m.plu = ml.plu ");
                     strSql.Append("  left join ean on m.plu = ean.plu ");
-                    strSql.Append("  inner join tributacao as t on m.codigo_tributacao = t.codigo_tributacao");
+                    strSql.Append("  inner join tributacao as t on ML.FILIAL = t.filial AND  m.codigo_tributacao = t.codigo_tributacao");
                     strSql.Append("  inner join peso_variavel as pesov on rtrim(ltrim(m.peso_variavel)) = pesov.peso_variavel");
                     strSql.Append("  inner join tipo  on Tipo.Tipo = m.Tipo");
 

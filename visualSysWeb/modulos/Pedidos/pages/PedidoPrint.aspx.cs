@@ -138,6 +138,7 @@ namespace visualSysWeb.modulos.Pedidos.pages
             pedidoDAO obj = (pedidoDAO)Session["PedidoPrint"];
             lblPedido.Text = (obj.Pedido == null ? "" : obj.Pedido.ToString());
             divFilial.Visible = false;
+            lblTipoPedido.Text = "";
             if (obj.Tipo == 1)
             {
                 lblTituloPedido.Text = "PEDIDO DE VENDA";
@@ -149,15 +150,21 @@ namespace visualSysWeb.modulos.Pedidos.pages
             else if (obj.Tipo == 8 )
             {
                 lblTituloPedido.Text = "ORÇAMENTO";
-                lblOrcamentoObservacoes.Text = Funcoes.valorParametro("OBS_ORCAMENTO", null);
-                divFilial.Visible = true;
-                filialDAO filial = new filialDAO(obj.Filial);
-                lblFilialCnpj.Text = filial.CNPJ;
-                lblFilialRazaoSocial.Text = filial.Razao_Social;
-                lblFilialEndereco.Text = filial.Endereco + "," + filial.endereco_nro + " " + filial.bairro + " " +filial.Cidade +"-" +filial.UF;
+                //lblOrcamentoObservacoes.Text = Funcoes.valorParametro("OBS_ORCAMENTO", null);
+                //divFilial.Visible = true;
+                //filialDAO filial = new filialDAO(obj.Filial);
+                //lblFilialCnpj.Text = filial.CNPJ;
+                //lblFilialRazaoSocial.Text = filial.Razao_Social;
+                //lblFilialEndereco.Text = filial.Endereco + "," + filial.endereco_nro + " " + filial.bairro + " " +filial.Cidade +"-" +filial.UF;
 
             }
-
+            divFilial.Visible = true;
+            filialDAO filial = new filialDAO(obj.Filial);
+            lblFilialCnpj.Text = filial.CNPJ;
+            lblFilialIE.Text = filial.IE;
+            lblFilialRazaoSocial.Text = filial.Razao_Social + " - " + filial.Fantasia;
+            lblFilialEndereco.Text = filial.Endereco + "," + filial.endereco_nro + " " + filial.bairro + " " + filial.Cidade + " - " + filial.UF + "- CEP: " + filial.CEP;
+            lblFilialContato.Text = filial.fone;
 
             switch (obj.Status)
             {

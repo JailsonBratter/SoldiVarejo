@@ -30,6 +30,7 @@ namespace visualSysWeb.dao
                 return dataBr(Data_ult_atualizacao);
             } 
         }
+        public string PDVTerceiros { get; set; } = ""; //Define qual o terceiro que possui pdv instalados
 
         public PDVDAO(User usr) { this.usr = usr; }
         public PDVDAO(int campoIndex, User usr)
@@ -69,6 +70,7 @@ namespace visualSysWeb.dao
                     Carga_Automatica = rs["Carga_Automatica"].ToString().Equals("1");
                     Integracao_Vendas_automatica = rs["Integracao_Vendas_Automatica"].ToString().Equals("1");
                     ConnectionString = rs["ConnectionString"].ToString();
+                    PDVTerceiros = rs["PDV_Terceiros"].ToString();
 
                 }
             }
@@ -99,6 +101,7 @@ namespace visualSysWeb.dao
                               ",carga_automatica="+(Carga_Automatica?"1":"0")+
                               ",Integracao_Vendas_automatica="+(Integracao_Vendas_automatica?"1":"0")+
                               ",ConnectionString='"+ConnectionString+"'"+
+                              ",PDV_Terceiros='"+PDVTerceiros+"'"+
                     "  WHERE Filial = '" + usr.filial.Filial + "' AND Caixa = " + PDV;
                 Conexao.executarSql(sql);
             }
@@ -144,6 +147,7 @@ namespace visualSysWeb.dao
                               ",Carga_automatica"+
                               ",Integracao_Vendas_automatica"+
                               ",ConnectionString"+
+                              ",PDV_Terceiros"+
                           ") VALUES (" +
                             "'" + usr.filial.Filial + "'" +
                             ", '" + Modelo + "'" +
@@ -157,6 +161,7 @@ namespace visualSysWeb.dao
                             ","+(Carga_Automatica?"1":"0")+
                             ","+(Integracao_Vendas_automatica?"1":"0")+
                             ",'"+ConnectionString+"'"+
+                            ",'"+PDVTerceiros+"'"+
                             ")";
 
 

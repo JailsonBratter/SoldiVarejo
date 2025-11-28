@@ -84,9 +84,9 @@ namespace visualSysWeb.modulos.Financeiro.pages
 
                 lblIdMovimento.Text = id_fecha.ToString();
 
-                if (!stsPdv.Status.Equals("FECHADO"))
+                if (stsPdv.Status.Equals("OPERANDO"))
                 {
-                    //stsPdv.limparDetalhes();
+                    stsPdv.limparDetalhes();
                     stsPdv.inserirDetalhes();
                 }
 
@@ -153,7 +153,7 @@ namespace visualSysWeb.modulos.Financeiro.pages
                 gridItens.Columns[4].Visible = true; //Diferenca
                 gridItens.Columns[5].Visible = true;//Deposito
                 btnEncerrar.Visible = true;
-                divReprocessa.Visible = true;
+                //divReprocessa.Visible = true;
 
             }
             else
@@ -184,7 +184,7 @@ namespace visualSysWeb.modulos.Financeiro.pages
                 gridItens.Columns[2].Visible = false; //Registrado
                 gridItens.Columns[4].Visible = false; //Diferenca
                 btnEncerrar.Visible = false;
-                divReprocessa.Visible = false;
+                //divReprocessa.Visible = false;
             }
             gridItens.DataSource = Conexao.GetTable(sql, usr, false);
             gridItens.DataBind();

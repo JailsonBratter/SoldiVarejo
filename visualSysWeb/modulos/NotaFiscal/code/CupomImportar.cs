@@ -10,5 +10,6 @@ namespace visualSysWeb.modulos.NotaFiscal.code
         public String numero = "";
         public String caixa = "";
         public DateTime dt = new DateTime();
+        public String cliente = "";
     }
 }

@@ -1,0 +1,1819 @@
+
+GO
+
+/****** Object:  Table [dbo].[Mercadoria_Estoque_Dia]    Script Date: 17/07/2025 13:39:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Mercadoria_Estoque_Dia](
+	[Filial] [varchar](20) NOT NULL,
+	[Data] [datetime] NOT NULL,
+	[PLU] [varchar](20) NOT NULL,
+	[Saldo] [decimal](15, 3) NULL,
+	[Qtde_Inicial] [decimal](14, 3) NULL,
+	[Entrada_NFe] [decimal](14, 3) NULL,
+	[Entrada_Outras] [decimal](14, 3) NULL,
+	[Saida_NFe] [decimal](14, 3) NULL,
+	[Saida_Outras] [decimal](14, 3) NULL,
+	[Saida_Cupom] [decimal](14, 3) NULL,
+ CONSTRAINT [PK_Mercadoria_Estoque_Dia] PRIMARY KEY CLUSTERED 
+(
+	[Filial] ASC,
+	[Data] ASC,
+	[PLU] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Saldo]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Qtde_Inicial]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Entrada_NFe]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Entrada_Outras]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Saida_NFe]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Saida_Outras]
+GO
+
+ALTER TABLE [dbo].[Mercadoria_Estoque_Dia] ADD  DEFAULT ((0)) FOR [Saida_Cupom]
+GO
+
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_Atualizar_Saldo_Dia]    Script Date: 30/07/2025 16:54:54 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[sp_Atualizar_Saldo_Dia]
+    @Filial VARCHAR(20),
+    @Data DATE,
+    @PLU VARCHAR(20),
+    @TipoMovimentacao VARCHAR(2), -- Ex: 'Entrada_NFe', 'Saida_Cupom'
+    @Quantidade DECIMAL(18, 4)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+
+	--sp_Atualizar_Saldo_Dia 'MATRIZ', '2025-07-14', '6832', 'EN', 12
+	DECLARE @ColunaMovimentacao VARCHAR(20);
+    DECLARE @ExisteRegistro INT;
+    DECLARE @DataAnterior DATE = DATEADD(DAY, -1, @Data);
+    DECLARE @QtdeInicialAnterior DECIMAL(18,4) = 0;
+
+	SET @ColunaMovimentacao = CASE 
+		WHEN @TipoMovimentacao = 'EN' THEN 'Entrada_NFe'
+		WHEN @TipoMovimentacao = 'EO' THEN 'Entrada_Outras'
+		WHEN @TipoMovimentacao = 'SN' THEN 'Saida_NFe'
+		WHEN @TipoMovimentacao = 'SO' THEN 'Saida_Outras'
+		WHEN @TipoMovimentacao = 'SC' THEN 'Saida_Cupom'
+		END
+
+
+
+    -- Verifica se já existe o registro
+    SELECT @ExisteRegistro = COUNT(*)
+    FROM Mercadoria_Estoque_Dia WITH (INDEX=PK_Mercadoria_Estoque_Dia, NOLOCK)
+    WHERE Filial = @Filial AND Data = @Data AND PLU = @PLU;
+
+    -- Se não existir, insere com base no dia anterior
+    IF @ExisteRegistro = 0
+    BEGIN
+        SELECT TOP 1 @QtdeInicialAnterior = ISNULL(Mercadoria_Estoque_Dia.Saldo, 0)
+        FROM Mercadoria_Estoque_Dia WITH (INDEX=PK_Mercadoria_Estoque_Dia, NOLOCK)
+        WHERE Filial = @Filial AND Data <= @DataAnterior AND PLU = @PLU
+        ORDER BY Data DESC;
+
+        INSERT INTO Mercadoria_Estoque_Dia (
+            Filial, Data, PLU, Qtde_Inicial,
+            Entrada_NFe, Entrada_Outras,
+            Saida_NFe, Saida_Outras, Saida_Cupom, Saldo
+        )
+        VALUES (
+            @Filial, @Data, @PLU, @QtdeInicialAnterior,
+            0, 0, 0, 0, 0, @QtdeInicialAnterior
+        );
+    END
+
+    -- Atualiza o tipo de movimentação
+    DECLARE @Sql NVARCHAR(MAX) = N'';
+    SET @Sql = '
+        UPDATE Mercadoria_Estoque_Dia
+        SET ' + QUOTENAME(@ColunaMovimentacao) + ' = ISNULL(' + QUOTENAME(@ColunaMovimentacao) + ', 0) + @Quantidade
+        WHERE Filial = @Filial AND Data = @Data AND PLU = @PLU;
+    ';
+
+    EXEC sp_executesql @Sql,
+        N'@Filial VARCHAR(20), @Data DATE, @PLU VARCHAR(20), @Quantidade DECIMAL(18,4)',
+        @Filial, @Data, @PLU, @Quantidade;
+
+    -- Recalcula o saldo
+    UPDATE Mercadoria_Estoque_Dia
+    SET Saldo = Qtde_Inicial 
+                + ISNULL(Entrada_NFe, 0)
+                + ISNULL(Entrada_Outras, 0)
+                - ISNULL(Saida_NFe, 0)
+                - ISNULL(Saida_Outras, 0)
+                - ISNULL(Saida_Cupom, 0)
+    WHERE Filial = @Filial AND Data = @Data AND PLU = @PLU;
+
+	UPDATE Mercadoria_Loja SET Mercadoria_Loja.Saldo_Atual = ISNULL((SELECT TOP 1 Mercadoria_Estoque_Dia.Saldo
+	FROM Mercadoria_Estoque_Dia WHERE Mercadoria_Estoque_Dia.Filial = Mercadoria_loja.Filial 
+	and Mercadoria_Loja.PLU = Mercadoria_Estoque_Dia.PLU
+	AND Mercadoria_Estoque_Dia.Data = @Data), 0)
+	WHERE Mercadoria_Loja.Filial = @Filial AND Mercadoria_Loja.PLU = @PLU ;
+
+	UPDATE Mercadoria SET Mercadoria.saldo_atual = ISNULL((SELECT SUM(Mercadoria_Loja.Saldo_Atual) 
+	FROM Mercadoria_Loja WHERE Mercadoria_Loja.PLU = Mercadoria.PLU), 0)
+	WHERE Mercadoria.PLU = @PLU ;
+
+
+END
+GO
+
+
+
+
+
+go
+
+/****** Object:  Table [dbo].[NF_CTe]    Script Date: 30/06/2025 09:21:05 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NF_CTe](
+	[Filial] [varchar](20) NOT NULL,
+	[Chave_NFe] [varchar](47) NOT NULL,
+	[Situacao] [varchar](2) NOT NULL,
+	[Fornecedor] [varchar](100) NOT NULL,
+	[Numero_Documento] [varchar](20) NOT NULL,
+	[Serie] [varchar](3) NOT NULL,
+	[Emissao] [datetime] NOT NULL,
+	[Aquisicao] [datetime] NOT NULL,
+	[Chave] [varchar](47) NOT NULL,
+	[Tipo_CTe] [tinyint] NOT NULL,
+	[Chave_Substituicao] [varchar](47) NOT NULL,
+	[Tipo_Frete] [tinyint] NOT NULL,
+	[ICMS_Base] [decimal](12, 2) NOT NULL,
+	[ICMS_Reducao] [decimal](5, 2) NOT NULL,
+	[ICMS_Aliquota] [decimal](12, 2) NOT NULL,
+	[ICMS_Valor] [decimal](12, 2) NOT NULL,
+	[Valor_Documento] [decimal](12, 2) NOT NULL,
+	[Valor_Desconto] [decimal](12, 2) NOT NULL,
+	[IBGE_Origem] [int] NOT NULL,
+	[IBGE_Destino] [int] NOT NULL,
+	[Boleto_Vencimento] [datetime] NOT NULL,
+ CONSTRAINT [PK_NF_CTe] PRIMARY KEY CLUSTERED 
+(
+	[Fornecedor] ASC,
+	[Numero_Documento] ASC,
+	[Serie] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_Br_Cons_SaldoKardexPLU]    Script Date: 17/07/2025 13:41:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_Br_Cons_SaldoKardexPLU]
+@PLU as Varchar(17)
+AS
+
+-- sp_br_cons_saldokardexplu  '6862'
+begin
+	--declare @plu as varchar(17)
+	declare @qtdeEntrada as integer
+	declare @qtdeSaidanf As integer
+	declare @qtdeSaida As integer
+	declare @qtdeAjEntrada as Integer
+	declare @qtdeAjSaida as Integer
+	declare @dataBase	as datetime
+	declare @qtdeBase as integer
+	declare @qtdeRelacionado as integer
+
+	--set @plu = '59382'
+
+	SET @dataBase = ISNULL((select TOP 1 case WHEN iv.DataHora_Encerramento > IV.Data THEN IV.DataHora_Encerramento 
+	ELSE IV.DATA END  from 
+	Inventario iv INNER JOIN Inventario_itens ii on iv.Codigo_inventario = ii.Codigo_inventario 
+	INNER JOIN Tipo_movimentacao tm ON tm.Movimentacao = iv.tipoMovimentacao and tm.Saida = 2 
+	WHERE ii.PLU = @plu and iv.status = 'ENCERRADO' order by iv.Data desc), '1900-01-01')
+
+	if @dataBase > '1900-01-01' 
+		begin
+			SET @qtdeBase = ISNULL((select top 1 ii.Contada from 
+			Inventario iv inner join Inventario_itens ii on iv.Codigo_inventario = ii.Codigo_inventario
+			INNER JOIN Tipo_movimentacao tm ON tm.Movimentacao = iv.tipoMovimentacao and tm.Saida = 2 
+			WHERE ii.PLU = @plu  and iv.status = 'ENCERRADO' order by convert(int, iv.Codigo_inventario)  desc), 
+			'1900-01-01')
+		end
+	else
+		set @qtdeBase = 0
+
+
+	set @qtdeAjEntrada = isnull(( select sum(ii.Contada) from Inventario iv inner join Inventario_itens ii 
+	on iv.Codigo_inventario = ii.Codigo_inventario AND iv.tipoMovimentacao in('AJUSTE ENTRADA', 'DEVOLUCAO')
+	and iv.status = 'ENCERRADO' WHERE iv.DataHora_Encerramento  >= @database and ii.PLU = @plu), 0)
+
+	set @qtdeAjSaida  = isnull(( select sum(ii.Contada) from Inventario iv inner join Inventario_itens ii 
+	on iv.Codigo_inventario = ii.Codigo_inventario AND iv.tipoMovimentacao in('AJUSTE SAIDA', 'DESPERDICIO')
+	and iv.status = 'ENCERRADO' WHERE iv.DataHora_Encerramento  >= @dataBase and ii.PLU = @plu), 0)
+		
+
+	select @qtdeEntrada = sum(i.Qtde * i.Embalagem) 
+	from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo  and nf.tipo_nf = i.Tipo_NF and nf.serie = i.serie 
+	inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+	where nf.Tipo_NF = 2
+	and i.PLU = @plu
+	and CASE WHEN ISNULL(NF.DataHora_Lancamento, '1900-01-01') > NF.DATA THEN nf.DataHora_Lancamento ELSE NF.DATA END   >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and ISNULL(nf.nf_canc, 0) < 1
+	and n.Baixa_estoque  = 1
+
+		
+	select @qtdeSaidanf  = sum(i.Qtde * i.Embalagem) 
+	from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo and nf.tipo_nf = i.Tipo_NF and nf.serie = i.serie 
+	inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+	where nf.Tipo_NF = 1
+	and i.PLU = @plu
+	and CASE WHEN ISNULL(NF.DataHora_Lancamento, '1900-01-01') > NF.DATA THEN nf.DataHora_Lancamento ELSE NF.DATA END  >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and ISNULL(nf.nf_canc, 0) < 1
+	and n.Baixa_estoque  = 1
+
+	select @qtdeSaida = sum(s.qtde) from Saida_estoque s with (index=ix_Saida_estoque)
+	where s.Filial = 'MATRIZ' AND ( s.Data_movimento + CONVERT(DATETIME, S.Hora_venda)) >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and s.PLU = @plu and s.data_cancelamento is null
+
+
+	SELECT @qtdeRelacionado = SUM(A.Qtde * M.fator_Estoque_Vinculado)
+	FROM (SELECT S.PLU, S.QTDE 
+	from Saida_estoque s with (index=ix_Saida_estoque)
+	where s.Filial = 'MATRIZ' AND 
+	 ( s.Data_movimento + CONVERT(DATETIME, S.Hora_venda)) >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and s.data_cancelamento is null
+	AND s.plu IN(SELECT Mercadoria.PLU FROM Mercadoria WHERE Mercadoria.PLU_Vinculado = @PLU)) AS A
+	INNER JOIN Mercadoria M ON A.PLU = M.PLU
+
+	/*
+	print @database
+	print @plu
+	print @qtdebase 
+	print @qtdeentrada 
+	PRINT @qtdeajentrada
+	print @qtdesaidanf
+	print @qtdesaida
+	print @qtdeAjSaida
+	PRINT @qtdeRelacionado
+
+	PRINT '----'
+	*/
+	SELECT
+	Inicio = CONVERT(VARCHAR, @dataBase, 120) 
+	, [Qtde Inicio] =  ISNULL(@qtdeBase, 0)
+	, [Entrada NFe] = ISNULL(@qtdeentrada, 0) 
+	, [Entrada Ajustes] = ISNULL(@qtdeajentrada, 0) 
+	, [Saida NFe] = ISNULL(@qtdesaidanf, 0) 
+	, [Saida Cupom] = ISNULL(@qtdesaida, 0) + ISNULL(@qtdeRelacionado, 0) 
+	, [Saida Ajustes] = ISNULL(@qtdeAjSaida, 0)
+	, [Saldo Final] = ISNULL(@qtdeBase, 0) + ISNULL(@qtdeentrada, 0)  + ISNULL(@qtdeajentrada, 0)  - ISNULL(@qtdesaidanf, 0)  - ISNULL(@qtdesaida, 0)  - ISNULL(@qtdeAjSaida, 0) - ISNULL(@qtdeRelacionado, 0) 
+
+end
+GO
+
+GO
+
+/****** Object:  UserDefinedFunction [dbo].[F_SaldoKardexPLU]    Script Date: 17/07/2025 13:42:27 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER FUNCTION [dbo].[F_SaldoKardexPLU](@PLU as Varchar(17))
+Returns int as
+begin
+	--declare @plu as varchar(17)
+	declare @qtdeEntrada as integer
+	declare @qtdeSaidanf As integer
+	declare @qtdeSaida As integer
+	declare @qtdeAjEntrada as Integer
+	declare @qtdeAjSaida as Integer
+	declare @dataBase	as datetime
+	declare @qtdeBase as integer
+	declare @qtdeRelacionado as integer
+	--set @plu = '6862'
+
+
+	SET @dataBase = ISNULL((select TOP 1 case WHEN iv.DataHora_Encerramento > IV.Data THEN IV.DataHora_Encerramento 
+	ELSE IV.DATA END  from Inventario iv 
+	inner join Inventario_itens ii on iv.Codigo_inventario = ii.Codigo_inventario 
+	INNER JOIN Tipo_movimentacao tm ON tm.Movimentacao = iv.tipoMovimentacao and tm.Saida = 2 
+	WHERE ii.PLU = @plu and iv.status = 'ENCERRADO' order by iv.Data desc), '1900-01-01')
+
+	if @dataBase > '1900-01-01' 
+		begin
+			SET @qtdeBase = ISNULL((select top 1 ii.Contada from Inventario iv 
+			inner join Inventario_itens ii on iv.Codigo_inventario = ii.Codigo_inventario
+			INNER JOIN Tipo_movimentacao tm ON tm.Movimentacao = iv.tipoMovimentacao and tm.Saida = 2 
+			WHERE ii.PLU = @plu and iv.status = 'ENCERRADO' order by iv.Codigo_inventario  desc), '1900-01-01')
+		end
+	else
+		set @qtdeBase = 0
+
+
+	set @qtdeAjEntrada = isnull(( select sum(ii.Contada) from Inventario iv inner join Inventario_itens ii 
+	on iv.Codigo_inventario = ii.Codigo_inventario AND iv.tipoMovimentacao in('AJUSTE ENTRADA', 'DEVOLUCAO')
+	and iv.status = 'ENCERRADO' WHERE iv.data >= @database and ii.PLU = @plu), 0)
+
+	set @qtdeAjSaida  = isnull(( select sum(ii.Contada) from Inventario iv inner join Inventario_itens ii 
+	on iv.Codigo_inventario = ii.Codigo_inventario AND iv.tipoMovimentacao in('AJUSTE SAIDA', 'DESPERDICIO')
+	and iv.status = 'ENCERRADO' WHERE iv.Data >= @dataBase and ii.PLU = @plu), 0)
+		
+
+	select @qtdeEntrada = sum(i.Qtde * i.Embalagem) 
+	from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+	inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+	where nf.Tipo_NF = 2
+	and i.PLU = @plu
+	and nf.data >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and ISNULL(nf.nf_canc, 0) < 1
+	and n.Baixa_estoque  = 1
+
+		
+	select @qtdeSaidanf  = sum(i.Qtde * i.Embalagem) 
+	from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+	inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+	where nf.Tipo_NF = 1
+	and i.PLU = @plu
+	and nf.data >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and ISNULL(nf.nf_canc, 0) < 1
+	and n.Baixa_estoque  = 1
+
+	select @qtdeSaida = sum(s.qtde) from Saida_estoque s with (index=ix_Saida_estoque)
+	where s.Filial = 'MATRIZ' AND (s.Data_movimento + CONVERT(DATETIME, S.HORA_VENDA))  >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and s.PLU = @plu and s.data_cancelamento is null
+
+	SELECT @qtdeRelacionado = SUM(A.Qtde * M.fator_Estoque_Vinculado)
+	FROM (SELECT S.PLU, S.QTDE 
+	from Saida_estoque s with (index=ix_Saida_estoque)
+	where s.Filial = 'MATRIZ' AND (s.Data_movimento + CONVERT(DATETIME, S.HORA_VENDA))   >= case when @dataBase >= '1900-01-01' then @dataBase else '1900-01-01' end
+	and s.data_cancelamento is null
+	AND s.plu IN(SELECT Mercadoria.PLU FROM Mercadoria WHERE Mercadoria.PLU_Vinculado = @PLU)) AS A
+	INNER JOIN Mercadoria M ON A.PLU = M.PLU
+
+	/*
+	print @database
+	print @plu
+	print @qtdebase 
+	print @qtdeentrada 
+	PRINT @qtdeajentrada
+	print @qtdesaidanf
+	print @qtdesaida
+	print @qtdeAjSaida
+	PRINT @qtdeRelacionado
+
+	PRINT '----'
+	*/
+	return ISNULL(@qtdeBase, 0) 
+	+ ISNULL(@qtdeentrada, 0) 
+	+ ISNULL(@qtdeajentrada, 0) 
+	- ISNULL(@qtdesaidanf, 0) 
+	- ISNULL(@qtdesaida, 0) 
+	- ISNULL(@qtdeAjSaida, 0)
+	- ISNULL(@qtdeRelacionado, 0)
+
+end
+GO
+
+CREATE TABLE Mercadoria_Movimentacao_Relacionada 
+(Filial VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL ,
+PLU VARCHAR(17) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+Data DATETIME,
+Qtde DECIMAL(12,3),
+PLU_Origem VARCHAR(17) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+Origem VARCHAR(250)
+)
+GO
+CREATE INDEX IX_Filial_PLU ON Mercadoria_Movimentacao_Relacionada (Filial, PLU);
+
+GO
+CREATE PROCEDURE sp_ins_Mercadoria_Movimentacao_Relacionada
+	@FILIAL VARCHAR(20),
+	@PLU VARCHAR(17),
+	@DATA DATETIME,
+	@QTDE DECIMAL(12,3),
+	@PLU_ORIGEM VARCHAR(17),
+	@ORIGEM VARCHAR(250)
+AS
+BEGIN
+INSERT INTO Mercadoria_Movimentacao_Relacionada (Filial, PLU, Data, Qtde, PLU_Origem, Origem) VALUES (@FILIAL, @PLU, @DATA, @QTDE, @PLU_ORIGEM, @ORIGEM)
+END
+
+GO
+
+USE [BratterWeb]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_br_RecalculoSaldoDia]    Script Date: 05/09/2025 08:20:02 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+ALTER PROCEDURE [dbo].[sp_br_RecalculoSaldoDia]
+@FILIAL VARCHAR(20),
+@PLU VARCHAR(17),
+@DATAINICIO DATE
+AS
+
+DECLARE @DATAATUAL DATE = CAST(GETDATE() AS DATE);
+DECLARE @DATACORRENTE DATE;
+DECLARE @NSALDO DECIMAL(12,3) = 0;
+DECLARE @SALDOINICIO DECIMAL(12,3) = 0;
+DECLARE @ENTNFE DECIMAL(12,3) = 0;
+DECLARE @ENTOUTRAS DECIMAL(12,3) = 0;
+DECLARE @SAINFE DECIMAL(12,3) = 0;
+DECLARE @SAIOUTRAS DECIMAL(12,3) = 0;
+DECLARE @SAICUPOM DECIMAL(12,3) = 0;
+
+SET @DATACORRENTE = @DATAINICIO
+
+--sp_br_recalculoSaldoDia 'matriz', '6862', '2025-08-01'
+--select * from mercadoria_estoque_dia where plu = '27685'
+
+--** Pega o primeiro registro anterior ou igual a data enviada.
+SELECT TOP 1 @NSALDO = ISNULL(Mercadoria_Estoque_Dia.Saldo, 0) FROM Mercadoria_Estoque_Dia 
+	WHERE Mercadoria_Estoque_Dia.Filial = @FILIAL AND Mercadoria_Estoque_Dia.Data < @DATAINICIO 
+	AND Mercadoria_Estoque_Dia.PLU = @PLU ORDER BY Mercadoria_Estoque_Dia.Data DESC;
+PRINT 'Saldo inial ' + CONVERT(VARCHAR, @NSALDO);
+WHILE @DATACORRENTE <= @DATAATUAL 
+	BEGIN
+		DECLARE ID_CURSOR_MD CURSOR FOR SELECT Entrada_NFe, Entrada_Outras, Saida_NFe, Saida_Outras, Saida_Cupom 
+								FROM Mercadoria_Estoque_Dia WHERE Filial = @FILIAL AND Mercadoria_Estoque_Dia.Data = @DATACORRENTE AND PLU = @PLU;
+		OPEN ID_CURSOR_MD;
+		FETCH NEXT FROM ID_CURSOR_MD INTO @ENTNFE, @ENTOUTRAS, @SAINFE, @SAIOUTRAS, @SAICUPOM;
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+				UPDATE MERCADORIA_ESTOQUE_DIA 
+					SET Mercadoria_Estoque_dia.Saldo = @NSALDO + @ENTNFE + @ENTOUTRAS - @SAINFE - @SAIOUTRAS - @SAICUPOM,
+					Mercadoria_Estoque_dia.Qtde_Inicial = @NSALDO
+				WHERE Mercadoria_Estoque_dia.Filial = @FILIAL
+				AND Mercadoria_Estoque_Dia.Data = @DATACORRENTE
+				AND Mercadoria_Estoque_Dia.PLU = @PLU;
+
+				--** Grava o SALDO INICIAL PARA O DIA SEGUINTE
+				SET @NSALDO = (@NSALDO + @ENTNFE + @ENTOUTRAS - @SAINFE - @SAIOUTRAS - @SAICUPOM);
+				PRINT 'SALDO FINAL DO DIA ' + CONVERT(VARCHAR, @DATACORRENTE, 102) + ' QTDE: ' + CONVERT(VARCHAR, @NSALDO);
+				FETCH NEXT FROM ID_CURSOR_MD INTO @ENTNFE, @ENTOUTRAS, @SAINFE, @SAIOUTRAS, @SAICUPOM;;
+			END
+		CLOSE ID_CURSOR_MD;
+		DEALLOCATE ID_CURSOR_MD;
+		SET @DATACORRENTE = DATEADD(DAY, 1, @DATACORRENTE);
+	END
+
+	UPDATE Mercadoria_Loja SET Mercadoria_Loja.Saldo_Atual = ISNULL((SELECT TOP 1 Mercadoria_Estoque_Dia.Saldo
+	FROM Mercadoria_Estoque_Dia WHERE Mercadoria_Estoque_Dia.Filial = Mercadoria_loja.Filial 
+	and Mercadoria_Loja.PLU = Mercadoria_Estoque_Dia.PLU
+	ORDER BY Mercadoria_Estoque_Dia.Data DESC), 0)
+	WHERE Mercadoria_Loja.Filial = @Filial AND Mercadoria_Loja.PLU = @PLU ;
+
+	UPDATE Mercadoria SET Mercadoria.saldo_atual = ISNULL((SELECT SUM(Mercadoria_Loja.Saldo_Atual) 
+	FROM Mercadoria_Loja WHERE Mercadoria_Loja.PLU = Mercadoria.PLU), 0)
+	WHERE Mercadoria.PLU = @PLU ;
+
+
+
+GO
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_KardexPLU]    Script Date: 03/09/2025 10:51:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_Rel_KardexPLU]
+	@FILIAL	VARCHAR(20),
+	@PLU VARCHAR(17),
+	@DataDe AS DATETIME,
+	@DataAte AS DATETIME,
+    @descricao	  As varchar(50),
+    @grupo	      As Varchar(50),
+    @subGrupo	  As varchar(50),
+    @departamento as varchar(50),
+    @Fornecedor	  as varchar(40)
+AS
+-- [sp_Rel_KardexPLU_Desenv] 'MATRIZ', '', '2025-08-03', '2025-08-14', 'BRIGA BELGA', '', '', '', ''
+
+IF RTRIM(LTRIM(@PLU)) <> ''
+	BEGIN
+		DECLARE @Qtde AS DECIMAL(12,2)
+
+		SET @DataAte = @DataAte + CONVERT(DATETIME, '23:59:59')
+
+		--vARIAVEL QUE VAI RECEBER A DATA PARA ANALISE
+		DECLARE @MINDATA AS DATETIME
+		SELECT @MINDATA = MIN(DATA) FROM MERCADORIA_ESTOQUE_DIA WHERE PLU = @PLU
+
+		IF RTRIM(LTRIM(@PLU)) = ''
+			RETURN
+		IF NOT EXISTS(SELECT * FROM Mercadoria INNER JOIN Tipo ON Mercadoria.Tipo = Tipo.Tipo WHERE Mercadoria.PLU = @PLU AND ISNULL(Tipo.Estoque, 0) = 1)
+			BEGIN
+				SELECT 'PRODUTO NÃO CONTROLA ESTOQUE' AS DESCRICAO;
+				RETURN;
+			END
+		--SE A DATEDE É MENOR QUE MIN DATA -1, DATADE SERA AJUSTA PARA MINDATA + 1
+		IF DATEADD(DAY, -1, @DataDe) <= @MINDATA
+			SET @DataDe = DATEADD(DAY, 1, @MINDATA)
+
+		--PRINT @DATADE
+
+		SET @Qtde = 0;
+
+		SELECT TOP 1 @Qtde = ISNULL(Mercadoria_Estoque_Dia.Saldo, 0) 
+		FROM Mercadoria_Estoque_Dia WITH (INDEX=PK_Mercadoria_Estoque_Dia)
+		WHERE Filial = 'MATRIZ' AND Mercadoria_Estoque_Dia.Data <= DATEADD(DAY, -1, @DataDe) AND PLU = @PLU 
+		ORDER BY Mercadoria_Estoque_Dia.Data DESC
+
+
+		--IF NOT EXISTS(select ii.plu from inventario i inner join Inventario_itens ii on i.codigo_inventario = ii.Codigo_inventario
+		--and i.Codigo_inventario = '204' WHERE II.PLU = @PLU)
+		--	RETURN;
+
+
+		--sp_Rel_KardexPLU '6862', '2025-07-01', '2025-07-21'
+
+		BEGIN	
+			SELECT PLU, fator_Estoque_Vinculado, Descricao INTO #LIXO FROM MERCADORIA WHERE PLU_Vinculado = @PLU
+
+			CREATE TABLE #Movimentacao (id INT IDENTITY(1, 1), DataHora Datetime, Descricao VARCHAR(250), Qtde Decimal(12,3), Saldo Decimal(12,3));
+	
+			INSERT INTO #Movimentacao (DataHora, Descricao, Qtde, Saldo) VALUES (@DataDe, 'Saldo inicial', 0, CONVERT(DECIMAL(12,2), @Qtde));
+
+			INSERT INTO #Movimentacao 
+			SELECT iv.datahora_encerramento AS DataHora, Descricao = 'OUTRAS MOVIMENTAÇÕES ' + iv.Descricao_inventario + ' ' + IV.Codigo_inventario + 
+			CASE WHEN TM.Saida = 2 THEN ' CONTADO ' + CONVERT(VARCHAR, II.Contada, 0) ELSE '' END, case when tm.Saida = 1 then ii.Contada * -1 
+			when tm.Saida = 0 then tm.Saida
+			when tm.Saida = 2 then ii.Contada - ii.Saldo_atual end, 0
+			FROM Inventario iv inner join Inventario_itens ii 
+			on iv.Codigo_inventario = ii.Codigo_inventario 	and iv.status = 'ENCERRADO' 
+			INNER JOIN Tipo_movimentacao TM ON IV.tipoMovimentacao = TM.Movimentacao
+			WHERE iv.DataHora_Encerramento BETWEEN @DataDe AND @DataAte AND ii.PLU = @PLU
+
+			INSERT INTO #Movimentacao 
+			SELECT ISNULL(NF.DATAHORA_LANCAMENTO, (NF.DATA + CONVERT(DATETIME, '00:00:01'))), 'Entrada ' + n.Descricao + ' ' + nf.Cliente_Fornecedor + ' ' + NF.Codigo, i.Qtde * i.Embalagem, 0
+			from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+			inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+			where nf.Tipo_NF = 2 	and i.PLU = @plu
+			and nf.data  BETWEEN @DataDe AND @DataAte	and ISNULL(nf.nf_canc, 0) < 1
+			and n.Baixa_estoque  = 1
+
+			INSERT INTO #Movimentacao
+			select ISNULL(NF.DATAHORA_LANCAMENTO, NF.DATA), 'Saída ' + n.Descricao + ' ' + nf.Cliente_Fornecedor + ' ' + NF.Codigo, i.Qtde * i.Embalagem, 0
+			from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+			inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+			where nf.Tipo_NF = 1 and i.PLU = @plu 	and nf.data  BETWEEN @DataDe AND @DataAte
+			AND NF.STATUS = 'AUTORIZADO'
+			and ISNULL(nf.nf_canc, 0) < 1 	and n.Baixa_estoque  = 1 
+
+			INSERT INTO #Movimentacao
+			select S.DATA_MOVIMENTO + CONVERT(DATETIME, S.Hora_venda), 'Venda Cupom ' + s.Documento,  s.qtde * -1, 0
+			from Saida_estoque s with (index=ix_Saida_estoque)
+			where s.Filial = 'MATRIZ' AND S.DATA_MOVIMENTO + CONVERT(DATETIME, S.Hora_venda) BETWEEN @DataDe AND @DataAte
+			and s.PLU = @plu and s.data_cancelamento is null
+
+			INSERT INTO #Movimentacao
+			SELECT A.Data, 'Venda Cupom RELACIONADO PLU:' + a.PLU_Origem, a.Qtde, 0
+			FROM Mercadoria_Movimentacao_Relacionada A
+			WHERE A.Data BETWEEN @DataDe AND @DataAte
+			AND A.PLU = @PLU;
+
+			/*
+			SELECT A.DATA_MOVIMENTO + CONVERT(DATETIME, A.Hora_venda), 'Venda Cupom RELACIONADO PLU: ' + A.PLU + ' ' + A.Documento + ' ' + M.Descricao,  (A.qtde * M.fator_Estoque_Vinculado) * -1, 0
+			FROM (SELECT S.DATA_MOVIMENTO, S.HORA_vENDA, S.PLU, S.QTDE , S.Documento, S.id_Chave
+			from Saida_estoque s with (index=ix_Saida_estoque)
+			where s.Filial = 'MATRIZ' AND 
+			 ( s.Data_movimento + CONVERT(DATETIME, S.Hora_venda))  BETWEEN @DataDe AND @DataAte
+			and s.data_cancelamento is null
+			AND S.PLU IN(SELECT #LIXO.PLU FROM #LIXO)) AS A
+			INNER JOIN #LIXO M ON A.PLU = M.PLU;
+			*/
+
+			WITH CTE_Saldos AS (
+				SELECT 
+					ID,
+					SaldoAtual = SUM(qtde + Saldo) OVER (ORDER BY Datahora, ID)
+				FROM #Movimentacao
+			)
+			UPDATE M
+			SET M.Saldo = C.SaldoAtual
+			FROM #Movimentacao M
+			JOIN CTE_Saldos C ON M.ID = C.ID;
+
+
+			SELECT DataHora, Descricao, Qtde, Saldo FROM #Movimentacao ORDER BY DataHora ASC
+
+		END
+	END
+ELSE
+	BEGIN
+		IF OBJECT_ID(N'tempdb..##ProdutosKardex', N'U') IS NOT NULL   
+			BEGIN
+				DROP TABLE ##ProdutosKardex;  
+			END
+
+		SELECT
+		Mercadoria.PLU,
+		Mercadoria.Descricao,
+		cd.descricao_grupo,
+		cd.descricao_subgrupo,
+		cd.descricao_departamento
+		INTO ##ProdutosKardex
+		FROM Mercadoria INNER JOIN W_BR_CADASTRO_DEPARTAMENTO CD ON Mercadoria.Codigo_departamento = cd.codigo_departamento
+		WHERE Mercadoria.PLU <> ''
+		AND	(LEN(@Descricao)=0 or Mercadoria.Descricao LIKE '%' + REPLACE(@descricao,' ','%') + '%')
+		AND (LEN(@grupo)=0 or cd.Descricao_grupo = @grupo)
+		AND (LEN(@subGrupo)=0 or cd.descricao_subgrupo = @subGrupo)
+		AND (len(@departamento)=0 or cd.descricao_departamento = @departamento)		
+		AND (LEN(@fornecedor)=0 OR EXISTS(SELECT * FROM Fornecedor_Mercadoria FM WHERE FM.Fornecedor = @fornecedor AND FM.PLU = Mercadoria.PLU))
+
+		IF NOT EXISTS(SELECT * FROM ##ProdutosKardex)
+			BEGIN
+				SELECT 'NÃO EXISTEM PRODUTOS QUE ATENDAM OS FILTROS DETERMINADOS' AS DESCRICAO;
+				RETURN;
+			END
+
+		SELECT 
+		a.plu,
+		a.Descricao,
+		a.descricao_grupo,
+		a.descricao_subgrupo,
+		a.descricao_departamento,
+		Inicial = ISNULL((SELECT TOP 1 e.saldo FROM mercadoria_estoque_dia e WHERE e.plu = a.plu and DATA < @datade order by e.Data desc), 0),
+		ISNULL(SUM(md.Entrada_NFe), 0) as EntNFe,
+		ISNULL(sum(md.Entrada_Outras), 0) as EntOutras,
+		ISNULL(sum(md.Saida_NFe), 0) as SaiNFe,
+		ISNULL(sum(md.Saida_Outras), 0) as SaiOutras,
+		ISNULL(sum(md.Saida_Cupom), 0) as SaiCupom,
+		Saldo = (select top 1 ed.saldo from mercadoria_estoque_dia ed where ed.plu = a.plu and data <= @dataate order by ed.Data desc)
+		FROM 
+		##ProdutosKardex as a 
+		inner join mercadoria_estoque_dia md on a.plu = md.PLU
+		where 
+		md.Data between @datade and @dataate
+		GROUP BY A.PLU, A.Descricao, 
+		a.descricao_grupo,
+		a.descricao_subgrupo,
+		a.descricao_departamento
+
+	END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_Movimentacao_Inventario]    Script Date: 03/09/2025 08:12:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROCEDURE [dbo].[sp_Rel_Movimentacao_Inventario]
+	@FILIAL	VARCHAR(20),
+	@codigoInventario VARCHAR(20),
+	@DataHoraEncerramento DATETIME
+AS
+-- [sp_Rel_Movimentacao_Inventario] 'MATRIZ', '322', '2025-08-26 08:14:15'
+
+	DECLARE @DATAMIN	AS DATETIME
+
+	BEGIN
+		SELECT
+		II.PLU,
+		dtDe = I.DataHora_Encerramento,
+		II.Contada
+		INTO #LIXO
+		FROM Inventario_Itens II 
+		INNER JOIN Inventario I ON I.Codigo_inventario = II.Codigo_inventario AND I.status = 'ENCERRADO'
+		INNER JOIN Tipo_movimentacao tm on tm.Movimentacao = i.tipoMovimentacao AND tm.Saida = 2
+		WHERE I.Filial = @FILIAL
+		AND I.DataHora_Encerramento < @DataHoraEncerramento
+		AND II.PLU IN(SELECT Inventario_itens.PLU FROM Inventario_itens WHERE Inventario_itens.Codigo_inventario = @codigoInventario)
+
+		SELECT 
+		#LIXO.PLU,
+		#LIXO.dtDe,
+		#LIXO.Contada
+		INTO #LIXO2
+		FROM #LIXO 
+		INNER JOIN (SELECT B.PLU, dtDe = MAX(b.dtDe) FROM #LIXO B GROUP BY PLU) AS B ON #LIXO.PLU = B.PLU AND #LIXO.dtDe = B.dtDe;
+
+		SELECT @DATAMIN = MIN(#LIXO2.dtDe) FROM #LIXO2
+
+		print @datamin
+
+
+		CREATE TABLE #Movimentacao (PLU VARCHAR(17) COLLATE SQL_Latin1_General_CP1_CI_AS, Tipo VARCHAR(2), Qtde Decimal(12,3))
+			
+		INSERT INTO #Movimentacao 
+		SELECT II.PLU, CASE 
+		WHEN TM.Saida = 2 AND II.Contada - II.Saldo_atual < 0 THEN 'SO'
+		WHEN TM.Saida = 2 AND II.Contada - II.Saldo_atual >= 0 THEN 'EO'
+		WHEN TM.Saida = 1 THEN 'SO'
+		WHEN TM.Saida = 0 THEN 'EO' END,
+		CASE WHEN TM.SAIDA = 2 THEN ii.Contada - ii.Saldo_Atual ELSE II.Contada END
+		FROM Inventario iv inner join Inventario_itens ii 
+		on iv.Codigo_inventario = ii.Codigo_inventario 	and iv.status = 'ENCERRADO'  
+		INNER JOIN Tipo_movimentacao TM ON IV.tipoMovimentacao = TM.Movimentacao
+		WHERE EXISTS(SELECT * FROM #LIXO2 WHERE IV.DataHora_Encerramento > #LIXO2.dtDe AND IV.DataHora_Encerramento < @DataHoraEncerramento
+		AND II.PLU = #LIXO2.PLU)
+
+		INSERT INTO #Movimentacao 
+		SELECT I.PLU, 'EN', i.Qtde * i.Embalagem
+		from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+		inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+		where nf.Tipo_NF = 2 AND n.Baixa_estoque  = 1
+		AND EXISTS(SELECT * FROM #LIXO2 WHERE NF.Data > #LIXO2.dtDe AND NF.DATA < @DataHoraEncerramento
+		AND i.PLU = #LIXO2.PLU)
+
+		INSERT INTO #Movimentacao
+		SELECT I.PLU, 'SN', i.Qtde * i.Embalagem
+		from nf inner join nf_item i on nf.Filial = i.Filial and nf.Cliente_Fornecedor = i.Cliente_Fornecedor and nf.codigo = i.codigo
+		inner join Natureza_Operacao n on nf.codigo_operacao = n.Codigo_operacao 
+		where nf.Tipo_NF = 1 AND n.Baixa_estoque  = 1
+		AND NF.status = 'AUTORIZADO'
+		AND EXISTS(SELECT * FROM #LIXO2 WHERE NF.Data > #LIXO2.dtDe AND NF.DATA < @DataHoraEncerramento
+		AND i.PLU = #LIXO2.PLU)
+
+		INSERT INTO #Movimentacao
+		SELECT S.PLU, 'SC',  s.qtde
+		from Saida_estoque s with (index=ix_Saida_estoque, NOLOCK)
+		where s.Filial = 'MATRIZ' 
+		AND S.DATA_MOVIMENTO + CONVERT(DATETIME, S.Hora_venda) BETWEEN @DATAMIN AND @DataHoraEncerramento
+		and s.data_cancelamento is null
+		AND EXISTS(SELECT * FROM #LIXO2 WHERE (S.Data_movimento + CONVERT(DATETIME, S.Hora_venda)) > #LIXO2.dtDe AND (S.Data_movimento + + CONVERT(DATETIME, S.Hora_venda)) < @DataHoraEncerramento
+		AND S.PLU = #LIXO2.PLU)
+
+		INSERT INTO #Movimentacao
+		SELECT a.PLU_Origem, 'SC', a.Qtde
+		FROM Mercadoria_Movimentacao_Relacionada A
+		WHERE EXISTS(SELECT * FROM #LIXO2 WHERE A.Data > #LIXO2.dtDe AND A.Data < @DataHoraEncerramento
+		AND A.PLU_Origem = #LIXO2.PLU)
+
+		/*
+		SELECT A.DATA_MOVIMENTO + CONVERT(DATETIME, A.Hora_venda), 'Venda Cupom RELACIONADO PLU: ' + A.PLU + ' ' + A.Documento + ' ' + M.Descricao,  (A.qtde * M.fator_Estoque_Vinculado) * -1, 0
+		FROM (SELECT S.DATA_MOVIMENTO, S.HORA_vENDA, S.PLU, S.QTDE , S.Documento, S.id_Chave
+		from Saida_estoque s with (index=ix_Saida_estoque)
+		where s.Filial = 'MATRIZ' AND 
+			( s.Data_movimento + CONVERT(DATETIME, S.Hora_venda))  BETWEEN @DataDe AND @DataAte
+		and s.data_cancelamento is null
+		AND S.PLU IN(SELECT #LIXO.PLU FROM #LIXO)) AS A
+		INNER JOIN #LIXO M ON A.PLU = M.PLU;
+		*/
+
+		SELECT Inventario_itens.PLU,
+		ISNULL((SELECT TOP 1 EAN.EAN FROM EAN WHERE EAN.PLU = m.PLU), '') AS EAN,
+		dp.descricao_departamento,
+		ISNULL(m.Ref_Fornecedor, '') AS Ref_Fornecedor,
+		M.Descricao,
+		#lixo2.dtDe AS UltimoInventario,
+		#LIXO2.Contada AS UltimaContagem,
+		EntNFe = ISNULL((SELECT SUM(#Movimentacao.Qtde) FROM #Movimentacao WHERE #Movimentacao.PLU = Inventario_itens.PLU AND #Movimentacao.Tipo = 'EN'), 0),
+		EntOutras = ISNULL((SELECT SUM(#Movimentacao.Qtde) FROM #Movimentacao WHERE #Movimentacao.PLU = Inventario_itens.PLU AND #Movimentacao.Tipo = 'EO'), 0),
+		SaiNFe = ISNULL((SELECT SUM(#Movimentacao.Qtde) FROM #Movimentacao WHERE #Movimentacao.PLU = Inventario_itens.PLU AND #Movimentacao.Tipo = 'SN'), 0),
+		SaiOutras = ISNULL((SELECT SUM(#Movimentacao.Qtde) FROM #Movimentacao WHERE #Movimentacao.PLU = Inventario_itens.PLU AND #Movimentacao.Tipo = 'SO'), 0),
+		SaiCupom = ISNULL((SELECT SUM(#Movimentacao.Qtde) FROM #Movimentacao WHERE #Movimentacao.PLU = Inventario_itens.PLU AND #Movimentacao.Tipo = 'SC'), 0),
+		Saldo_Atual =  ISNULL(Inventario_itens.Saldo_atual, 0),
+		Inventario_itens.Contada,
+		Divergencia = Inventario_itens.Contada - Inventario_itens.Saldo_atual
+		FROM Inventario_itens 
+		INNER JOIN Mercadoria M on M.PLU = Inventario_itens.PLU
+		INNER JOIN W_BR_CADASTRO_DEPARTAMENTO DP ON m.Codigo_departamento = DP.codigo_departamento 
+		LEFT OUTER JOIN #LIXO2 ON Inventario_itens.PLU = #lixo2.PLU
+		WHERE Inventario_itens.Codigo_inventario = @codigoInventario
+
+	END
+GO
+IF NOT EXISTS(SELECT * FROM Parametros WHERE Parametros.PARAMETRO = 'REL_INV_DIV_TP2')
+	INSERT INTO PARAMETROS VALUES ('REL_INV_DIV_TP2', GETDATE(), 'FALSE', GETDATE(), 'FALSE', 'RELATORIO DE DIVERGENCIA TIPO 2', 'C', 'RELATORIO DIVERGENCIA TIPO 2 ONDE APARECEM OS DADOS DO ULTIMO INVENTARIO', 1, '', 0, 0, NULL, 0)
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_Outras_Movimentacoes]    Script Date: 05/09/2025 12:31:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER  PROCEDURE [dbo].[sp_Rel_Outras_Movimentacoes]
+	@Filial				As Varchar(20),
+	@DataDe				As Varchar(8),
+	@DataAte			As Varchar(8),
+	@plu				AS Varchar(20),
+	@ean				as varchar(20),
+	@ref				as Varchar(20),
+	@descricao			as Varchar(40),
+	@Movimentacao	As Varchar(30) = '',
+	@tipo			 as varchar(20)
+AS
+	Declare @String	As nVarchar(1024)
+if @tipo = 'PRODUTO'
+BEGIN		
+		SET @String = ' SELECT'
+		SET @String = @String + ' i.Codigo_inventario As Codigo,'
+		SET @String = @String + ' CONVERT(VARCHAR, i.Data, 103) AS Data,'
+		SET @String = @String + ' i.tipoMovimentacao,'
+		SET @String = @String + ' i.Usuario,'
+		SET @String = @String +   CHAR(39) +'PLU' +CHAR(39) +'+ ii.plu as PLU,'
+		SET @String = @String + ' m.descricao,'
+		SET @String = @String + ' ii.Contada AS Qtde,'
+		SET @String = @String + ' ii.custo as Vlr_Unit,'
+		SET @String = @String + ' Total_Item = CONVERT(DECIMAL(12,2), (ii.custo * ii.Contada ))'
+		SET @String = @String + ' FROM inventario i inner join inventario_itens ii on i.Codigo_inventario = ii.Codigo_inventario '
+		SET @String = @String + ' inner join mercadoria m on ii.PLU = m.PLU '
+		SET @String = @String + ' WHERE i.status = ' + CHAR(39) + 'ENCERRADO' + CHAR(39) + ' AND i.Data BETWEEN ' + CHAR(39) + @DataDe + CHAR(39) + ' AND ' + CHAR(39) + @DataAte + CHAR(39)
+		BEGIN
+			IF @Movimentacao<> 'TODOS' 
+				SET @String = @String + ' AND i.tipoMovimentacao = ' + CHAR(39) + @Movimentacao + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@plu ,'')) > 0 
+				SET @String = @String + ' AND ii.plu = ' + CHAR(39) + @plu + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@ean ,'')) > 0 
+				SET @String = @String + ' m.plu IN(SELECT EAN.PLU FROM EAN WHRE ean.EAN LIKE ' + CHAR(39) + ISNULL(@ean ,'') + '%' + CHAR(39) + ')'
+
+				--SET @String = @String + ' AND ean = ' + CHAR(39) + @ean + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@ref ,'')) > 0 
+				SET @String = @String + ' AND m.Ref_fornecedor = ' + CHAR(39) + @ref + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@descricao ,'')) > 0 
+				SET @String = @String + ' AND m.descricao like ' + CHAR(39) + '%'+@descricao +'%'+ CHAR(39)
+		END
+		SET @String = @String + ' ORDER BY 1'
+
+	-- PRINT @STRING
+	 EXECUTE(@String)
+
+END
+ELSE
+	BEGIN
+			
+		SET @String = ' SELECT'
+		SET @String = @String + ' i.Codigo_inventario As Codigo,'
+		SET @String = @String + ' CONVERT(VARCHAR, i.Data, 103) AS Data,'
+		SET @String = @String + ' i.tipoMovimentacao,'
+		SET @String = @String + ' i.Usuario,'
+		SET @String = @String + ' Total_Item = SUM(CONVERT(DECIMAL(12,2), (ii.custo * ii.Contada )))'
+		SET @String = @String + ' FROM inventario i inner join inventario_itens ii on i.Codigo_inventario = ii.Codigo_inventario '
+		SET @String = @String + ' inner join mercadoria m on ii.PLU = m.PLU '
+		SET @String = @String + ' left join ean  on m.PLU = ean.PLU '
+		SET @String = @String + ' WHERE i.status = ' + CHAR(39) + 'ENCERRADO' + CHAR(39) + ' AND i.Data BETWEEN ' + CHAR(39) + @DataDe + CHAR(39) + ' AND ' + CHAR(39) + @DataAte + CHAR(39)
+		BEGIN
+			IF @Movimentacao<> 'TODOS' 
+				SET @String = @String + ' AND i.tipoMovimentacao = ' + CHAR(39) + @Movimentacao + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@plu ,'')) > 0 
+				SET @String = @String + ' AND ii.plu = ' + CHAR(39) + @plu + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@ean ,'')) > 0 
+				SET @String = @String + ' AND ean = ' + CHAR(39) + @ean + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@ref ,'')) > 0 
+				SET @String = @String + ' AND m.Ref_fornecedor = ' + CHAR(39) + @ref + CHAR(39)
+		END
+		BEGIN
+			IF LEN(ISNULL(@descricao ,'')) > 0 
+				SET @String = @String + ' AND m.descricao like ' + CHAR(39) + '%'+@descricao +'%'+ CHAR(39)
+		END
+		SET @String = @String + ' GROUP BY i.Codigo_inventario,i.Data,i.tipoMovimentacao,i.Usuario ORDER BY 1'
+
+	-- PRINT @STRING
+	 EXECUTE(@String)	
+	END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Rel_Fin_PorOperador]    Script Date: 05/09/2025 12:38:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ 
+
+ALTER PROCEDURE [dbo].[sp_Rel_Fin_PorOperador](
+
+       @FILIAL         AS VARCHAR(17),
+
+       @Datade               As DATETIME,
+
+       @Dataate        As DATETIME,
+
+       @Caixa          As varchar(30),
+
+       @Grupo        As Varchar(60),
+
+       @subGrupo   as Varchar(60),
+
+       @Departamento as Varchar(60),
+
+       @Familia   as Varchar(60),
+
+       @fornecedor   as Varchar(40),
+
+       @plu           as Varchar(20),
+
+       @descricao    as Varchar(50),
+
+       @ordem            as Varchar(30),
+
+       @ordemS        as Varchar(30),
+
+       @finalizadora as Varchar(30)
+
+)
+
+ 
+
+as
+
+begin
+
+          -- sp_Rel_Fin_PorOperador 'MATRIZ', '2021-09-01', '2021-09-30', 'TODOS', '', '', '', '', '', '', '', 'VALOR', 'DECRESCENTE', ''
+
+ 
+
+                select distinct   
+
+ 
+
+                                        a.plu as PLU,
+
+ 
+
+                                        ean = isnull((select TOP 1 ISNULL(EAN.EAN, '') AS EAN
+
+                                                                                        FROM EAN WHERE EAN.PLU = b.PLU order by isnull(ean.ean, '') desc), ''),
+
+                                        b.descricao AS DESCRICAO,
+
+ 
+
+                                        c.Descricao_grupo as GRUPO,
+
+ 
+
+                                        C.descricao_subgrupo AS SUBGRUPO,
+
+ 
+
+                                        C.descricao_departamento DEPARTAMENTO,
+
+ 
+
+                                        F.Descricao_Familia AS FAMILIA ,
+
+ 
+
+                                        sum(Qtde) as Qtde ,
+
+ 
+
+                                        (Sum(isnull(a.vlr,0)-ISNULL(a.desconto,0)+isnull(a.Acrescimo,0))) as Valor
+
+ 
+
+                           into #vendasTot                 
+
+ 
+
+                from saida_estoque   a with(index(ix_Rel_fin_porOperador))
+
+ 
+
+                                        inner join mercadoria b on a.plu =b.plu
+
+ 
+
+                                        inner join w_br_cadastro_departamento c on b.codigo_departamento = c.codigo_departamento
+
+ 
+
+                                        left join familia f on b.codigo_familia=f.codigo_familia
+
+ 
+
+                                        -- left join Fornecedor_Mercadoria fm on a.PLU = fm.plu and (len(@fornecedor)<>0  and  fm.fornecedor = @fornecedor)
+
+ 
+
+                where a.filial=@FILIAL
+
+ 
+
+                           and  data_cancelamento is null
+
+ 
+
+                           and (Data_movimento between @Datade and @Dataate)
+
+ 
+
+                           and (len(@Grupo)=0 or  c.Descricao_grupo = @Grupo)
+
+ 
+
+                           and (len(@subGrupo)=0 or  c.descricao_subgrupo = @subGrupo)
+
+ 
+
+                           and (len(@Departamento)=0 or c.descricao_departamento = @Departamento)
+
+ 
+
+                           and (len(@familia)=0 or isnull(f.Descricao_Familia,'') = @Familia)
+
+ 
+
+                           and (LEN(@plu)=0 or a.PLU=@plu)
+
+ 
+
+                           and (LEN(@descricao)=0 or  b.descricao like '%'+@descricao+'%')
+
+ 
+
+                           --and (len(@fornecedor)=0 or fm.fornecedor = @fornecedor)
+
+ 
+
+                           and (@caixa='TODOS' or ( Select TOP 1 Operadores.Nome
+
+ 
+
+                                                                   from Operadores
+
+ 
+
+                                                                          inner join Lista_finalizadora l on l.operador = Operadores.ID_Operador
+
+ 
+
+                                                                   where  l.filial =a.Filial
+
+ 
+
+                                                                          and l.Emissao = a.Data_movimento
+
+ 
+
+                                                                          and a.Caixa_Saida = l.pdv
+
+ 
+
+                                                                          and a.Documento=L.Documento) = @caixa)
+
+ 
+
+                           and (@finalizadora ='TODOS' or ( Select TOP 1 Finalizadora.Finalizadora
+
+ 
+
+                                                                   from Finalizadora
+
+ 
+
+                                                                          inner join Lista_finalizadora l on l.finalizadora  = Finalizadora.Nro_Finalizadora
+
+ 
+
+                                                                   where  l.filial =a.Filial
+
+ 
+
+                                                                          and l.Emissao = a.Data_movimento
+
+ 
+
+                                                                          and a.Caixa_Saida = l.pdv
+
+ 
+
+                                                                          and a.Documento=L.Documento) = @finalizadora )
+							AND (@fornecedor = '' OR EXISTS(SELECT * FROM Fornecedor_Mercadoria WHERE Fornecedor_Mercadoria.Fornecedor = @Fornecedor AND Fornecedor_Mercadoria.PLU = a.PLU))
+
+ 
+
+                group by a.plu,b.descricao ,b.plu
+
+ 
+
+                                        ,c.Descricao_grupo
+
+ 
+
+                                        ,c.Descricao_subgrupo
+
+ 
+
+                                        ,c.Descricao_departamento
+
+ 
+
+                                        ,f.Descricao_familia
+
+ 
+
+                  
+
+ 
+
+                order by b.descricao
+
+ 
+
+                    INSERT INTO #vendasTot                 
+
+                select distinct   
+
+ 
+
+                                        i.plu as PLU,
+
+ 
+
+                                        ean = isnull((select TOP 1 ISNULL(EAN.EAN, '') AS EAN
+
+                                               FROM EAN WHERE EAN.PLU = b.PLU order by isnull(ean.ean, '') desc), ''),
+
+ 
+
+                                        b.descricao AS DESCRICAO,
+
+ 
+
+                                        c.Descricao_grupo as GRUPO,
+
+ 
+
+                                        C.descricao_subgrupo AS SUBGRUPO,
+
+ 
+
+                                        C.descricao_departamento DEPARTAMENTO,
+
+ 
+
+                                        F.Descricao_Familia AS FAMILIA ,
+
+ 
+
+                                        sum(i.Qtde * i.Embalagem) as Qtde ,
+
+                                       
+
+                                        SUM(((i.Qtde * i.Embalagem) * i.Unitario) + 0 - i.desconto + i.IPIV) as Valor
+
+ 
+
+                from  nf
+
+                INNER JOIN NF_Item i WITH (index=ix_nf_item_01) ON nf.FILIAL = i.Filial AND NF.Cliente_Fornecedor = i.Cliente_Fornecedor AND NF.Codigo = i.Codigo
+
+                    inner join Natureza_operacao as np on nf.Codigo_operacao = np.Codigo_operacao
+
+ 
+
+                                        inner join mercadoria b on i.plu =b.plu
+
+ 
+
+                                        inner join w_br_cadastro_departamento c on b.codigo_departamento = c.codigo_departamento
+
+ 
+
+                                        left join familia f on b.codigo_familia=f.codigo_familia
+
+ 
+
+                                        left join Fornecedor_Mercadoria fm on i.PLU = fm.plu and (len(@fornecedor)<>0  and  fm.fornecedor = @fornecedor)
+
+ 
+
+                where nf.filial=@FILIAL
+
+ 
+
+                           and (nf.Emissao between @Datade and @Dataate)
+
+                          
+
+                            AND nf.Tipo_NF = 1
+
+                          
+
+                            AND ISNULL(NF.nf_Canc, 0) < 1
+
+                          
+
+                            and nf.status='AUTORIZADO'
+
+                          
+
+                            AND i.codigo_operacao in ('5102','5405','5402','5403','6102','6405','6401','6403')
+
+                            
+
+                            and np.Saida = 1  and isnull(np.NF_devolucao,0) =0
+
+							and (len(@finalizadora) = 0 or @finalizadora = 'TODOS')
+
+                           and (len(@Grupo)=0 or  c.Descricao_grupo = @Grupo)
+
+ 
+
+                           and (len(@subGrupo)=0 or  c.descricao_subgrupo = @subGrupo)
+
+ 
+
+                           and (len(@Departamento)=0 or c.descricao_departamento = @Departamento)
+
+ 
+
+                           and (len(@familia)=0 or isnull(f.Descricao_Familia,'') = @Familia)
+
+ 
+
+                           and (LEN(@plu)=0 or i.PLU=@plu)
+
+ 
+
+                           and (LEN(@descricao)=0 or  b.descricao like '%'+@descricao+'%')
+
+ 
+
+                           and (len(@fornecedor)=0 or fm.fornecedor = @fornecedor)
+
+                          
+
+                            group by i.plu,b.descricao, b.plu
+
+                                        ,c.Descricao_grupo
+
+ 
+
+                                        ,c.Descricao_subgrupo
+
+ 
+
+                                        ,c.Descricao_departamento
+
+ 
+
+                                        ,f.Descricao_familia
+
+ 
+
+                  
+
+ 
+
+                order by b.descricao
+
+ 
+
+ 
+
+      
+
+       select
+
+ 
+
+                      PLU,
+
+ 
+
+                      EAN,
+
+ 
+
+                      DESCRICAO,
+
+                     
+
+                      GRUPO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      SUM(Qtde) AS Qtde ,
+
+ 
+
+                      SUM(Valor) AS Valor
+
+       INTO #VENDA01
+
+       FROM #vendasTot
+
+       GROUP BY PLU, EAN, DESCRICAO, GRUPO, SUBGRUPO, DEPARTAMENTO, FAMILIA  
+
+ 
+
+ 
+
+ 
+
+       Select ORDEM,
+
+ 
+
+                      PLU,
+
+ 
+
+                      EAN,
+
+ 
+
+                      DESCRICAO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      Qtde ,
+
+ 
+
+                      Valor  
+
+ 
+
+                      INTO #tbFinalVenda
+
+ 
+
+       from
+
+ 
+
+       (
+
+ 
+
+                Select Ordem = GRUPO+'0' -- CABECALHO
+
+ 
+
+                                        ,GRUPO + '|-TITULO-||CONCAT|' AS PLU
+
+ 
+
+                                        ,'' AS EAN
+
+ 
+
+                                        ,'' AS DESCRICAO
+
+ 
+
+                                        ,'' AS SUBGRUPO
+
+ 
+
+                                        ,'' AS DEPARTAMENTO
+
+ 
+
+                                        ,'' AS FAMILIA
+
+ 
+
+                                        ,0  AS Qtde
+
+ 
+
+                                        ,0  AS Valor   
+
+ 
+
+                FROM  #VENDA01
+
+ 
+
+                group by grupo
+
+ 
+
+                UNION ALL
+
+ 
+
+                Select Ordem = GRUPO+'1' -- ITENS
+
+ 
+
+                                        ,'PLU'+PLU
+
+ 
+
+                                        ,'PLU'+EAN
+
+ 
+
+                                        ,DESCRICAO
+
+ 
+
+                                        ,SUBGRUPO
+
+ 
+
+                                        ,DEPARTAMENTO
+
+ 
+
+                                        ,FAMILIA
+
+ 
+
+                                        ,Qtde
+
+ 
+
+                                        ,Valor   
+
+ 
+
+                FROM  #VENDA01
+
+ 
+
+                UNION ALL
+
+ 
+
+     
+
+ 
+
+                Select Ordem = GRUPO+'9' -- TOTAL
+
+ 
+
+                                        ,'|-SUB-|' --PLU
+
+ 
+
+                                        ,'' --EAN
+
+ 
+
+                                        ,'' --DESCRICAO
+
+ 
+
+                                        ,'' --SUBGRUPO
+
+ 
+
+                                        ,'' --DEPARTAMENTO
+
+ 
+
+                                        ,'' --FAMILIA
+
+ 
+
+                                        ,SUM(QTDE)  --Qtde
+
+ 
+
+                                        ,SUM(Valor)  --Valor   
+
+ 
+
+                FROM  #VENDA01
+
+ 
+
+                group by grupo
+
+ 
+
+                union all
+
+ 
+
+                Select Ordem = 'ZZZZZ9' -- TOTAL GERAL
+
+ 
+
+                                        ,'|-SUB-|TOTAL ' --PLU
+
+ 
+
+                                        ,'' --EAN
+
+ 
+
+                                        ,'' --DESCRICAO
+
+ 
+
+                                        ,'' --SUBGRUPO
+
+ 
+
+                                        ,'' --DEPARTAMENTO
+
+ 
+
+                                        ,'' --FAMILIA
+
+ 
+
+                                        ,SUM(QTDE)  --Qtde
+
+ 
+
+                                        ,SUM(VALOR)  --Valor   
+
+ 
+
+                FROM  #VENDA01
+
+ 
+
+       ) as a
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+       IF( @ORDEM='DESCRICAO' AND @ORDEMS='DECRESCENTE' )
+
+ 
+
+       BEGIN
+
+ 
+
+                SELECT PLU,
+
+                  
+
+                      EAN,
+
+ 
+
+                      DESCRICAO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      Qtde ,
+
+ 
+
+                      Valor  
+
+ 
+
+                FROM #tbFinalVenda  ORDER BY ORDEM, DESCRICAO DESC
+
+ 
+
+       END
+
+ 
+
+           
+
+ 
+
+       ELSE IF(@ORDEM='DESCRICAO' AND @ORDEMS='CRESCENTE'  )
+
+ 
+
+       BEGIN
+
+ 
+
+                SELECT PLU,
+
+ 
+
+                   EAN,
+
+ 
+
+                      DESCRICAO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      Qtde ,
+
+ 
+
+                      Valor   
+
+ 
+
+                    FROM #tbFinalVenda  ORDER BY ORDEM, DESCRICAO
+
+ 
+
+       END
+
+ 
+
+       ELSE IF(@ORDEM='VALOR' AND @ORDEMS='CRESCENTE'  )
+
+ 
+
+       BEGIN
+
+ 
+
+                SELECT PLU,
+
+ 
+
+                   EAN,
+
+ 
+
+                      DESCRICAO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      Qtde ,
+
+ 
+
+                      Valor   
+
+ 
+
+                FROM #tbFinalVenda  ORDER BY ORDEM, VALOR
+
+ 
+
+       END
+
+ 
+
+       ELSE IF(@ORDEM='VALOR' AND @ORDEMS='DECRESCENTE'  )
+
+ 
+
+       BEGIN
+
+ 
+
+                SELECT PLU,
+
+ 
+
+                   EAN,
+
+ 
+
+                      DESCRICAO,
+
+ 
+
+                      SUBGRUPO,
+
+ 
+
+                      DEPARTAMENTO,
+
+ 
+
+                      FAMILIA ,
+
+ 
+
+                      Qtde ,
+
+ 
+
+                      Valor   
+
+ 
+
+                FROM #tbFinalVenda  ORDER BY ORDEM, VALOR DESC
+
+ 
+
+       END
+
+ 
+
+end
+

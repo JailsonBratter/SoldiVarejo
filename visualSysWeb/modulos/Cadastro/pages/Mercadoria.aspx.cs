@@ -21,7 +21,8 @@ namespace visualSysWeb.Cadastro
                                 " ,Saldo_atual = case when isnull((Select permite_item from tipo where tipo=a.tipo ),0)=1 then 0 else l.Saldo_atual end " +
                                 ",l.margem,a.peso_bruto, ISNULL(Convert(varchar, ISNULL((select max(i.datahora_encerramento) " +
                                 " FROM Inventario i inner join Inventario_itens ii on i.Codigo_inventario = ii.Codigo_inventario " +
-                                " WHERE ii.PLU = mercadoria_loja.PLU), '1900-01-01'), 103), '1900.01.01') AS DataInventario " +
+                                " INNER JOIN Tipo_Movimentacao tm ON tm.Movimentacao = i.TipoMovimentacao AND tm.saida = 2"+
+                                " WHERE i.status = 'ENCERRADO' AND ii.PLU = mercadoria_loja.PLU), '1900-01-01'), 103), '1900.01.01') AS DataInventario " +
                                 "   from mercadoria a  LEFT join ean b on a.plu=b.plu  inner join mercadoria_loja l on l.plu=a.plu	inner join Tributacao t on a.Codigo_Tributacao = t.Codigo_Tributacao  " +
                                  "  left join W_BR_CADASTRO_DEPARTAMENTO d on (a.codigo_departamento= d.codigo_Departamento) left join Familia f on a.Codigo_familia = f.Codigo_familia";
         static String ultimaOrdem = "";
@@ -998,5 +999,43 @@ namespace visualSysWeb.Cadastro
             modalTransmitirWebServer.Show();
         }
 
+        protected void btnGETIN_Click(object sender, EventArgs e)
+        {
+            GtinService wsGtins = new GtinService();
+            MercadoriaGTINs mercadorias = new MercadoriaGTINs("");
+            string analise = "";
+            int registrosProcessados = 0;
+            foreach (MercadoriaGTINs item in mercadorias.produtosGTINs)
+            {
+                registrosProcessados++;
+                try
+                {
+                    var retorno = wsGtins.ConsultarGtin(item.EAN);
+                    if (retorno != null)
+                    {
+                        if (retorno.CEST == null)
+                        {
+                            retorno.CEST = "0";
+                        }
+                        if (retorno.NCM == null)
+                        {
+                            retorno.NCM = "";
+                        }
+                        if (!item.NCM.Equals(retorno.NCM) || !item.CEST.Equals(retorno.CEST))
+                        {
+                            analise += item.PLU + ";" + item.EAN + ";" + item.Descricao + ";" + item.NCM + ";" + item.CEST + ";Retorno;" + retorno.NCM + ";" + retorno.CEST + ";" +((!item.NCM.Equals(retorno.NCM) ? "NCM." : "") + (!item.CEST.Equals(retorno.CEST) ? "CEST." : "")) + ";" + (!retorno.CStat.Equals("9490") ? retorno.XMotivo : "") + "\r\n";
+                        }
+                    }
+                    else
+                    {
+                        analise += item.PLU + ";" + item.EAN + ";" + item.Descricao + ";Erro ao consulta\r\n";
+                    }
+                }
+                catch
+                {
+                    analise += item.PLU + ";" + item.EAN + ";" + item.Descricao + ";Erro na aplicação\r\n";
+                }
+            }
+        }
     }
 }

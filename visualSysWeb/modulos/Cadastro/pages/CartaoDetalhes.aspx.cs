@@ -163,6 +163,7 @@ namespace visualSysWeb.modulos.Cadastro.pages
             txtacrecimo.Text = string.Format("{0:0,0.00}", obj.acrecimo);
             txtid_Bandeira.Text = obj.id_Bandeira.ToString();
             txtid_Rede.Text = obj.id_Rede.ToString();
+            chkInativo.Checked = obj.inativo;
         }
 
         // --Atualizar FormDao 
@@ -182,6 +183,7 @@ namespace visualSysWeb.modulos.Cadastro.pages
             obj.acrecimo = (txtacrecimo.Text.Equals("") ? 0 : Decimal.Parse(txtacrecimo.Text));
             obj.id_Bandeira = txtid_Bandeira.Text;
             obj.id_Rede = txtid_Rede.Text;
+            obj.inativo = chkInativo.Checked;
             Session.Remove("cartao" + urlSessao());
             Session.Add("cartao" + urlSessao(), obj);
                             

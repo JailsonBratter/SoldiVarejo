@@ -94,6 +94,69 @@
                 </asp:BoundField>
             </Columns>
         </asp:GridView>
+        <asp:GridView ID="gridMercadoriasDeola" runat="server" ForeColor="#333333" Visible="false"
+            AutoGenerateColumns="False" Width="100%" ShowFooter="true" 
+            ondatabinding="gridMercadoriasDeola_DataBinding" 
+            ondatabound="gridMercadoriasDeola_DataBound">
+            <AlternatingRowStyle BackColor="#BEBEBE" ForeColor="#284775" />
+            <Columns>
+                <asp:BoundField DataField="PLU" HeaderText="PLU">
+                    <HeaderStyle HorizontalAlign="Left" />
+                </asp:BoundField>
+                <asp:BoundField DataField="EAN" HeaderText="EAN">
+                    <HeaderStyle HorizontalAlign="Left" />
+                </asp:BoundField>
+                <asp:BoundField DataField="Ref_Fornecedor" HeaderText="Ref">
+                    <HeaderStyle HorizontalAlign="Left" />
+                </asp:BoundField>
+                <asp:BoundField DataField="descricao_departamento" HeaderText="Departamento">
+                    <HeaderStyle HorizontalAlign="Left" />
+                </asp:BoundField>
+                <asp:BoundField DataField="Descricao" HeaderText="Descrição">
+                    <HeaderStyle HorizontalAlign="Left" />
+                </asp:BoundField>
+                <asp:BoundField DataField="UltimoInventario" HeaderText="Ultimo Inventário">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="UltimaContagem" HeaderText="Ult.Cont.">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" Font-Bold="true" />
+                </asp:BoundField>
+                <asp:BoundField DataField="EntNFe" HeaderText="Ent NFe">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="EntOutras" HeaderText="Ent Outras">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="SaiNFe" HeaderText="Sai NFe">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="SaiOutras" HeaderText="Sai Outras">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="SaiCupom" HeaderText="Sai Cupom">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="Saldo_Atual" HeaderText="Saldo">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" />
+                </asp:BoundField>
+                <asp:BoundField DataField="contada" HeaderText="Contado">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right" Font-Bold="true" />
+                </asp:BoundField>
+                <asp:BoundField DataField="Divergencia" HeaderText="Divergencia">
+                    <HeaderStyle HorizontalAlign="Center" />
+                    <ItemStyle HorizontalAlign="Right"  Font-Bold="true"/>
+                </asp:BoundField>
+            </Columns>
+        </asp:GridView>
     </div>
     </form>
 </body>

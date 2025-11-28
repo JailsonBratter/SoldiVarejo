@@ -1364,6 +1364,7 @@
     <Compile Include="modulos\Cadastro\code\FiltroFuncionario.cs" />
     <Compile Include="modulos\Cadastro\code\FiltrosMercadoria.cs" />
     <Compile Include="modulos\Cadastro\code\FornecedorMercadoria.cs" />
+    <Compile Include="modulos\Cadastro\code\GtinService.cs" />
     <Compile Include="modulos\Cadastro\code\KCWCategorias.cs" />
     <Compile Include="modulos\Cadastro\code\KCWSFabricante.cs" />
     <Compile Include="modulos\Cadastro\code\KCWSProduto.cs" />

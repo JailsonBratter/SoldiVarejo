@@ -1939,6 +1939,15 @@ namespace visualSysWeb.modulos.NotaFiscal.pages {
         protected global::AjaxControlToolkit.CalendarExtender CalendarExtender2;
         
         /// <summary>
+        /// Controle txtCodigoClienteImporta.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigoClienteImporta;
+        
+        /// <summary>
         /// Controle div1.
         /// </summary>
         /// <remarks>
