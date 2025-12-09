@@ -136,6 +136,7 @@
                         <asp:ListItem Value="2">Operação não presencial, pela Internet</asp:ListItem>
                         <asp:ListItem Value="3">Operação não presencial, Teleatendimento</asp:ListItem>
                         <asp:ListItem Value="4">NFC-e em operação com entrega a domicílio</asp:ListItem>
+                        <asp:ListItem Value="5">Operação presencial, fora do estabelecimento</asp:ListItem>
                         <asp:ListItem Value="9">Operação não presencial, outros</asp:ListItem>
                     </asp:DropDownList>
                     <!-- 
@@ -157,6 +158,8 @@
                             <asp:ListItem Value="1">Normal</asp:ListItem>
                             <asp:ListItem Value="2">Complementar</asp:ListItem>
                             <asp:ListItem Value="4">Devolução</asp:ListItem>
+                            <asp:ListItem Value="5">Nota de Crédito</asp:ListItem>
+                            <asp:ListItem Value="4">Nota de Débito</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                     <div class="panelItem">

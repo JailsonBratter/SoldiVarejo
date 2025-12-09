@@ -2423,11 +2423,20 @@ namespace visualSysWeb.modulos.Pedidos.pages
         {
             txtDataProducaoItem.Enabled = chkProduzirItem.Checked;
             txtHoraProducaoItem.Enabled = chkProduzirItem.Checked;
+
+            if (!txtCodTbPreco.Text.Trim().Equals(""))
+            {
+                txtUnitario.Enabled = false;
+                txtDescontoItem.Enabled = false;
+            }
+
             if (chkProduzirItem.Checked)
             {
                 //Parametro para obrigar agrupamento no pedido de venda produção.
                 User usr = (User)Session["User"];
                 bool obrigaAgrupamento = Funcoes.valorParametro("PED_PRODUZIR_OBRIGA_AGRUP", usr).ToUpper().Equals("TRUE");
+
+
 
                 txtDataProducaoItem.BackColor = txtDescricao.BackColor;
                 txtHoraProducaoItem.BackColor = txtDescricao.BackColor;

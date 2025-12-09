@@ -14,6 +14,7 @@ using System.IO;
 using System.Collections;
 using System.Text;
 using System.Dynamic;
+using visualSysWeb.modulos.NotaFiscal.NFeRT;
 
 namespace visualSysWeb.modulos.NotaFiscal.pages
 {
@@ -3099,6 +3100,18 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                     switch (nf.status)
                     {
                         case "DIGITACAO":
+
+                            User usr = (User)Session["user"];
+                            NFCeOperacoes nNFe = new NFCeOperacoes(usr);
+                            nNFe.criarNFCe(nf);
+
+
+                            return;
+
+
+
+
+
 
                             bool validarArquivo = !nf.usr.filial.tipo_certificado.Equals("A3");
                             //xml.gravarArquivo(validarArquivo);

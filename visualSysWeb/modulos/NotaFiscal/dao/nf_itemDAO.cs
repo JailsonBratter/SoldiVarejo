@@ -1865,7 +1865,7 @@ namespace visualSysWeb.dao
                     {
                         if (naturezaOperacao.Baixa_estoque)
                         {
-                            Funcoes.atualizaSaldoPLU(Filial, PLU, -(Qtde * Embalagem), conn, tran, dataMovimentacao,"EN");
+                            Funcoes.atualizaSaldoPLU(Filial, PLU, -(Qtde * Embalagem), conn, tran, dataMovimentacao,"SN");
                             //String SqlEstoque = " update mercadoria_loja set  saldo_atual = (isnull(saldo_atual,0) -" + Funcoes.decimalPonto((Qtde * Embalagem).ToString()) + ") where plu='" + PLU + "' and filial='" + Filial + "'";
                             //Conexao.executarSql(SqlEstoque, conn, tran);
                             //String SqlMercadoria = " update mercadoria  set  saldo_atual =(select sum(isnull(saldo_atual,0))from mercadoria_loja b where b.plu='" + PLU + "') where plu='" + PLU + "'";

@@ -74,6 +74,8 @@ namespace visualSysWeb.dao
         public String chave_XML { get; set; }
         public String certificado { get; set; }
         public String certificado_senha { get; set; }
+        public String certificado_arquivo { get; set; }
+
         public String caminhoServidor = "";
         public bool producaoNfe { get; set; }
         public DateTime dtFechamentoEstoque = new DateTime();
@@ -106,6 +108,8 @@ namespace visualSysWeb.dao
         public bool produtora { get; set; }
         public int pdv = 1;
         public List<FilialIEDAO> IEs;
+        public String codigo_IBGE { get; set; }
+        public string diretorio_Schemas { get; set; }
 
         public filialDAO() { }
         public filialDAO(String Filial)
@@ -238,7 +242,9 @@ namespace visualSysWeb.dao
 
                         throw new Exception("O Campo diretorio_etiqueta Varchar(50) da tabela Filial não foi criado no banco ");
                     }
-
+                    certificado_arquivo = rs["certificado_arquivo"].ToString();
+                    codigo_IBGE = rs["codigo_IBGE"].ToString();
+                    diretorio_Schemas = rs["Diretorio_Schemas"].ToString();
 
                 }
             }

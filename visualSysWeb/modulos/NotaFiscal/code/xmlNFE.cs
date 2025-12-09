@@ -17,6 +17,7 @@ using System.Collections;
 using visualSysWeb.modulos.NotaFiscal.dao;
 using Ionic.Zip;
 using XML_NFe;
+using visualSysWeb.modulos.NotaFiscal.NFeRT;
 
 namespace visualSysWeb.modulos.NotaFiscal.code
 {
@@ -1693,7 +1694,6 @@ namespace visualSysWeb.modulos.NotaFiscal.code
 
         public void gravarArquivo(bool arValidar)
         {
-
             StringBuilder xml = new StringBuilder();
             xml.Append("<?xml version=\"1.0\"?>");
             if (!nf.usr.filial.tipo_certificado.Equals("A3"))

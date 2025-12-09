@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using System.Net;
 
 namespace visualSysWeb
 {
@@ -13,6 +14,7 @@ namespace visualSysWeb
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
 
         }
 

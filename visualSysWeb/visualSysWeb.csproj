@@ -85,6 +85,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Web.dll</HintPath>
     </Reference>
+    <Reference Include="DFe.Classes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DFe.Classes.dll</HintPath>
+    </Reference>
+    <Reference Include="DFe.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DFe.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="DFe.Wsdl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DFe.Wsdl.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
     </Reference>
@@ -106,6 +118,34 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Classes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Classes.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Danfe.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Danfe.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Danfe.Nativo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Danfe.Nativo.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Servicos, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Servicos.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Wsdl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Wsdl.dll</HintPath>
+    </Reference>
+    <Reference Include="NFe.Wsdl.Standard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NFe.Wsdl.Standard.dll</HintPath>
     </Reference>
     <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
@@ -1338,6 +1378,7 @@
     <Compile Include="code\BaixarArquivo.aspx.designer.cs">
       <DependentUpon>BaixarArquivo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="code\Certificado.cs" />
     <Compile Include="code\Coletor.cs" />
     <Compile Include="code\CollectionHelper.cs" />
     <Compile Include="code\ConfiguracaoColetor.aspx.cs">
@@ -2069,6 +2110,17 @@
     <Compile Include="modulos\NotaFiscal\dao\Nf_RecebimentoDAO.cs" />
     <Compile Include="modulos\NotaFiscal\dao\NF_Recebimento_ItensDAO.cs" />
     <Compile Include="modulos\NotaFiscal\dao\UfPobrezaDAO.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\gCBS.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\gIBSCBS.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\gIBSMun.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\gIBSUF.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\IBSCBS.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\IBSCBSTot.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\IS.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\NNFe.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\NFCeHelper.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\NFCeOperacoes.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\Valor.cs" />
     <Compile Include="modulos\NotaFiscal\pages\CTeEntrada.aspx.cs">
       <DependentUpon>CTeEntrada.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

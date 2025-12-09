@@ -303,7 +303,7 @@ namespace visualSysWeb.dao
                     sql += " FROM TESOURARIA T INNER JOIN FinaliZadora F ON T.Finalizadora = F.Nro_Finalizadora ";
                     sql += " LEFT OUTER JOIN Cartao ON T.FINALIZADORA = Cartao.Nro_Finalizadora";
                     sql += " WHERE t.DATA_ABERTURA = " + Funcoes.dateSql(Data_Abertura) + " and T.id_fechamento = " + id_fechamento + " AND T.pdv =  " + Pdv + " AND ";
-                    sql += " T.ID_OPERADOR = 1) AS A WHERE A.Total + A.dif > 0";
+                    sql += " T.ID_OPERADOR = " + Id_Operador.ToString() + ") AS A WHERE A.Total + A.dif > 0";
                 }
                 else
                 {
@@ -324,6 +324,7 @@ namespace visualSysWeb.dao
                                            rsTes["rede_cartao"].ToString().PadLeft(3, '0') +
                                            rsTes["id_bandeira"].ToString().PadLeft(5, '0') +
                                            "-" + rsTes["finalizadora"].ToString().PadLeft(2, '0');
+
 
                         conta_a_receberDAO rec = new conta_a_receberDAO(usr,numeroDoc);
                         bool novo = (rec.Documento == null);
@@ -351,13 +352,14 @@ namespace visualSysWeb.dao
                         "Operador:" + this.Id_Operador.ToString().PadRight(5, ' ') +
                         " PDV:" + this.Pdv.ToString().PadRight(5, ' ') +
                         " Taxa:" + Funcoes.decTry(rsTes["taxa"].ToString()).ToString("N2").PadLeft(10, ' ') +
-                        " Total:" + Funcoes.decTry(rsTes["total"].ToString()).ToString("N2").PadLeft(10, ' ');
+                        " Total:" + (Funcoes.decTry(rsTes["total"].ToString()) + Funcoes.decTry(rsTes["dif"].ToString())).ToString("N2").PadLeft(10, ' ');
                         if (dif < 0 && !finaDif.ContainsKey(rec.id_finalizadora))
                         {
                             finaDif.Add(rec.id_finalizadora, dif);
-                            rec.Valor += dif;
+                            //rec.Valor += dif;
                             rec.Obs += " *Quebra: " + dif.ToString("N2");
                         }
+
                         rec.salvar(novo, cnn,trans);
                         
 
@@ -563,7 +565,7 @@ namespace visualSysWeb.dao
                         rec.entrada = Data_Abertura;
                         rec.Vencimento = Funcoes.dtTry(rsTes["vencimento"].ToString());
                         rec.taxa -= Funcoes.decTry(rsTes["taxa"].ToString());
-                        rec.Valor -= (Funcoes.decTry(rsTes["total"].ToString()) + Funcoes.decTry(rsTes["dif"].ToString()));
+                        rec.Valor -= Funcoes.decTry(rsTes["total"].ToString()) + Funcoes.decTry(rsTes["dif"].ToString());
                         decimal dif = Funcoes.decTry(rsTes["dif"].ToString());
 
                         rec.status = 1;
@@ -582,7 +584,7 @@ namespace visualSysWeb.dao
                         if (dif < 0 && !finaDif.ContainsKey(rec.id_finalizadora))
                         {
                             finaDif.Add(rec.id_finalizadora, dif);
-                            rec.Valor -= dif;
+                            //rec.Valor -= dif;
                             rec.Obs += " *Quebra: " + dif.ToString("N2");
                         }
                         rec.salvar(false, cnn, trans);

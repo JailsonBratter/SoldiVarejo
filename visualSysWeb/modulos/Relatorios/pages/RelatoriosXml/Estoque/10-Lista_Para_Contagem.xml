@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Relatorio>
+  <enderecoImg>~/img/logo.jpg</enderecoImg>
+  <cabecalho>Curva ABC Vendas</cabecalho>
+  <tipoConsulta>procedure</tipoConsulta>
+  <sql>
+    sp_Rel_Curva_ABC
+  </sql>
+
+  <filtros>
+    <filtro0>
+      <tipo>data</tipo>
+      <titulo>Data De</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>datade</campo> 
+    </filtro0>
+    <filtro1>
+      <tipo>data</tipo>
+      <titulo>Data Ate</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>dataate</campo>
+      <campofiltro></campofiltro>
+    </filtro1>
+    <filtro2>
+      <tipo>hora</tipo>
+      <titulo>Hora de</titulo>
+      <valorPadrao>00:00</valorPadrao>
+      <largura>60</largura>
+      <campo>ini_periodo</campo>
+
+    </filtro2>
+
+    <filtro3>
+      <tipo>hora</tipo>
+      <titulo>Hora ate</titulo>
+      <valorPadrao>23:59</valorPadrao>
+      <largura>60</largura>
+      <campo>fim_periodo</campo>
+    </filtro3>
+    <filtro4>
+      <tipo>combo</tipo>
+      <titulo>PDV</titulo>
+      <sql>select 'TODOS' UNION ALL Select CONVERT(VARCHAR(3),caixa) from Controle_Filial_PDV</sql>
+      <valorPadrao></valorPadrao>
+      <campo>Pdv</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro4>
+    <filtro5>
+      <tipo>combo</tipo>
+      <titulo>Ordem</titulo>
+      <lista>
+        <campo>QTDE</campo>
+        <campo>VALOR</campo>
+        <campo>RENTABILIDADE</campo>
+      </lista>
+      <campo>Ordem</campo>
+      <obrigatorio>true</obrigatorio>
+    </filtro5>
+    <filtro6>
+      <tipo>texto</tipo>
+      <titulo>N. Itens</titulo>
+      <valorPadrao>0</valorPadrao>
+      <campo>nlinhas</campo>
+      <campofiltro></campofiltro>
+      <largura>50</largura>
+    </filtro6>
+    <filtro7>
+
+      <tipo>texto</tipo>
+      <titulo>Descricao</titulo>
+      <valorPadrao></valorPadrao>
+      <campo>Descricao</campo>
+      <campofiltro></campofiltro>
+    </filtro7>
+    <filtro8>
+      <tipo>listafiltro</tipo>
+      <titulo>Grupo</titulo>
+      <sql>select Descricao_Grupo as Descri, Codigo_grupo From Grupo</sql>
+      <valorPadrao/>
+      <sqldetalhe>select descricao from grupo</sqldetalhe>
+      <campo>grupo</campo>
+      <filtropai></filtropai>
+      <campofiltro>codigo_grupo</campofiltro>
+      <camposFiltros>
+        <filtro>Descricao_grupo</filtro>
+        <filtro>codigo_grupo</filtro>
+      </camposFiltros>
+
+    </filtro8>
+    <filtro9>
+      <tipo>listafiltro</tipo>
+      <titulo>SubGrupo</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>subGrupo</campo>
+      <sql>select distinct Descricao_SubGrupo,codigo_subGrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO</sql>
+      <camposFiltros>
+        <filtro>Descricao_SubGrupo</filtro>
+        <filtro>codigo_subGrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+      
+      <preencher>
+        <filtroPreenche>
+          <filtro>8</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>8</filtropai>
+      <campofiltroPai>descricao_grupo</campofiltroPai>
+    </filtro9>
+
+    <filtro10>
+      <tipo>listafiltro</tipo>
+      <titulo>Departamento</titulo>
+      <valorPadrao></valorPadrao>
+      <largura>200</largura>
+      <campo>departamento</campo>
+      <sql>select distinct Descricao_Departamento,codigo_Departamento,descricao_subgrupo,descricao_grupo from W_BR_CADASTRO_DEPARTAMENTO </sql>
+      <preencher>
+        <filtroPreenche>
+          <filtro>9</filtro>
+          <campofiltro>3</campofiltro>
+        </filtroPreenche>
+        <filtroPreenche>
+          <filtro>8</filtro>
+          <campofiltro>4</campofiltro>
+        </filtroPreenche>
+      </preencher>
+      <sqlAutocompleta>true</sqlAutocompleta>
+      <filtropai>9</filtropai>
+      <campofiltroPai>descricao_subgrupo</campofiltroPai>
+      <camposFiltros>
+        <filtro>Descricao_Departamento</filtro>
+        <filtro>codigo_Departamento</filtro>
+        <filtro>descricao_subgrupo</filtro>
+        <filtro>descricao_grupo</filtro>
+      </camposFiltros>
+      
+    </filtro10>
+    <filtro11>
+      <tipo>listafiltro</tipo>
+      <titulo>Familia</titulo>
+      <camposFiltros>
+        <campo>Descricao_familia</campo>
+        <campo>Codigo_familia=</campo>
+      </camposFiltros>
+      <valorPadrao></valorPadrao>
+      <campo>Familia</campo>
+      <largura>200</largura>
+      <sql>select Descricao_familia,Codigo_familia from familia</sql>
+      <sqlAutocompleta>true</sqlAutocompleta>
+    </filtro11>
+  
+    
+   
+  </filtros>
+  <subtotais>
+    <sub0>
+      <index>7</index>
+    </sub0>
+    <sub1>
+      <index>8</index>
+    </sub1>
+    <sub2>
+			<index>9</index>
+		</sub2>
+    <sub3>
+      <index>10</index>
+    </sub3>
+  </subtotais>
+  <camposSemformatacao>
+    <campo>0</campo>
+    <campo>1</campo>
+    <campo>2</campo>
+  </camposSemformatacao>
+
+  <rodape>
+    Bratter e Bocco Automação Comercial
+    Av. Indianópolis, 1788 - Planalto Paulista - São Paulo - SP - 04062-002
+    Tel/Fax: (11) 5078-6121
+  </rodape>
+  
+  
+  
+  
+</Relatorio>

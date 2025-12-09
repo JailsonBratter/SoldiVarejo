@@ -3131,6 +3131,67 @@ namespace visualSysWeb.code
                 }
             }
         }
+        public static Decimal ConvertstrToDecimalCulture(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return 0;
+
+            // Remove espaços
+            valor = valor.Trim();
+
+            // Troca vírgula por ponto (para padronizar)
+            valor = valor.Replace(',', '.');
+
+            // Usa CultureInfo com ponto como separador decimal
+            var culture = CultureInfo.InvariantCulture;
+
+            // Tenta converter
+            if (decimal.TryParse(valor, NumberStyles.Any, culture, out decimal resultado))
+            {
+                return resultado;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static string DefinirDiretorio(bool dia, filialDAO filial)
+        {
+            try
+            {
+                string Diretorio = filial.diretorio_exporta;
+                if (filial.diretorio_exporta.Substring(filial.diretorio_exporta.Length - 1) != "\\")
+                {
+                    filial.diretorio_exporta += "\\";
+                }
+
+                if (dia)
+                {
+                    // Ano
+                    Diretorio += DateTime.Now.Year;
+                    if (!Directory.Exists(Diretorio))
+                        Directory.CreateDirectory(Diretorio);
+
+                    // Mês
+                    Diretorio += "\\" + String.Format("{0:00}", DateTime.Now.Month);
+                    if (!Directory.Exists(Diretorio))
+                        Directory.CreateDirectory(Diretorio);
+
+                    // Dia
+                    Diretorio += "\\" + String.Format("{0:00}", DateTime.Now.Day);
+                    if (!Directory.Exists(Diretorio))
+                        Directory.CreateDirectory(Diretorio);
+                }
+
+                return Diretorio + (filial.diretorio_exporta.Substring(filial.diretorio_exporta.Length - 1) != "\\" ? "\\" : "");
+            }
+            catch (Exception err)
+            {
+
+                throw err;
+            }
+        }
     }
 
 }
