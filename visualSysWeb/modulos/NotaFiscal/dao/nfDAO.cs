@@ -6418,6 +6418,34 @@ namespace visualSysWeb.dao
                 return false;
             }
         }
-
+        public bool atualizaIDNFe()
+        {
+            SqlConnection conn = Conexao.novaConexao();
+            SqlTransaction tran = conn.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted);
+            try
+            {
+                string sql = "UPDATE NF SET NF.ID ='" + this.id.ToString().Replace("NFe","") + "' WHERE NF.FILIAL='" + this.Filial + "' AND NF.Cliente_Fornecedor = '" + this.Cliente_Fornecedor + "' AND ";
+                sql += " NF.codigo ='" + this.Codigo + "' AND NF.Tipo_NF = " + this.Tipo_NF.ToString() + " AND NF.Serie = " + this.serie.ToString();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Transaction = tran;
+                cmd.ExecuteNonQuery();
+                tran.Commit();
+                return true;
+            }
+            catch (Exception err)
+            {
+                tran.Rollback();
+                throw err;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                    conn.Dispose();
+                    SqlConnection.ClearPool(conn);
+                }
+            }
+        }
     }
 }

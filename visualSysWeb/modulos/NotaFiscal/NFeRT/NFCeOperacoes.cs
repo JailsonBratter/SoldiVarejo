@@ -58,7 +58,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             CarregarConfiguracoes();
             arquivoXML = Loja.diretorio_exporta;
         }
-        public NNFe criarNFCe(nfDAO nfDAO, string tipo_pagamento = "", bool obrigacontingencia = false)
+        public NFe.Classes.nfeProc criarNFCe(nfDAO nfDAO, string tipo_pagamento = "", bool obrigacontingencia = false)
         {
             //Numero de lote e número de NFe
             Random rnd = new Random();
@@ -135,9 +135,6 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         finNFe = nfDAO.finNFe, //
                         indFinal = nfDAO.indFinal,
                         indPres = nfDAO.indPres, //Indicador de presença
-                        indIntermed = nfDAO.indIntermed, //Indicador de intermediador/marketplace
-                                                         //0 = Operação sem intermediador(em site ou plataforma própria)
-                                                         //1 = Operação em site ou plataforma de terceiros (intermediadores/ marketplace)
                         natOp = nfDAO.NtOperacao.Descricao,
                     },
                     detalhes = dadosNFCe.det,
@@ -176,6 +173,15 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     throw new Exception("Para NFe COMPLEMENTAR ou DEVOLUÇÃO, é obrigatório uma NFe REFERENCIADA.");
                 }
 
+                if (nFe.infNFe.identificacao.indPres == 2)
+                {
+                    nFe.infNFe.identificacao.indIntermed = Tipos.IndicadorIntermediador.iiSitePlataformaTerceiros; //Indicador de intermediador/marketplace
+                                                         //0 = Operação sem intermediador(em site ou plataforma própria)
+                }
+                else
+                {
+                    nFe.infNFe.identificacao.indIntermedSpecified = false;
+                }
 
                 //Checar CPF
                 if (nfDAO.objCliente.CNPJ.Equals(""))
@@ -200,6 +206,14 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 }
 
                 nFe.infNFe.Id = "NFe" + FuncoesNFe.chaveNFe(nFe.infNFe.identificacao);
+
+                //Salvando ID no DB
+                nfDAO.id = nFe.infNFe.Id.Replace("NFe", "");
+                if (!nfDAO.atualizaIDNFe())
+                {
+                    throw new Exception("Não foi possível gravar o ID: " + nFe.infNFe.Id + " no Banco de Dados");
+                }
+
                 nFe.infNFe.identificacao.cDV = nFe.infNFe.Id.Substring(nFe.infNFe.Id.Length - 1);
                 if (Contingencia == 1)
                 {
@@ -251,11 +265,65 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 
                         var xmlFinal = procNfe.ObterXmlString();
                         var chave = NFeEnvio.infNFe.Id.Replace("NFe", "");
-                        nfDAO.id = NFeEnvio.infNFe.Id;
+                        nfDAO.id = NFeEnvio.infNFe.Id.Replace("NFe","").Replace("NFCe","");
+
+                        //A partir deste ponto utiliza-se as DLL NFe e DFe.
+                        var readerProc = new StringReader(xmlFinal);
+                        var desserializadorProc = new XmlSerializer(typeof(NFe.Classes.nfeProc));
+                        var NFeRetornoProc = ((NFe.Classes.nfeProc)desserializadorProc.Deserialize(readerProc));
 
                         //nfDAO.EditarCupom(nfDAO);
-                        File.WriteAllText(Funcoes.DefinirDiretorio(true, Loja) + $"NFe{chave}-procNFe.xml", xmlFinal);
+                        string arquivoAutorizado = Funcoes.DefinirDiretorio(true, Loja);
+                        arquivoAutorizado += (arquivoAutorizado.Substring(arquivoAutorizado.Length - 1) != "\\" ? "\\" : "");
+
+                        File.WriteAllText( arquivoAutorizado + $"NFe{chave}-procNFe.xml", xmlFinal);
+
+                        //Processo para atualização de status, estoque no DB ocorre no evento abaixo.
+                        try
+                        {
+                            if (nfDAO.numeroProtocolo.Equals(""))
+                            {
+                                nfDAO.numeroProtocolo = NFeRetornoProc.protNFe.infProt.nProt.ToString();
+                            }
+                            nfDAO.id = NFeRetornoProc.NFe.infNFe.Id.Replace("NFe", "").Replace("NFCe", "");
+                            nfDAO.status = "AUTORIZADO";
+                            nfDAO.Emissao = NFeRetornoProc.protNFe.infProt.dhRecbto.Date;
+                            nfDAO.dataHoraLancamento = NFeRetornoProc.protNFe.infProt.dhRecbto.DateTime;
+                            if (nfDAO.Data <= nfDAO.Emissao)
+                            {
+                                nfDAO.Data = nfDAO.Emissao;
+                            }
+                            //Atualiza banco de dados e movimenta estoque se a natureza solicita.
+
+                            nfDAO.AtualizarStatus();
+                        }
+                        catch
+                        {
+
+                        }
+
+                        //Incluir processo para salvar o XML
+                        Documento_EletronicoDAO docE = new Documento_EletronicoDAO();
+                        if (!docE.exists(nfDAO.id))
+                        {
+                            docE.filial = usr.getFilial();
+                            docE.tipo = (nfDAO.Tipo_NF.Equals("1") ? 2 : 3);
+                            docE.data = nfDAO.Emissao;
+                            docE.caixa = 0;
+                            docE.documento = nfDAO.Codigo.Trim();
+                            docE.id_chave = nfDAO.id;
+                            docE.id_chave_cancelamento = "";
+                            docE.nro_serie_equipamento = "";
+                            docE.operador = "0";
+                            docE.cfe_xml = xmlFinal;
+                            docE.cfe_xml_cancelamento = "";
+                            docE.insert();
+                        }
+
+
                         //MessageBox.Show($"NFe: {chave} emitida com sucesso!");
+
+                        return NFeRetornoProc;
                     }
                     else
                     {
@@ -265,10 +333,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 else
                 {
                     throw new Exception(StatusOK.xMotivo);
-
                 }
-
-                return nFe;
             }
             catch (Exception ex)
             {
@@ -841,7 +906,9 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 XmlSerializer serializer = new XmlSerializer(typeof(NNFe));
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://www.portalfiscal.inf.br/nfe");
-                arquivoXML = Funcoes.DefinirDiretorio(false, Loja ) + nfe.infNFe.Id + ".xml";
+                arquivoXML = Funcoes.DefinirDiretorio(false, Loja);
+
+                arquivoXML += (arquivoXML.Substring(arquivoXML.Length -1) == "\\" ? "" : "\\") + nfe.infNFe.Id + ".xml";
 
                 string xml;
 

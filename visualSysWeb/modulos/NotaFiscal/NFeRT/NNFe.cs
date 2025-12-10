@@ -14,6 +14,7 @@ using System.Globalization;
 using NFe.Utils.Excecoes;
 using visualSysWeb.dao;
 using visualSysWeb.code;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Tipos;
 
 namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 {
@@ -99,9 +100,13 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         public int finNFe { get; set; } = 1; //1=NFe-NFCe normal.
         public int indFinal { get; set; } = 1; //Consumidor final
         public int indPres { get; set; } = 1; //Operação presencial
+        [XmlElement("indIntermed")]
+        public IndicadorIntermediador? indIntermed { get; set; } //Não há intermediador
+        [XmlIgnore]
+        public bool indIntermedSpecified { get; set; }
+
         public int procEmi { get; set; } = 0; //Emissão de NF-e/NFC-e com aplicativo do contribuinte
         public string verProc { get; set; } = "NF-e 1.0";
-        public int indIntermed { get; set; } = 0; //Não há intermediador
         //[XmlElement("dhCont", Order = 20)]
         //public string DhContFormatado
         //{
@@ -119,10 +124,76 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         }
         public string xJust { get; set; }
 
-
+        /// <summary>
+        ///     BA01 - Informação de Documentos Fiscais referenciados
+        /// </summary>
+        [XmlElement("NFref")]
+        public List<NFref> NFref { get; set; }
 
     }
-    #endregion 
+    //Nota Fiscal Referenciada
+    public class NFref
+    {
+        /// <summary>
+        ///     BA02 - Chave de acesso da NF-e referenciada
+        /// </summary>
+        public string refNFe { get; set; }
+
+        /// <summary>
+        ///     BA10 - Informações da NF de produtor rural referenciada
+        /// </summary>
+        public refNFP refNFP { get; set; }
+
+        /// <summary>
+        ///     BA19 - Chave de acesso do CT-e referenciado
+        /// </summary>
+        public string refCTe { get; set; }
+
+    }
+    //Nota Fiscal Produtor Rural referenciada
+    public class refNFP
+    {
+        /// <summary>
+        ///     BA11 - Código da UF do emitente
+        /// </summary>
+        public Estado cUF { get; set; }
+
+        /// <summary>
+        ///     BA12 - Ano e Mês de emissão da NF-e
+        /// </summary>
+        public string AAMM { get; set; }
+
+        /// <summary>
+        ///     BA13 - CNPJ do emitente
+        /// </summary>
+        public string CNPJ { get; set; }
+
+        /// <summary>
+        ///     BA14 - CPF do emitente
+        /// </summary>
+        public string CPF { get; set; }
+
+        /// <summary>
+        ///     BA15 - IE do emitente
+        /// </summary>
+        public string IE { get; set; }
+
+        /// <summary>
+        ///     BA16 - Modelo do Documento Fiscal
+        /// </summary>
+        public string mod { get; set; }
+
+        /// <summary>
+        ///     BA17 - Série do Documento Fiscal
+        /// </summary>
+        public int serie { get; set; }
+
+        /// <summary>
+        ///     BA18 - Número do Documento Fiscal
+        /// </summary>
+        public int nNF { get; set; }
+    }
+    #endregion
     #region EMITENTE (emit)
     public class Emitente
     {

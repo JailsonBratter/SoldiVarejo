@@ -3080,11 +3080,57 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             try
             {
 
-
+                //Objeto para emissão da NFe
                 nfDAO nf = (nfDAO)Session["obj"];
                 xmlNFE xml = new xmlNFE(nf);
-
                 String ResultadoXML = "";
+
+                User usr = (User)Session["user"];
+                NFCeOperacoes nNFe = new NFCeOperacoes(usr);
+                var notaEmitida = nNFe.criarNFCe(nf);
+
+                if (notaEmitida != null)
+                {
+
+                    ResultadoXML = "NFe " + notaEmitida.NFe.infNFe.Id + "\r\nAutorizada:" + notaEmitida.protNFe.infProt.nProt.ToString();
+
+                    Session.Remove("resultadoXml");
+                    Session.Add("resultadoXml", ResultadoXML);
+
+                    //Retorno.
+                    String resultado = (String)Session["resultadoXml"];
+
+
+                    if (resultado != null)
+                    {
+                        if (resultado.Contains("Carta Correcao - "))
+                            ExibirCorrecao();
+                        lblResultadoXML.Visible = true;
+                        lblResultadoXML.Text = resultado;
+                        TimerXml.Enabled = true;
+                        lblResultadoXML.ForeColor = System.Drawing.Color.Blue;
+
+                        if (nf.status.Equals("AUTORIZADO"))
+                        {
+                            //Gravar NFe na tabela documentos eletronicos.
+
+                            RedirectNovaAba("~/modulos/notafiscal/pages/DanfeReport.aspx?cliente_Fornecedor=" + nf.Cliente_Fornecedor + "&" +
+                                                            "numero=" + nf.Codigo + "&" +
+                                                            "tipoNf=" + nf.Tipo_NF + " &" +
+                                                            "tipoOrigem=N&" +
+                                                            "enviaEmail=true");
+                        }
+                        Session.Remove("resultadoXml");
+
+                        carregarDados();
+
+                    }
+                }
+
+
+                return;
+
+
 
                 String aborta = (String)Session["aborta"];
                 if (aborta != null)
@@ -3100,17 +3146,6 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                     switch (nf.status)
                     {
                         case "DIGITACAO":
-
-                            User usr = (User)Session["user"];
-                            NFCeOperacoes nNFe = new NFCeOperacoes(usr);
-                            nNFe.criarNFCe(nf);
-
-
-                            return;
-
-
-
-
 
 
                             bool validarArquivo = !nf.usr.filial.tipo_certificado.Equals("A3");
@@ -3698,8 +3733,8 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                         System.Threading.Thread.Sleep(2000);
                         TimerXml.Interval = 450;
                         TimerXml.Enabled = true;
-                        System.Threading.Thread th = new System.Threading.Thread(gravarXml);
-                        th.Start();
+                        //System.Threading.Thread th = new System.Threading.Thread(gravarXml);
+                        //th.Start();
 
                     }
                     else
@@ -3777,14 +3812,14 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             }
             modalXml.Show();
 
-            if (aborta != null)
-            {
-                TimerXml.Enabled = false;
-                System.Threading.Thread th = new System.Threading.Thread(gravarXml);
-                th.Start();
-                modalXml.Hide();
+            //if (aborta != null)
+            //{
+            //    TimerXml.Enabled = false;
+            //    System.Threading.Thread th = new System.Threading.Thread(gravarXml);
+            //    th.Start();
+            //    modalXml.Hide();
 
-            }
+            //}
         }
 
         protected void btnConfirmaExclusao_Click(object sender, ImageClickEventArgs e)
@@ -4699,7 +4734,10 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                         cpItem.numero = item.Cells[2].Text;
                         cpItem.caixa = item.Cells[3].Text;
                         cpItem.dt = Funcoes.dtTry(item.Cells[4].Text);
-                        cpItem.cliente = txtFiltroCupomVarios.Text.Replace(".","").Replace("/","").Replace("-","");
+
+                        var codigoCli = item.Cells[1].Text.ToString().Split('-')[0];
+
+                        cpItem.cliente = codigoCli; // txtFiltroCupomVarios.Text.Replace(".","").Replace("/","").Replace("-","");
                         imp.Add(cpItem);
                     }
 

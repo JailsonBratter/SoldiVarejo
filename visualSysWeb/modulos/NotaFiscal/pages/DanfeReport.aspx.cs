@@ -30,6 +30,8 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             String strArquivo = "";
             String strPasta = "";
             String strPath = "";
+            string diretorioGravacao = usr.filial.diretorio_exporta;
+
             if (Request.Params["soEmail"] != null)
             {
                 soEmail();
@@ -180,7 +182,8 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 // * como IIS não aceita abrir um aquivo que não esteja localizado na maquina servidor abro o arquivo da Danfe que foi gerado no servidor
                 if (strStatus.Equals("AUTORIZADO") && tipoNf != 3)
                 {
-                    if (File.Exists(usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"))
+                    diretorioGravacao += (diretorioGravacao.Substring(diretorioGravacao.Length - 1) == "\\" ? "" : "");
+                    if (File.Exists(diretorioGravacao +  dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"))
                     {
                         danfeGerado = true;
                     }
@@ -216,7 +219,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                     {
                         strPasta = Server.MapPath("~/modulos/notafiscal/pages/" + dtEmissao.ToString("yyyyMM"));
                         strArquivo = strPasta + "/" + strId + "_danfe.pdf";
-                        strPath = "~/modulos/notafiscal/pages/" + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"; ;
+                        strPath = "~/modulos/notafiscal/pages/" + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"; 
                     }
 
                   
@@ -231,14 +234,14 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
                         if (strStatus.Equals("AUTORIZADO"))
                         {
-                            if (!Directory.Exists(usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM")))
+                            if (!Directory.Exists(diretorioGravacao + dtEmissao.ToString("yyyyMM")))
                             {
-                                Directory.CreateDirectory(usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM"));
+                                Directory.CreateDirectory(diretorioGravacao + dtEmissao.ToString("yyyyMM"));
                             }
 
-                            if (!File.Exists(usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"))
+                            if (!File.Exists(diretorioGravacao+ dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf"))
                             {
-                                File.Copy(strArquivo, usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf");
+                                File.Copy(strArquivo, diretorioGravacao + dtEmissao.ToString("yyyyMM") + "/" + strId + "_danfe.pdf");
                             }
                         }
 
@@ -336,7 +339,9 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
         {
             String emailEnvio = "";
             User usr = (User)Session["User"];
-            String caminhoAutorizado = usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + dtEmissao.ToString("yyyyMM") + "/" + strId;
+            string diretorioGravacao = usr.filial.diretorio_exporta;
+            diretorioGravacao += (diretorioGravacao.Substring(diretorioGravacao.Length - 1) == "\\" ? "" : "\\");
+            String caminhoAutorizado = diretorioGravacao + dtEmissao.ToString("yyyyMM") + "/" + strId;
 
             String strNumeroNota = "";
             String strSerie = "";

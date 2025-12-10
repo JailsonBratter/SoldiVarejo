@@ -2120,6 +2120,7 @@
     <Compile Include="modulos\NotaFiscal\NFeRT\NNFe.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\NFCeHelper.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\NFCeOperacoes.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\Tipos\Tipos.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\Valor.cs" />
     <Compile Include="modulos\NotaFiscal\pages\CTeEntrada.aspx.cs">
       <DependentUpon>CTeEntrada.aspx</DependentUpon>

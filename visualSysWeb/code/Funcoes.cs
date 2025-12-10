@@ -3178,13 +3178,13 @@ namespace visualSysWeb.code
                     if (!Directory.Exists(Diretorio))
                         Directory.CreateDirectory(Diretorio);
 
-                    // Dia
-                    Diretorio += "\\" + String.Format("{0:00}", DateTime.Now.Day);
-                    if (!Directory.Exists(Diretorio))
-                        Directory.CreateDirectory(Diretorio);
+                    //// Dia
+                    //Diretorio += "\\" + String.Format("{0:00}", DateTime.Now.Day);
+                    //if (!Directory.Exists(Diretorio))
+                    //    Directory.CreateDirectory(Diretorio);
                 }
 
-                return Diretorio + (filial.diretorio_exporta.Substring(filial.diretorio_exporta.Length - 1) != "\\" ? "\\" : "");
+                return Diretorio + (Diretorio.Substring(Diretorio.Length - 1) != "\\" ? "\\" : "");
             }
             catch (Exception err)
             {
