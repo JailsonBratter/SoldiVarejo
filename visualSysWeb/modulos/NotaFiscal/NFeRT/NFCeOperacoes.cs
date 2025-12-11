@@ -34,6 +34,8 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using visualSysWeb.dao;
 using visualSysWeb.code;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Cobranca;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Transporte;
 
 namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 {
@@ -71,10 +73,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             List<nf_itemDAO> itens = nfDAO.NfItens;
 
             //Montar DETALHES e TOTAIS do NFCe
-            var dadosNFCe = montarNFe(itens);
+            var dadosNFCe = montarNFe(itens, nfDAO);
             //Montar destinatario
             var dadosDest = montarDestinatario(nfDAO);
-
+            //Montar pagamento
+            var dadosPagamento = montarPagamento(nfDAO);
 
             //Criar objeto NFCe
             NNFe nFe = new NNFe();
@@ -139,21 +142,8 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     },
                     detalhes = dadosNFCe.det,
                     total = dadosNFCe.total,
-                    transporte = new Transporte
-                    {
-                        modFrete = 9
-                    },
-                    pag = new Pagamento
-                    {
-                        DetPag = new List<DetPag>
-                        {
-                            new DetPag {
-                                indPag=0,
-                                tPag=tipo_pagamento,
-                                vPag = dadosNFCe.total.ICMSTot.vNF
-                            }
-                        }
-                    },
+                    transporte = montarTransporte(nfDAO),
+                    pag = dadosPagamento,
                     infAdic = new informacaoAdicional
                     {
                         infCpl = "Tributos Aprox." + dadosNFCe.total.ICMSTot.vTotTribFormatado + " Fonte:IBPT",
@@ -167,6 +157,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         fone = "1150786121"
                     }
                 };
+                //Regras para cobrança
+                if (!nfDAO.tPag.Equals("90"))
+                {
+                    nFe.infNFe.cobr = montarCobranca(nfDAO);
+                }
                 //Regras para nota fiscal referneiciada
                 if ((nFe.infNFe.identificacao.finNFe == 2 || nFe.infNFe.identificacao.finNFe == 4) && nfDAO.NfReferencias.Count <= 0)
                 {
@@ -342,7 +337,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             }
         }
 
-        private (List<Detalhamento> det, Total total) montarNFe(List<nf_itemDAO> itens)
+        private (List<Detalhamento> det, Total total) montarNFe(List<nf_itemDAO> itens, nfDAO nf)
         {
             List<Detalhamento> detalhes = new List<Detalhamento>();
             Total total = new Total();
@@ -389,14 +384,43 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         vOutro = row.despesas,
                         indTot = 1,
                     };
-
+                    //CEST
                     if (!row.CEST.Equals("0"))
                     {
                         produto.CEST = row.CEST.ToString().PadLeft(7, '0');
                     }
+                    //Frete
+                    if (row.Frete > 0)
+                    {
+                        produto.vFrete = row.Frete;
+                    }
+                    //Desconto
+                    if (row.vDesconto_valor > 0)
+                    {
+                        produto.vDesc = row.vDesconto_valor;
+                    }
+                    //Outros
+                    if (row.despesas > 0)
+                    {
+                        produto.vOutro = row.despesas;
+                    }
+                    //Referenciar pedido de compra
+                    if (!row.Ordem_compra.Trim().Equals(""))
+                    {
+                        string strOrdem = row.pedidoItemNumero.Trim();
+                        if (strOrdem.Length > 15)
+                        {
+                            produto.xPed = strOrdem.Substring(0, 15);
+                        }
+                        else
+                        {
+                            produto.xPed = strOrdem;
+                        }
+                        produto.nItemPed = row.pedidoItemSequencia.Trim();
+                    }
                     detItem.produto = produto;
 
-
+                    #region Imposto
                     Imposto imposto = new Imposto();
                     //Valor total do imposto
                     if (row.TotTrib > 0)
@@ -409,6 +433,116 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     imposto.ICMS = retornaICMS(row.origem.ToString(), row.indice_St.ToString(), row.aliquota_icms, produto.vProd - produto.vDesc + produto.vOutro);
                     imposto.PIS = retonaPIS(row.CSTPIS, produto.vProd - produto.vDesc + produto.vOutro - vValorICMS);
                     imposto.COFINS = retornaCOFINS(row.CSTCOFINS, produto.vProd - produto.vDesc + produto.vOutro - vValorICMS);
+
+                    //ICMSUFDest
+                    if (!(Loja.ICMSSN.Equals("102") && Loja.CRT.ToString().Equals("1")))
+                    {
+                        //Não é um fornecedor e a NFe é destinada a um consumidor final e a natureza de operação permite DIFAL
+                        if (!nf.DestFornecedor && nf.indFinal == 1 && nf.NtOperacao.Difal)
+                        {
+                            //UF de origem é diferente da UF de destino e o cliente final não é contribuinte de ICMS
+                            if ((Loja.UF.Trim().ToUpper() != nf.objCliente.UF.Trim().ToUpper())) // && !cli.indIEDest.ToString().Equals("1"))
+                            {
+                                // Tratamento para o novo grupo  
+                                // Grupo de Tributação do ICMS para a UF de destino
+                                decimal vBCUFDest = 0; //Valor da BC do ICMS na UF de destino
+                                decimal pFCPUFDest = 0; // Percentual do ICMS relativo ao fundo de Combate à Pobreza (FCP) da UF de destino
+                                decimal pICMSUFDest = 0; // Aliquota interna da UF de destino
+                                decimal pICMSInter = 0; /*Alíquota interestadual das UF envolvidas
+                                - 4% alíquota interestadual para produtos importados;
+                                - 7% para os Estados de origem do Sul e Sudeste (exceto ES), destinado para os Estados do Norte, Nordeste, CentroOeste e Espírito Santo;
+                                - 12% para os demais casos.*/
+                                decimal pICMSInterPart = 0; /*Percentual de ICMS Interestadual para a UF de destino:
+                                    - 40% em 2016;
+                                    - 60% em 2017;
+                                    - 80% em 2018;
+                                    - 100% a partir de 2019*/
+                                decimal vFCPUFDest = 0; //Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino
+                                decimal vICMSUFDest = 0; //Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo ao Fundo de Combate à Pobreza naquela UF.
+                                decimal vICMSUFRemet = 0;//Valor do ICMS Interestadual para a UF do remetente. Nota: A partir de 2019, este valor será zero
+
+                                ClienteDAO cli = nf.objCliente; //new ClienteDAO(nf.Cliente_Fornecedor, new User());
+                                aliquota_imp_estadoDAO AliqInter = new aliquota_imp_estadoDAO(cli.UF.Trim().ToUpper(), row.NCM, null);
+
+                                vBCUFDest = row.vBaseICMS;
+                                //pICMSUFDest = item.aliquota_ICMS_Destino;
+                                pICMSUFDest = AliqInter.icms_interestadual;
+                                //Aliquota interestadual
+                                switch (cli.UF.Trim().ToUpper())
+                                {
+                                    case "RS":
+                                    case "PR":
+                                    case "SC":
+                                    case "MG":
+                                    case "RJ":
+                                        pICMSInter = row.aliquota_icms;
+                                        break;
+                                    default:
+                                        pICMSInter = row.aliquota_icms;
+                                        break;
+                                }
+                                //Percentual de participação
+                                switch (DateTime.Today.Year)
+                                {
+                                    case 2016:
+                                        pICMSInterPart = 40;
+                                        break;
+                                    case 2017:
+                                        pICMSInterPart = 60;
+                                        break;
+                                    case 2018:
+                                        pICMSInterPart = 80;
+                                        break;
+                                    default:
+                                        pICMSInterPart = 100;
+                                        break;
+                                }
+                                vFCPUFDest = 0;
+
+                                if (pICMSUFDest <= pICMSInter)
+                                {
+                                    vICMSUFDest = 0;
+                                    vICMSUFRemet = 0;
+                                }
+                                else
+                                {
+
+                                    UfPobrezaDAO uf = UfPobrezaDAO.objUFPobreza(cli.UF.Trim().ToUpper());
+                                    if (uf.calc_Fora == 1)
+                                    {
+                                        vICMSUFDest = (vBCUFDest * ((pICMSUFDest - pICMSInter) / 100));
+                                    }
+                                    else //(uf.calc_Fora == 0)
+                                    {
+                                        //vICMSUFDest = (vBCUFDest * ((pICMSUFDest - pICMSInter) / 100)) * (pICMSInterPart / 100);
+                                        decimal valorBCUFDest = ((vBCUFDest - (vBCUFDest * (pICMSInter / 100))) / ((100 - pICMSUFDest - AliqInter.porc_combate_pobresa) / 100));
+                                        vICMSUFDest = row.valor_Difal_Item; //   (((vBCUFDest - (vBCUFDest * (pICMSInter / 100))) / ((100 - pICMSUFDest) / 100)) * (pICMSUFDest / 100)) - (vBCUFDest * (pICMSInter / 100));
+                                        vBCUFDest = valorBCUFDest;
+                                        vICMSUFRemet = 0; // (vBCUFDest * ((pICMSUFDest - pICMSInter) / 100)) - vICMSUFDest;
+
+                                        pFCPUFDest = AliqInter.porc_combate_pobresa;
+                                        vFCPUFDest = row.vFCP;
+
+                                    }
+                                    total.ICMSTot.vFCPUFDest += vFCPUFDest;
+                                    total.ICMSTot.vICMSUFDest += vICMSUFDest;
+                                    total.ICMSTot.vICMSUFRemet += vICMSUFRemet;
+                                }
+                                imposto.ICMSUFDest = new ICMSUFDest
+                                {
+                                    vBCUFDest = vBCUFDest,
+                                    pFCPUFDest = pFCPUFDest,
+                                    pICMSUFDest = pICMSUFDest,
+                                    pICMSInter = pICMSInter,
+                                    pICMSInterPart = pICMSInterPart,
+                                    vFCPUFDest = vFCPUFDest,
+                                    vICMSUFDest = vICMSUFDest,
+                                    vICMSUFRemet = vICMSUFRemet
+                                };
+                            }
+                        }
+                    }
+
 
                     //Dados para reforma tributária
                     if (Loja.CRT.ToString().Equals("3"))
@@ -427,7 +561,19 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     }
 
                     detItem.Imposto = imposto;
+                    #endregion
+                    #region impostoDevol
+                    if (row.vIPIDevol > 0)
+                    {
+                        impostoDevol impostoDevol = new impostoDevol();
+                        impostoDevol.pDevol = row.pDevol;
+                        impostoDevol.IPI = new IPIDevolvido
+                        {
+                            vIPIDevol = row.vIPIDevol
+                        };
+                    }
 
+                    #endregion
                     if (int.Parse(row.CSTPIS.ToString()) == 1)
                     {
                         total.ICMSTot.vPIS += imposto.PIS.PISAliq.vPIS;
@@ -1148,6 +1294,104 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             return dest;
         }
 
+        public cobr montarCobranca(nfDAO nf)
+        {
+            cobr cobr = new cobr();
+            cobr.fat = new fat
+            {
+                nFat = nf.Codigo.Trim(),
+                vOrig = nf.Total,
+                vDesc = 0,
+                vLiq = nf.Total
+            };
+            if (nf.tPag.Equals("14") || nf.tPag.Equals("15"))
+            {
+                cobr.dup = new List<dup>();
+                int i = 1;
+                foreach (nf_pagamentoDAO pg in nf.NfPagamentos)
+                {
+                    dup dupl = new dup();
+                    dupl.nDup = i.ToString().PadLeft(3, '0');
+                    dupl.dVenc = pg.Vencimento;
+                    dupl.vDup = pg.Valor;
+                    cobr.dup.Add(dupl);
+                    i++;
+                }
+            }
+            return cobr;
+        }
+        public Pagamento montarPagamento(nfDAO nf)
+        {
+            Pagamento pgto = new Pagamento();
+            pgto.DetPag = new List<DetPag>(); //Matriz de detalhamento de pagamento
+            
+            DetPag detPag = new DetPag(); //Detalhamento para cada pagamento
+            string indPag = nf.pagamentoAvista(); //Definição se o pgto é avista ou a prazo.
+            if (nf.NfPagamentos.Count > 0)
+            {
+                detPag.indPag = int.Parse(indPag);
+            }
+            detPag.tPag = nf.tPag;
+            detPag.vPag = (nf.tPag == "90" ? 0 : nf.TotalPag());
+
+            //Caso o pagamento seja 03-Cartão de C´redito; 04-Cartão de Débito ou 17-Pagamento Instantâeneo (PIX)
+            if (nf.tPag.Equals("03") || nf.tPag.Equals("04") || nf.tPag.Equals("17"))
+            {
+                detPag.Card = new Card
+                {
+                    tpIntegra = "2",
+                    CNPJ = nf.CNPJPagamento
+                };
+            }
+            pgto.DetPag.Add(detPag);
+            return pgto;
+        }
+        public transp montarTransporte(nfDAO nf)
+        {
+            transp transp = new transp();
+            if (nf.tipo_frete.Equals("9"))
+            {
+                transp.modFrete = 9;
+            }
+            else
+            {
+                transp.modFrete = int.Parse(nf.tipo_frete);
+                transp.transporta = new transporta();
+                if (nf.cnpjTransportadora.Trim().Length == 14)
+                {
+                    transp.transporta.CNPJ = nf.cnpjTransportadora.Trim();
+                }
+                else
+                {
+                    transp.transporta.CPF = nf.cnpjTransportadora.Trim();
+                }
+                transp.transporta.xNome = nf.nome_transportadora.Trim();
+                //Endereço
+                if (!nf.endereco_transportadora.Equals(""))
+                {
+                    transp.transporta.xEnder = nf.endereco_transportadora.Trim();
+                }
+                //Municipio
+                if (!nf.municipio_transportadora.Trim().Equals(""))
+                {
+                    transp.transporta.xMun = nf.municipio_transportadora.Trim();
+                }
+                //UF
+                if (!nf.estado_transportadora.Trim().Equals(""))
+                {
+                    transp.transporta.UF = nf.estado_transportadora.Trim().ToUpper();
+                }
+                transp.vol = new List<vol>();
+                vol volumes = new vol();
+
+                volumes.qVol = Funcoes.intTry(nf.qtde.ToString());
+                volumes.esp = nf.especie;
+                volumes.pesoL = nf.peso_liquido;
+                volumes.pesoB = nf.peso_bruto;
+                transp.vol.Add(volumes);
+            }
+            return transp;
+        }
     }
 
 

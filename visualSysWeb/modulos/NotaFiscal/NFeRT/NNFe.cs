@@ -15,6 +15,8 @@ using NFe.Utils.Excecoes;
 using visualSysWeb.dao;
 using visualSysWeb.code;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Tipos;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Cobranca;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Transporte;
 
 namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 {
@@ -52,7 +54,12 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         public Total total { get; set; }
 
         [XmlElement("transp")]
-        public Transporte transporte { get; set; }
+        public transp transporte { get; set; }
+        /// <summary>
+        ///     Y01 - Grupo Cobrança
+        /// </summary>
+        [XmlElement("cobr")]
+        public cobr cobr { get; set; }
 
         [XmlElement("pag")]
         public Pagamento pag { get; set; }
@@ -254,6 +261,8 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         public Produto produto { get; set; }
         [XmlElement("imposto")]
         public Imposto Imposto { get; set; }
+        [XmlElement("impostoDevol")]
+        public impostoDevol ImpostoDevol { get; set; }
     }
 
     public class Produto
@@ -330,6 +339,16 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             get => (vOutro > 0 ? vOutro.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) : null);
             set => vOutro = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
         }
+        [XmlIgnore]
+        public decimal vFrete { get; set; } // Valor do desconto
+        [XmlElement("vFrete")]
+        public string vFreteFormatado
+        {
+            get => (vFrete > 0 ? vOutro.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) : null);
+            set => vFrete = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        public string xPed { get; set; }
+        public string nItemPed { get; set; }
     }
     #region IMPOSTO
     public class Imposto
@@ -348,10 +367,12 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         public PIS PIS { get; set; }
         [XmlElement("COFINS")]
         public COFINS COFINS { get; set; }
+        [XmlElement("ICMSUFDest")]
+        public ICMSUFDest ICMSUFDest { get; set; } //Informação do Imposto devolvido
         [XmlElement("IS")]
-        public IS IS { get; set; }
+        public IS IS { get; set; } //Informação do Imposto Seletivo
         [XmlElement("IBSCBS")]
-        public IBSCBS IBSCBS { get; set; }
+        public IBSCBS IBSCBS { get; set; } //Informação do Imposto Sobre Bens e Serviços e o Imposto Sobre Contribuições
 
     }
     #region ICMS
@@ -1549,6 +1570,46 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             set => vICMSDeson = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
         }
 
+        //**
+        // Inicio Apenas qdo houver DIFAL
+        //
+
+        [XmlIgnore]
+        public decimal vFCPUFDest { get; set; } = 0m;
+        [XmlElement("vFCPUFDest")]
+        public string vFCPUFDestFormatado
+        {
+            get => vFCPUFDest.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            set => vFCPUFDest = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        [XmlIgnore]
+        public bool vFCPUFDestSpecified { get ; set; }
+
+        [XmlIgnore]
+        public decimal vICMSUFDest { get; set; } = 0m;
+        [XmlElement("vICMSUFDest")]
+        public string vICMSUFDestFormatado
+        {
+            get => vICMSUFDest.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            set => vICMSUFDest = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        [XmlIgnore]
+        public bool vICMSUFDestSpecified { get; set; }
+
+        [XmlIgnore]
+        public decimal vICMSUFRemet { get; set; } = 0m;
+        [XmlElement("vICMSUFRemet")]
+        public string vICMSUFRemetFormatado
+        {
+            get => vICMSUFRemet.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            set => vICMSUFRemet = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        [XmlIgnore]
+        public bool vICMSUFRemetSpecified { get; set; }
+        
+        //** Término DIFAL
+
+
         [XmlIgnore]
         public decimal vFCP { get; set; } = 0m;
         [XmlElement("vFCP")]
@@ -1703,30 +1764,34 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         }
     }
     #endregion
-    #region TRANSPORTE (transp)
-    public class Transporte
-    {
-        public int modFrete { get; set; } = 9; //sem frete
-    }
-    #endregion
     #region PAGAMENTO (pag)
     public class Pagamento
     {
         [XmlElement("detPag")]
         public List<DetPag> DetPag { get; set; }
-        [XmlIgnore]
-        public decimal vTroco { get; set; }
-        [XmlElement("vTroco")]
-        public string vTrocoFormatado
-        {
-            get => vTroco.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-            set => vTroco = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
-        }
+        //[XmlIgnore]
+        //public decimal? vTroco { get; set; }
+        //[XmlElement("vTroco")]
+        //public string vTrocoFormatado
+        //{
+        //    get => vTroco.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        //    set => vTroco = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        //}
+        //[XmlIgnore]
+        //public bool vTrocoSpecified
+        //{
+        //    get { return vTroco.HasValue; }
+        //}
     }
 
     public class DetPag
     {
-        public int indPag { get; set; } = 0; // Indicador da forma de pagamento (0=pagamento à vista; 1=pagamento a prazo)
+        public int? indPag { get; set; } // Indicador da forma de pagamento (0=pagamento à vista; 1=pagamento a prazo)
+        [XmlIgnore]
+        public bool indPagSpecified
+        {
+            get { return indPag.HasValue; }
+        }
         public string tPag { get; set; }   // Meio de pagamento (01=Dinheiro, 02=Cheque, etc.)
         [XmlIgnore]
         public decimal vPag { get; set; }
