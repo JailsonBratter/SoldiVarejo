@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using visualSysWeb.dao;
 using visualSysWeb.modulos.NotaFiscal.code;
 using visualSysWeb.code;
+using visualSysWeb.modulos.NotaFiscal.NFeRT;
+
 namespace visualSysWeb.modulos.NotaFiscal.pages
 {
     public partial class NfInutilizacao : System.Web.UI.Page
@@ -71,46 +73,78 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
 
                 User usr = (User)Session["User"];
-                xmlNFE xml = new xmlNFE(usr);
-               xml.inutilizarNumero(txtSerie.Text, txtNumeroInicial.Text, txtNumeroFinal.Text, txtJustificativa.Text, usr);
-                int cont = 0;
-                bool encerra = false;
-                String Resposta = "";
-                while (!encerra)
+
+                NFCeOperacoes nfe = new NFCeOperacoes(usr);
+
+                var retorno = nfe.InutilizarNumeracao(DateTime.Now.Year, usr.filial.CNPJ, txtJustificativa.Text, int.Parse(txtNumeroInicial.Text), int.Parse(txtNumeroFinal.Text), int.Parse(txtSerie.Text));
+
+                if (retorno.Retorno.infInut.cStat == 102)
                 {
-                    if (cont >= 50)
-                        encerra = true;
-                    try
-                    {
-                        Resposta = xml.respostaInutilizacao(txtSerie.Text, txtNumeroInicial.Text, txtNumeroFinal.Text, DateTime.Now, encerra);
+                    String strProtocolo = retorno.Retorno.infInut.nProt.ToString(); //  Resposta.Substring(Resposta.IndexOf("Protocolo :") + 11, 15);
+                    String sqlInsert = "insert into nf_inutilizadas (serie,N_inicio,N_fim,protocolo,justificativa,data,usuario)" +
+                                                " values('" + txtSerie.Text + "'," + txtNumeroInicial.Text.Trim() + "," + txtNumeroFinal.Text + ",'" + strProtocolo + "','" + txtJustificativa.Text + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + usr.getUsuario() + "')";
 
-                        encerra = true;
-                        String strProtocolo = Resposta.Substring(Resposta.IndexOf("Protocolo :") + 11, 15);
-                        String sqlInsert = "insert into nf_inutilizadas (serie,N_inicio,N_fim,protocolo,justificativa,data,usuario)" +
-                                                    " values('" + txtSerie.Text + "'," + txtNumeroInicial.Text.Trim() + "," + txtNumeroFinal.Text + ",'" + strProtocolo + "','" + txtJustificativa.Text + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + usr.getUsuario() + "')";
+                    Conexao.executarSql(sqlInsert);
 
-                        Conexao.executarSql(sqlInsert);
+                    Conexao.executarSql("Update nf  set status='INUTILIZADO' WHERE CODIGO >=" + txtNumeroInicial.Text + " AND CODIGO <=" + txtNumeroFinal.Text + " AND TIPO_NF=1");
 
-                        Conexao.executarSql("Update nf  set status='INUTILIZADO' WHERE CODIGO >=" + txtNumeroInicial.Text + " AND CODIGO <=" + txtNumeroFinal.Text +" AND TIPO_NF=1");
 
-                        //modalPnConfirma.Hide();
-                        Session.Remove("Resposta-Inutilizacao");
-                        Session.Add("Resposta-Inutilizacao", Resposta);
-                      
-                        //modalResposta.Show();
 
-                    }
-                    catch (Exception err)
-                    {
-                        if (err.Message.IndexOf("Erro-Inutilizar:") >= 0 || encerra)
-                        {
-                            Session.Remove("Erro-Inutilizacao");
-                            Session.Add("Erro-Inutilizacao",err.Message);
-                            encerra = true;
-                        }
-                    }
-                    cont++;
+                    lblRespostaInutilizacao.Text = "Sucesso. " + retorno.Retorno.infInut.cStat + " " + retorno.Retorno.infInut.xMotivo;
+                    lblRespostaInutilizacao.ForeColor = System.Drawing.Color.Blue;
+                    //modalPnConfirma.Hide();
+                    Session.Remove("Resposta-Inutilizacao");
+                    Session.Add("Resposta-Inutilizacao", retorno.Retorno.infInut.xMotivo);
+
                 }
+                else
+                {
+                    lblRespostaInutilizacao.Text = "FALHA. " + retorno.Retorno.infInut.cStat + " " + retorno.Retorno.infInut.xMotivo;
+                    lblRespostaInutilizacao.ForeColor = System.Drawing.Color.Red;
+                    new Exception("Erro na inutilização: codigo " + retorno.Retorno.infInut.cStat + " " + retorno.Retorno.infInut.xMotivo);
+                }
+
+
+               // xmlNFE xml = new xmlNFE(usr);
+               //xml.inutilizarNumero(txtSerie.Text, txtNumeroInicial.Text, txtNumeroFinal.Text, txtJustificativa.Text, usr);
+               // int cont = 0;
+               // bool encerra = false;
+               // String Resposta = "";
+               // while (!encerra)
+               // {
+               //     if (cont >= 50)
+               //         encerra = true;
+               //     try
+               //     {
+               //         Resposta = xml.respostaInutilizacao(txtSerie.Text, txtNumeroInicial.Text, txtNumeroFinal.Text, DateTime.Now, encerra);
+
+               //         encerra = true;
+               //         String strProtocolo = Resposta.Substring(Resposta.IndexOf("Protocolo :") + 11, 15);
+               //         String sqlInsert = "insert into nf_inutilizadas (serie,N_inicio,N_fim,protocolo,justificativa,data,usuario)" +
+               //                                     " values('" + txtSerie.Text + "'," + txtNumeroInicial.Text.Trim() + "," + txtNumeroFinal.Text + ",'" + strProtocolo + "','" + txtJustificativa.Text + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + usr.getUsuario() + "')";
+
+               //         Conexao.executarSql(sqlInsert);
+
+               //         Conexao.executarSql("Update nf  set status='INUTILIZADO' WHERE CODIGO >=" + txtNumeroInicial.Text + " AND CODIGO <=" + txtNumeroFinal.Text +" AND TIPO_NF=1");
+
+               //         //modalPnConfirma.Hide();
+               //         Session.Remove("Resposta-Inutilizacao");
+               //         Session.Add("Resposta-Inutilizacao", Resposta);
+                      
+               //         //modalResposta.Show();
+
+               //     }
+               //     catch (Exception err)
+               //     {
+               //         if (err.Message.IndexOf("Erro-Inutilizar:") >= 0 || encerra)
+               //         {
+               //             Session.Remove("Erro-Inutilizacao");
+               //             Session.Add("Erro-Inutilizacao",err.Message);
+               //             encerra = true;
+               //         }
+               //     }
+               //     cont++;
+               // }
             }
             catch (Exception err)
             {
@@ -124,16 +158,16 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             try
             {
                 User usr = (User)Session["User"];
-                TimerXml.Interval = 450;
-                TimerXml.Enabled = true;
-                System.Threading.Thread th = new System.Threading.Thread(executar);
-                th.Start();
-
+                //TimerXml.Interval = 450;
+                //TimerXml.Enabled = true;
+                //System.Threading.Thread th = new System.Threading.Thread(executar);
+                //th.Start();
+                executar();
                 
                 modalPnConfirma.Hide();
                 modalResposta.Show();
-                lblRespostaInutilizacao.Text = "AGUARDE .....";
-                lblRespostaInutilizacao.ForeColor = System.Drawing.Color.Green;
+                //lblRespostaInutilizacao.Text = "AGUARDE .....";
+                //lblRespostaInutilizacao.ForeColor = System.Drawing.Color.Green;
             }
             catch (Exception err)
             {

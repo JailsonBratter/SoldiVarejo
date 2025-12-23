@@ -36,6 +36,7 @@ using visualSysWeb.dao;
 using visualSysWeb.code;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Cobranca;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Transporte;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Intermediador;
 
 namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 {
@@ -60,13 +61,27 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             CarregarConfiguracoes();
             arquivoXML = Loja.diretorio_exporta;
         }
-        public NFe.Classes.nfeProc criarNFCe(nfDAO nfDAO, string tipo_pagamento = "", bool obrigacontingencia = false)
+        public NFe.Classes.nfeProc criarNFCe(nfDAO nfDAO, string tipo_pagamento = "", bool obrigacontingencia = false, bool soValidar = false)
         {
+            retConsStatServ StatusOK = null;
+            bool pularTransmitirNFe = false;
+            
             //Numero de lote e número de NFe
             Random rnd = new Random();
 
             var numeroNFCe = int.Parse(nfDAO.Codigo);
             var numeroLote = rnd.Next(1, 1000);
+
+
+            if (!soValidar)
+            {
+                arquivoXML = Funcoes.DefinirDiretorio(false, Loja);
+                arquivoXML += (arquivoXML.Substring(arquivoXML.Length - 1) == "\\" ? "" : "\\") + "NFe" + nfDAO.id + ".xml";
+                if (File.Exists(arquivoXML))
+                {
+                    pularTransmitirNFe = true;
+                }
+            }
 
             //Pegar todos os itens do cupom.
             nf_itemDAO cupomItem = new nf_itemDAO(usr);
@@ -76,12 +91,17 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             var dadosNFCe = montarNFe(itens, nfDAO);
             //Montar destinatario
             var dadosDest = montarDestinatario(nfDAO);
+            if (!Loja.producaoNfe)
+            {
+                dadosDest.xNome = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL";
+            }
+
             //Montar pagamento
             var dadosPagamento = montarPagamento(nfDAO);
 
             //Criar objeto NFCe
             NNFe nFe = new NNFe();
-            retConsStatServ StatusOK = null;
+            //retConsStatServ StatusOK = null;
             try
             {
 
@@ -89,7 +109,16 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 
                 if (StatusOK.cStat != 107)
                 {
-                    throw new Exception("Sem comunicação com sefaz.");
+                    if (pularTransmitirNFe)
+                    {
+                        throw new Exception("Erro ao consultar STATUS SEFAZ. " + StatusOK.cStat.ToString() + "-" + StatusOK.xMotivo);
+                    }
+                }
+
+                //Só vai transmitir, sem gerar novamente o arquivo.
+                if (pularTransmitirNFe)
+                {
+                    goto TranmitirNFe;
                 }
      
                 if (tipo_pagamento == "")
@@ -146,7 +175,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     pag = dadosPagamento,
                     infAdic = new informacaoAdicional
                     {
-                        infCpl = "Tributos Aprox." + dadosNFCe.total.ICMSTot.vTotTribFormatado + " Fonte:IBPT",
+                        infCpl = nfDAO.Observacao.Trim(),
 
                     },
                     responsavelTecnico = new responsavelTecnico
@@ -167,43 +196,35 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 {
                     throw new Exception("Para NFe COMPLEMENTAR ou DEVOLUÇÃO, é obrigatório uma NFe REFERENCIADA.");
                 }
+                else
+                {
+                    nFe.infNFe.identificacao.NFref = new List<NFref>();
+                    foreach (String idNfRef in nfDAO.NfReferencias)
+                    {
+                        NFref referenciada = new NFref
+                        {
+                            refNFe = idNfRef
+                        };
+                        nFe.infNFe.identificacao.NFref.Add(referenciada);
+                    }
+                }
 
                 if (nFe.infNFe.identificacao.indPres == 2)
                 {
                     nFe.infNFe.identificacao.indIntermed = Tipos.IndicadorIntermediador.iiSitePlataformaTerceiros; //Indicador de intermediador/marketplace
-                                                         //0 = Operação sem intermediador(em site ou plataforma própria)
-                }
-                else
-                {
-                    nFe.infNFe.identificacao.indIntermedSpecified = false;
-                }
-
-                //Checar CPF
-                if (nfDAO.objCliente.CNPJ.Equals(""))
-                {
-                    nFe.infNFe.destinatario = null;
-                }
-                else
-                {
-                    //Define valor do elemento xNome (Nome do destinatário)
-                    nFe.infNFe.destinatario.xNome = (!Loja.producaoNfe ? "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL" : "NAO INFORMADO");
-                    string codigoCNPJCPF = nfDAO.objCliente.CNPJ.Replace(".", "").Replace("/", "").Replace("-", "").Trim();
-                    if (codigoCNPJCPF.Length > 11)
+                                                                                                                   //0 = Operação sem intermediador(em site ou plataforma própria)
+                    nFe.infNFe.infIntermed = new infIntermed
                     {
-                        nFe.infNFe.destinatario.CNPJ = codigoCNPJCPF; // nfDAO.objCliente.CNPJ;
-                        nFe.infNFe.destinatario.indIEDest = "9";
-                    }
-                    else
-                    {
-                        nFe.infNFe.destinatario.CPF = codigoCNPJCPF; // nfDAO.objCliente.CNPJ;
-                        nFe.infNFe.destinatario.indIEDest = "9";
-                    }
+                        CNPJ = nfDAO.intermedCnpj,
+                        idCadIntTran = nfDAO.idCadIntTran
+                    };
                 }
 
                 nFe.infNFe.Id = "NFe" + FuncoesNFe.chaveNFe(nFe.infNFe.identificacao);
 
                 //Salvando ID no DB
                 nfDAO.id = nFe.infNFe.Id.Replace("NFe", "");
+
                 if (!nfDAO.atualizaIDNFe())
                 {
                     throw new Exception("Não foi possível gravar o ID: " + nFe.infNFe.Id + " no Banco de Dados");
@@ -216,6 +237,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     nFe.infNFe.identificacao.xJust = "Falha na comunicação com sefaz";
                 }
 
+                //Momento que gera o arquivo XML
                 SerializarNFCeParaXML(nFe);
 
                 FuncoesNFe.limparerros();
@@ -229,6 +251,15 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         throw new Exception("Erro na validação do arquivo: " + FuncoesNFe.ObterErros());
                     }
                 }
+
+                //Apenas para validar a NFe
+                if (soValidar)
+                {
+                    return null;
+                }
+
+                //O sistema "SALTA" para este ponto qdo é para transmitir.
+                TranmitirNFe:
 
                 //A partir deste ponto utiliza-se as DLL NFe e DFe.
                 var reader = new StringReader(File.ReadAllText(arquivoXML));
@@ -278,7 +309,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         {
                             if (nfDAO.numeroProtocolo.Equals(""))
                             {
-                                nfDAO.numeroProtocolo = NFeRetornoProc.protNFe.infProt.nProt.ToString();
+                                nfDAO.numeroProtocolo = NFeRetornoProc.protNFe.infProt.nProt.ToString() + " " + NFeRetornoProc.protNFe.infProt.dhRecbto.DateTime.ToString("dd-MM-yyyy HH:mm:ss");
                             }
                             nfDAO.id = NFeRetornoProc.NFe.infNFe.Id.Replace("NFe", "").Replace("NFCe", "");
                             nfDAO.status = "AUTORIZADO";
@@ -332,7 +363,6 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             }
             catch (Exception ex)
             {
-               
                 throw ex;
             }
         }
@@ -574,10 +604,26 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     }
 
                     #endregion
-                    if (int.Parse(row.CSTPIS.ToString()) == 1)
+                    if (int.Parse(row.CSTPIS.ToString()) == 1 || int.Parse(row.CSTPIS.ToString()) == 50)
                     {
-                        total.ICMSTot.vPIS += imposto.PIS.PISAliq.vPIS;
-                        total.ICMSTot.vCOFINS += imposto.COFINS.COFINSAliq.vCOFINS;
+                        if (nf.Tipo_NF.Equals("2"))
+                        {
+                            if (imposto.PIS.PISOutr != null)
+                            {
+                                total.ICMSTot.vPIS += imposto.PIS.PISOutr.vPIS;
+                                total.ICMSTot.vCOFINS += imposto.COFINS.COFINSOutr.vCOFINS;
+                            }
+                            else
+                            {
+                                total.ICMSTot.vPIS += 0;
+                                total.ICMSTot.vCOFINS += 0;
+                            }
+                        }
+                        else
+                        {
+                            total.ICMSTot.vPIS += imposto.PIS.PISAliq.vPIS;
+                            total.ICMSTot.vCOFINS += imposto.COFINS.COFINSAliq.vCOFINS;
+                        }
                     }
                     var (vBC, vIcms) = RetornaBcIcms(imposto.ICMS);
 
@@ -640,7 +686,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         {
             #region Set file config
 
-            ConfiguracaoServico.Instancia.Certificado.TipoCertificado = (Loja.tipo_certificado.Equals("A1") ? TipoCertificado.A1Arquivo : TipoCertificado.A3);
+            ConfiguracaoServico.Instancia.Certificado.TipoCertificado = TipoCertificado.A1Arquivo; //  (Loja.tipo_certificado.Equals("A1") ? TipoCertificado.A1Arquivo : TipoCertificado.A3);
             ConfiguracaoServico.Instancia.Certificado.Arquivo = Loja.certificado_arquivo;
             ConfiguracaoServico.Instancia.Certificado.Senha = Loja.certificado_senha;
             ConfiguracaoServico.Instancia.DiretorioSalvarXml = Loja.diretorio_exporta;
@@ -766,6 +812,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             var servicoNFe = new ServicosNFe(_configuracao);
             return servicoNFe.RecepcaoEventoCancelamento(numeroLote, sequenciaEvento, protocolo, chaveAcesso, justificativa, cnpjEmitente);
         }
+        public RetornoRecepcaoEvento CartaCorrecaoNFe(int idLote, int sequencia, string chave, string correcao, string cnpj)
+        {
+            var servicoNFe = new ServicosNFe(_configuracao);
+            return servicoNFe.RecepcaoEventoCartaCorrecao(idLote, sequencia, chave, correcao, cnpj);
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -838,7 +889,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                         ICMS60 iCMS60 = new ICMS60
                         {
                             orig = origem,
-                            CST = cst
+                            CST = cst,
+                            vBCSTRet = 0,
+                            pST = 0,
+                            vICMSSubstituto = 0,
+                            vICMSSTRet = 0
                         };
                         iCMS.ICMS60 = iCMS60;
                         break;
@@ -926,12 +981,14 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 default:
                     PISOutr pISOUTR = new PISOutr
                     {
-                        CST = cst
+                        CST = cst,
+                        vBC = bc,
+                        pPIS = Loja.pis,
+                        vPIS = Math.Round((bc * Math.Round(Loja.pis / 100, 4)), 2)
 
                     };
                     pIS.PISOutr = pISOUTR;
                     break;
-
 
             }
             return pIS;
@@ -971,7 +1028,10 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 default:
                     COFINSOutr cOFINSOutr = new COFINSOutr
                     {
-                        CST = cst
+                        CST = cst,
+                        vBC = bc,
+                        pCOFINS = Loja.cofins,
+                        vCOFINS = Math.Round((bc * Math.Round(Loja.cofins / 100, 4)), 2)//Math.Round((bc * 0.076m), 2)
                     };
                     pCofins.COFINSOutr = cOFINSOutr;
                     break;
@@ -1201,7 +1261,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     dest.CPF = codigoCNPJCPF;
                 }
 
-                dest.xNome = fornecedor.Razao_social.Trim().Replace("&", "E");
+                dest.xNome = Loja.producaoNfe ? fornecedor.Razao_social.Trim().Replace("&", "E") : "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL";
                 enderDest.xLgr = fornecedor.Endereco.Trim();
                 enderDest.nro = fornecedor.Endereco_nro.Trim();
                 //enderDest.xCpl = "";
@@ -1211,10 +1271,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 enderDest.UF = fornecedor.UF.Trim();
                 enderDest.CEP = fornecedor.CEP.Replace("-", "").Trim();
                 enderDest.fone = fornecedor.telefone1.Trim().Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
-
+                enderDest.xPais = "BRASIL";
                 dest.IE = fornecedor.IE.Replace(",", "").Replace(".", "").Replace("-", "").Replace("-", "").Replace("/", "").Trim();
                 dest.email = fornecedor.email.Trim();
                 dest.indIEDest = fornecedor.indIEDest.ToString();
+                
             }
             else
             {
@@ -1259,7 +1320,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                     }
                     else
                     {
-                        dest.indIEDest = "1";
+                        dest.indIEDest = "9";
                     }
                 }
                 else
@@ -1340,7 +1401,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
                 detPag.Card = new Card
                 {
                     tpIntegra = "2",
-                    CNPJ = nf.CNPJPagamento
+                    //CNPJ = nf.CNPJPagamento
                 };
             }
             pgto.DetPag.Add(detPag);
@@ -1392,6 +1453,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             }
             return transp;
         }
+
     }
 
 

@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using System.Security.Cryptography;
 using System.Xml;
 using System.Xml.Schema;
 using System.IO;
 using NFe.Classes;
 using NFe.Utils;
-using System.Globalization;
 using NFe.Utils.Excecoes;
 using visualSysWeb.dao;
 using visualSysWeb.code;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Tipos;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Cobranca;
 using visualSysWeb.modulos.NotaFiscal.NFeRT.Transporte;
+using visualSysWeb.modulos.NotaFiscal.NFeRT.Intermediador;
+using System.Globalization;
+using System.Xml.Serialization;
 
 namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 {
@@ -64,6 +65,11 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         [XmlElement("pag")]
         public Pagamento pag { get; set; }
 
+        /// <summary>
+        ///     YB01 - Grupo de Informações do Intermediador da Transação 
+        /// </summary>
+        public infIntermed infIntermed { get; set; }
+
         [XmlElement("infAdic")]
         public informacaoAdicional infAdic { get; set; }
 
@@ -110,7 +116,7 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         [XmlElement("indIntermed")]
         public IndicadorIntermediador? indIntermed { get; set; } //Não há intermediador
         [XmlIgnore]
-        public bool indIntermedSpecified { get; set; }
+        public bool indIntermedSpecified => indIntermed.HasValue;
 
         public int procEmi { get; set; } = 0; //Emissão de NF-e/NFC-e com aplicativo do contribuinte
         public string verProc { get; set; } = "NF-e 1.0";
@@ -693,10 +699,178 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
 
     public class ICMS60
     {
+        /// <summary>
+        /// N09 - Origem da mercadoria
+        /// </summary>
+        [XmlElement("orig")]
         public string orig { get; set; }
-        public string CST { get; set; }
-    }
 
+        /// <summary>
+        /// N10 - CST=60
+        /// </summary>
+        [XmlElement("CST")]
+        public string CST { get; set; } = "60";
+
+
+        // -------------------------
+        // vBCSTRet
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vBCSTRet { get; set; }
+
+        [XmlElement("vBCSTRet")]
+        public string vBCSTRetField
+        {
+            get => vBCSTRet?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vBCSTRet = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+
+            }
+        }
+
+        public bool ShouldSerializevBCSTRetField() => vBCSTRet.HasValue;
+
+        // -------------------------
+        // pST
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? pST { get; set; }
+
+        [XmlElement("pST")]
+        public string pSTField
+        {
+            get => pST?.ToString("0.0000", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    pST = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializepSTField() => pST.HasValue;
+
+        // -------------------------
+        // vICMSSubstituto
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vICMSSubstituto { get; set; }
+
+        [XmlElement("vICMSSubstituto")]
+        public string vICMSSubstitutoField
+        {
+            get => vICMSSubstituto?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vICMSSubstituido = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializevICMSSubstitutoField() => vICMSSubstituto.HasValue;
+
+
+        // -------------------------
+        // vICMSSTRet
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vICMSSTRet { get; set; }
+
+        [XmlElement("vICMSSTRet")]
+        public string vICMSSTRetField
+        {
+            get => vICMSSTRet?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vICMSSTRet = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializevICMSSTRetField() => vICMSSTRet.HasValue;
+
+        // -------------------------
+        // vBCST
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vBCST { get; set; }
+
+        [XmlElement("vBCST")]
+        public string vBCSTField
+        {
+            get => vBCST?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vBCST = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializevBCSTField() => vBCST.HasValue;
+
+
+        // -------------------------
+        // vICMSST
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vICMSST { get; set; }
+
+        [XmlElement("vICMSST")]
+        public string vICMSSTField
+        {
+            get => vICMSST?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vICMSST = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializevICMSSTField() => vICMSST.HasValue;
+
+
+
+        // -------------------------
+        // vICMSSubstituido
+        // -------------------------
+
+        [XmlIgnore]
+        public decimal? vICMSSubstituido { get; set; }
+
+        [XmlElement("vICMSSubstituido")]
+        public string vICMSSubstituidoField
+        {
+            get => vICMSSubstituido?.ToString("0.00", CultureInfo.InvariantCulture);
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    vICMSSubstituido = null;
+                else
+                    decimal.Parse(value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShouldSerializevICMSSubstituidoField() => vICMSSubstituido.HasValue;
+    }
     public class ICMS70
     {
         public string orig { get; set; }
@@ -1351,23 +1525,23 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
             set => pPIS = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        [XmlIgnore]
-        public decimal qBCProd { get; set; }
-        [XmlElement("qBCProd")]
-        public string qBCProdFormatado
-        {
-            get => qBCProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-            set => qBCProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
-        }
+        //[XmlIgnore]
+        //public decimal qBCProd { get; set; }
+        //[XmlElement("qBCProd")]
+        //public string qBCProdFormatado
+        //{
+        //    get => qBCProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        //    set => qBCProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        //}
 
-        [XmlIgnore]
-        public decimal vAliqProd { get; set; }
-        [XmlElement("vAliqProd")]
-        public string vAliqProdFormatado
-        {
-            get => vAliqProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-            set => vAliqProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
-        }
+        //[XmlIgnore]
+        //public decimal vAliqProd { get; set; }
+        //[XmlElement("vAliqProd")]
+        //public string vAliqProdFormatado
+        //{
+        //    get => vAliqProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        //    set => vAliqProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        //}
 
         [XmlIgnore]
         public decimal vPIS { get; set; }
@@ -1487,23 +1661,23 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
            set => pCOFINS = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
        }
 
-       [XmlIgnore]
-       public decimal qBCProd { get; set; }
-       [XmlElement("qBCProd")]
-       public string qBCProdFormatado
-       {
-           get => qBCProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-           set => qBCProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
-       }
+       //[XmlIgnore]
+       //public decimal qBCProd { get; set; }
+       //[XmlElement("qBCProd")]
+       //public string qBCProdFormatado
+       //{
+       //    get => qBCProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+       //    set => qBCProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+       //}
 
-       [XmlIgnore]
-       public decimal vAliqProd { get; set; }
-       [XmlElement("vAliqProd")]
-       public string vAliqProdFormatado
-       {
-           get => vAliqProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-           set => vAliqProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
-       }
+       //[XmlIgnore]
+       //public decimal vAliqProd { get; set; }
+       //[XmlElement("vAliqProd")]
+       //public string vAliqProdFormatado
+       //{
+       //    get => vAliqProd.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+       //    set => vAliqProd = decimal.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+       //}
 
        [XmlIgnore]
        public decimal vCOFINS { get; set; }

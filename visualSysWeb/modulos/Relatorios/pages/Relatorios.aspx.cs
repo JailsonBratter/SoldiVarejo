@@ -1003,7 +1003,7 @@ namespace visualSysWeb.modulos.Relatorios.pages
                                 }
                                 else if (cell.Contains("|chave|"))
                                 {
-                                    String chave = cell.Replace("|chave|", "").Replace("CFe","");
+                                    String chave = cell.Replace("|chave|", "").Replace("CFe","").Replace("NFe","");
                                     String text = chave.Substring(0, 10) + "...";
                                     
                                     e.Row.Cells[i].Text = "<input type='button' value='"+text+ "' onclick='javascript: MostrarChave(\""+chave+"\")'>";

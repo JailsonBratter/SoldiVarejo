@@ -5580,7 +5580,6 @@ namespace visualSysWeb.dao
                     conn.Close();
             }
         }
-
         public bool excluir()
         {
             if (!Tipo_NF.Equals("3"))

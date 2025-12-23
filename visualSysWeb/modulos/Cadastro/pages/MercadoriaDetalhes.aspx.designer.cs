@@ -2299,6 +2299,33 @@ namespace visualSysWeb.Cadastro {
         protected global::System.Web.UI.WebControls.TextBox txtCodigoEmissaoNFe;
         
         /// <summary>
+        /// Controle ddlCSTcTrib.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCSTcTrib;
+        
+        /// <summary>
+        /// Controle ddlcClassTrib.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlcClassTrib;
+        
+        /// <summary>
+        /// Controle txtAliquotaIVA_cTrib.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAliquotaIVA_cTrib;
+        
+        /// <summary>
         /// Controle TabObservacao.
         /// </summary>
         /// <remarks>

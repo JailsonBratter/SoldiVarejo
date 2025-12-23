@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe Id="NFe35251202340366000216550010000063531987654323" versao="4.00">
+    <ide>
+      <cUF>35</cUF>
+      <cNF>98765432</cNF>
+      <natOp>VENDA</natOp>
+      <mod>55</mod>
+      <serie>1</serie>
+      <nNF>6353</nNF>
+      <dhEmi>2025-12-19T14:50:22-03:00</dhEmi>
+      <dhSaiEnt>2025-12-19T14:50:22-03:00</dhSaiEnt>
+      <tpNF>1</tpNF>
+      <idDest>1</idDest>
+      <cMunFG>3550308</cMunFG>
+      <tpImp>1</tpImp>
+      <tpEmis>1</tpEmis>
+      <cDV>3</cDV>
+      <tpAmb>2</tpAmb>
+      <finNFe>1</finNFe>
+      <indFinal>1</indFinal>
+      <indPres>0</indPres>
+      <procEmi>0</procEmi>
+      <verProc>NF-e 1.0</verProc>
+    </ide>
+    <emit>
+      <CNPJ>02340366000216</CNPJ>
+      <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+      <enderEmit>
+        <xLgr>RUA TROCARI</xLgr>
+        <nro>131</nro>
+        <xBairro>VILA PRUDENTE</xBairro>
+        <cMun>3550308</cMun>
+        <xMun>SAO PAULO</xMun>
+        <UF>SP</UF>
+        <CEP>03134080</CEP>
+        <cPais>1058</cPais>
+        <xPais>BRASIL</xPais>
+        <fone>1150786121</fone>
+      </enderEmit>
+      <IE>149873550112</IE>
+      <CRT>3</CRT>
+    </emit>
+    <dest>
+      <CPF>05230991852</CPF>
+      <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+      <enderDest>
+        <xLgr>RUA INGUAI, 151 AP 105</xLgr>
+        <nro>1</nro>
+        <xBairro>V. PRUDENTE</xBairro>
+        <cMun>3550308</cMun>
+        <xMun>SAO PAULO</xMun>
+        <UF>SP</UF>
+        <CEP>03132080</CEP>
+        <cPais>1058</cPais>
+        <xPais>BRASIL</xPais>
+        <fone>1150832155</fone>
+      </enderDest>
+      <indIEDest>9</indIEDest>
+      <email>jailson@bratter.com.br</email>
+    </dest>
+    <det nItem="1">
+      <prod>
+        <cProd>59666</cProd>
+        <cEAN>7896181209836</cEAN>
+        <xProd>ROYAL CANIN ESP CAES AD GOLDEN RETRIEVER 12KG</xProd>
+        <NCM>23099010</NCM>
+        <CFOP>5403</CFOP>
+        <uCom>UN</uCom>
+        <qCom>1.0000</qCom>
+        <vUnCom>429.9000</vUnCom>
+        <vProd>429.90</vProd>
+        <cEANTrib>7896181209836</cEANTrib>
+        <uTrib>UN</uTrib>
+        <qTrib>1.0000</qTrib>
+        <vUnTrib>429.9000</vUnTrib>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <vTotTrib>152.61</vTotTrib>
+        <ICMS>
+          <ICMS60>
+            <orig>0</orig>
+            <CST>60</CST>
+            <vBCSTRet>0.00</vBCSTRet>
+            <pST>0.0000</pST>
+            <vICMSSubstituto>0.00</vICMSSubstituto>
+            <vICMSSTRet>0.00</vICMSSTRet>
+          </ICMS60>
+        </ICMS>
+        <PIS>
+          <PISAliq>
+            <CST>01</CST>
+            <vBC>429.90</vBC>
+            <pPIS>1.6500</pPIS>
+            <vPIS>7.09</vPIS>
+          </PISAliq>
+        </PIS>
+        <COFINS>
+          <COFINSAliq>
+            <CST>01</CST>
+            <vBC>429.90</vBC>
+            <pCOFINS>7.6000</pCOFINS>
+            <vCOFINS>32.67</vCOFINS>
+          </COFINSAliq>
+        </COFINS>
+        <IBSCBS>
+          <CST>000</CST>
+          <cClassTrib>000001</cClassTrib>
+          <gIBSCBS>
+            <vBC>429.90</vBC>
+            <gIBSUF>
+              <pIBSUF>0.1000</pIBSUF>
+              <vIBSUF>0.43</vIBSUF>
+            </gIBSUF>
+            <gIBSMun>
+              <pIBSMun>0.0000</pIBSMun>
+              <vIBSMun>0.00</vIBSMun>
+            </gIBSMun>
+            <vIBS>0.43</vIBS>
+            <gCBS>
+              <pCBS>0.9000</pCBS>
+              <vCBS>3.87</vCBS>
+            </gCBS>
+          </gIBSCBS>
+        </IBSCBS>
+      </imposto>
+    </det>
+    <total>
+      <ICMSTot>
+        <vBC>0.00</vBC>
+        <vICMS>0.00</vICMS>
+        <vICMSDeson>0.00</vICMSDeson>
+        <vFCPUFDest>0.00</vFCPUFDest>
+        <vICMSUFDest>0.00</vICMSUFDest>
+        <vICMSUFRemet>0.00</vICMSUFRemet>
+        <vFCP>0.00</vFCP>
+        <vBCST>0.00</vBCST>
+        <vST>0.00</vST>
+        <vFCPST>0.00</vFCPST>
+        <vFCPSTRet>0.00</vFCPSTRet>
+        <vProd>429.90</vProd>
+        <vFrete>0.00</vFrete>
+        <vSeg>0.00</vSeg>
+        <vDesc>0.00</vDesc>
+        <vII>0.00</vII>
+        <vIPI>0.00</vIPI>
+        <vIPIDevol>0.00</vIPIDevol>
+        <vPIS>7.09</vPIS>
+        <vCOFINS>32.67</vCOFINS>
+        <vOutro>0.00</vOutro>
+        <vNF>429.90</vNF>
+        <vTotTrib>152.61</vTotTrib>
+      </ICMSTot>
+      <IBSCBSTot>
+        <vBCIBSCBS>429.90</vBCIBSCBS>
+        <gIBS>
+          <gIBSUF>
+            <vDif>0.00</vDif>
+            <vDevTrib>0.00</vDevTrib>
+            <vIBSUF>0.43</vIBSUF>
+          </gIBSUF>
+          <gIBSMun>
+            <vDif>0.00</vDif>
+            <vDevTrib>0.00</vDevTrib>
+            <vIBSMun>0.00</vIBSMun>
+          </gIBSMun>
+          <vIBS>0.43</vIBS>
+          <vCredPres>0.00</vCredPres>
+          <vCredPresCondSus>0.00</vCredPresCondSus>
+        </gIBS>
+        <gCBS>
+          <vDif>0.00</vDif>
+          <vDevTrib>0.00</vDevTrib>
+          <vCBS>3.87</vCBS>
+          <vCredPres>0.00</vCredPres>
+          <vCredPresCondSus>0.00</vCredPresCondSus>
+        </gCBS>
+      </IBSCBSTot>
+      <vNFTot>429.90</vNFTot>
+    </total>
+    <transp>
+      <modFrete>0</modFrete>
+      <transporta>
+        <xNome>O PROPRIO</xNome>
+        <xMun>SAO PAULO</xMun>
+        <UF>SP</UF>
+      </transporta>
+      <vol>
+        <qVol>0</qVol>
+        <esp>0</esp>
+        <pesoL>0</pesoL>
+        <pesoB>0</pesoB>
+      </vol>
+    </transp>
+    <cobr>
+      <fat>
+        <nFat>6353</nFat>
+        <vOrig>429.90</vOrig>
+        <vDesc>0</vDesc>
+        <vLiq>429.90</vLiq>
+      </fat>
+    </cobr>
+    <pag>
+      <detPag>
+        <tPag>15</tPag>
+        <vPag>0.00</vPag>
+      </detPag>
+    </pag>
+    <infAdic>
+      <infCpl>Valor do Imposto Aproximado: R$ 152,61 Conforme Lei.12.741/12 fonte IBPT</infCpl>
+    </infAdic>
+    <infRespTec>
+      <CNPJ>53969281000151</CNPJ>
+      <xContato>JGA Solucoes em Tecnologia LTDA</xContato>
+      <email>sistemas@jgasolucoes.tec.br</email>
+      <fone>1150786121</fone>
+    </infRespTec>
+  </infNFe>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="#NFe35251202340366000216550010000063531987654323">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+          <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>KVBCRJtSIIsM/KodrotevHEEPL4=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>VfZVmSkQFJ5DI0vVSYTcIpG9IzF5nV7QTfZKRhYeHY0pJWIetIZ9/s3f3hv3/28ODiOxOuib0aDj0GS3kGCJjn4sYGPspzSAvhFWiInrDC3yLFgS84kTevi5lVwG7v/P5upM+A9rqOzLYX387JAOR4ibpfI7HJGeiT0m6iGCmzWYTK+8EvcOBMW7ZVoIpD4u7OxFY5RYLzT0evUr/s5bY2Ds6LSxh1Vaj0m+rUWzZkOBswdP5oTFwF0LWVF3aT+be5kmqG91LKWPCYZ5hOYo62ntNfPyM1GQNkxyEQIecGX238q2UNyAJg1eDpau+F0nA7DVwtN7wpZel3tkLpYQ8Q==</SignatureValue>
+    <KeyInfo>
+      <X509Data>
+        <X509Certificate>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</X509Certificate>
+      </X509Data>
+    </KeyInfo>
+  </Signature>
+</NFe>

@@ -17,113 +17,88 @@ namespace visualSysWeb.modulos.NotaFiscal.NFeRT
         private decimal _vIcmsufRemet;
         private decimal? _vBcfcpufDest;
 
-        /// <summary>
-        /// NA03 - Valor da BC do ICMS na UF de destino
-        /// </summary>
+        private decimal? RoundNullable(decimal? v, int casas)
+            => v.HasValue ? Math.Round(v.Value, casas) : (decimal?)null;
+
+        private decimal Round(decimal v, int casas)
+            => Math.Round(v, casas);
+
+        // ---------------- NA03 ----------------
         [XmlElement(Order = 1)]
         public decimal vBCUFDest
         {
-            get { return _vBcufDest; }
-            set { _vBcufDest = value.Arredondar(2); }
+            get => _vBcufDest;
+            set => _vBcufDest = Round(value, 2);
         }
 
-        /// <summary>
-        /// NA04 - Valor da BC FCP na UF de destino
-        /// Versão 4.00
-        /// </summary>
+        // ---------------- NA04 ----------------
         [XmlElement(Order = 2)]
         public decimal? vBCFCPUFDest
         {
-            get { return _vBcfcpufDest.Arredondar(2); }
-            set { _vBcfcpufDest = value.Arredondar(2); }
+            get => RoundNullable(_vBcfcpufDest, 2);
+            set => _vBcfcpufDest = RoundNullable(value, 2);
         }
 
-        public bool vBCFCPUFDestSpecified
-        {
-            get { return vBCFCPUFDest.HasValue; }
-        }
+        public bool vBCFCPUFDestSpecified => vBCFCPUFDest.HasValue;
 
-        /// <summary>
-        /// NA05 - Percentual do ICMS relativo ao Fundo de Combate à Pobreza (FCP) na UF de destino
-        /// </summary>
+        // ---------------- NA05 ----------------
         [XmlElement(Order = 3)]
         public decimal? pFCPUFDest
         {
-            get { return _pFcpufDest; }
-            set
-            {
-                _pFcpufDest = value.Arredondar(4);
-            }
+            get => _pFcpufDest;
+            set => _pFcpufDest = RoundNullable(value, 4);
         }
 
-        public bool pFCPUFDestSpecified
-        {
-            get { return pFCPUFDest.HasValue; }
-        }
+        public bool pFCPUFDestSpecified => pFCPUFDest.HasValue;
 
-        /// <summary>
-        /// NA07 - Alíquota interna da UF de destino
-        /// </summary>
+        // ---------------- NA07 ----------------
         [XmlElement(Order = 4)]
         public decimal pICMSUFDest
         {
-            get { return _pIcmsufDest; }
-            set { _pIcmsufDest = value.Arredondar(4); }
+            get => _pIcmsufDest;
+            set => _pIcmsufDest = Round(value, 4);
         }
 
-        /// <summary>
-        /// NA09 - Alíquota interestadual das UF envolvidas
-        /// </summary>
+        // ---------------- NA09 ----------------
         [XmlElement(Order = 5)]
         public decimal pICMSInter
         {
-            get { return _pIcmsInter; }
-            set { _pIcmsInter = value.Arredondar(2); }
+            get => _pIcmsInter;
+            set => _pIcmsInter = Round(value, 2);
         }
 
-        /// <summary>
-        /// NA11 - Percentual provisório de partilha do ICMS Interestadual
-        /// </summary>
+        // ---------------- NA11 ----------------
         [XmlElement(Order = 6)]
         public decimal pICMSInterPart
         {
-            get { return _pIcmsInterPart; }
-            set { _pIcmsInterPart = value.Arredondar(4); }
+            get => _pIcmsInterPart;
+            set => _pIcmsInterPart = Round(value, 4);
         }
 
-        /// <summary>
-        /// NA13 - Valor do ICMS relativo ao Fundo de Combate à Pobreza(FCP) da UF de destino
-        /// </summary>
+        // ---------------- NA13 ----------------
         [XmlElement(Order = 7)]
         public decimal? vFCPUFDest
         {
-            get { return _vFcpufDest; }
-            set { _vFcpufDest = value.Arredondar(2); }
+            get => _vFcpufDest;
+            set => _vFcpufDest = RoundNullable(value, 2);
         }
 
-        public bool vFCPUFDestSpecified
-        {
-            get { return vFCPUFDest.HasValue; }
-        }
+        public bool vFCPUFDestSpecified => vFCPUFDest.HasValue;
 
-        /// <summary>
-        /// NA15 - Valor do ICMS Interestadual para a UF de destino
-        /// </summary>
+        // ---------------- NA15 ----------------
         [XmlElement(Order = 8)]
         public decimal vICMSUFDest
         {
-            get { return _vIcmsufDest; }
-            set { _vIcmsufDest = value.Arredondar(2); }
+            get => _vIcmsufDest;
+            set => _vIcmsufDest = Round(value, 2);
         }
 
-        /// <summary>
-        /// NA17 - Valor do ICMS Interestadual para a UF do remetente
-        /// </summary>
+        // ---------------- NA17 ----------------
         [XmlElement(Order = 9)]
         public decimal vICMSUFRemet
         {
-            get { return _vIcmsufRemet; }
-            set { _vIcmsufRemet = value.Arredondar(2); }
+            get => _vIcmsufRemet;
+            set => _vIcmsufRemet = Round(value, 2);
         }
     }
 }

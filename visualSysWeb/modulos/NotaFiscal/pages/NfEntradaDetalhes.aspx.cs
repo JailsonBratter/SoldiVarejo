@@ -417,20 +417,20 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                         habilitarCampos(false);
                         return;
                     }
-                    //Caso não haja bloqueio pelo inventário, checa se há bloqueio pelo controle de estoque na MERCADORIA_ESTOQUE_DIA
-                    if (obj.Data < DateTime.Today)
-                    {
-                        //Checa se a data é inferior a data de controle de estoque do item.
-                        if (obj.bloqueioControleEstoqueDia(usr, item.PLU, obj.Data))
-                        {
-                            showMessage("O Item: " + item.PLU + " iniciou o controle de estoque posterior a data desta NFE. Não será permitido a edição.", true);
-                            status = "pesquisar";
-                            carregarDados();
-                            carregabtn(pnBtn, true);
-                            habilitarCampos(false);
-                            return;
-                        }
-                    }
+                    ////Caso não haja bloqueio pelo inventário, checa se há bloqueio pelo controle de estoque na MERCADORIA_ESTOQUE_DIA
+                    //if (obj.Data < DateTime.Today)
+                    //{
+                    //    //Checa se a data é inferior a data de controle de estoque do item.
+                    //    if (obj.bloqueioControleEstoqueDia(usr, item.PLU, obj.Data))
+                    //    {
+                    //        showMessage("O Item: " + item.PLU + " iniciou o controle de estoque posterior a data desta NFE. Não será permitido a edição.", true);
+                    //        status = "pesquisar";
+                    //        carregarDados();
+                    //        carregabtn(pnBtn, true);
+                    //        habilitarCampos(false);
+                    //        return;
+                    //    }
+                    //}
                 }
             }
 

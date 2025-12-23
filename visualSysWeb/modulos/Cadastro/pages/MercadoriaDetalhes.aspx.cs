@@ -53,6 +53,11 @@ namespace visualSysWeb.Cadastro
                     Conexao.preencherLISTCheckBox(lckTipoFarmaceutico, "SELECT descricao, id FROM PET_Farmacos", "descricao", "id", usr);
                     Conexao.preencherLISTCheckBox(lckTipoAcessorio, "SELECT descricao, id FROM PET_Acessorios_Tipo", "descricao", "id", usr);
                     Conexao.preencherLISTCheckBox(lckCor, "SELECT cor, id FROM Cor", "cor", "id", usr);
+
+                    //Especifico cClassTrib
+                    Conexao.preencherDDL(ddlCSTcTrib, "select Descricao, CST from Classificacao_Tributaria_CST ", "Descricao", "CST", usr);
+                    Conexao.preencherDDL(ddlcClassTrib, "select Descricao, cClassTrib from Classificacao_Tributaria", "Descricao", "cClassTrib", usr);
+
                 }
 
                 usaSKU = Funcoes.valorParametro("ATIVA_SKU_ECOMMERCE", usr).ToUpper().Equals("TRUE");

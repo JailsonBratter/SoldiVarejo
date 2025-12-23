@@ -7,6 +7,16 @@ BEGIN
 END
 
 GO
-ALTE TABLE Filial ADD Certificado_Arquivo VARCHAR(250),
+ALTER TABLE Filial ADD Certificado_Arquivo VARCHAR(250),
 Diretorio_Schemas VARCHAR(250),
 Codigo_IBGE VARCHAR(10);
+GO
+ALTER TABLE Mercadoria 
+ADD CST_cTrib VARCHAR(3),
+cClassTrib VARCHAR(6),
+Aliquota_IVA DECIMAL(10,4)
+go
+ALTER TABLE Natureza_Operacao 
+ADD CST_cTrib VARCHAR(3),
+cClassTrib VARCHAR(6),
+Aliquota_IVA DECIMAL(10,4)

@@ -2121,6 +2121,7 @@
     <Compile Include="modulos\NotaFiscal\NFeRT\IBSCBSTot.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\ICMSUFDest.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\impostoDevol.cs" />
+    <Compile Include="modulos\NotaFiscal\NFeRT\Intermediador\infIntermed.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\IPIDevolvido.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\IS.cs" />
     <Compile Include="modulos\NotaFiscal\NFeRT\NNFe.cs" />

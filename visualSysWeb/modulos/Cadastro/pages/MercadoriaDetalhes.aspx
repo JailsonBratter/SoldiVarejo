@@ -1745,6 +1745,49 @@
                                 </table>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <center>
+                                <br />
+                                    <p>
+                                        IBS/CBS/IS</p>
+                                    <hr />
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table style="border-style: solid; border-width: 1px;">
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                CST (Código de Situação Tributária)
+                                            </p>
+                                            <asp:DropDownList ID="ddlCSTcTrib" runat="server">
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                Código de Classificação Tributária (cClassTrib)
+                                            </p>
+                                            <asp:DropDownList ID="ddlcClassTrib" runat="server" Width="90%">
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                Alíquota IVA (cClassTrib)
+                                            </p>
+                                            <asp:TextBox ID="txtAliquotaIVA_cTrib" runat="server" Width="100px" CssClass="numero"></asp:TextBox>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
                 </ContentTemplate>
             </asp:TabPanel>

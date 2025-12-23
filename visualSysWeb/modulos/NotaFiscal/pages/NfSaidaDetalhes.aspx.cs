@@ -407,22 +407,22 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             {
                 if (obj.status == "VALIDADO" || obj.status == "VALIDADA")
                 {
-                    if (!obj.StatusConsultadoAntesDaExclusao)
-                    {
-                        lblError.Text = "Antes de executar esta operação o usuário deverá checar o STATUS da NFe no SEFAZ. Clicar na opção CONSULTA SITUAÇÃO através do BOTÃO XML.";
-                        carregarDados();
-                        carregabtn(pnBtn, true);
-                        habilitarCampos(false);
-                    }
-                    else
-                    {
+                    //if (!obj.StatusConsultadoAntesDaExclusao)
+                    //{
+                    //    lblError.Text = "Antes de executar esta operação o usuário deverá checar o STATUS da NFe no SEFAZ. Clicar na opção CONSULTA SITUAÇÃO através do BOTÃO XML.";
+                    //    carregarDados();
+                    //    carregabtn(pnBtn, true);
+                    //    habilitarCampos(false);
+                    //}
+                    //else
+                    //{
                         habilitarCampos(true);
                         status = "editar";
                         carregarDados();
                         User usr = (User)Session["User"];
                         txtusuario.Text = usr.getNome();
                         carregabtn(pnBtn, true);
-                    }
+                    //}
                 }
             }
             else
@@ -3006,7 +3006,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             ImgBtnCancelarNota.Visible = false;
             ImgBtnCartaDeCorrecao.Visible = false;
             lblCartaCorrecaoText.Visible = false;
-            divSituacao.Visible = true;
+            divSituacao.Visible = false; //Não será mais utilizado.
             lblProximoXml.Visible = true;
             divVisualizaXML.Visible = false;
             visualizarConfirmacao(false);
@@ -3045,7 +3045,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
 
                         lblResultadoXML.ForeColor = System.Drawing.Color.Blue;
-                        divSituacao.Visible = true;
+                        divSituacao.Visible = false;
                         divVisualizaXML.Visible = true;
                         break;
                     case "CANCELADA":
@@ -3087,7 +3087,33 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
                 User usr = (User)Session["user"];
                 NFCeOperacoes nNFe = new NFCeOperacoes(usr);
-                var notaEmitida = nNFe.criarNFCe(nf);
+
+                bool soValidar = nf.status.ToUpper().Equals("DIGITACAO");
+                var notaEmitida = nNFe.criarNFCe(nf, soValidar: soValidar);
+
+                if (soValidar)
+                {
+                    nf.status = "VALIDADO";
+                    nf.AtualizarStatus();
+
+                    Session.Remove("obj");
+                    Session.Add("obj", nf);
+
+                    TimerXml.Enabled = false;
+                    ResultadoXML = "NFe validada com sucesso!";
+                    lblResultadoXML.Text = ResultadoXML;
+                    lblResultadoXML.Visible = true;
+
+                    Session.Remove("resultadoXml");
+                    Session.Add("resultadoXml", ResultadoXML);
+
+                    //Retorno.
+                    String resultado = (String)Session["resultadoXml"];
+                    modalXml.Hide();
+                    modalXml.Show();
+                    
+                    return;
+                }
 
                 if (notaEmitida != null)
                 {
@@ -3242,9 +3268,11 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             }
             catch (Exception err)
             {
+                TimerXml.Enabled = false;
                 Session.Remove("erroXml");
                 Session.Add("erroXml", err.Message);
                 erroBtnXml();
+                modalXml.Show();
             }
 
         }
@@ -3392,6 +3420,24 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 else
                     nCorrecao = (int.Parse(nCorrecao) + 1).ToString();
 
+                User usr = (User)Session["user"];
+                NFCeOperacoes nNFe = new NFCeOperacoes(usr);
+
+                var retorno = nNFe.CartaCorrecaoNFe(1, int.Parse(nCorrecao), nf.id, txtCorrecao.Text, usr.filial.CNPJ);
+
+                if (retorno.Retorno.cStat == 128)
+                {
+                    lblResultadoXML.Text = "Efetuado com sucesso. " + retorno.Retorno.xMotivo;
+                    lblResultadoXML.Visible = true;
+                }
+                else
+                {
+                    lblResultadoXML.Text = "Falha. " + retorno.Retorno.xMotivo;
+                    lblResultadoXML.Visible = true;
+                }
+
+                return;
+
                 xmlNFE xml = new xmlNFE(nf);
 
                 xml.CorrecaoNFE(txtCorrecao.Text, nCorrecao);
@@ -3463,6 +3509,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 divSituacao.Visible = false;
                 Session.Remove("obj");
                 Session.Add("obj", nf);
+                //gravarXml();
                 System.Threading.Thread th = new System.Threading.Thread(gravarXml);
                 th.Start();
                 switch (nf.status)
@@ -3520,10 +3567,13 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                             break;
                     }
                 }
+                TimerXml.Enabled = false;
                 lblResultadoXML.Text = err.Message;
                 lblResultadoXML.ForeColor = System.Drawing.Color.Red;
 
                 carregarDados();
+                modalXml.Hide();
+
                 modalXml.Show();
             }
         }
@@ -3674,13 +3724,52 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                     visualizarConfirmacao(false);
                     visualizarCorrecao(false);
 
-                    Session.Remove("aborta");
-                    TimerXml.Interval = 450;
-                    TimerXml.Enabled = true;
+                    //Novo cancelamento.
+                    //Objeto para emissão da NFe
+                    nfDAO nf = (nfDAO)Session["obj" +urlSessao()];
+                    String ResultadoXML = "";
 
-                    System.Threading.Thread th = new System.Threading.Thread(cancelarxmlnota);
+                    User usr = (User)Session["user"];
+                    NFCeOperacoes nNFe = new NFCeOperacoes(usr);
 
-                    th.Start();
+                    string numeroProtocolo = nf.numeroProtocolo.Split(' ')[0];
+
+                    var retornoCancelamento = nNFe.CancelarNFe(usr.filial.CNPJ, 1, 1, nf.id, numeroProtocolo, txtJustificativa.Text);
+
+                    if (retornoCancelamento.Retorno.retEvento.Count > 0)
+                    {
+                        if (retornoCancelamento.Retorno.retEvento[0].infEvento.cStat.ToString() == "135")
+                        {
+                            ResultadoXML = retornoCancelamento.Retorno.retEvento[0].infEvento.xEvento.ToString() + "\r\n";
+                            ResultadoXML += retornoCancelamento.Retorno.retEvento[0].infEvento.xMotivo.ToString() ;
+                            //Cancelamento OK.  
+                            nf.status = "CANCELADA";
+                            nf.nf_Canc = true;
+                            nf.salvar(false);
+                            lblResultadoXML.Text = ResultadoXML;
+                        }
+                        else
+                        {
+                            throw new Exception("Erro. " + retornoCancelamento.Retorno.retEvento[0].infEvento.cStat.ToString());
+                        }
+
+                    }
+                    Session.Remove("resultadoXml");
+                    Session.Add("resultadoXml", ResultadoXML);
+
+                    //Session.Remove(nomeObj);
+                    //Session.Add(nomeObj, nf);
+                    carregarDados();
+
+                    //Fim do novo
+
+
+                    //Session.Remove("aborta");
+                    //TimerXml.Interval = 450;
+                    //TimerXml.Enabled = true;
+
+                    //System.Threading.Thread th = new System.Threading.Thread(cancelarxmlnota);
+                    //th.Start();
                     imgBtnConfirmaCancelamento.Visible = false;
 
                 }
@@ -3724,7 +3813,7 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
                 lblResultadoXML.Text = resultado;
                 TimerXml.Enabled = false;
                 lblResultadoXML.ForeColor = System.Drawing.Color.Blue;
-                BotaoXml();
+                //BotaoXml();
                 nfDAO nf = (nfDAO)Session["obj"];
                 if (nf != null)
                 {
@@ -4113,6 +4202,8 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
 
         protected void imgBtnConsultaSituacao_Click(object sender, ImageClickEventArgs e)
         {
+
+            return;
             Session.Remove("aborta");
             Session.Remove("resultadoXml");
 
@@ -4588,12 +4679,13 @@ namespace visualSysWeb.modulos.NotaFiscal.pages
             String urlXml = "";
             if (!obj.status.Equals("AUTORIZADO"))
             {
-
-                urlXml = obj.usr.filial.diretorio_exporta + "/SOLDI_XMLS/" + obj.id + ".xml";
+                //urlXml = obj.usr.filial.diretorio_exporta + "/SOLDI_XMLS/" + obj.id + ".xml";
+                urlXml = obj.usr.filial.diretorio_exporta + "/NFe" + obj.id + ".xml";
             }
             else
             {
-                urlXml = obj.usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + obj.Emissao.ToString("yyyyMM") + "/" + obj.id + "-procNFe.xml";
+                //urlXml = obj.usr.filial.diretorio_exporta + "/Enviado/Autorizados/" + obj.Emissao.ToString("yyyyMM") + "/" + obj.id + "-procNFe.xml";
+                urlXml = obj.usr.filial.diretorio_exporta + "/" + obj.Emissao.ToString("yyyy") + "/" + obj.Emissao.ToString("MM") + "/NFe" + obj.id + "-procNFe.xml";
             }
 
             String caminhoPasta = Server.MapPath("~/modulos/notafiscal/pages/uploads/" + obj.Emissao.ToString("yyyyMM"));
